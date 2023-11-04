@@ -7,18 +7,18 @@ import java.util.ArrayList;
 public class Usuari {
 
     //Nombre d'usuari
-
     private String nomUsuari;
 
     //contrasenya d'usuari
-
     private String contrasenya;
 
     //Vector punter a les partides
     private ArrayList<Teclat> teclats;
 
     //Classe creadora d'un usuari
-    public Usuari(String nomUsuari, String contrasenya) {
+    public Usuari(String nomUsuari, String contrasenya) throws Exception{
+        if(nomUsuari.length() > 15) throw new Exception("El nom d'usuari no pot superar els 15 caracters");
+        if(contrasenya.length() > 15) throw new Exception("La contrasenya no pot superar els 15 caracters");
         this.nomUsuari = nomUsuari;
         this.contrasenya = contrasenya;
         this.teclats = new ArrayList<Teclat>();
@@ -33,21 +33,18 @@ public class Usuari {
     //Funcio per obtindre la contrasenya d'un usuari
     public String getContrasenya() {return contrasenya;}
 
-    //Funcio modificar contraseña
-    public void setContrasenya(String contrasenya) { this.contrasenya = contrasenya;}
+    //Funció modificar contraseña
+    public void setContrasenya(String contrasenya) throws Exception {
+        if(contrasenya.length() > 15) throw new Exception("La contrasenya no pot superar els 15 caracters");
+        this.contrasenya = contrasenya;
+    }
 
-    // Funcio mirar si la contransenya pasada com a parametre coincideix amb la del usuari
+    // Funció mirar si la contransenya pasada com a parametre coincideix amb la del usuari
     public boolean contrasenyaCorrecta(String contrasenya) { return this.contrasenya.equals(contrasenya);}
 
-    //Funcio per obtindre el numero de teclats d'un usuari
+    //Funció per obtindre el numero de teclats d'un usuari
     public Integer getTeclats() { return this.teclats.size();}
 
-    //Funcio per obtindre els teclats d'un usuari
-
-    public Teclat[] obtindreTeclats() { return this.teclats.Array(new Teclat[this.teclats.size()]);}
-
-
-
-
-
+    //Funció per obtindre els teclats d'un usuari
+    public Teclat[] obtindreTeclats() { return this.teclats.toArray(new Teclat[this.teclats.size()]);}
 }
