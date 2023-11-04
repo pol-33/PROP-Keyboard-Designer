@@ -1,5 +1,5 @@
-package FONTS.Domini;
+package Domini;
 
 public class Text extends Entrada {
-    
+
 }

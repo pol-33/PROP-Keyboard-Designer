@@ -1,4 +1,4 @@
-package FONTS.Domini;
+package Domini;
 
 public class Entrada {
     

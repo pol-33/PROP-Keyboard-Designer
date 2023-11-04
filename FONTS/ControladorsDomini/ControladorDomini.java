@@ -1,8 +1,5 @@
-package FONTS.ControladorsDomini;
-
-import FONTS.Domini.Usuari;
-
+package ControladorsDomini;
 
 public class ControladorDomini {
-    
+
 }

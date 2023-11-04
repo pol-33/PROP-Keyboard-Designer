@@ -1,4 +1,4 @@
-package FONTS.ControladorsDomini;
+package ControladorsDomini;
 
 public class ControladorAlgoritme {
     
