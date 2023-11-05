@@ -61,4 +61,8 @@ public class Alfabet {
         HashSet<String> set = new HashSet<String>(lletres);
         return set.size() != lletres.size();
     }
+
+    public void add(Alfabet noualfabet) {
+
+    }
 }

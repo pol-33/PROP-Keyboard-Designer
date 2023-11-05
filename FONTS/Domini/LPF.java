@@ -42,4 +42,9 @@ public class LPF extends Entrada {
             System.out.println("Palabra: " + entry.getKey() + ", Frequencia: " + entry.getValue());
         }
     }
+
+    // Mètode per retornar la LPF
+    public HashMap<String, Integer> getLPF() {
+        return this.lpf;
+    }
 }
