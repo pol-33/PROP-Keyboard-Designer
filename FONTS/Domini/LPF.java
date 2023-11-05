@@ -2,7 +2,7 @@ package Domini;
 
 import java.util.HashMap;
 import java.util.Map;
-public class LPF extends Entrada {
+public class LPF implements Entrada {
 
     private HashMap<String, Integer> contingut;
 
