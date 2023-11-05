@@ -3,14 +3,16 @@ package Domini;
 import java.util.HashMap;
 import java.util.Map;
 public class LPF implements Entrada {
+    private String nom;
 
     private HashMap<String, Integer> contingut;
 
     // Constructora
-    public LPF(HashMap<String, Integer> contingut) throws Exception {
+    public LPF(String nom, HashMap<String, Integer> contingut) throws Exception {
         for (Map.Entry<String, Integer> paraulaAmbFreq : contingut.entrySet()) {
             if (paraulaAmbFreq.getValue() < 0) throw new Exception("Una paraula no pot tenir frequencia negativa");
         }
+        this.nom = nom;
         this.contingut = contingut;
     }
 

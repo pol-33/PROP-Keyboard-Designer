@@ -3,14 +3,16 @@ package Domini;
 import java.util.HashMap;
 
 public class Text implements Entrada{
+    private String nom;
 
     // Nom text
     private String contingut;
     private HashMap<String, Integer> lpf;
 
     // Constructor
-    public Text(String contingut) throws Exception {
+    public Text(String nom, String contingut) throws Exception {
         if(contingut == null) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser null");
+        this.nom = nom;
         this.contingut = contingut;
         calculateLPF();
     }
