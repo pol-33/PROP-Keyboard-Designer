@@ -43,7 +43,7 @@ public class Text implements Entrada{
 
     // Mètode per fer print del contingut del text
     public void display() {
-        System.out.println(content);
+        System.out.println(contingut);
     }
 
     public HashMap<String, Integer> getLPF() {
