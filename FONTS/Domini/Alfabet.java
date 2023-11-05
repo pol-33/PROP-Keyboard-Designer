@@ -8,8 +8,8 @@ public class Alfabet {
     //class attributes
     private ArrayList<Character> lletres;
     private String idioma;
-    private ArrayList<Text> textos;
-    private ArrayList<LPF> lpfs;
+    private HashMap<String, Text> textos;
+    private HashMap<String, LPF> lpfs;
 
     //constructora
     public Alfabet(String idioma, ArrayList<Character> lletres) throws Exception {
@@ -36,11 +36,31 @@ public class Alfabet {
         return lletres.size();
     }
 
-    public ArrayList<Text> getTextos() {
+    public int getNumTextos() {
+        return textos.size();
+    }
+
+    public int getNumLPFs() {
+        return lpfs.size();
+    }
+
+    public Text getText(String nom) throws Exception {
+        Text text = textos.get(nom);
+        if (text == null) throw new Exception("ERROR: no existeix cap text amb aquest nom");
+        return text;
+    }
+
+    public LPF getLPF(String nom) throws Exception {
+        LPF lpf = lpfs.get(nom);
+        if (lpf == null) throw new Exception("ERROR: no existeix cap LPF amb aquest nom");
+        return lpf;
+    }
+
+    public HashMap<String, Text> getTextos() {
         return textos;
     }
 
-    public ArrayList<LPF> getLPFs() {
+    public HashMap<String, LPF> getLPFs() {
         return lpfs;
     }
 
@@ -84,27 +104,28 @@ public class Alfabet {
     }
 
     // Crear un text a partir d'un String.
-    public Text crearText(String text) {
-        Text t = new Text(text);
-        textos.add(t);
+    public Text crearText(String nom, String text) throws Exception {
+        Text t = new Text(nom, text);
+        textos.put(nom, t);
         return t;
     }
 
     // Crear una LPF a partir d'un HashMap<String, int>.
-    public LPF crearLPF(HashMap<String, Integer> lpf) {
-        LPF l = new LPF(lpf);
-        lpfs.add(l);
+    public LPF crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
+        LPF l = new LPF(nom, lpf);
+        lpfs.put(nom, l);
         return l;
     }
 
     // Eliminar un text de l'alfabet.
-    public void eliminarText(Text text) {
-        textos.remove(text);
+    public void eliminarText(String nom) {
+        // eliminar Text amb nom = nom de textos
+        textos.remove(nom);
     }
 
     // Eliminar una LPF de l'alfabet.
-    public void eliminarLPF(LPF lpf) {
-        lpfs.remove(lpf);
+    public void eliminarLPF(String nom) {
+        lpfs.remove(nom);
     }
 
 }
