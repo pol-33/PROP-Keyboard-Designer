@@ -40,13 +40,13 @@ public class Usuari {
     //
     public void crearText (String nomAlfabet, String nomEntrada, String contingutEntrada) throws Exception {
         Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearText(contingutEntrada);//contingut del text
+        alfabet.crearText(nomAlfabet, contingutEntrada);//contingut del text
     }
 
     //
-    public void cearLPF (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) {
+    public void cearLPF (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
         Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearLPF(contingutEntrada); //hashmap string integer fet
+        alfabet.crearLPF(nomAlfabet, contingutEntrada); //hashmap string integer fet
     }
 
     /*
