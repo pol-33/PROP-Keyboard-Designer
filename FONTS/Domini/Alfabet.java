@@ -84,7 +84,7 @@ public class Alfabet {
     }
 
     // Crear un text a partir d'un String.
-    public Text crearText(String text) {
+    public Text crearText(String text) throws Exception {
         Text t = new Text(text);
         textos.add(t);
         return t;

@@ -16,7 +16,10 @@ public class Usuari {
     private String contrasenya;
 
     // Alfabet de l'usuari
-    private ArrayList<Alfabet> alfabets;
+   // private ArrayList<Alfabet> alfabets;
+
+    //string = nom del alfabet
+    private HashMap<String, Alfabet> alfabets;
 
 
     // Classe creadora d'un usuari
@@ -25,33 +28,33 @@ public class Usuari {
         if(contrasenya.length() > MAX_LENGTH) throw new Exception("La contrasenya no pot superar els 15 caracters");
         this.nomUsuari = nomUsuari;
         this.contrasenya = contrasenya;
-        this.alfabets = new ArrayList<>();
+        this.alfabets = new HashMap<>();
     }
 
     //
     public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
         Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
-        this.alfabets.add(nouAlfabet);
+        this.alfabets.put(nomAlfabet, nouAlfabet);
     }
 
     //
-    public void crearText (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) {
-        Alfabet alfabet = alfabets.find(nomAlfabet);
-        alfabet.crearText();//contingut del text
+    public void crearText (String nomAlfabet, String nomEntrada, String contingutEntrada) throws Exception {
+        Alfabet alfabet = alfabets.get(nomAlfabet);
+        alfabet.crearText(contingutEntrada);//contingut del text
     }
 
     //
     public void cearLPF (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) {
-        Alfabet alfabet = alfabets.    find(nomAlfabet);
-        alfabet.crearLPF(contingutEntrada); //hashmap string integer
+        Alfabet alfabet = alfabets.get(nomAlfabet);
+        alfabet.crearLPF(contingutEntrada); //hashmap string integer fet
     }
 
-    //
-    public void crearTeclat (String nomTeclat, String nomAlfabet) {
+    /*
+   // public void crearTeclat (String nomTeclat, String nomAlfabet) {
         Alfabet alfabet = alfabets.find(nomAlfabet);
         alfabet.crearTeclat(nomTeclat);
     }
-
+*/
     /*
     public void eliminarAlfabet(Alfabet nomAlfabet) throws Exception{
         OptionalDouble index = this.alfabets.stream().filter(alfabet -> alfabet.getNomAlfabet().equals(nomAlfabet)).findFirst();
@@ -85,17 +88,4 @@ public class Usuari {
     public boolean contrasenyaCorrecta(String contrasenya) {
         return this.contrasenya.equals(contrasenya);
     }
-
-
-
-   /* // Funció per obtindre el numero de teclats d'un usuari
-    public Integer getTeclats() {
-        return this.teclats.size();
-    }
-
-    // Funció per obtindre els teclats d'un usuari
-    public Teclat[] obtindreTeclats() {
-        return this.teclats.toArray(new Teclat[this.teclats.size()]);
-    }
-    */
 }
