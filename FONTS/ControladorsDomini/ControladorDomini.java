@@ -2,6 +2,7 @@ package ControladorsDomini;
 
 import Domini.Usuari;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorDomini {
@@ -27,10 +28,11 @@ public class ControladorDomini {
     }
 
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
-        if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessió");
+        if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
         if (Usuaris.containsKey(nomUsuari)) {
             Usuari usuariSessio = Usuaris.get(nomUsuari);
             if (usuariSessio.contrasenyaCorrecta(contrasenya)) {
+                System.out.println("S'ha iniciat sessio correctament");
                 usuariActiu = usuariSessio;
             } else {
                 throw new Exception("La contrasenya no es correcte");
@@ -43,6 +45,7 @@ public class ControladorDomini {
     public void registrarUsuari(String nomUsuari, String contrasenya) throws Exception{
         if (!Usuaris.containsKey(nomUsuari)) {
             Usuari nouUsuari = new Usuari(nomUsuari, contrasenya);
+            System.out.println("S'ha registrat l'usuari correctament");
             Usuaris.put(nomUsuari, nouUsuari);
         } else {
             throw new Exception("Ja existeix un usuari amb aquesta contrasenya");
@@ -52,14 +55,16 @@ public class ControladorDomini {
     //Tancar sessio usuari actiu
     public void tancarSessio() throws Exception {
         if (usuariActiu == null) {
-            throw new Exception("Has d'haver iniciat sessió per a poder tancar-la");
+            throw new Exception("Has d'haver iniciat sessio per a poder tancar-la");
         }
+        System.out.println("S'ha tancat sessio correctament");
         usuariActiu = null;
     }
 
     //Llista tots els usuaris
     public void llistarUsuaris() throws Exception {
         if (!Usuaris.isEmpty()) {
+            System.out.println("Aquests son els ususaris registrats al sistema");
             for (String nomUsuari : Usuaris.keySet()) {
                 System.out.println(nomUsuari);
             }
@@ -67,4 +72,17 @@ public class ControladorDomini {
             throw new Exception("No hi ha cap usuari registrat al sistema");
         }
     }
+
+    //Comprova que hi ha un usuari autenticat
+    public void usuariAutenticat() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessió per a poder fer aquesta funcionalitat");
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    //Crea un alfabet
+    public void crearAlfabet(String idioma, ArrayList<Character> lletres) throws Exception {
+        usuariAutenticat();
+
+    }
+
 }
