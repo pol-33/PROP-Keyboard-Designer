@@ -2,13 +2,7 @@ package Domini;
 
 import java.util.HashMap;
 
-public class Entrada {
-
-    private String nom;
-
-    public interface ILPFConvertibl{
-        //public LPF getLPF();
-        LPF getLPF();
-
-    }
+public interface Entrada {
+    //Retorna un HashMap equivalent a la lpf de l'entrada
+    public HashMap<String, Integer> getLPF();
 }

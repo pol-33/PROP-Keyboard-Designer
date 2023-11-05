@@ -4,59 +4,44 @@ import java.util.HashMap;
 import java.util.Map;
 public class LPF extends Entrada {
 
-    private HashMap <String, Integer> lpf;
-
-    private String nomLPF;
+    private HashMap<String, Integer> contingut;
 
     // Constructora
-    public LPF(String nomLPF, HashMap<String, Integer> lpf) {
-        this.lpf = new HashMap<String, Integer>();
-        this.nomLPF = nomLPF;
-    }
-
-    public LPF(){
-        this.lpf = new HashMap<>();
-
-    }
-
-    // Mètode per afegir una paraula o actualitzar el seu valor
-    public void afegirParaula(String paraula) {
-        if (this.lpf.containsKey(paraula)) {
-            this.lpf.put(paraula, this.lpf.get(paraula) + 1);
+    public LPF(HashMap<String, Integer> contingut) throws Exception {
+        for (Map.Entry<String, Integer> paraulaAmbFreq : contingut.entrySet()) {
+            if (paraulaAmbFreq.getValue() < 0) throw new Exception("Una paraula no pot tenir frequencia negativa");
         }
-        else {
-            this.lpf.put(paraula, 1);
-        }
+        this.contingut = contingut;
     }
 
-    public void afegirLPF(String paraula, Integer freq) {
-        this.lpf.put(paraula, freq);
+    // Mètode per reassignar la frequencia d'una paraula
+    public void reassignarFrequencia(String paraula, Integer frequencia) throws Exception {
+        if (frequencia < 0) throw new Exception("Una paraula no pot tenir frequencia negativa");
+        this.contingut.put(paraula, frequencia);
     }
 
-    // Mètode per obtindre la frequencia d'una paraula
-    public int  obtindreFrequencia(String paraula) {
-        if (this.lpf.containsKey(paraula)) {
-            return this.lpf.get(paraula);
+    // Mètode per obtenir la frequencia d'una paraula
+    public int  obtenirFrquencia(String paraula) throws Exception {
+        if (!this.contingut.containsKey(paraula)) {
+            throw new Exception("La paraula no existeix en la llista de paraules, per tant la frequencia és 0");
         }
-        else {
-            return 0;
-        }
+        return this.contingut.get(paraula);
     }
 
-    // Mètode per obtindre el numbre de paraules diferents
-    public int obtindreNombreParaulasDiferents() {
-        return this.lpf.size();
+    // Mètode per obtenir el numbre de paraules diferents
+    public int obtenirNombreParaulasDiferents() {
+        return this.contingut.size();
     }
 
     // Mètode per imprimir el contingut de l'LPF
     public void mostrarParaulesFrequencia(){
-        for (Map.Entry<String, Integer> entry : this.lpf.entrySet()) {
-            System.out.println("Palabra: " + entry.getKey() + ", Frequencia: " + entry.getValue());
+        for (Map.Entry<String, Integer> entry : this.contingut.entrySet()) {
+            System.out.println("Paraula: " + entry.getKey() + ", Frequencia: " + entry.getValue());
         }
     }
 
     // Mètode per retornar la LPF
     public HashMap<String, Integer> getLPF() {
-        return this.lpf;
+        return this.contingut;
     }
 }

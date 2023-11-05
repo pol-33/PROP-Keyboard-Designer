@@ -2,6 +2,7 @@ package ControladorsDomini;
 
 import Domini.Usuari;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorDomini {
@@ -71,4 +72,17 @@ public class ControladorDomini {
             throw new Exception("No hi ha cap usuari registrat al sistema");
         }
     }
+
+    //Comprova que hi ha un usuari autenticat
+    public void usuariAutenticat() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessió per a poder fer aquesta funcionalitat");
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    //Crea un alfabet
+    public void crearAlfabet(String idioma, ArrayList<Character> lletres) throws Exception {
+        usuariAutenticat();
+
+    }
+
 }
