@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class DriverControladorDomini {
     //Instancia única del controlador de domini
     private ControladorDomini ctrlDomini = ControladorDomini.obtenInstancia();
+
     public static void main(String[] args) {
         DriverControladorDomini driverCtrlDomini = new DriverControladorDomini();
 
@@ -84,6 +85,7 @@ public class DriverControladorDomini {
         try {
             ctrlDomini.tancarSessio();
         } catch (Exception e) {
+
             System.out.println(e.getMessage());
         }
     }
