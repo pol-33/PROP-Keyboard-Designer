@@ -5,6 +5,9 @@ import java.util.*;
 public class Text extends Entrada{
 
     // Nom text
+    private String nomText;
+
+    // Contingut del text
     private String content;
 
     // Constructor
@@ -41,11 +44,13 @@ public class Text extends Entrada{
     }
 
     // Transformar Text a LPF
-    public LPF getLPF() {
+    public LPF getLPF(String nomText, String content ) {
         LPF lpf = new LPF();
         String[] paraules = content.split(" ");
         for (String paraula : paraules) {
-            lpf.afegirParaula(paraula);
+            if (!paraula.isEmpty()) {
+                lpf.afegirLPF(paraula, lpf.obtindreFrequencia(paraula) + 1);
+            }
         }
         return lpf;
     }

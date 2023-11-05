@@ -7,8 +7,13 @@ public class LPF extends Entrada {
     private HashMap <String, Integer> lpf;
 
     // Constructora
-    public LPF() {
+    public LPF(HashMap<String, Integer> lpf) {
         this.lpf = new HashMap<String, Integer>();
+    }
+
+    public LPF(){
+        this.lpf = new HashMap<>();
+
     }
 
     // Mètode per afegir una paraula o actualitzar el seu valor
@@ -19,6 +24,10 @@ public class LPF extends Entrada {
         else {
             this.lpf.put(paraula, 1);
         }
+    }
+
+    public void afegirLPF(String paraula, Integer freq) {
+        this.lpf.put(paraula, freq);
     }
 
     // Mètode per obtindre la frequencia d'una paraula
