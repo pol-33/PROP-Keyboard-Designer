@@ -6,9 +6,12 @@ public class LPF extends Entrada {
 
     private HashMap <String, Integer> lpf;
 
+    private String nomLPF;
+
     // Constructora
-    public LPF(HashMap<String, Integer> lpf) {
+    public LPF(String nomLPF, HashMap<String, Integer> lpf) {
         this.lpf = new HashMap<String, Integer>();
+        this.nomLPF = nomLPF;
     }
 
     public LPF(){

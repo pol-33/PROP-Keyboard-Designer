@@ -11,7 +11,7 @@ public class Text extends Entrada{
     private String content;
 
     // Constructor
-    public Text(String content) throws Exception {
+    public Text(String nom, String content) throws Exception {
         if(content == null) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser null");
         this.content = content;
     }
