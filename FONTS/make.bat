@@ -1,3 +1,5 @@
+
+
 javac --release 11 Domini/*.java
 javac --release 11 Drivers/*.java
 javac --release 11 ControladorsDomini/*.java
