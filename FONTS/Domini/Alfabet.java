@@ -96,6 +96,16 @@ public class Alfabet {
         return set.size() != lletres.size();
     }
 
+    // Comprova si hi ha lletres d'una LPF no contingudes a l'alfabet.
+    private boolean lletres_no_contingudes(HashMap<String, Integer> lpf_map) {
+        for (String paraula : lpf_map.keySet()) {
+            for (int i = 0; i < paraula.length(); i++) {
+                if (!lletres.contains(paraula.charAt(i))) return true;
+            }
+        }
+        return false;
+    }
+
     // public class methods
 
     // Afegeix un caracter addicional a l'alfabet.
@@ -106,12 +116,15 @@ public class Alfabet {
     // Crear un text a partir d'un String.
     public Text crearText(String nom, String text) throws Exception {
         Text t = new Text(nom, text);
+        HashMap<String, Integer> lpf_map = t.getLPF();
+        if (lletres_no_contingudes(lpf_map)) throw new Exception("ERROR: el text conté lletres no contingudes a l'alfabet");
         textos.put(nom, t);
         return t;
     }
 
     // Crear una LPF a partir d'un HashMap<String, int>.
     public LPF crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
+        if (lletres_no_contingudes(lpf)) throw new Exception("ERROR: la LPF conté lletres no contingudes a l'alfabet");
         LPF l = new LPF(nom, lpf);
         lpfs.put(nom, l);
         return l;
