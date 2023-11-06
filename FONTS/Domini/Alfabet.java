@@ -24,7 +24,7 @@ public class Alfabet {
     }
 
     //getters
-    public ArrayList<Character> getCaracters() {
+    public ArrayList<Character> getLletres() {
         return lletres;
     }
 
