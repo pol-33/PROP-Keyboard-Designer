@@ -14,6 +14,8 @@ public class DriverControladorDomini {
         Scanner in = new Scanner(System.in);
         String nomUsuari;
         String contrasenya;
+        String idioma;
+        String textAlfabet;
 
         int opcio = -1;
         while (opcio != 0) {
@@ -48,6 +50,18 @@ public class DriverControladorDomini {
                 case 4:
                     driverCtrlDomini.testLlistarUsuaris();
                     break;
+
+                case 5:
+                    System.out.println("Introdueix l'idioma de l'alfabet");
+                    idioma = in.next();
+                    System.out.println("Introdueix les lletres de l'alfabet");
+                    textAlfabet = in.next();
+                    driverCtrlDomini.testCrearAlfabet(idioma, textAlfabet);
+                    break;
+
+                case 6:
+                    driverCtrlDomini.testLlistarAlfabets();
+                    break;
             }
         }
     }
@@ -60,6 +74,8 @@ public class DriverControladorDomini {
         System.out.println("2 - Inicia sessio");
         System.out.println("3 - Tanca sessio ");
         System.out.println("4 - Veure tots els usuaris registrats");
+        System.out.println("5 - Crear alfabet");
+        System.out.println("6 - Llistar alfabets");
     }
 
     //Invoca la creacio d'usuari
@@ -98,4 +114,21 @@ public class DriverControladorDomini {
             System.out.println(e.getMessage());
         }
     }
+
+    public void testCrearAlfabet(String idioma, String textAlfabet) {
+        try {
+            ctrlDomini.crearAlfabet(idioma, textAlfabet);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testLlistarAlfabets() {
+        try {
+            ctrlDomini.llistarAlfabets();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

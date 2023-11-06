@@ -80,9 +80,14 @@ public class ControladorDomini {
 
     //----------------------------------------------------------------------------------------------------------------------------
     //Crea un alfabet
-    public void crearAlfabet(String idioma, ArrayList<Character> lletres) throws Exception {
+    public void crearAlfabet(String idioma, String textAlfabet) throws Exception {
         usuariAutenticat();
+        usuariActiu.crearAlfabet(idioma, textAlfabet);
+    }
 
+    public void llistarAlfabets() throws Exception {
+        usuariAutenticat();
+        usuariActiu.llistarAlfabets();
     }
 
 }
