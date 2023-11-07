@@ -19,6 +19,71 @@ public class ControladorAlgoritme {
         return ctrl;
     }
 
+    // Funcions principals
+    public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
+        // Crear les matrius de flux i distància basades en les especificacions del problema
+        int[][] flux = calcularMatriuFlux(lpf, alfabet);
+        int[][] distancia = calcularMatriuDistancia(files, columnes);
+
+        // Resoldre el QAP per obtenir la distribució òptima
+        int[] distribucioOptima = algoritmeQAP.resoldreQAP(flux, distancia);
+
+        // Convertir l'índex de la distribució òptima a caràcters segons l'alfabet
+        ArrayList<Character> distribucioTeclat = new ArrayList<>();
+        for (int i = 0; i < distribucioOptima.length; i++) {
+            distribucioTeclat.add(alfabet.get(distribucioOptima[i]));
+        }
+
+        return distribucioTeclat;
+    }
+
+    // Mètode per calcular la matriu de flux a partir del HashMap i l'alfabet
+    private int[][] calcularMatriuFlux(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
+        int n = alfabet.size();
+        int[][] flux = new int[n][n];
+    
+        for (String paraula : lpf.keySet()) {
+            int freq = lpf.get(paraula);
+    
+            for (int i = 0; i < paraula.length() - 1; i++) {
+                char c1 = paraula.charAt(i);
+                char c2 = paraula.charAt(i + 1);
+    
+                int idx1 = alfabet.indexOf(c1);
+                int idx2 = alfabet.indexOf(c2);
+    
+                // Comprovar si els caràcters es troben a l'alfabet abans d'utilitzar els índexs
+                if (idx1 != -1 && idx2 != -1) {
+                    flux[idx1][idx2] += freq;
+                    flux[idx2][idx1] += freq;
+                }
+            }
+        }
+    
+        return flux;
+    }
+
+    // Mètode per calcular la matriu de distància basada en les files i columnes del teclat
+    private int[][] calcularMatriuDistancia(int files, int columnes) {
+        int n = files * columnes;
+        int[][] distancia = new int[n][n];
+
+        // Càlcul de la distància euclidiana entre les tecles
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int fila1 = i / columnes;
+                int columna1 = i % columnes;
+                int fila2 = j / columnes;
+                int columna2 = j % columnes;
+
+                // Fórmula de distància euclidiana entre dues tecles
+                distancia[i][j] = 5 - (int) (Math.pow(fila2 - fila1, 2) + Math.pow(columna2 - columna1, 2));
+            }
+        }
+
+        return distancia;
+    }
+
     public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
         
         HashMap<Character, Integer> frequencies = new HashMap<>();

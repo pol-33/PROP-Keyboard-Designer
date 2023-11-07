@@ -28,10 +28,10 @@ public class DriverControladorAlgoritme {
 
             switch (opcio) {
                 case 1:
-                    // driverCtrlAlgoritme.ordenarLlistaAlgoritmeQAP(in);
+                    driverCtrlAlgoritme.ordenarLlistaAlgoritmeDuesMans(in);
                     break;
                 case 2:
-                    driverCtrlAlgoritme.ordenarLlistaAlgoritmePersonalitzat(in);
+                    driverCtrlAlgoritme.ordenarLlistaAlgoritmePolzes(in);
                     break;
                 case 3:
                     running = false;
@@ -45,7 +45,7 @@ public class DriverControladorAlgoritme {
         in.close();
     }
 
-    private void ordenarLlistaAlgoritmePersonalitzat(Scanner in) {
+    private void ordenarLlistaAlgoritmePolzes(Scanner in) {
         System.out.println("Introdueix la llista de paraules amb la seva freqüència (LPF):");
         HashMap<String, Integer> lpf = llegirLPF(in);
     
@@ -61,6 +61,43 @@ public class DriverControladorAlgoritme {
         ArrayList<Character> llistaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
     
         imprimirTeclado(files, columnes, llistaOrdenada);
+    }
+    
+    private HashMap<String, Integer> obtenerTextoEProcesar(Scanner in) {
+        System.out.println("Introduce un texto en inglés:");
+        String texto = in.nextLine();
+        return crearListaPalabrasConRepeticiones(texto);
+    }
+
+    private void ordenarLlistaAlgoritmeDuesMans(Scanner in) {
+        HashMap<String, Integer> lpf = obtenerTextoEProcesar(in); // Obtener el texto y procesarlo
+
+        System.out.println("Introduce el número de filas:");
+        int filas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        System.out.println("Introduce el número de columnas:");
+        int columnas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        ArrayList<Character> alfabeto = obtenirAlfabet(in);
+        ArrayList<Character> listaOrdenada = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabeto, filas, columnas);
+
+        imprimirTeclado(filas, columnas, listaOrdenada);
+    }
+
+    private HashMap<String, Integer> crearListaPalabrasConRepeticiones(String texto) {
+        HashMap<String, Integer> palabrasConRepeticiones = new HashMap<>();
+        String[] palabras = texto.toLowerCase().split("\\s+");
+
+        for (String palabra : palabras) {
+            if (palabrasConRepeticiones.containsKey(palabra)) {
+                palabrasConRepeticiones.put(palabra, palabrasConRepeticiones.get(palabra) + 1);
+            } else {
+                palabrasConRepeticiones.put(palabra, 1);
+            }
+        }
+        return palabrasConRepeticiones;
     }
 
     private void imprimirTeclado(int files, int columnes, ArrayList<Character> llistaOrdenada) {
