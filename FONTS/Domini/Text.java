@@ -66,7 +66,6 @@ public class Text implements Entrada{
                 this.lpf.merge(paraula, 1, Integer::sum);
             }
         }
-
         this.lpf = lpf;
     }
 

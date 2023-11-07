@@ -37,6 +37,15 @@ public class Usuari {
         this.alfabets.put(nomAlfabet, nouAlfabet);
     }
 
+    //Funcio per a llistar alfabets
+    public void llistarAlfabets() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("L'usuari no té alfabets");
+        alfabets.forEach((idioma, Alfabet) -> {
+            System.out.println("Idioma: " + idioma);
+            System.out.println("Lletres de l'idioma: " + Alfabet);
+        });
+    }
+
     //
     public void crearText (String nomAlfabet, String nomEntrada, String contingutEntrada) throws Exception {
         Alfabet alfabet = alfabets.get(nomAlfabet);
