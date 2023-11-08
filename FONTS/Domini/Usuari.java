@@ -1,8 +1,8 @@
 package Domini;
 
-import java.util.ArrayList;
+import Domini.Alfabet;
+
 import java.util.HashMap;
-import java.util.OptionalDouble;
 
 public class Usuari {
 
@@ -18,7 +18,7 @@ public class Usuari {
     // Alfabet de l'usuari
    // private ArrayList<Alfabet> alfabets;
 
-    //string = nom del alfabet
+    //string = nom del alfabet, alfabet = objecte alfabet
     private HashMap<String, Alfabet> alfabets;
 
 
@@ -35,6 +35,16 @@ public class Usuari {
     public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
         Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
         this.alfabets.put(nomAlfabet, nouAlfabet);
+    }
+
+    //Retorna el hashMap de alfabets de l'usuari
+    public HashMap<String, Alfabet> getAlfabets() {
+        return this.alfabets;
+    }
+
+    // Método para obtener un alfabeto especific pel nom
+    public Alfabet getAlfabet(String nomAlfabet) {
+        return this.alfabets.get(nomAlfabet);
     }
 
     //Funcio per a llistar alfabets
