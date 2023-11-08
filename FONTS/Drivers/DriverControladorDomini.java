@@ -2,6 +2,7 @@ package Drivers;
 
 import ControladorsDomini.ControladorDomini;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class DriverControladorDomini {
@@ -52,6 +53,10 @@ public class DriverControladorDomini {
                     break;
 
                 case 5:
+                    if (!driverCtrlDomini.testUsuariAutenticat()) {
+                        System.out.println("Has d'haver iniciat sessio per a poder fer aquesta funcionalitat");
+                        break;
+                    };
                     System.out.println("Introdueix l'idioma de l'alfabet");
                     idioma = in.next();
                     System.out.println("Introdueix les lletres de l'alfabet");
@@ -60,12 +65,16 @@ public class DriverControladorDomini {
                     break;
 
                 case 6:
+                    if (!driverCtrlDomini.testUsuariAutenticat()) {
+                        System.out.println("Has d'haver iniciat sessio per a poder fer aquesta funcionalitat");
+                        break;
+                    };
+                    driverCtrlDomini.testUsuariAutenticat();
                     driverCtrlDomini.testLlistarAlfabets();
                     break;
             }
         }
     }
-
 
     private static void imprimirOperacions() {
         System.out.println("Introdueix el numero segons l'opcio que desitjis realitzar:");
@@ -100,6 +109,7 @@ public class DriverControladorDomini {
     public void testTancarSessio() {
         try {
             ctrlDomini.tancarSessio();
+            ;
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
@@ -129,6 +139,18 @@ public class DriverControladorDomini {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void testEliminarAlfabet(String idioma) {
+        try {
+            ctrlDomini.eliminarAlfabet(idioma);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public boolean testUsuariAutenticat() {
+        return ctrlDomini.usuariAutenticat();
     }
 
 }

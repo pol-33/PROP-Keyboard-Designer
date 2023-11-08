@@ -2,7 +2,6 @@ package ControladorsDomini;
 
 import Domini.Usuari;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorDomini {
@@ -16,7 +15,7 @@ public class ControladorDomini {
     private Usuari usuariActiu;
 
     private ControladorDomini() {
-        Usuaris = new HashMap<String, Usuari>();
+        Usuaris = new HashMap<>();
     }
 
     //Metode per obtenir l'instància singleton
@@ -32,11 +31,11 @@ public class ControladorDomini {
         if (Usuaris.containsKey(nomUsuari)) {
             Usuari usuariSessio = Usuaris.get(nomUsuari);
             if (usuariSessio.contrasenyaCorrecta(contrasenya)) {
-                System.out.println("S'ha iniciat sessio correctament");
                 usuariActiu = usuariSessio;
+                System.out.println("S'ha iniciat sessio correctament");
             } else {
                 throw new Exception("La contrasenya no es correcte");
-            };
+            }
         } else {
             throw new Exception("No existeix un usuari amb aquest nom");
         }
@@ -45,8 +44,8 @@ public class ControladorDomini {
     public void registrarUsuari(String nomUsuari, String contrasenya) throws Exception{
         if (!Usuaris.containsKey(nomUsuari)) {
             Usuari nouUsuari = new Usuari(nomUsuari, contrasenya);
-            System.out.println("S'ha registrat l'usuari correctament");
             Usuaris.put(nomUsuari, nouUsuari);
+            System.out.println("S'ha registrat l'usuari " + nomUsuari + " correctament");
         } else {
             throw new Exception("Ja existeix un usuari amb aquesta contrasenya");
         }
@@ -57,8 +56,8 @@ public class ControladorDomini {
         if (usuariActiu == null) {
             throw new Exception("Has d'haver iniciat sessio per a poder tancar-la");
         }
-        System.out.println("S'ha tancat sessio correctament");
         usuariActiu = null;
+        System.out.println("S'ha tancat sessio correctament");
     }
 
     //Llista tots els usuaris
@@ -73,21 +72,25 @@ public class ControladorDomini {
         }
     }
 
-    //Comprova que hi ha un usuari autenticat
-    public void usuariAutenticat() throws Exception {
-        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessió per a poder fer aquesta funcionalitat");
+    //Retorna true si l'usuari està autenticat o fals altrament
+    public boolean usuariAutenticat() {
+        return (usuariActiu != null);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------
     //Crea un alfabet
     public void crearAlfabet(String idioma, String textAlfabet) throws Exception {
-        usuariAutenticat();
         usuariActiu.crearAlfabet(idioma, textAlfabet);
+        System.out.println("S'ha creat correctament l'alfabet: " + idioma);
     }
 
+    //Llista els alfabets
     public void llistarAlfabets() throws Exception {
-        usuariAutenticat();
         usuariActiu.llistarAlfabets();
     }
 
+    public void eliminarAlfabet(String idioma) throws Exception {
+        usuariActiu.eliminarAlfabet(idioma);
+        System.out.println("S'ha eliminat correctament l'idioma " + idioma);
+    }
 }
