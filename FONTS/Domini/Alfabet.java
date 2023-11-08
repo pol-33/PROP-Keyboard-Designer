@@ -13,15 +13,7 @@ public class Alfabet {
 
 
     //constructora
-    public Alfabet(String idioma, ArrayList<Character> lletres) throws Exception {
-        if (lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduït lletres repetides");
-        if (lletres.size() < 1) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
-        this.lletres = lletres;
-        this.idioma = idioma;
-    }
-
     public Alfabet(String idioma, String lletres_separades_comes) throws Exception {
-        if (lletres.size() < 1) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
         this.lletres = obtenir_lletres(lletres_separades_comes);
         this.idioma = idioma;
     }
@@ -85,9 +77,11 @@ public class Alfabet {
         ArrayList<Character> lletres = new ArrayList<Character>();
 
         for (String s : lletres_separades) {
-            if (s.length() != 1 && s != null) throw new Exception("ERROR: les lletres només poden tenir un caràcter");
-            if (s != null) lletres.add(s.charAt(0));
+            if (s.length() > 1) throw new Exception("ERROR: les lletres només poden tenir un caràcter");
+            if (s.length() != 0) lletres.add(s.charAt(0));
         }
+
+        if (lletres.isEmpty()) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
 
         // Verifica si hi ha lletres repetides.
         if(lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduït lletres repetides");
@@ -149,6 +143,7 @@ public class Alfabet {
         for (int i = 1; i < lletres.size(); i++) {
             System.out.print("," + lletres.get(i));
         }
+        System.out.println();
     }
 
     // Imprimir textos de l'alfabet.
