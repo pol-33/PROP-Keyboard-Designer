@@ -7,7 +7,7 @@ import java.util.Scanner;
 import ControladorsDomini.ControladorAlgoritme;
 
 public class DriverControladorAlgoritme {
-    private ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
+    private final ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
 
     public static void main(String[] args) {
         DriverControladorAlgoritme driverCtrlAlgoritme = new DriverControladorAlgoritme();
@@ -19,8 +19,8 @@ public class DriverControladorAlgoritme {
 
         while (running) {
             System.out.println("\nEscull una opció:");
-            System.out.println("1. Ordenar llista amb l'Algorisme QAP");
-            System.out.println("2. Ordenar llista amb un Algorisme Personalitzat");
+            System.out.println("1. Ordenar llista amb l'Algorisme QAP, dues mans (encara no)");
+            System.out.println("2. Ordenar llista amb un Algoritme per dos polzes");
             System.out.println("3. Sortir");
 
             int opcio = in.nextInt();
@@ -28,10 +28,10 @@ public class DriverControladorAlgoritme {
 
             switch (opcio) {
                 case 1:
-                    driverCtrlAlgoritme.ordenarLlistaAlgoritmeQAP(in);
+                    driverCtrlAlgoritme.ordenarLlistaAlgoritmeDuesMans(in);
                     break;
                 case 2:
-                    driverCtrlAlgoritme.ordenarLlistaAlgoritmePersonalitzat(in);
+                    driverCtrlAlgoritme.ordenarLlistaAlgoritmePolzes(in);
                     break;
                 case 3:
                     running = false;
@@ -45,24 +45,77 @@ public class DriverControladorAlgoritme {
         in.close();
     }
 
-    private void ordenarLlistaAlgoritmeQAP(Scanner in) {
+    private void ordenarLlistaAlgoritmePolzes(Scanner in) {
         System.out.println("Introdueix la llista de paraules amb la seva freqüència (LPF):");
         HashMap<String, Integer> lpf = llegirLPF(in);
-
-        // Implementem la lògica per provar la funció ordenarLlistaAlgoritmeQAP aquí
+    
+        System.out.println("Introdueix el número de files:");
+        int files = in.nextInt();
+        in.nextLine(); // Limpiamos el buffer del scanner
+    
+        System.out.println("Introdueix el número de columnes:");
+        int columnes = in.nextInt();
+        in.nextLine(); // Limpiamos el buffer del scanner
+    
         ArrayList<Character> alfabet = obtenirAlfabet(in);
-        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.ordenarLlistaAlgoritmeQAP(lpf, alfabet);
-        System.out.println("Llista ordenada amb l'Algorisme QAP: " + llistaOrdenada);
+        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
+    
+        imprimirTeclado(files, columnes, llistaOrdenada);
+    }
+    
+    private HashMap<String, Integer> obtenerTextoEProcesar(Scanner in) {
+        System.out.println("Introduce un texto en inglés:");
+        String texto = in.nextLine();
+        return crearListaPalabrasConRepeticiones(texto);
     }
 
-    private void ordenarLlistaAlgoritmePersonalitzat(Scanner in) {
-        System.out.println("Introdueix la llista de paraules amb la seva freqüència (LPF):");
-        HashMap<String, Integer> lpf = llegirLPF(in);
+    private void ordenarLlistaAlgoritmeDuesMans(Scanner in) {
+        HashMap<String, Integer> lpf = obtenerTextoEProcesar(in); // Obtener el texto y procesarlo
 
-        // Implementem la lògica per provar la funció ordenarLlistaAlgoritmePersonalitzat aquí
-        ArrayList<Character> alfabet = obtenirAlfabet(in);
-        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.ordenarLlistaAlgoritmePersonalitzat(lpf, alfabet);
-        System.out.println("Llista ordenada amb un Algorisme Personalitzat: " + llistaOrdenada);
+        System.out.println("Introduce el número de filas:");
+        int filas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        System.out.println("Introduce el número de columnas:");
+        int columnas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        ArrayList<Character> alfabeto = obtenirAlfabet(in);
+        ArrayList<Character> listaOrdenada = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabeto, filas, columnas);
+
+        imprimirTeclado(filas, columnas, listaOrdenada);
+    }
+
+    private HashMap<String, Integer> crearListaPalabrasConRepeticiones(String texto) {
+        HashMap<String, Integer> palabrasConRepeticiones = new HashMap<>();
+        String[] palabras = texto.toLowerCase().split("\\s+");
+
+        for (String palabra : palabras) {
+            if (palabrasConRepeticiones.containsKey(palabra)) {
+                palabrasConRepeticiones.put(palabra, palabrasConRepeticiones.get(palabra) + 1);
+            } else {
+                palabrasConRepeticiones.put(palabra, 1);
+            }
+        }
+        return palabrasConRepeticiones;
+    }
+
+    private void imprimirTeclado(int files, int columnes, ArrayList<Character> llistaOrdenada) {
+        // Comprobación de la igualdad de la multiplicación de las filas por las columnas con el tamaño del alfabeto
+        if (files * columnes != llistaOrdenada.size()) {
+            System.out.println("La disposició de les files i columnes no és igual al nombre d'elements en l'alfabet.");
+            return;
+        }
+
+        // Creación y visualización del teclado
+        int index = 0;
+        for (int i = 0; i < files; i++) {
+            for (int j = 0; j < columnes; j++) {
+                System.out.print(llistaOrdenada.get(index) + " ");
+                index++;
+            }
+            System.out.println();
+        }
     }
 
     private HashMap<String, Integer> llegirLPF(Scanner in) {
@@ -89,10 +142,12 @@ public class DriverControladorAlgoritme {
     private ArrayList<Character> obtenirAlfabet(Scanner in) {
         System.out.println("Introdueix els símbols de l'alfabet (sense espais): ");
         String simbols = in.nextLine();
+    
         ArrayList<Character> alfabet = new ArrayList<>();
         for (char c : simbols.toCharArray()) {
             alfabet.add(c);
         }
+    
         return alfabet;
     }
 }

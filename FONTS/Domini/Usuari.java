@@ -40,10 +40,18 @@ public class Usuari {
     //Funcio per a llistar alfabets
     public void llistarAlfabets() throws Exception {
         if (alfabets.isEmpty()) throw new Exception("L'usuari no té alfabets");
+        System.out.println("Aquests son els alfabets:");
         alfabets.forEach((idioma, Alfabet) -> {
             System.out.println("Idioma: " + idioma);
             System.out.println("Lletres de l'idioma: " + Alfabet);
         });
+    }
+
+    public void eliminarAlfabet(String idioma) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        alfabets.remove(idioma);
     }
 
     //
