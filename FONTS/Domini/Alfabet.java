@@ -108,14 +108,9 @@ public class Alfabet {
 
     // public class methods
 
-    // Afegeix un caracter addicional a l'alfabet.
-    public void afegirCaracter(Character caracter) {
-        lletres.add(caracter);
-    }
-
     // Crear un text a partir d'un String.
     public Text crearText(String nom, String text) throws Exception {
-        Text t = new Text(nom, text);
+        Text t = new Text(nom, lletres, text);
         HashMap<String, Integer> lpf_map = t.getLPF();
         if (lletres_no_contingudes(lpf_map)) throw new Exception("ERROR: el text conté lletres no contingudes a l'alfabet");
         textos.put(nom, t);
@@ -125,7 +120,7 @@ public class Alfabet {
     // Crear una LPF a partir d'un HashMap<String, int>.
     public LPF crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
         if (lletres_no_contingudes(lpf)) throw new Exception("ERROR: la LPF conté lletres no contingudes a l'alfabet");
-        LPF l = new LPF(nom, lpf);
+        LPF l = new LPF(nom, lletres, lpf);
         lpfs.put(nom, l);
         return l;
     }
@@ -139,6 +134,14 @@ public class Alfabet {
     // Eliminar una LPF de l'alfabet.
     public void eliminarLPF(String nom) {
         lpfs.remove(nom);
+    }
+
+    // Imprimir les lletres de l'alfabet.
+    public void imprimirLletres() {
+        for (Character c : lletres) {
+            System.out.print(c + ",");
+        }
+        System.out.println();
     }
 
 }

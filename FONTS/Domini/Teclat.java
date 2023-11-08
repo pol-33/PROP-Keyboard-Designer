@@ -1,18 +1,23 @@
 package Domini;
 
-import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Teclat {
 
     //Identificador de teclat
     private int id;
+    private ArrayList<Character> tecles;
 
-    //Perfil de l'usuari del teclat
-    private Usuari usuari;
+    // Creadora
+    public Teclat(ArrayList<Character> tecles, HashMap<String, Integer> lpf) {
+        this.tecles = tecles;
+    }
 
-    //
+    // Getters
+    public int getId() {
+        return id;
+    }
 
 
 }
