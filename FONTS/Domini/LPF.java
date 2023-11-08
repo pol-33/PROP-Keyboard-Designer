@@ -35,7 +35,8 @@ public class LPF extends Entrada {
     }
 
     // Mètode per imprimir el contingut de l'LPF
-    public void mostrarContingut(){
+    public void imprimirEntrada(){
+        System.out.println("Nom: " + this.nom);
         for (Map.Entry<String, Integer> entry : this.lpf.entrySet()) {
             System.out.println("Paraula: " + entry.getKey() + ", Frequencia: " + entry.getValue());
         }

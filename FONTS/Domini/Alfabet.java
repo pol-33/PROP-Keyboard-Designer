@@ -11,14 +11,17 @@ public class Alfabet {
     private HashMap<String, Text> textos;
     private HashMap<String, LPF> lpfs;
 
+
     //constructora
     public Alfabet(String idioma, ArrayList<Character> lletres) throws Exception {
         if (lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduït lletres repetides");
+        if (lletres.size() < 1) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
         this.lletres = lletres;
         this.idioma = idioma;
     }
 
     public Alfabet(String idioma, String lletres_separades_comes) throws Exception {
+        if (lletres.size() < 1) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
         this.lletres = obtenir_lletres(lletres_separades_comes);
         this.idioma = idioma;
     }
@@ -37,6 +40,7 @@ public class Alfabet {
     }
 
     public int getNumTextos() {
+        // obtenir numero textos a entrades
         return textos.size();
     }
 
@@ -81,8 +85,8 @@ public class Alfabet {
         ArrayList<Character> lletres = new ArrayList<Character>();
 
         for (String s : lletres_separades) {
-            if (s.length() != 1) throw new Exception("ERROR: les lletres només poden tenir un caràcter");
-            lletres.add(s.charAt(0));
+            if (s.length() != 1 && s != null) throw new Exception("ERROR: les lletres només poden tenir un caràcter");
+            if (s != null) lletres.add(s.charAt(0));
         }
 
         // Verifica si hi ha lletres repetides.
@@ -109,20 +113,20 @@ public class Alfabet {
     // public class methods
 
     // Crear un text a partir d'un String.
-    public Text crearText(String nom, String text) throws Exception {
+    public void crearText(String nom, String text) throws Exception {
         Text t = new Text(nom, lletres, text);
         HashMap<String, Integer> lpf_map = t.getLPF();
         if (lletres_no_contingudes(lpf_map)) throw new Exception("ERROR: el text conté lletres no contingudes a l'alfabet");
         textos.put(nom, t);
-        return t;
+        return;
     }
 
     // Crear una LPF a partir d'un HashMap<String, int>.
-    public LPF crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
+    public void crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
         if (lletres_no_contingudes(lpf)) throw new Exception("ERROR: la LPF conté lletres no contingudes a l'alfabet");
         LPF l = new LPF(nom, lletres, lpf);
         lpfs.put(nom, l);
-        return l;
+        return;
     }
 
     // Eliminar un text de l'alfabet.
@@ -138,10 +142,29 @@ public class Alfabet {
 
     // Imprimir les lletres de l'alfabet.
     public void imprimirLletres() {
-        for (Character c : lletres) {
-            System.out.print(c + ",");
+        // Imprimir la primera lletra
+        System.out.print(lletres.get(0));
+
+        // Imprimir les lletres restants
+        for (int i = 1; i < lletres.size(); i++) {
+            System.out.print("," + lletres.get(i));
         }
-        System.out.println();
+    }
+
+    // Imprimir textos de l'alfabet.
+    public void imprimirTextos() {
+        // Imprimir textos de l'alfabet.
+        for (Text t : textos.values()) {
+            t.imprimirEntrada();
+        }
+    }
+
+    // Imprimir LPFs de l'alfabet.
+    public void imprimirLPFs() {
+        // Imprimir textos de l'alfabet.
+        for (LPF f : lpfs.values()) {
+            f.imprimirEntrada();
+        }
     }
 
 }

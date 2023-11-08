@@ -9,6 +9,11 @@ public abstract class Entrada {
     protected HashMap<String, Integer> lpf;
     protected Teclat teclat;
 
+    //Retorna el nom de l'entrada
+    public String getNom() {
+        return this.nom;
+    }
+
     //Retorna un HashMap equivalent a la lpf de l'entrada
     public HashMap<String, Integer> getLPF() {
         return this.lpf;
@@ -16,9 +21,9 @@ public abstract class Entrada {
 
     // Crea un teclat per l'entrada
     protected Teclat creaTeclat(ArrayList<Character> lletres) {
-        return new Teclat(lletres, this.lpf);
+        return new Teclat(lletres, this);
     }
 
     // Mostrar contingut
-    public abstract void mostrarContingut();
+    public abstract void imprimirEntrada();
 }
