@@ -2,6 +2,7 @@ package ControladorsDomini;
 
 import Domini.Algoritme;
 import Domini.AlgoritmeQAP;
+import Domini.QAPBranchAndBound;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class ControladorAlgoritme {
 
     private Algoritme algoritme = new Algoritme();
     private AlgoritmeQAP algoritmeQAP = new AlgoritmeQAP();
+    private QAPBranchAndBound qapBranchAndBound = new QAPBranchAndBound();
 
     public static ControladorAlgoritme obtenirInstancia() {
         if (ctrl == null) {
@@ -67,20 +69,29 @@ public class ControladorAlgoritme {
     private int[][] calcularMatriuDistancia(int files, int columnes) {
         int n = files * columnes;
         int[][] distancia = new int[n][n];
-
-        // Càlcul de la distància euclidiana entre les tecles
+    
+        int migColumnes = columnes / 2; // Mitad de las columnas
+    
+        // Cálculo de la matriz de distancias con las condiciones específicas
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 int fila1 = i / columnes;
                 int columna1 = i % columnes;
                 int fila2 = j / columnes;
                 int columna2 = j % columnes;
-
-                // Fórmula de distància euclidiana entre dues tecles
-                distancia[i][j] = 5 - (int) (Math.pow(fila2 - fila1, 2) + Math.pow(columna2 - columna1, 2));
+    
+                if (columna1 == columna2) {
+                    distancia[i][j] = 2; // Si están en la misma columna, coste 2
+                } else {
+                    if ((columna1 < migColumnes && columna2 < migColumnes) || (columna1 >= migColumnes && columna2 >= migColumnes)) {
+                        distancia[i][j] = 1; // Si están en la misma mitad, coste 1
+                    } else {
+                        distancia[i][j] = 5; // Coste predeterminado (puede ser ajustado según tu necesidad)
+                    }
+                }
             }
         }
-
+    
         return distancia;
     }
 
