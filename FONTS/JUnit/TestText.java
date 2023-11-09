@@ -1,5 +1,6 @@
 package JUnit;
 
+import Domini.Text;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestText {
 
     @Test
-    public void testTextCreacio() {
+    public void testTextCreacio() throws Exception {
         String nomEsperat = "ExempleNom";
         String contingutEsperat = "ExempleContingut";
 
