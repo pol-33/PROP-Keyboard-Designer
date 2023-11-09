@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TextTest {
+class TestText {
+
     @Test
     public void testTextCreacio() {
         String nomEsperat = "ExempleNom";
@@ -98,12 +98,6 @@ public class TextTest {
         } catch (Exception e) {
             fail("No se esperaba que el constructor lanzara una excepción.");
         }
+
+
     }
-
-
-
-
-
-
-
-}

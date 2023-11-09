@@ -1,27 +1,27 @@
 package JUnit;
 
 import Domini.Alfabet;
+import Domini.Text;
 import Domini.Usuari;
-
-import org.junit.Test;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UsuariTest {
+import static org.junit.jupiter.api.Assertions.*;
 
+class TestUsuari {
     @Test
-    public void testUsuari() {
+    public void testUsuari() throws Exception {
         Usuari usuari = new Usuari("usuari", "contrasenya");
-        assertEquals("usuari", usuari.obtenNom(), "El nom no és correcte");
-        assertEquals("contrasenya", usuari.obtenContrasenya(), "La contrasenya no és correcte");
+        assertEquals("usuari", usuari.getNomUsuari(), "El nom no és correcte");
+        assertEquals("contrasenya", usuari.getContrasenya(), "La contrasenya no és correcte");
     }
 
     @Test
-    public void testCrearAlfabets() {
+    public void testCrearAlfabets() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
         usuari.crearAlfabet("alfabet1", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
 
@@ -33,10 +33,10 @@ public class UsuariTest {
     }
 
     @Test
-    public void testgetAlfabet(){
+    public void testgetAlfabet() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
-        String nomAlfabet("alfabet1");
-        String textAlfabet("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
+        String nomAlfabet = "alfabet1";
+        String textAlfabet  = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
         usuari.crearAlfabet(nomAlfabet, textAlfabet);
 
         Alfabet alfabetObtingut = usuari.getAlfabet(nomAlfabet);
@@ -46,7 +46,7 @@ public class UsuariTest {
     }
 
     @Test
-    public void testgetAlfabets(){
+    public void testgetAlfabets() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
         usuari.crearAlfabet("Català", "a,b,c,ç,d,e,f,g,h,i,j,k,l,ł,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
         usuari.crearAlfabet("Castellà", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z");
@@ -56,12 +56,12 @@ public class UsuariTest {
 
         assertNotNull(alfabets, "L'usuari no té alfabets");
         assertEquals(2, alfabets.size(), "El nombre d'alfabets no coincideix");
-        assertTrue(alfabets.constainsKey("Català"), "L'alfabet no s'ha creat correctament");
-        assertTrue(alfabets.constainsKey("Castellà"), "L'alfabet no s'ha creat correctament");
+        assertTrue(alfabets.containsKey("Català"), "L'alfabet no s'ha creat correctament");
+        assertTrue(alfabets.containsKey("Castellà"), "L'alfabet no s'ha creat correctament");
     }
 
     @Test
-    public void testllistarAlfabets(){
+    public void testllistarAlfabets() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
 
         usuari.crearAlfabet("Català", "a,b,c,ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
@@ -79,7 +79,7 @@ public class UsuariTest {
     }
 
     @Test
-    public void TestcrearText(){ // Inicialización
+    public void TestcrearText() throws Exception { // Inicialización
         String nomUsuari = "testUser";
         String contrasenya = "testPass";
         Usuari usuari = new Usuari(nomUsuari, contrasenya);
@@ -106,8 +106,8 @@ public class UsuariTest {
         // Validación: Comprobar si el texto se ha creado correctamente dentro del alfabeto
         Text text = usuari.getAlfabet(nomAlfabet).getText(nomText);
 
-        assertNotNull("El text no s'ha creat correctament o no s'ha afegit a l'alfabet", text);
-        assertEquals("El contingut del text no coincideix", contingutText, text.getContingut());
+        assertNotNull(text, "El text no s'ha creat correctament o no s'ha afegit a l'alfabet");
+        assertEquals("El contingut del text no coincideix", contingutText, text.getText());
     }
 
     @Test
@@ -119,14 +119,14 @@ public class UsuariTest {
         assertEquals(esperatNomUsuari, nomUsuari, "El nom d'usuari no coincideix");
     }
     @Test
-    public void testsetNomUsuari(){
+    public void testsetNomUsuari() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
         usuari.setNomUsuari("usuariTest2");
         assertEquals("usuariTest2", usuari.getNomUsuari(), "El nom d'usuari no coincideix");
     }
 
     @Test
-    public void testgetContrasenya(){
+    public void testgetContrasenya() throws Exception {
         String esperatContrasenya = "contrasenyaTest";
         Usuari usuari = new Usuari("usuariTest", esperatContrasenya);
 
@@ -134,16 +134,17 @@ public class UsuariTest {
         assertEquals(esperatContrasenya, contrasenya, "La contrasenya no coincideix");
     }
     @Test
-    public void testSetContrasenya(){
+    public void testSetContrasenya() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
         usuari.setContrasenya("contrasenyaTest2");
         assertEquals("contrasenyaTest2", usuari.getContrasenya(), "La contrasenya no coincideix");
     }
 
     @Test
-    public void testContrasenyaCorrecta(){
+    public void testContrasenyaCorrecta() throws Exception {
         Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
         assertEquals("contrasenyaTest", usuari.contrasenyaCorrecta("contrasenyaTest"), "La contrasenya no coincideix");
     }
+
 
 }

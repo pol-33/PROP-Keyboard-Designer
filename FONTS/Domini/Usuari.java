@@ -31,7 +31,7 @@ public class Usuari {
         this.alfabets = new HashMap<>();
     }
 
-    //
+    //ficar exception si ja existeix un alfabet amb aquest nom
     public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
         Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
         this.alfabets.put(nomAlfabet, nouAlfabet);
