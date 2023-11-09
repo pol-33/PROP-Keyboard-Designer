@@ -1,18 +1,14 @@
 package ControladorsDomini;
 
-import Domini.Algoritme;
 import Domini.AlgoritmeQAP;
-import Domini.QAPBranchAndBound;
+import Domini.AlgoritmeLAP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ControladorAlgoritme {
     private static ControladorAlgoritme ctrl;
-
-    private Algoritme algoritme = new Algoritme();
-    private AlgoritmeQAP algoritmeQAP = new AlgoritmeQAP();
-    private QAPBranchAndBound qapBranchAndBound = new QAPBranchAndBound();
 
     public static ControladorAlgoritme obtenirInstancia() {
         if (ctrl == null) {
@@ -21,13 +17,21 @@ public class ControladorAlgoritme {
         return ctrl;
     }
 
-    // Funcions principals
+    // Retorna assignacions de lletres a tecles en funcio de teclat de dues mans
     public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
-        // Crear les matrius de flux i distància basades en les especificacions del problema
+        // Si sobren tecles afegim caracters en blanc a l'alfabet
+        int tamanyAlfabet = alfabet.size();
+        while (tamanyAlfabet < files * columnes) {
+            tamanyAlfabet++;
+            alfabet.add(' ');
+        }
+
+        // Crear les matrius de flux i distància per a QAP
         int[][] flux = calcularMatriuFlux(lpf, alfabet);
         int[][] distancia = calcularMatriuDistancia(files, columnes);
 
         // Resoldre el QAP per obtenir la distribució òptima
+        AlgoritmeQAP algoritmeQAP = new AlgoritmeQAP();
         int[] distribucioOptima = algoritmeQAP.resoldreQAP(flux, distancia);
 
         // Convertir l'índex de la distribució òptima a caràcters segons l'alfabet
@@ -39,7 +43,33 @@ public class ControladorAlgoritme {
         return distribucioTeclat;
     }
 
-    // Mètode per calcular la matriu de flux a partir del HashMap i l'alfabet
+    // Retorna assignacions de lletres a tecles en funcio d'un teclat de polzes
+    public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
+        
+        // Si sobren tecles afegim espais
+        int tamanyAlfabet = alfabet.size();
+        while (tamanyAlfabet < files * columnes) {
+            tamanyAlfabet++;
+            alfabet.add(' ');
+        }
+
+        // Crear els vectors de frequencies i costos per a LAP
+        int[] frequencia = calcularVectorFrequencies(lpf, alfabet);
+        int[] costos = calcularVectorCostos(files, columnes);
+
+        // Resoldre el QAP per obtenir la distribució òptima
+        AlgoritmeLAP algoritmeLAP = new AlgoritmeLAP();
+        int[] distribucioOptima = algoritmeLAP.resoldreCostosConstants(frequencia, costos);
+
+        // Convertir l'índex de la distribució òptima a caràcters segons l'alfabet
+        ArrayList<Character> distribucioTeclat = new ArrayList<>();
+        for (int i = 0; i < distribucioOptima.length; i++) {
+            distribucioTeclat.add(alfabet.get(distribucioOptima[i]));
+        }
+        return distribucioTeclat;
+    }
+
+    // Funcions auxiliars per a preparar problema QAP
     private int[][] calcularMatriuFlux(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
         int n = alfabet.size();
         int[][] flux = new int[n][n];
@@ -64,8 +94,6 @@ public class ControladorAlgoritme {
     
         return flux;
     }
-
-    // Mètode per calcular la matriu de distància basada en les files i columnes del teclat
     private int[][] calcularMatriuDistancia(int files, int columnes) {
         int n = files * columnes;
         int[][] distancia = new int[n][n];
@@ -86,7 +114,7 @@ public class ControladorAlgoritme {
                     if ((columna1 < migColumnes && columna2 < migColumnes) || (columna1 >= migColumnes && columna2 >= migColumnes)) {
                         distancia[i][j] = 1; // Si están en la misma mitad, coste 1
                     } else {
-                        distancia[i][j] = 5; // Coste predeterminado (puede ser ajustado según tu necesidad)
+                        distancia[i][j] = 0; // Coste predeterminado (puede ser ajustado según tu necesidad)
                     }
                 }
             }
@@ -94,112 +122,48 @@ public class ControladorAlgoritme {
     
         return distancia;
     }
+    
+    // Funcions auxiliars per a preparar problema LAP
+    public int[] calcularVectorFrequencies(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
+        int[] frequencia = new int[alfabet.size()];
 
-    public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
-        
-        HashMap<Character, Integer> frequencies = new HashMap<>();
-        for (char lletra : alfabet) {
-            frequencies.put(lletra, 0);
-        }
+        for (Map.Entry<String, Integer> entry : lpf.entrySet()) {
+            String palabra = entry.getKey();
+            int freq = entry.getValue();
 
-        for (String paraula : lpf.keySet()) {
-            for (char lletra : paraula.toCharArray()) {
-                if (alfabet.contains(lletra)) {
-                    int frequencia = lpf.get(paraula);
-                    frequencies.put(lletra, frequencies.get(lletra) + frequencia);
+            for (int i = 0; i < palabra.length(); i++) {
+                char letra = palabra.charAt(i);
+                int index = alfabet.indexOf(letra);
+                if (index != -1) {
+                    frequencia[index] += freq; // Incrementa la frecuencia de la letra según las veces que aparece en la palabra
                 }
             }
         }
 
-        ArrayList<Character> lletresOrdenades = new ArrayList<>(alfabet);
-        lletresOrdenades.sort((a, b) -> frequencies.get(b) - frequencies.get(a));
+        return frequencia;
+    }
+    public int[] calcularVectorCostos(int files, int columnes) {
+        int[] costos = new int[files * columnes]; // Tamaño del array según el número de teclas
 
-        ArrayList<Integer> indexs = new ArrayList<>();
-        for (int i = 0; i < files * columnes; i++) {
-            indexs.add(i);
-        }
-        indexs.sort((i, j) -> {
-            double costMinimI = obtenirCostMinim(i, files, columnes);
-            double costMinimJ = obtenirCostMinim(j, files, columnes);
-            return Double.compare(costMinimI, costMinimJ);
-        });
-
-        ArrayList<Character> teclat = new ArrayList<>(files * columnes);
-        for (int i = 0; i < files * columnes; i++) {
-            teclat.add(' ');
-        }
-
-        for (int i = 0; i < indexs.size(); i++) {
-            int index = indexs.get(i);
-            if (i < lletresOrdenades.size()) {
-                teclat.set(index, lletresOrdenades.get(i));
+        int index = 0;
+        for (int i = 0; i < files; i++) {
+            for (int j = 0; j < columnes; j++) {
+                double cost = obtenirCostMinim(i, j, files, columnes);
+                costos[index] = (int) (10.0*cost); // Asigna directamente el costo al array en el índice correspondiente
+                index++;
             }
         }
 
-        return teclat;
-    }
-
-    private double obtenirCostMinim(int index, int files, int columnes) {
-        int i = index / columnes;
-        int j = index % columnes;
-
+        return costos;
+    } 
+    private double obtenirCostMinim(int i, int j, int files, int columnes) {
         double cantInferiorEsq = calcularDistanciaEuclidiana(i, j, files - 1, 0);
         double cantInferiorDreta = calcularDistanciaEuclidiana(i, j, files - 1, columnes - 1);
 
         return Math.min(cantInferiorEsq, cantInferiorDreta);
     }
-
     private double calcularDistanciaEuclidiana(int i1, int j1, int i2, int j2) {
         double distancia = Math.sqrt(Math.pow(i1 - i2, 2) + Math.pow(j1 - j2, 2));
         return distancia;
     }
 }
-
-
-/*
-// pre: files * columnes = alfabet.size()
-// post: [files*columnes] assigancions de lletres a tecles tal que es minimitzi el cost d'escriure
-public ArrayList<Character> calcularDistribucioDuesMans (HashMap<String, Integer> lpf, ArrayList<Character> alfabet,
-    int files, int columnes) {
-    // Supongamos que se tiene la matriz QAP y el algoritmo de resolución
-    // Se requiere la implementación de la conversión de datos a una matriz QAP y el llamado al algoritmo para resolverlo
-
-    int n = alfabet.size();  // Tamaño del alfabeto
-    // TODO: Convertir los datos en una matriz QAP
-    //int[][] matrizQAP = convertirAMatrizQAP(lpf, alfabet);
-
-    // TODO: Llamar al algoritmo QAP para resolver el problema
-    // Aquí se necesitaría la llamada al algoritmo apropiado para resolver la matriz QAP
-    //int[] solucionQAP = algoritmeQAP.resoldre(matrizQAP);
-
-    // TODO: Desconvertir la solución QAP a un ArrayList de caracteres
-    //ArrayList<Character> alfabetOrdenado = desconvertirSolucionQAP(solucionQAP, alfabet);
-
-    return alfabetOrdenado;
-    }
-// Funcions auxiliars
-
-// Función para calcular la distancia en el teclado entre dos letras
-private int[][] calcularCostosTeclesDuesMans(int files, int columnes) {
-    int numTecles = files * columnes;
-    int[][] matriuCostos = new int[numTecles][numTecles];
-
-    for (int i = 0; i < numTecles; i++) {
-        for (int j = 0; j < numTecles; j++) {
-            int distanciaEuclidiana = calcularDistanciaEuclidiana(i, j, files, columnes);
-            matriuCostos[i][j] = 5 - distanciaEuclidiana;
-        }
-    }
-    return matriuCostos;
-}
-
-
-private int[][] calcularCostesCeldas(int filas, int columnas) {
-    int[][] costes = new int[filas][columnas];
-    for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-            costes[i][j] = Math.min(i, filas - 1 - i) + Math.min(j, columnas - 1 - j);
-        }
-    }
-    return costes;
-}*/
