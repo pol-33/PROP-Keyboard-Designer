@@ -40,7 +40,8 @@ public class Text extends Entrada{
     }
 
     // Mètode per mostrar el contingut del text
-    public void mostrarContingut() {
+    public void imprimirEntrada() {
+        System.out.println("Nom: " + this.nom);
         System.out.println(text);
     }
 

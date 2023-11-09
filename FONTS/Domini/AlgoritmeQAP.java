@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class AlgoritmeQAP {
 
+    // funcio principal
     public int[] resoldreQAP(int[][] flux, int[][] distancia) {
         int n = flux.length;
         int[] mejorSolucion = new int[n];
@@ -30,7 +31,7 @@ public class AlgoritmeQAP {
 
         return mejorSolucion;
     }
-
+     // calculra cost de asignacio parcial
     private int calcularCostoTotal(int indice, boolean[] asignado, int[][] flux, int[][] distancia) {
         int costoTotal = 0;
         int n = asignado.length;

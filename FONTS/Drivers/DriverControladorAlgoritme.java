@@ -19,7 +19,7 @@ public class DriverControladorAlgoritme {
 
         while (running) {
             System.out.println("\nEscull una opció:");
-            System.out.println("1. Ordenar llista amb l'Algorisme QAP, dues mans (encara no)");
+            System.out.println("1. Ordenar llista amb l'Algorisme QAP, dues mans");
             System.out.println("2. Ordenar llista amb un Algoritme per dos polzes");
             System.out.println("3. Sortir");
 
@@ -46,21 +46,20 @@ public class DriverControladorAlgoritme {
     }
 
     private void ordenarLlistaAlgoritmePolzes(Scanner in) {
-        System.out.println("Introdueix la llista de paraules amb la seva freqüència (LPF):");
-        HashMap<String, Integer> lpf = llegirLPF(in);
-    
-        System.out.println("Introdueix el número de files:");
-        int files = in.nextInt();
-        in.nextLine(); // Limpiamos el buffer del scanner
-    
-        System.out.println("Introdueix el número de columnes:");
-        int columnes = in.nextInt();
-        in.nextLine(); // Limpiamos el buffer del scanner
-    
-        ArrayList<Character> alfabet = obtenirAlfabet(in);
-        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
-    
-        imprimirTeclado(files, columnes, llistaOrdenada);
+        HashMap<String, Integer> lpf = obtenerTextoEProcesar(in); // Obtener el texto y procesarlo
+
+        System.out.println("Introduce el número de filas:");
+        int filas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        System.out.println("Introduce el número de columnas:");
+        int columnas = in.nextInt();
+        in.nextLine(); // Limpiar el buffer del scanner
+
+        ArrayList<Character> alfabeto = obtenirAlfabet(in);
+        ArrayList<Character> listaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabeto, filas, columnas);
+
+        imprimirTeclado(filas, columnas, listaOrdenada);
     }
     
     private HashMap<String, Integer> obtenerTextoEProcesar(Scanner in) {
@@ -101,17 +100,14 @@ public class DriverControladorAlgoritme {
     }
 
     private void imprimirTeclado(int files, int columnes, ArrayList<Character> llistaOrdenada) {
-        // Comprobación de la igualdad de la multiplicación de las filas por las columnas con el tamaño del alfabeto
-        if (files * columnes != llistaOrdenada.size()) {
-            System.out.println("La disposició de les files i columnes no és igual al nombre d'elements en l'alfabet.");
-            return;
-        }
+        System.out.println("Teclado generado:");
 
-        // Creación y visualización del teclado
+        // Representación visual del teclado con teclas generadas
+        System.out.println("\nRepresentación visual del teclado:");
         int index = 0;
         for (int i = 0; i < files; i++) {
             for (int j = 0; j < columnes; j++) {
-                System.out.print(llistaOrdenada.get(index) + " ");
+                System.out.print("[" + llistaOrdenada.get(index) + "] ");
                 index++;
             }
             System.out.println();
