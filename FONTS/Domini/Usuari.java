@@ -33,6 +33,7 @@ public class Usuari {
 
     //
     public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
+        if (alfabets.containsKey(nomAlfabet)) throw new Exception("Ja existeix un alfabet d'aquest idioma");
         Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
         this.alfabets.put(nomAlfabet, nouAlfabet);
     }
@@ -43,7 +44,8 @@ public class Usuari {
         System.out.println("Aquests son els alfabets:");
         alfabets.forEach((idioma, Alfabet) -> {
             System.out.println("Idioma: " + idioma);
-            System.out.println("Lletres de l'idioma: " + Alfabet);
+            System.out.println("Lletres de l'idioma: ");
+            Alfabet.imprimirLletres();
         });
     }
 
@@ -55,15 +57,37 @@ public class Usuari {
     }
 
     //
-    public void crearText (String nomAlfabet, String nomEntrada, String contingutEntrada) throws Exception {
-        Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearText(nomAlfabet, contingutEntrada);//contingut del text
+    public void crearText (String idioma, String nomEntrada, String contingutEntrada) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        Alfabet alfabet = alfabets.get(idioma);
+        alfabet.crearText(nomEntrada, contingutEntrada);//contingut del text
     }
 
     //
-    public void cearLPF (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
-        Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearLPF(nomAlfabet, contingutEntrada); //hashmap string integer fet
+    public void crearLPF (String idioma, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        Alfabet alfabet = alfabets.get(idioma);
+        alfabet.crearLPF(nomEntrada, contingutEntrada);
+    }
+
+    public void llistarTexts() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("No existeixen textos ni alfabets");
+        alfabets.forEach((idioma, alfabet) -> {
+            System.out.println(idioma);
+            alfabet.llistarTexts();
+        });
+    }
+
+    public void llistarLPFs() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("No existeixen llistes de paraules frequents ni alfabets");
+        alfabets.forEach((idioma, alfabet) -> {
+            System.out.println(idioma);
+            alfabet.llistarLPFs();
+        });
     }
 
     /*

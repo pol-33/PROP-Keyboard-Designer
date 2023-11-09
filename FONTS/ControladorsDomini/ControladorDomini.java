@@ -93,4 +93,23 @@ public class ControladorDomini {
         usuariActiu.eliminarAlfabet(idioma);
         System.out.println("S'ha eliminat correctament l'idioma " + idioma);
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    public void crearText(String idioma, String nomEntrada, String contingutEntrada) throws Exception {
+        usuariActiu.crearText(idioma, nomEntrada, contingutEntrada);
+        System.out.println("S'ha creat correctament el text " + nomEntrada);
+    }
+
+    public void crearLPF(String idioma, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
+        usuariActiu.crearLPF(idioma, nomEntrada, contingutEntrada);
+        System.out.println("S'ha creat correctament la llista de paraules amb frequencia " + nomEntrada);
+    }
+
+    public void llistarTexts() throws Exception {
+        usuariActiu.llistarTexts();
+    }
+
+    public void llistarLPFs() throws Exception {
+        usuariActiu.llistarLPFs();
+    }
 }
