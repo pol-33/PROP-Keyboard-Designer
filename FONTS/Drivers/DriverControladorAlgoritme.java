@@ -14,13 +14,13 @@ public class DriverControladorAlgoritme {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Benvingut al driver del Controlador d'Algorisme");
+        System.out.println("Driver del Controlador d'Algoritme");
         boolean running = true;
 
         while (running) {
             System.out.println("\nEscull una opció:");
-            System.out.println("1. Ordenar llista amb l'Algorisme QAP, dues mans");
-            System.out.println("2. Ordenar llista amb un Algoritme per dos polzes");
+            System.out.println("1. Ordenar amb algoritme per a dues mans (QAP)");
+            System.out.println("2. Ordenar amb algortime per dos polzes (LAP)");
             System.out.println("3. Sortir");
 
             int opcio = in.nextInt();
@@ -37,7 +37,7 @@ public class DriverControladorAlgoritme {
                     running = false;
                     break;
                 default:
-                    System.out.println("Opció invàlida. Torna a intentar.");
+                    System.out.println("Opció invàlida.");
             }
         }
 
@@ -46,64 +46,92 @@ public class DriverControladorAlgoritme {
     }
 
     private void ordenarLlistaAlgoritmePolzes(Scanner in) {
-        HashMap<String, Integer> lpf = obtenerTextoEProcesar(in); // Obtener el texto y procesarlo
+        System.out.println("Escull una opció:");
+        System.out.println("1. Introduir un text");
+        System.out.println("2. Introduir una llista de paraules amb freqüències");
+        int opcio = in.nextInt();
+        in.nextLine(); // Netegem el buffer d'entrada
 
-        System.out.println("Introduce el número de filas:");
-        int filas = in.nextInt();
-        in.nextLine(); // Limpiar el buffer del scanner
+        HashMap<String, Integer> llistaFreq;
+        if (opcio == 1) {
+            llistaFreq = obtenirTextIProcessar(in);
+        } else if (opcio == 2) {
+            llistaFreq = llegirLlistaParaulesFreq(in);
+        } else {
+            System.out.println("Opció invàlida.");
+            return;
+        }
 
-        System.out.println("Introduce el número de columnas:");
-        int columnas = in.nextInt();
-        in.nextLine(); // Limpiar el buffer del scanner
+        System.out.println("Introdueix el nombre de files:");
+        int files = in.nextInt();
+        in.nextLine(); // Netegem el buffer del scanner
 
-        ArrayList<Character> alfabeto = obtenirAlfabet(in);
-        ArrayList<Character> listaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabeto, filas, columnas);
+        System.out.println("Introdueix el nombre de columnes:");
+        int columnes = in.nextInt();
+        in.nextLine(); // Netegem el buffer del scanner
 
-        imprimirTeclado(filas, columnas, listaOrdenada);
+        ArrayList<Character> alfabet = obtenirAlfabet(in);
+        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.calcularDistribucioPolzes(llistaFreq, alfabet, files, columnes);
+
+        imprimirTeclat(files, columnes, llistaOrdenada);
     }
     
-    private HashMap<String, Integer> obtenerTextoEProcesar(Scanner in) {
-        System.out.println("Introduce un texto en inglés:");
-        String texto = in.nextLine();
-        return crearListaPalabrasConRepeticiones(texto);
-    }
-
     private void ordenarLlistaAlgoritmeDuesMans(Scanner in) {
-        HashMap<String, Integer> lpf = obtenerTextoEProcesar(in); // Obtener el texto y procesarlo
+        System.out.println("Escull una opció:");
+        System.out.println("1. Introduir un text");
+        System.out.println("2. Introduir una llista de paraules amb freqüències");
+        int opcio = in.nextInt();
+        in.nextLine(); // Netegem el buffer d'entrada
 
-        System.out.println("Introduce el número de filas:");
-        int filas = in.nextInt();
-        in.nextLine(); // Limpiar el buffer del scanner
+        HashMap<String, Integer> llistaFreq;
+        if (opcio == 1) {
+            llistaFreq = obtenirTextIProcessar(in);
+        } else if (opcio == 2) {
+            llistaFreq = llegirLlistaParaulesFreq(in);
+        } else {
+            System.out.println("Opció invàlida.");
+            return;
+        }
 
-        System.out.println("Introduce el número de columnas:");
-        int columnas = in.nextInt();
-        in.nextLine(); // Limpiar el buffer del scanner
+        System.out.println("Introdueix el nombre de files:");
+        int files = in.nextInt();
+        in.nextLine(); // Netegem el buffer del scanner
 
-        ArrayList<Character> alfabeto = obtenirAlfabet(in);
-        ArrayList<Character> listaOrdenada = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabeto, filas, columnas);
+        System.out.println("Introdueix el nombre de columnes:");
+        int columnes = in.nextInt();
+        in.nextLine(); // Netegem el buffer del scanner
 
-        imprimirTeclado(filas, columnas, listaOrdenada);
+        ArrayList<Character> alfabet = obtenirAlfabet(in);
+        ArrayList<Character> llistaOrdenada = ctrlAlgoritme.calcularDistribucioDuesMans(llistaFreq, alfabet, files, columnes);
+
+        imprimirTeclat(files, columnes, llistaOrdenada);
     }
 
-    private HashMap<String, Integer> crearListaPalabrasConRepeticiones(String texto) {
-        HashMap<String, Integer> palabrasConRepeticiones = new HashMap<>();
-        String[] palabras = texto.toLowerCase().split("\\s+");
+    private HashMap<String, Integer> obtenirTextIProcessar(Scanner in) {
+        System.out.println("Introdueix un text:");
+        String text = in.nextLine();
+        return crearLlistaParaulesAmbRepeticions(text);
+    }
 
-        for (String palabra : palabras) {
-            if (palabrasConRepeticiones.containsKey(palabra)) {
-                palabrasConRepeticiones.put(palabra, palabrasConRepeticiones.get(palabra) + 1);
+    private HashMap<String, Integer> crearLlistaParaulesAmbRepeticions(String text) {
+        HashMap<String, Integer> paraulesAmbRepeticions = new HashMap<>();
+        String[] paraules = text.toLowerCase().split("\\s+");
+
+        for (String paraula : paraules) {
+            if (paraulesAmbRepeticions.containsKey(paraula)) {
+                paraulesAmbRepeticions.put(paraula, paraulesAmbRepeticions.get(paraula) + 1);
             } else {
-                palabrasConRepeticiones.put(palabra, 1);
+                paraulesAmbRepeticions.put(paraula, 1);
             }
         }
-        return palabrasConRepeticiones;
+        return paraulesAmbRepeticions;
     }
 
-    private void imprimirTeclado(int files, int columnes, ArrayList<Character> llistaOrdenada) {
-        System.out.println("Teclado generado:");
+    private void imprimirTeclat(int files, int columnes, ArrayList<Character> llistaOrdenada) {
+        System.out.println("Teclat generat:");
 
-        // Representación visual del teclado con teclas generadas
-        System.out.println("\nRepresentación visual del teclado:");
+        // Representació visual del teclat amb tecles generades
+        System.out.println("\nRepresentació visual del teclat:");
         int index = 0;
         for (int i = 0; i < files; i++) {
             for (int j = 0; j < columnes; j++) {
@@ -114,8 +142,8 @@ public class DriverControladorAlgoritme {
         }
     }
 
-    private HashMap<String, Integer> llegirLPF(Scanner in) {
-        HashMap<String, Integer> lpf = new HashMap<>();
+    private HashMap<String, Integer> llegirLlistaParaulesFreq(Scanner in) {
+        HashMap<String, Integer> llistaFreq = new HashMap<>();
         int numParaules;
 
         System.out.print("Introdueix el nombre de paraules a la llista: ");
@@ -130,20 +158,20 @@ public class DriverControladorAlgoritme {
             int freq = in.nextInt();
             in.nextLine(); // Netegem el buffer d'entrada
 
-            lpf.put(paraula, freq);
+            llistaFreq.put(paraula, freq);
         }
-        return lpf;
+        return llistaFreq;
     }
 
     private ArrayList<Character> obtenirAlfabet(Scanner in) {
         System.out.println("Introdueix els símbols de l'alfabet (sense espais): ");
         String simbols = in.nextLine();
-    
+
         ArrayList<Character> alfabet = new ArrayList<>();
         for (char c : simbols.toCharArray()) {
             alfabet.add(c);
         }
-    
+
         return alfabet;
     }
 }
