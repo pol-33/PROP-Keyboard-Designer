@@ -2,6 +2,7 @@ package Domini;
 
 import Domini.Alfabet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Usuari {
@@ -15,11 +16,8 @@ public class Usuari {
     // Contrasenya d'usuari
     private String contrasenya;
 
-    // Alfabet de l'usuari
-   // private ArrayList<Alfabet> alfabets;
-
-    //string = nom del alfabet, alfabet = objecte alfabet
-    private HashMap<String, Alfabet> alfabets;
+    // Punter cap a alfabets
+    private ArrayList<String> idsAlfabets;
 
 
     // Classe creadora d'un usuari
@@ -28,67 +26,9 @@ public class Usuari {
         if(contrasenya.length() > MAX_LENGTH) throw new Exception("La contrasenya no pot superar els 15 caracters");
         this.nomUsuari = nomUsuari;
         this.contrasenya = contrasenya;
-        this.alfabets = new HashMap<>();
+        this.idsAlfabets = new ArrayList<>();
     }
 
-    //ficar exception si ja existeix un alfabet amb aquest nom
-    public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
-        Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
-        this.alfabets.put(nomAlfabet, nouAlfabet);
-    }
-
-    //Retorna el hashMap de alfabets de l'usuari
-    public HashMap<String, Alfabet> getAlfabets() {
-        return this.alfabets;
-    }
-
-    // Método para obtener un alfabeto especific pel nom
-    public Alfabet getAlfabet(String nomAlfabet) {
-        return this.alfabets.get(nomAlfabet);
-    }
-
-    //Funcio per a llistar alfabets
-    public void llistarAlfabets() throws Exception {
-        if (alfabets.isEmpty()) throw new Exception("L'usuari no té alfabets");
-        System.out.println("Aquests son els alfabets:");
-        alfabets.forEach((idioma, Alfabet) -> {
-            System.out.println("Idioma: " + idioma);
-            System.out.println("Lletres de l'idioma: " + Alfabet);
-        });
-    }
-
-    public void eliminarAlfabet(String idioma) throws Exception {
-        if (!alfabets.containsKey(idioma)) {
-            throw new Exception("No existeix un alfabet d'aquest idioma");
-        }
-        alfabets.remove(idioma);
-    }
-
-    //
-    public void crearText (String nomAlfabet, String nomEntrada, String contingutEntrada) throws Exception {
-        Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearText(nomAlfabet, contingutEntrada);//contingut del text
-    }
-
-    //
-    public void cearLPF (String nomAlfabet, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
-        Alfabet alfabet = alfabets.get(nomAlfabet);
-        alfabet.crearLPF(nomAlfabet, contingutEntrada); //hashmap string integer fet
-    }
-
-    /*
-   // public void crearTeclat (String nomTeclat, String nomAlfabet) {
-        Alfabet alfabet = alfabets.find(nomAlfabet);
-        alfabet.crearTeclat(nomTeclat);
-    }
-*/
-    /*
-    public void eliminarAlfabet(Alfabet nomAlfabet) throws Exception{
-        OptionalDouble index = this.alfabets.stream().filter(alfabet -> alfabet.getNomAlfabet().equals(nomAlfabet)).findFirst();
-        if(index.isPresent()) this.alfabets.remove(index.getAsInt());
-        else throw new Exception("No existeix cap alfabet amb aquest nom");
-    }
-    */
     // Funcio per obtindre el nom d'un usuari
     public String getNomUsuari() {
         return nomUsuari;
@@ -115,4 +55,39 @@ public class Usuari {
     public boolean contrasenyaCorrecta(String contrasenya) {
         return this.contrasenya.equals(contrasenya);
     }
+
+    //Retorna el Array que conte tots els ids dels alfabets de l'usuari
+    public ArrayList<String> getIDsAlfabets() {
+        return idsAlfabets;
+    }
+
+    // Afegeix un alfabet en el cas que aquest no estigui ja afegit
+    public void afegirAlfabet(String idAlfabet){
+        if(!idsAlfabets.contains(idAlfabet)) idsAlfabets.add(idAlfabet);
+    }
+
+    // Elimina un alfabet en el cas que aquest estigui afegit
+    public void eliminarAlfabet(String idioma) throws Exception {
+        if (!idsAlfabets.contains(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        idsAlfabets.remove(idioma);
+    }
+
+    // Retorna true si l'usuari te l'alfabet amb id idAlfabets
+    public boolean teAlfabets(String idAlfabets) throws Exception {
+        if(idsAlfabets.isEmpty()) {
+            throw new Exception("El usuari no te cap alfabet");
+        }
+        return idsAlfabets.contains(idAlfabets);
+    }
+
+    // Funció per imprimir un usuari amb totes les seves dades
+    public String print(){
+        return "Usuari{" +
+                "nomUsuari='" + nomUsuari + '\'' +
+                ", contrasenya='" + contrasenya + '\'' +
+                ", idsAlfabets=" + idsAlfabets + '}';
+    }
+
 }
