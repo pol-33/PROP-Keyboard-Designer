@@ -1,104 +1,150 @@
 package JUnit;
 
+import Domini.Alfabet;
 import Domini.Text;
+import Domini.Usuari;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestText {
-
+class TestUsuari {
     @Test
-    public void testTextCreacio() throws Exception {
-        String nomEsperat = "ExempleNom";
-        String contingutEsperat = "ExempleContingut";
-
-        Text text = new Text(nomEsperat, contingutEsperat);
-
-        assertEquals(nomEsperat, text.getNom(), "Els noms són diferents");
-        assertEquals(contingutEsperat, text.getContingut(), "Els continguts són diferents");
-        assertNotNull(text.getLPF(), "El LPF és null");
-    }
-
-
-    @Test
-    public void testSetContingut() {
-        Text text = new Text("ExempleNom", "ExempleContingut");
-        String nouContingut = "nou contingut";
-        text.setContingut(nouContingut);
-        assertEquals(nouContingut, text.getContingut(), "El contingut no s'ha modificat correctament");
-        assertNotNull(text.getLPF(), "El LPF és null");
+    public void testUsuari() throws Exception {
+        Usuari usuari = new Usuari("usuari", "contrasenya");
+        assertEquals("usuari", usuari.getNomUsuari(), "El nom no és correcte");
+        assertEquals("contrasenya", usuari.getContrasenya(), "La contrasenya no és correcte");
     }
 
     @Test
-    public void testAppendContingut() {
-        Text text = new Text("ExempleNom", "ExempleContingut");
-        String additionalContent = "contingut adicional";
-        text.appendContingut(additionalContent);
-        assertEquals(additionalContent, text.getContingut(), "El contingut no s'ha modificat correctament");
-        assertNotNull(text.getLPF(), "El LPF és null");
+    public void testCrearAlfabets() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        usuari.crearAlfabet("alfabet1", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
+
+        Alfabet alfabetCreado = usuari.getAlfabet("alfabet1");
+
+        assertNotNull(alfabetCreado, "L'alfabet no s'ha creat correctament");
+        assertEquals("alfabet1", alfabetCreado.getIdioma(), "El nom de l'alfabet no coincideix");
+        assertEquals("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z", String.join(",", alfabetCreado.getLletres()), "El texto del alfabeto no coincide");
     }
 
     @Test
-    public void testLenght() {
-        Text text = new Text("ExempleNom", "ExempleContingut");
-        assertEquals(15, text.length(), "La longitud no és correcta");
+    public void testgetAlfabet() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        String nomAlfabet = "alfabet1";
+        String textAlfabet  = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+        usuari.crearAlfabet(nomAlfabet, textAlfabet);
 
-        //cas de text buit
-        text.setContingut("");
-        assertEquals(0, text.length(), "La longitud no és correcta");
-
-        //cas de text llarg
-        String longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse";
-        text.setContingut(longText);
-        assertEquals(longText.length(), text.length(), "La longitud no és correcta");
+        Alfabet alfabetObtingut = usuari.getAlfabet(nomAlfabet);
+        //preguntar a pol
+        assertNotNull(alfabetObtingut, "L'alfabet no s'ha creat correctament");
+        assertEquals("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z", String.join(",", alfabetObtingut.getLletres()), "El text de l'alfabet no coincideix");
     }
 
     @Test
-    public void testDisplay() {
-        Text text = new Text("ExempleNom", "ExempleContingut");
+    public void testgetAlfabets() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        usuari.crearAlfabet("Català", "a,b,c,ç,d,e,f,g,h,i,j,k,l,ł,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
+        usuari.crearAlfabet("Castellà", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z");
+
+        HashMap<String, Alfabet> alfabets;
+        alfabets = usuari.getAlfabets();
+
+        assertNotNull(alfabets, "L'usuari no té alfabets");
+        assertEquals(2, alfabets.size(), "El nombre d'alfabets no coincideix");
+        assertTrue(alfabets.containsKey("Català"), "L'alfabet no s'ha creat correctament");
+        assertTrue(alfabets.containsKey("Castellà"), "L'alfabet no s'ha creat correctament");
+    }
+
+    @Test
+    public void testllistarAlfabets() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+
+        usuari.crearAlfabet("Català", "a,b,c,ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z");
+        usuari.crearAlfabet("Español", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z");
+
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        text.display();
+        usuari.llistarAlfabets();
 
         System.setOut(System.out);
 
-        String expectedOutput = "ExempleContingut" + System.lineSeparator();
-        assertEquals(expectedOutput, outContent.toString(), "El contingut no s'ha mostrat correctament");
+        String expectedOutput = "Idioma: Català\nLletres de l'idioma: a,b,c,ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z\n" + "Idioma: Español\nLletres de l'idioma: a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z\n";
+        assertEquals("La sortida no coincideix amb lo esperat", expectedOutput.trim(), outContent.toString().trim());
     }
 
     @Test
-    public void testCalculateLPF(){
-        T try {
-            Text text = new Text("TestName", "word1 word2, word1! word3 word2.");
+    public void TestcrearText() throws Exception { // Inicialización
+        String nomUsuari = "testUser";
+        String contrasenya = "testPass";
+        Usuari usuari = new Usuari(nomUsuari, contrasenya);
 
-            text.setContingut("word1 word2, word1! word3 word2");
+        // Configuración del alfabeto
+        String idiomaAlfabet = "Català";
+        ArrayList<Character> lletres = new ArrayList<>();
+        lletres.add('a');
+        lletres.add('b');
+        // ... añadir todas las letras necesarias
+        Alfabet alfabet = new Alfabet(idiomaAlfabet, lletres);
 
+        // Añadir el alfabeto al usuario manualmente
+        usuari.getAlfabets().put(idiomaAlfabet, alfabet);
 
-            // Obtener el mapa de frecuencias después de que se haya llamado a calculateLPF() internamente
-            HashMap<String, Integer> lpf = text.getLPF();
+        // Datos para la creación del texto
+        String nomAlfabet = idiomaAlfabet;
+        String nomText = "TestText";
+        String contingutText = "Contingut de prova";
 
-            //verificar que el hasmap no sigui null
-            asserNotNull(lpf, "El LPF és null");
+        // Ejecución: Crear el texto mediante el método a probar
+        usuari.crearText(nomAlfabet, nomText, contingutText);
 
-            // Verifica el contingut de les frequencies
-            assertEquals(2, lpf.getOrDefault("word1", 0), "La frecuencia de 'word1' debería ser 2");
-            assertEquals(2, lpf.getOrDefault("word2", 0), "La frecuencia de 'word2' debería ser 2");
-            assertEquals(1, lpf.getOrDefault("word3", 0), "La frecuencia de 'word3' debería ser 1");
+        // Validación: Comprobar si el texto se ha creado correctamente dentro del alfabeto
+        Text text = usuari.getAlfabet(nomAlfabet).getText(nomText);
 
-            // Verifica que no hi hagin signes de puntuacio
-            assertFalse(lpf.containsKey("word2,"), "Las palabras no deberían contener signos de puntuación");
-            assertFalse(lpf.containsKey("word1!"), "Las palabras no deberían contener signos de puntuación");
-
-            // Verifica que no hi hagin espain en blanc
-            assertFalse(lpf.containsKey(""), "No deberían incluirse palabras vacías en el mapa LPF");
-
-        } catch (Exception e) {
-            fail("No se esperaba que el constructor lanzara una excepción.");
-        }
-
-
+        assertNotNull(text, "El text no s'ha creat correctament o no s'ha afegit a l'alfabet");
+        assertEquals("El contingut del text no coincideix", contingutText, text.getText());
     }
+
+    @Test
+    public void testgetNomUsuari() throws Exception {
+        String esperatNomUsuari = "usuariTest";
+        Usuari usuari = new Usuari(esperatNomUsuari, "contrasenyaTest");
+
+        String nomUsuari = usuari.getNomUsuari();
+        assertEquals(esperatNomUsuari, nomUsuari, "El nom d'usuari no coincideix");
+    }
+    @Test
+    public void testsetNomUsuari() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        usuari.setNomUsuari("usuariTest2");
+        assertEquals("usuariTest2", usuari.getNomUsuari(), "El nom d'usuari no coincideix");
+    }
+
+    @Test
+    public void testgetContrasenya() throws Exception {
+        String esperatContrasenya = "contrasenyaTest";
+        Usuari usuari = new Usuari("usuariTest", esperatContrasenya);
+
+        String contrasenya = usuari.getContrasenya();
+        assertEquals(esperatContrasenya, contrasenya, "La contrasenya no coincideix");
+    }
+    @Test
+    public void testSetContrasenya() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        usuari.setContrasenya("contrasenyaTest2");
+        assertEquals("contrasenyaTest2", usuari.getContrasenya(), "La contrasenya no coincideix");
+    }
+
+    @Test
+    public void testContrasenyaCorrecta() throws Exception {
+        Usuari usuari = new Usuari("usuariTest", "contrasenyaTest");
+        assertEquals("contrasenyaTest", usuari.contrasenyaCorrecta("contrasenyaTest"), "La contrasenya no coincideix");
+    }
+
+
+}
