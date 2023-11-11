@@ -8,17 +8,21 @@ public class Alfabet {
     //class attributes
     private ArrayList<Character> lletres;
     private String idioma;
-    private HashMap<String, Text> textos;
-    private HashMap<String, LPF> lpfs;
+    private ArrayList<Integer> textos;
+    private ArrayList<Integer> lpfs;
 
 
-    //constructora
+    // ---------------------------------------------------------------------------- //
+    //                              Constructora                                    //
+    // ---------------------------------------------------------------------------- //
     public Alfabet(String idioma, String lletres_separades_comes) throws Exception {
         this.lletres = obtenir_lletres(lletres_separades_comes);
         this.idioma = idioma;
     }
 
-    //getters
+    // ---------------------------------------------------------------------------- //
+    //                                 Getters                                      //
+    // ---------------------------------------------------------------------------- //
     public ArrayList<Character> getLletres() {
         return lletres;
     }
@@ -40,27 +44,17 @@ public class Alfabet {
         return lpfs.size();
     }
 
-    public Text getText(String nom) throws Exception {
-        Text text = textos.get(nom);
-        if (text == null) throw new Exception("ERROR: no existeix cap text amb aquest nom");
-        return text;
-    }
-
-    public LPF getLPF(String nom) throws Exception {
-        LPF lpf = lpfs.get(nom);
-        if (lpf == null) throw new Exception("ERROR: no existeix cap LPF amb aquest nom");
-        return lpf;
-    }
-
-    public HashMap<String, Text> getTextos() {
+    public ArrayList<Integer> getTextos() {
         return textos;
     }
 
-    public HashMap<String, LPF> getLPFs() {
+    public ArrayList<Integer> getLPFs() {
         return lpfs;
     }
 
-    //setters
+    // ---------------------------------------------------------------------------- //
+    //                                 Setters                                      //
+    // ---------------------------------------------------------------------------- //
     public void setLletres(ArrayList<Character> lletres) {
         this.lletres = lletres;
     }
@@ -69,8 +63,9 @@ public class Alfabet {
         this.idioma = idioma;
     }
 
-    // private class methods
-
+    // ---------------------------------------------------------------------------- //
+    //                       Private class methods                                  //
+    // ---------------------------------------------------------------------------- //
     // Obte un ArrayList de lletres a partir d'un String de lletres separades per comes.
     private ArrayList<Character> obtenir_lletres(String lletres_separades_comes) throws Exception {
         String[] lletres_separades = lletres_separades_comes.split(",");
@@ -94,72 +89,30 @@ public class Alfabet {
         return set.size() != lletres.size();
     }
 
-    // Comprova si hi ha lletres d'una LPF no contingudes a l'alfabet.
-    private boolean lletres_no_contingudes(HashMap<String, Integer> lpf_map) {
-        for (String paraula : lpf_map.keySet()) {
-            for (int i = 0; i < paraula.length(); i++) {
-                if (!lletres.contains(paraula.charAt(i))) return true;
-            }
-        }
-        return false;
-    }
 
-    // public class methods
-
+    // ---------------------------------------------------------------------------- //
+    //                       Public class methods                                  //
+    // ---------------------------------------------------------------------------- //
     // Crear un text a partir d'un String.
-    public void crearText(String nom, String text) throws Exception {
-        Text t = new Text(nom, lletres, text);
-        HashMap<String, Integer> lpf_map = t.getLPF();
-        if (lletres_no_contingudes(lpf_map)) throw new Exception("ERROR: el text conté lletres no contingudes a l'alfabet");
-        textos.put(nom, t);
-        return;
+    public void afegirText(Integer idText) throws Exception {
+        if (textos.contains(idText)) throw new Exception("ERROR: el text ja pertany a l'alfabet");
+        textos.add(idText);
     }
 
-    // Crear una LPF a partir d'un HashMap<String, int>.
-    public void crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
-        if (lletres_no_contingudes(lpf)) throw new Exception("ERROR: la LPF conté lletres no contingudes a l'alfabet");
-        LPF l = new LPF(nom, lletres, lpf);
-        lpfs.put(nom, l);
-        return;
+    public void afegirLPF(Integer idLPF) throws Exception {
+        if (lpfs.contains(idLPF)) throw new Exception("ERROR: la LPF ja pertany a l'alfabet");
+        lpfs.add(idLPF);
     }
 
     // Eliminar un text de l'alfabet.
-    public void eliminarText(String nom) {
-        // eliminar Text amb nom = nom de textos
-        textos.remove(nom);
+    public void eliminarText(Integer idText) throws Exception {
+        if (textos.contains(idText)) throw new Exception("ERROR: el text no pertany a l'alfabet");
+        textos.remove(idText);
     }
 
     // Eliminar una LPF de l'alfabet.
-    public void eliminarLPF(String nom) {
-        lpfs.remove(nom);
+    public void eliminarLPF(Integer idLPF) throws Exception {
+        if (lpfs.contains(idLPF)) throw new Exception("ERROR: la LPF no pertany a l'alfabet");
+        lpfs.remove(idLPF);
     }
-
-    // Imprimir les lletres de l'alfabet.
-    public void imprimirLletres() {
-        // Imprimir la primera lletra
-        System.out.print(lletres.get(0));
-
-        // Imprimir les lletres restants
-        for (int i = 1; i < lletres.size(); i++) {
-            System.out.print("," + lletres.get(i));
-        }
-        System.out.println();
-    }
-
-    // Imprimir textos de l'alfabet.
-    public void imprimirTextos() {
-        // Imprimir textos de l'alfabet.
-        for (Text t : textos.values()) {
-            t.imprimirEntrada();
-        }
-    }
-
-    // Imprimir LPFs de l'alfabet.
-    public void imprimirLPFs() {
-        // Imprimir textos de l'alfabet.
-        for (LPF f : lpfs.values()) {
-            f.imprimirEntrada();
-        }
-    }
-
 }
