@@ -22,10 +22,11 @@ public class ControladorTeclats {
     // Funcions de gestio del conjunt de teclats
     public Integer crearTeclatDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet,
      Integer uidEntrada, Integer files, Integer columnes) {
+        
         // creem un identificador per al nou teclat
         Integer idTeclat = conjuntTeclats.size();   // de moment estaran ordenats
 
-        // necessitem saber un ArrayList de <Character> per a crear el teclar
+        // necessitem calcular un ArrayList<Character>, la distribucio del teclat 
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabet, files, columnes);
 
@@ -40,10 +41,11 @@ public class ControladorTeclats {
     
     public Integer crearTeclatPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet,
      Integer uidEntrada, Integer files, Integer columnes) {
+
         // creem un identificador per al nou teclat
         Integer idTeclat = conjuntTeclats.size();   // de moment estaran ordenats
 
-        // necessitem saber un ArrayList de <Character> per a crear el teclar
+        // necessitem calcular un ArrayList<Character>, la distribucio del teclat
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
 
@@ -59,9 +61,9 @@ public class ControladorTeclats {
     public Integer eliminarTeclat(int idTeclat) {
         if (conjuntTeclats.containsKey(idTeclat)) {
             conjuntTeclats.remove(idTeclat);
-            return 0;   // ha funcionat
+            return 0;   // s'ha eliminat el teclat
         }
-        else return 1;  // no existeix el teclat
+        else return 1;  // no existeix un teclat amb aquell identificador
     }
     
 
