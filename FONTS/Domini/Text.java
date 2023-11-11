@@ -4,48 +4,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Text extends Entrada{
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     private String text;
 
-    // Constructora
-    public Text(String nom, ArrayList<Character> lletres, String text) throws Exception {
-        if(text == null) throw new Exception("ERROR: El text del text no pot ser null");
-        this.nom = nom;
-        this.text = text;
+    // ---------------------------------------------------------------------------- //
+    //                                   Constructora
+    // ---------------------------------------------------------------------------- //
+    public Text(String nomEntrada, Integer id, ArrayList<Character> lletres, String contingutEntrada) throws Exception {
+        if(contingutEntrada == null) throw new Exception("ERROR: El contingut del text no pot ser nul");
+        this.nom = nomEntrada;
+        this.id = id;
+        this.text = contingutEntrada;
         calculateLPF();
-        this.teclat = creaTeclat(lletres);
     }
 
-    // Mètode per obtindre el text del text
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
     public String getText() {
         return text;
     }
 
-    // Mètode per modificar el contingut del text
+    // ---------------------------------------------------------------------------- //
+    //                                   Setters
+    // ---------------------------------------------------------------------------- //
     public void setText(String nouText) throws Exception {
-        if(nouText == null) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser null");
+        if (nouText == null) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser null");
         this.text = nouText;
         calculateLPF();
     }
 
-    // Mètode per afegir més contingut al text
-    public void appendText(String additionalContent) throws Exception {
-        if(additionalContent == null) throw new IllegalArgumentException("ERROR: El contingut adicioanl del text no pot ser null");
-        this.text += additionalContent;
-        calculateLPF();
-    }
-
-    // Mètode per obtindre la quantitat de lletres totals del text
-    public int length() {
-        return this.text.length();
-    }
-
-    // Mètode per mostrar el contingut del text
-    public void imprimirEntrada() {
-        System.out.println("Nom: " + this.nom);
-        System.out.println(text);
-    }
-
-    //Funcio que calcula l'atribut lpf en funció del contigut del text
+    // ---------------------------------------------------------------------------- //
+    //                                   Funcions
+    // ---------------------------------------------------------------------------- //
     private void calculateLPF() {
         //Converteix el text en un array de Strings (totes les paraules)
         String[] paraules = this.text.split(" ");

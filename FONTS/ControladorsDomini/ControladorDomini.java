@@ -10,6 +10,8 @@ public class ControladorDomini {
     private ControladorTeclat ctrlTeclat = new ControladorTeclat();
     private ControladorUsuari ctrlUsuari = new ControladorUsuari();
 
+    private ControladorEntrada ctrlEntrada = new ControladorEntrada();
+
     // Mapa con todos los usuarios registrados en el sistema
     private String usuariActiu = null;
 
@@ -94,8 +96,16 @@ public class ControladorDomini {
     // ---------------------------------------------------------------------------- //
     //                                   Entrada                             
     // ---------------------------------------------------------------------------- //
-    public Integer crearEntrada()
-    public void eliminarEntrada()
+    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres) throws Exception {
+        ctrlEntrada.crearText(nomEntrada, contingutEntrada, lletres);
+    }
+
+    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres) throws Exception {
+        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, lletres);
+    }
+    public void eliminarEntrada(Integer id) throws Exception {
+        ctrlEntrada.eliminarEntrada(id);
+    }
 
     // ---------------------------------------------------------------------------- //
     //                                   Alfabet                             

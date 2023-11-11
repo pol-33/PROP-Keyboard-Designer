@@ -1,29 +1,25 @@
 package Domini;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Entrada {
-    // Atributs
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     protected String nom;
-    protected HashMap<String, Integer> lpf;
-    protected Teclat teclat;
 
-    //Retorna el nom de l'entrada
+    protected Integer id;
+    protected HashMap<String, Integer> lpf;
+    protected Integer idTeclat;
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
     public String getNom() {
         return this.nom;
     }
 
-    //Retorna un HashMap equivalent a la lpf de l'entrada
     public HashMap<String, Integer> getLPF() {
         return this.lpf;
     }
-
-    // Crea un teclat per l'entrada
-    protected Teclat creaTeclat(ArrayList<Character> lletres) {
-        return new Teclat(lletres, this);
-    }
-
-    // Mostrar contingut
-    public abstract void imprimirEntrada();
 }
