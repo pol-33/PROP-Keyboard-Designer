@@ -1,21 +1,19 @@
 package ControladorsDomini;
 
-import Domini.Usuari;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class ControladorDomini {
     //Instancia singleton del Controlador de Domini
     private static ControladorDomini ctrl;
+    private ControladorTeclat ctrlTeclat = new ControladorTeclat();
+    private ControladorUsuari ctrlUsuari = new ControladorUsuari();
 
     // Mapa con todos los usuarios registrados en el sistema
-    private HashMap<String,Usuari> Usuaris;
-
-    //Instancia de l'usuari actiu
-    private Usuari usuariActiu;
+    private String usuariActiu = null;
 
     private ControladorDomini() {
-        Usuaris = new HashMap<>();
     }
 
     //Metode per obtenir l'instància singleton
@@ -26,32 +24,40 @@ public class ControladorDomini {
         return ctrl;
     }
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters                             
+    // ---------------------------------------------------------------------------- //
+    
+    public ArrayList<String> getLlistaUsuaris() {
+        return ctrlUsuari.getLlistaUsuaris();
+    }
+    public ArrayList<Integer> getLlistaTeclat() {
+        return ctrlTeclat.getLlistaTeclats();
+    }
+    public ArrayList<Integer> getLlistaEntrades() {
+        return ctrlEntrada.getLlistaEntrades();
+    }
+    public ArrayList<Integer> getLlistaAlfabets() {
+        return ctrlAlfabet.getLlistaAlfabets();
+    }
+    public Boolean usuariIniciatSessio() {
+        return (usuariActiu != null);
+    }
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Usuaris                             
+    // ---------------------------------------------------------------------------- //
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
         if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
-        if (Usuaris.containsKey(nomUsuari)) {
-            Usuari usuariSessio = Usuaris.get(nomUsuari);
-            if (usuariSessio.contrasenyaCorrecta(contrasenya)) {
-                usuariActiu = usuariSessio;
-                System.out.println("S'ha iniciat sessio correctament");
-            } else {
-                throw new Exception("La contrasenya no es correcte");
-            }
-        } else {
-            throw new Exception("No existeix un usuari amb aquest nom");
+        Boolean resultat = ctrlUsuari.comprovaContrasenya(nomUsuari, contrasenya);
+        if (resultat) {
+            usuariActiu = nomUsuari;
         }
+        else throw new Exception("Contrasenya Incorrecta");
     }
-
-    public void registrarUsuari(String nomUsuari, String contrasenya) throws Exception{
-        if (!Usuaris.containsKey(nomUsuari)) {
-            Usuari nouUsuari = new Usuari(nomUsuari, contrasenya);
-            Usuaris.put(nomUsuari, nouUsuari);
-            System.out.println("S'ha registrat l'usuari " + nomUsuari + " correctament");
-        } else {
-            throw new Exception("Ja existeix un usuari amb aquesta contrasenya");
-        }
+    public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
+        ctrlUsuari.crearUsuari(nomUsuari, contrasenya);
     }
-
-    //Tancar sessio usuari actiu
     public void tancarSessio() throws Exception {
         if (usuariActiu == null) {
             throw new Exception("Has d'haver iniciat sessio per a poder tancar-la");
@@ -60,37 +66,41 @@ public class ControladorDomini {
         System.out.println("S'ha tancat sessio correctament");
     }
 
-    //Llista tots els usuaris
-    public void llistarUsuaris() throws Exception {
-        if (!Usuaris.isEmpty()) {
-            System.out.println("Aquests son els ususaris registrats al sistema");
-            for (String nomUsuari : Usuaris.keySet()) {
-                System.out.println(nomUsuari);
-            }
-        } else {
-            throw new Exception("No hi ha cap usuari registrat al sistema");
-        }
+    // ---------------------------------------------------------------------------- //
+    //                                   Teclats                             
+    // ---------------------------------------------------------------------------- //
+    public Integer crearTeclatDuesMans(Integer idEntrada, Integer idAlfabet, int files, int columnes) {
+        HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
+        ArrayList<Character> alfabet = ctrlAlfabet.getLletres(idAlfabet);
+
+        Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(lfp, alfabet, idEntrada, files, columnes);
+
+        ctrlEntrada.asociarTeclat(idEntrada, idTeclat);
+        return idTeclat;
+    }
+    public Integer crearTeclatPolzes(Integer idEntrada, Integer idAlfabet, int files, int columnes) {
+        HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
+        ArrayList<Character> alfabet = ctrlAlfabet.getLletres(idAlfabet);
+
+        Integer idTeclat = ctrlTeclat.crearTeclatPolzes(lfp, alfabet, idEntrada, files, columnes);
+
+        ctrlEntrada.asociarTeclat(idEntrada, idTeclat);
+        return idTeclat;
+    }
+    public void eliminarTeclat(Integer idTeclat) {
+        ctrlTeclat.eliminarTeclat(idTeclat);
     }
 
-    //Retorna true si l'usuari està autenticat o fals altrament
-    public boolean usuariAutenticat() {
-        return (usuariActiu != null);
-    }
+    // ---------------------------------------------------------------------------- //
+    //                                   Entrada                             
+    // ---------------------------------------------------------------------------- //
+    public Integer crearEntrada()
+    public void eliminarEntrada()
 
-    //----------------------------------------------------------------------------------------------------------------------------
-    //Crea un alfabet
-    public void crearAlfabet(String idioma, String textAlfabet) throws Exception {
-        usuariActiu.crearAlfabet(idioma, textAlfabet);
-        System.out.println("S'ha creat correctament l'alfabet: " + idioma);
-    }
+    // ---------------------------------------------------------------------------- //
+    //                                   Alfabet                             
+    // ---------------------------------------------------------------------------- //
+    public Integer crearAlfabet()
+    public Integer eliminarAlfabet()
 
-    //Llista els alfabets
-    public void llistarAlfabets() throws Exception {
-        usuariActiu.llistarAlfabets();
-    }
-
-    public void eliminarAlfabet(String idioma) throws Exception {
-        usuariActiu.eliminarAlfabet(idioma);
-        System.out.println("S'ha eliminat correctament l'idioma " + idioma);
-    }
 }

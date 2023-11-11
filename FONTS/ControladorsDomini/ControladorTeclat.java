@@ -5,26 +5,35 @@ import java.util.HashMap;
 
 import Domini.Teclat;
 
-public class ControladorTeclats {
+public class ControladorTeclat {
     private HashMap<Integer, Teclat> conjuntTeclats;
-
+    private Integer contador = 0;
+    
     //Instancia singleton del Controlador de Teclats
-    private static ControladorPerfil ctrlTeclats;
+    private static ControladorTeclat ctrlTeclats;
+
+    // Constructora de la classe
+    public ControladorTeclat() {
+        conjuntTeclats = new HashMap<>();
+    }
 
     //Metode per obtenir l'instància singleton
-    public static ControladorPerfil obtenInstancia() {
+    public static ControladorTeclat obtenInstancia() {
         if (ctrlTeclats == null) {
-            ctrlTeclats = new ControladorPerfil();
+            ctrlTeclats = new ControladorTeclat();
         }
         return ctrlTeclats;
     }
+
+    
 
     // Funcions de gestio del conjunt de teclats
     public Integer crearTeclatDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet,
      Integer uidEntrada, Integer files, Integer columnes) {
         
         // creem un identificador per al nou teclat
-        Integer idTeclat = conjuntTeclats.size();   // de moment estaran ordenats
+        Integer idTeclat = contador;   // de moment estaran ordenats
+        contador++;
 
         // necessitem calcular un ArrayList<Character>, la distribucio del teclat 
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
@@ -43,7 +52,8 @@ public class ControladorTeclats {
      Integer uidEntrada, Integer files, Integer columnes) {
 
         // creem un identificador per al nou teclat
-        Integer idTeclat = conjuntTeclats.size();   // de moment estaran ordenats
+        Integer idTeclat = contador;   // de moment estaran ordenats
+        contador++;
 
         // necessitem calcular un ArrayList<Character>, la distribucio del teclat
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
@@ -65,7 +75,6 @@ public class ControladorTeclats {
         }
         else return 1;  // no existeix un teclat amb aquell identificador
     }
-    
 
     // Fa falta modificarTeclat, i que hauria de fer??
 }
