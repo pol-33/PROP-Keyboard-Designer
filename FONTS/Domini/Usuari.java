@@ -40,6 +40,11 @@ public class Usuari {
         this.nomUsuari = nomUsuari;
     }
 
+    // Funció per obtindre la contrasenya d'un usuari
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
     // Funció modificar contraseña
     public void setContrasenya(String contrasenya) throws Exception {
         if(contrasenya.length() > MAX_LENGTH) throw new Exception("La contrasenya no pot superar els 15 caracters");
