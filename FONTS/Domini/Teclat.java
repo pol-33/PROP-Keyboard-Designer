@@ -5,11 +5,19 @@ import java.util.HashMap;
 
 public class Teclat {
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
+
     protected ArrayList<Character> tecles;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Constructora
+    // ---------------------------------------------------------------------------- //
 
     // Creadora
     public Teclat(ArrayList<Character> lletres, Integer idEntrada, Integer num_files, Integer num_columnes, Integer id) {
@@ -18,6 +26,10 @@ public class Teclat {
         this.numColumnes = num_columnes;
         this.id = id;
     }
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
 
     // Getters
     public ArrayList<Character> getTecles() {
