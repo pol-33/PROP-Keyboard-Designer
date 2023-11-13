@@ -21,12 +21,15 @@ public class Teclat {
 
     // Getters
     public ArrayList<Character> getTecles() {
-        return tecles;
+        return this.tecles;
     }
     public Integer getFiles() {
-        return numFiles;
+        return this.numFiles;
     }
     public Integer getColumnes() {
-        return numColumnes;
+        return this.numColumnes;
+    }
+    public Integer getIdEntrada() {
+        return this.idEntrada;
     }
 }
