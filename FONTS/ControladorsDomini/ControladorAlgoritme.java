@@ -26,15 +26,15 @@ public class ControladorAlgoritme {
             alfabet.add(' ');
         }
 
-        // Crear les matrius de flux i distància per a QAP
+        // Crear les matrius de flux i costos del problema QAP que resoldrem
         int[][] flux = calcularMatriuFlux(lpf, alfabet);
-        int[][] distancia = calcularMatriuDistancia(files, columnes);
+        int[][] distancia = calcularMatriuCostos(files, columnes);
 
-        // Resoldre el QAP per obtenir la distribució òptima
+        // Resoldre el problema QAP per obtenir les assignacions de lletres a tecles optimes
         AlgoritmeQAP algoritmeQAP = new AlgoritmeQAP();
         int[] distribucioOptima = algoritmeQAP.resoldreQAP(flux, distancia);
 
-        // Convertir l'índex de la distribució òptima a caràcters segons l'alfabet
+        // Convertir l'index de la distribucio optima a caracters segons l'alfabet
         ArrayList<Character> distribucioTeclat = new ArrayList<>();
         for (int i = 0; i < distribucioOptima.length; i++) {
             distribucioTeclat.add(alfabet.get(distribucioOptima[i]));
@@ -80,11 +80,12 @@ public class ControladorAlgoritme {
             for (int i = 0; i < paraula.length() - 1; i++) {
                 char c1 = paraula.charAt(i);
                 char c2 = paraula.charAt(i + 1);
-    
+                
+                // sabem que els simbols del alfabet son no repetits
                 int idx1 = alfabet.indexOf(c1);
                 int idx2 = alfabet.indexOf(c2);
     
-                // Comprovar si els caràcters es troben a l'alfabet abans d'utilitzar els índexs
+                // Comprovar si els caracters es troben a l'alfabet abans d'utilitzar els indexs
                 if (idx1 != -1 && idx2 != -1) {
                     flux[idx1][idx2] += freq;
                     flux[idx2][idx1] += freq;
@@ -94,9 +95,9 @@ public class ControladorAlgoritme {
     
         return flux;
     }
-    private int[][] calcularMatriuDistancia(int files, int columnes) {
+    private int[][] calcularMatriuCostos(int files, int columnes) {
         int n = files * columnes;
-        int[][] distancia = new int[n][n];
+        int[][] costos = new int[n][n];
     
         int migColumnes = columnes / 2; // Mitad de las columnas
     
@@ -109,18 +110,18 @@ public class ControladorAlgoritme {
                 int columna2 = j % columnes;
     
                 if (columna1 == columna2) {
-                    distancia[i][j] = 2; // Si están en la misma columna, coste 2
+                    costos[i][j] = 2; // Si utilitzem el mateix dit el cost es 2
                 } else {
                     if ((columna1 < migColumnes && columna2 < migColumnes) || (columna1 >= migColumnes && columna2 >= migColumnes)) {
-                        distancia[i][j] = 1; // Si están en la misma mitad, coste 1
+                        costos[i][j] = 1; // Si utilitzem la mateixa ma el cost es 1
                     } else {
-                        distancia[i][j] = 0; // Coste predeterminado (puede ser ajustado según tu necesidad)
+                        costos[i][j] = 0; // per les altres el cost es 0
                     }
                 }
             }
         }
     
-        return distancia;
+        return costos;
     }
     
     // Funcions auxiliars per a preparar problema LAP
