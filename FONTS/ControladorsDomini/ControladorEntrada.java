@@ -24,7 +24,7 @@ public class ControladorEntrada {
         this.conjuntEntrades = new HashMap<>();
     }
 
-    public static ControladorEntrada obtenInstancia() {
+    public static ControladorEntrada obtenirInstancia() {
         if (ctrlEntrada == null) {
             ctrlEntrada = new ControladorEntrada();
         }

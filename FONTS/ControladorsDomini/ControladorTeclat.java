@@ -18,7 +18,7 @@ public class ControladorTeclat {
     }
 
     //Metode per obtenir l'instància singleton
-    public static ControladorTeclat obtenInstancia() {
+    public static ControladorTeclat obtenirInstancia() {
         if (ctrlTeclats == null) {
             ctrlTeclats = new ControladorTeclat();
         }
