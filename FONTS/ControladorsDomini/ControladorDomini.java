@@ -36,17 +36,72 @@ public class ControladorDomini {
     public ArrayList<String> getLlistaUsuaris() {
         return ctrlUsuari.getLlistaUsuaris();
     }
-    /*
-    public ArrayList<Integer> getLlistaTeclat() {
-        return ctrlTeclat.getLlistaTeclats();
+
+    public ArrayList<Integer> getAlfabets(String nomUsuari) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlUsuari.getAlfabets(nomUsuari);
     }
-    public ArrayList<Integer> getLlistaEntrades() {
-        return ctrlEntrada.getLlistaEntrades();
+
+    public String getIdiomaAlfabet(String nomUsuari, Integer idAlfabet) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlAlfabet.getIdioma(idAlfabet);
     }
-    public ArrayList<Integer> getLlistaAlfabets() {
-        return ctrlAlfabet.getLlistaAlfabets();
+
+    public ArrayList<Character> getLletresAlfabet(String nomUsuari, Integer idAlfabet) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlAlfabet.getLletres(idAlfabet);
     }
-     */
+
+    public ArrayList<Integer> getEntrades(String nomUsuari, Integer idAlfabet) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+        return ctrlAlfabet.getEntrades(idAlfabet);
+    }
+
+    public String getTypeEntrada(String nomUsuari, Integer idEntrada) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+        return ctrlEntrada.getTypeEntrada(idEntrada);
+    }
+
+    public String getNomEntrada(String nomUsuari, Integer idEntrada) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+        return ctrlEntrada.getNomEntrada(idEntrada);
+    }
+
+    public String getContingutEntrada(String nomUsuari, Integer idEntrada) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+        return ctrlEntrada.getContingutEntrada(idEntrada);
+    }
+
+    public Integer getTeclat(String nomUsuari, Integer idEntrada) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlEntrada.getTeclat(idEntrada);
+    }
+
+    public ArrayList<Character> getTecles(String nomUsuari, Integer idTeclat) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlTeclat.getTecles(idTeclat);
+    }
+
+    public int getFiles(String nomUsuari, Integer idTeclat) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlTeclat.getFiles(idTeclat);
+    }
+
+    public int getColumnes(String nomUsuari, Integer idTeclat) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        return ctrlTeclat.getColumnes(idTeclat);
+    }
+
+    public ArrayList<Integer> getTeclatsAlfabet(String nomUsuari, Integer idAlfabet) {
+        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+        ArrayList<Integer> idEntrades = ctrlAlfabet.getEntrades(idAlfabet);
+        ArrayList<Integer> idTeclats = new ArrayList<>();
+        for (Integer idEntrada : idEntrades) {
+            idTeclats.add(ctrlEntrada.getTeclat(idEntrada));
+        }
+        return idTeclats;
+    }
+
     public Boolean usuariIniciatSessio() {
         return (usuariActiu != null);
     }
@@ -61,6 +116,10 @@ public class ControladorDomini {
     public void eliminarUsuari(String nomUsuari) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder eliminar un usuari");
         if (usuariActiu.equals(nomUsuari)) {
+            ArrayList<Integer> idsAlfabet = ctrlUsuari.getAlfabets(nomUsuari);
+            for (Integer idAlfabet : idsAlfabet) {
+                ctrlAlfabet.eliminarAlfabet(idAlfabet);
+            }
             ctrlUsuari.eliminarUsuari(nomUsuari);
             usuariActiu = null;
         }
@@ -148,7 +207,9 @@ public class ControladorDomini {
     }
 
     public void eliminarEntrada(Integer id) throws Exception {
+        int idAlfabet = ctrlEntrada.getAlfabet(id);
         ctrlEntrada.eliminarEntrada(id);
+        ctrlAlfabet.desvincularEntrada(idAlfabet, id);
     }
 
     // modificar text i lpf?
@@ -166,11 +227,15 @@ public class ControladorDomini {
 
     // Modifica l'alfabet afegint-hi una lletra nova
     public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
-        ctrlAlfabet.modificarAlfabet(idAlfabet, lletra);
+        ctrlAlfabet.afegirLletraAlfabet(idAlfabet, lletra);
     }
 
-    public Integer eliminarAlfabet(Integer idAlfabet) throws Exception {
-        return ctrlAlfabet.eliminarAlfabet(idAlfabet);
+    public void eliminarAlfabet(Integer idAlfabet) throws Exception {
+        ArrayList<Integer> entradesContingudes = ctrlAlfabet.getEntrades(idAlfabet);
+        ctrlAlfabet.eliminarAlfabet(idAlfabet);
+        for (Integer idEntrada : entradesContingudes) {
+            ctrlEntrada.eliminarEntrada(idEntrada);
+        }
     }
 
 }
