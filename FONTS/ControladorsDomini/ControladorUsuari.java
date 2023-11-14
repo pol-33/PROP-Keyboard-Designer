@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Classe ControladorUsuari. Gestiona un conjunt d'usuaris, encarregada de
+ * crear, modificar i eliminar usuaris. Conté funcions per comprovar
+ * la validesa de les credencials dels usuaris.
+ */
+
 public class ControladorUsuari {
 
     // ---------------------------------------------------------------------------- //
@@ -20,11 +27,20 @@ public class ControladorUsuari {
     //                                   Creadora
     // ---------------------------------------------------------------------------- //
 
-    // Constructora de la classe
+    /**
+     *
+     * Constructora de la clase.
+     *
+     */
     public ControladorUsuari() {
         usuaris = new HashMap<>();
     }
 
+    /**
+     *
+     * Constructor Singleton de la clase.
+     *
+     */
     public static ControladorUsuari obtenirInstancia() {
         if (ctrl == null) {
             ctrl = new ControladorUsuari();
@@ -32,21 +48,16 @@ public class ControladorUsuari {
         return ctrl;
     }
 
-    // Mètode per afegir un usuari
-    public String crearUsuari(String nomUsuari, String contrasenya) throws Exception{
-
-        if(usuaris.containsKey(nomUsuari))
-            throw new Exception("Ja existeix un usuari amb aquest nom");
-        
-        Usuari nouUsuari = new Usuari(nomUsuari, contrasenya);
-        usuaris.put(nomUsuari, nouUsuari);
-
-        return nomUsuari;
-    }
-
     // ---------------------------------------------------------------------------- //
-    //                                   Getters                             
+    //                                   Getters
     // ---------------------------------------------------------------------------- //
+
+    /**
+     *
+     * Retorna una llista de noms d'usuaris existents.
+     *
+     * @return ArrayList<String> que representa la llista de noms d'usuaris.
+     */
     public ArrayList<String> getLlistaUsuaris() {
         ArrayList<String> llistaUsuaris = new ArrayList<>();
 
@@ -61,14 +72,48 @@ public class ControladorUsuari {
     //                                   Funcions
     // ---------------------------------------------------------------------------- //
 
-    // Mètode per eliminar un usuari
+    /**
+     *
+     * Crear un nou usuari amb un nom i contrasenya.
+     *
+     * @param nomUsuari  Nom de l'usuari a crear
+     * @param contrasenya  Contrasenya de l'usuari
+     * @return String que representa el nom de l'usuari creat
+     * @throws   Exception Si ja existeix un usuari amb aquest nom.
+     */
+    public String crearUsuari(String nomUsuari, String contrasenya) throws Exception{
+
+        if(usuaris.containsKey(nomUsuari))
+            throw new Exception("Ja existeix un usuari amb aquest nom");
+
+        Usuari nouUsuari = new Usuari(nomUsuari, contrasenya);
+        usuaris.put(nomUsuari, nouUsuari);
+
+        return nomUsuari;
+    }
+
+    /**
+     *
+     * Elimina un usuari existent.
+     *
+     * @param nomUsuari  Nom de l'usuari a eliminar
+     * @throws   Exception Si el nom d'usuari és null o no existeix.
+     */
     public void eliminarUsuari(String nomUsuari) throws Exception{
         if(nomUsuari == null) throw new Exception("El nom d'usuari no pot ser null");
         if(!usuaris.containsKey(nomUsuari)) throw new Exception("No existeix cap usuari amb aquest nom");
         usuaris.remove(nomUsuari);
     }
 
-    // Mètode per obtenir un usuari
+    /**
+     *
+     * Comprova si la contrasenya d'un usuari és correcta.
+     *
+     * @param nomUsuari  Nom de l'usuari
+     * @param contrasenya  Contrasenya per comprovar
+     * @return Boolean que indica si la contrasenya és correcta o no
+     * @throws   Exception Si el nom d'usuari és null o no existeix.
+     */
     public Boolean comprovaContrasenya(String nomUsuari, String contrasenya) throws Exception {
         if(nomUsuari == null) throw new Exception("El nom d'usuari no pot ser null");
         Usuari usuari = usuaris.get(nomUsuari);
@@ -76,5 +121,4 @@ public class ControladorUsuari {
 
         return usuari.contrasenyaCorrecta(contrasenya);
     }
-    
 }
