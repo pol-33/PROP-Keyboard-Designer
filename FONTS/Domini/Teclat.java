@@ -1,32 +1,57 @@
 package Domini;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Teclat {
 
-    protected ArrayList<Character> tecles;
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
+
+    protected ArrayList<Character> assignacions;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
 
-    // Creadora
-    public Teclat(ArrayList<Character> lletres, Integer idEntrada, Integer num_files, Integer num_columnes, Integer id) {
+    // ---------------------------------------------------------------------------- //
+    //                                   Creadora
+    // ---------------------------------------------------------------------------- //
+
+    public Teclat(ArrayList<Character> assignacions, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+        this.assignacions = assignacions;
         this.idEntrada = idEntrada;
-        this.numFiles = num_files;
-        this.numColumnes = num_columnes;
+        this.numFiles = numFiles;
+        this.numColumnes = numColumnes;
         this.id = id;
     }
 
-    // Getters
-    public ArrayList<Character> getTecles() {
-        return tecles;
+    
+    /** 
+     * @return ArrayList<Character>
+     */
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
+
+    public ArrayList<Character> getAssignacions() {
+        return this.assignacions;
     }
+    
+    /** 
+     * @return Integer
+     */
     public Integer getFiles() {
-        return numFiles;
+        return this.numFiles;
     }
+    
+    /** 
+     * @return Integer
+     */
     public Integer getColumnes() {
-        return numColumnes;
+        return this.numColumnes;
+    }
+    public Integer getIdEntrada() {
+        return this.idEntrada;
     }
 }

@@ -7,10 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ControladorUsuari {
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     private static ControladorUsuari ctrl;
 
     // Mapa per guardar els usuaris
     private HashMap<String, Usuari> usuaris;
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Creadora
+    // ---------------------------------------------------------------------------- //
 
     // Constructora de la classe
     public ControladorUsuari() {
@@ -36,6 +44,23 @@ public class ControladorUsuari {
         return nomUsuari;
     }
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters                             
+    // ---------------------------------------------------------------------------- //
+    public ArrayList<String> getLlistaUsuaris() {
+        ArrayList<String> llistaUsuaris = new ArrayList<>();
+
+        // Iterate through the keys (usernames) in the usuaris map
+        for (String username : usuaris.keySet()) {
+            llistaUsuaris.add(username);
+        }
+
+        return llistaUsuaris;
+    }
+    // ---------------------------------------------------------------------------- //
+    //                                   Funcions
+    // ---------------------------------------------------------------------------- //
+
     // Mètode per eliminar un usuari
     public void eliminarUsuari(String nomUsuari) throws Exception{
         if(nomUsuari == null) throw new Exception("El nom d'usuari no pot ser null");
@@ -50,21 +75,6 @@ public class ControladorUsuari {
         if(usuari == null) throw new Exception("No existeix cap usuari amb aquest nom");
 
         return usuari.contrasenyaCorrecta(contrasenya);
-    }
-
-
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters                             
-    // ---------------------------------------------------------------------------- //
-    public ArrayList<String> getLlistaUsuaris() {
-        ArrayList<String> llistaUsuaris = new ArrayList<>();
-
-        // Iterate through the keys (usernames) in the usuaris map
-        for (String username : usuaris.keySet()) {
-            llistaUsuaris.add(username);
-        }
-
-        return llistaUsuaris;
     }
     
 }
