@@ -8,16 +8,17 @@ public class Alfabet {
     //class attributes
     private ArrayList<Character> lletres;
     private String idioma;
-    private ArrayList<Integer> textos;
-    private ArrayList<Integer> lpfs;
+    private Integer idAlfabet;
+    private ArrayList<Integer> idEntrades;
 
 
     // ---------------------------------------------------------------------------- //
     //                              Constructora                                    //
     // ---------------------------------------------------------------------------- //
-    public Alfabet(String idioma, String lletres_separades_comes) throws Exception {
-        this.lletres = obtenir_lletres(lletres_separades_comes);
+    public Alfabet(String idioma, Integer idAlfabet, String lletres_separades_comes) throws Exception {
         this.idioma = idioma;
+        this.idAlfabet = idAlfabet;
+        this.lletres = obtenir_lletres(lletres_separades_comes);
     }
 
     // ---------------------------------------------------------------------------- //
@@ -30,27 +31,14 @@ public class Alfabet {
     public String getIdioma() {
         return idioma;
     }
-
-    public int getNumLletres() {
-        return lletres.size();
+    public Integer getIdAlfabet() {
+        return idAlfabet;
     }
 
-    public int getNumTextos() {
-        // obtenir numero textos a entrades
-        return textos.size();
+    public ArrayList<Integer> getEntrades() {
+        return idEntrades;
     }
 
-    public int getNumLPFs() {
-        return lpfs.size();
-    }
-
-    public ArrayList<Integer> getTextos() {
-        return textos;
-    }
-
-    public ArrayList<Integer> getLPFs() {
-        return lpfs;
-    }
 
     // ---------------------------------------------------------------------------- //
     //                                 Setters                                      //
@@ -66,7 +54,7 @@ public class Alfabet {
     // ---------------------------------------------------------------------------- //
     //                       Private class methods                                  //
     // ---------------------------------------------------------------------------- //
-    // Obte un ArrayList de lletres a partir d'un String de lletres separades per comes.
+    // Obte un ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
     private ArrayList<Character> obtenir_lletres(String lletres_separades_comes) throws Exception {
         String[] lletres_separades = lletres_separades_comes.split(",");
         ArrayList<Character> lletres = new ArrayList<Character>();
@@ -91,28 +79,23 @@ public class Alfabet {
 
 
     // ---------------------------------------------------------------------------- //
-    //                       Public class methods                                  //
+    //                       Public class methods                                   //
     // ---------------------------------------------------------------------------- //
-    // Crear un text a partir d'un String.
-    public void afegirText(Integer idText) throws Exception {
-        if (textos.contains(idText)) throw new Exception("ERROR: el text ja pertany a l'alfabet");
-        textos.add(idText);
+    // Associar una entrada a l'alfabet.
+    public void associarEntrada(Integer idEntrada) throws Exception {
+        if (idEntrades.contains(idEntrada)) throw new Exception("ERROR: l'entrada ja pertany a l'alfabet");
+        idEntrades.add(idEntrada);
     }
 
-    public void afegirLPF(Integer idLPF) throws Exception {
-        if (lpfs.contains(idLPF)) throw new Exception("ERROR: la LPF ja pertany a l'alfabet");
-        lpfs.add(idLPF);
+    // Desvincular una entrada de l'alfabet.
+    public void desvincularEntrada(Integer idEntrada) throws Exception {
+        if (!idEntrades.contains(idEntrada)) throw new Exception("ERROR: l'entrada no pertany a l'alfabet");
+        idEntrades.remove(idEntrada);
     }
 
-    // Eliminar un text de l'alfabet.
-    public void eliminarText(Integer idText) throws Exception {
-        if (textos.contains(idText)) throw new Exception("ERROR: el text no pertany a l'alfabet");
-        textos.remove(idText);
-    }
-
-    // Eliminar una LPF de l'alfabet.
-    public void eliminarLPF(Integer idLPF) throws Exception {
-        if (lpfs.contains(idLPF)) throw new Exception("ERROR: la LPF no pertany a l'alfabet");
-        lpfs.remove(idLPF);
+    public void afegirLletra(Character lletra) throws Exception {
+        if (lletra == null) throw new Exception("ERROR: la lletra no pot ser null");
+        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra ja pertany a l'alfabet");
+        lletres.add(lletra);
     }
 }

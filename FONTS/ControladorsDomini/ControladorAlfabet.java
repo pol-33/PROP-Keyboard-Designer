@@ -2,6 +2,10 @@ package ControladorsDomini;
 
 import Domini.Alfabet;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,7 +41,7 @@ public class ControladorAlfabet {
         comptador++;
 
         // creem un alfabet nou
-        Alfabet nouAlfabet = new Alfabet(idioma, lletres_separades_comes);
+        Alfabet nouAlfabet = new Alfabet(idioma, idAlfabet, lletres_separades_comes);
 
         // afegim el teclat al conjunt
         conjuntAlfabets.put(idAlfabet, nouAlfabet);
@@ -45,10 +49,11 @@ public class ControladorAlfabet {
         return idAlfabet;
     }
 
-    public int eliminarAlfabet(Integer idAlfabet) throws Exception {
-        if (!conjuntAlfabets.containsKey(idAlfabet)) return 1;
+    public ArrayList<Integer> eliminarAlfabet(Integer idAlfabet) throws Exception {
+        if (!conjuntAlfabets.containsKey(idAlfabet)) throw new Exception("No existeix cap alfabet amb aquest identificador");
+        ArrayList<Integer> idEntrades = conjuntAlfabets.get(idAlfabet).getEntrades();
         conjuntAlfabets.remove(idAlfabet);
-        return 0;
+        return idEntrades;
     }
 
     // ---------------------------------------------------------------------------- //
@@ -66,34 +71,16 @@ public class ControladorAlfabet {
         return alfabet.getIdioma();
     }
 
-    public int getNumLletres(Integer idAlfabet) throws Exception {
+    public Integer getIdAlfabet(Integer idAlfabet) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getNumLletres();
+        return alfabet.getIdAlfabet();
     }
 
-    public int getNumTextos(Integer idAlfabet) throws Exception {
+    public ArrayList<Integer> getEntrades(Integer idAlfabet) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getNumTextos();
-    }
-
-    public int getNumLPFs(Integer idAlfabet) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getNumLPFs();
-    }
-
-    public ArrayList<Integer> getTextos(Integer idAlfabet) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getTextos();
-    }
-
-    public ArrayList<Integer> getLPFs(Integer idAlfabet) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getLPFs();
+        return alfabet.getEntrades();
     }
 
     // ---------------------------------------------------------------------------- //
@@ -114,28 +101,18 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
     //                           Mètodes públics                                    //
     // ---------------------------------------------------------------------------- //
-    public void afegirText(Integer idAlfabet, Integer idText) throws Exception {
+    public void associarEntrada(Integer idAlfabet, Integer idEntrada) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        alfabet.afegirText(idText);
+
+        alfabet.associarEntrada(idEntrada);
     }
 
-    public void afegirLPF(Integer idAlfabet, Integer idLPF) throws Exception {
+    public void desvincularEntrada(Integer idAlfabet, Integer idEntrada) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        alfabet.afegirLPF(idLPF);
-    }
 
-    public void eliminarText(Integer idAlfabet, Integer idText) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        alfabet.eliminarText(idText);
-    }
-
-    public void eliminarLPF(Integer idAlfabet, Integer idLPF) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        alfabet.eliminarLPF(idLPF);
+        alfabet.desvincularEntrada(idEntrada);
     }
 
     // Comprova que les lletres d'una lps estiguin contingudes a l'alfabet. Retorna true si totes les lletres de totes les lps estan contingudes a l'alfabet.
@@ -152,5 +129,18 @@ public class ControladorAlfabet {
         return true;
     }
 
+    public void importarAlfabet(String idioma, String localitzacioFitxer) throws Exception {
+        // llegir fitxer i guardar contingut a contingutFitxer
+        Path path = Paths.get(localitzacioFitxer);
+        String contingutFitxer = new String(Files.readAllBytes(path));
 
+        // crear alfabet
+        crearAlfabet(idioma, contingutFitxer);
+    }
+
+    public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
+        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
+        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
+        alfabet.afegirLletra(lletra);
+    }
 }
