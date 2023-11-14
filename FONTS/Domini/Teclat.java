@@ -1,7 +1,6 @@
 package Domini;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Teclat {
 
@@ -9,35 +8,46 @@ public class Teclat {
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
 
-    protected ArrayList<Character> tecles;
+    protected ArrayList<Character> assignacions;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
 
     // ---------------------------------------------------------------------------- //
-    //                                   Constructora
+    //                                   Creadora
     // ---------------------------------------------------------------------------- //
 
-    // Creadora
-    public Teclat(ArrayList<Character> lletres, Integer idEntrada, Integer num_files, Integer num_columnes, Integer id) {
+    public Teclat(ArrayList<Character> assignacions, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+        this.assignacions = assignacions;
         this.idEntrada = idEntrada;
-        this.numFiles = num_files;
-        this.numColumnes = num_columnes;
+        this.numFiles = numFiles;
+        this.numColumnes = numColumnes;
         this.id = id;
     }
 
+    
+    /** 
+     * @return ArrayList<Character>
+     */
     // ---------------------------------------------------------------------------- //
     //                                   Getters
     // ---------------------------------------------------------------------------- //
 
-    // Getters
-    public ArrayList<Character> getTecles() {
-        return this.tecles;
+    public ArrayList<Character> getAssignacions() {
+        return this.assignacions;
     }
+    
+    /** 
+     * @return Integer
+     */
     public Integer getFiles() {
         return this.numFiles;
     }
+    
+    /** 
+     * @return Integer
+     */
     public Integer getColumnes() {
         return this.numColumnes;
     }

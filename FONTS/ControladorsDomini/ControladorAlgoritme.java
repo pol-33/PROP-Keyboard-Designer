@@ -7,9 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controlador per a la gestió dels dos algorismes de distribució de lletres a tecles.
+ */
 public class ControladorAlgoritme {
     private static ControladorAlgoritme ctrl;
 
+    /**
+     * Obté una instància del ControladorAlgoritme (patró Singleton).
+     *
+     * @return La instància del ControladorAlgoritme.
+     */
     public static ControladorAlgoritme obtenirInstancia() {
         if (ctrl == null) {
             ctrl = new ControladorAlgoritme();
@@ -17,7 +25,19 @@ public class ControladorAlgoritme {
         return ctrl;
     }
 
-    // Retorna assignacions de lletres a tecles en funcio de teclat de dues mans
+    // ---------------------------------------------------------------------------- //
+    //                            Funcions publiques
+    // ---------------------------------------------------------------------------- //
+
+    /**
+    * Calcula la distribució de lletres a tecles per a un teclat de dues mans.
+    *
+    * @param lpf       Mapa de freqüència de paraules.
+    * @param alfabet   Llista d'alfabet.
+    * @param files     Nombre de files del teclat.
+    * @param columnes  Nombre de columnes del teclat.
+    * @return Una llista amb la distribució de lletres a tecles optimitzada.
+    */
     public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
         // Si sobren tecles afegim caracters en blanc a l'alfabet
         int tamanyAlfabet = alfabet.size();
@@ -43,7 +63,15 @@ public class ControladorAlgoritme {
         return distribucioTeclat;
     }
 
-    // Retorna assignacions de lletres a tecles en funcio d'un teclat de polzes
+    /**
+     * Calcula la distribució de lletres a tecles per a un teclat de polzes.
+     *
+     * @param lpf       Mapa de freqüència de paraules.
+     * @param alfabet   Llista d'alfabet.
+     * @param files     Nombre de files del teclat.
+     * @param columnes  Nombre de columnes del teclat.
+     * @return Una llista amb la distribució de lletres a tecles optimitzada.
+     */
     public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
         
         // Si sobren tecles afegim espais
@@ -69,7 +97,17 @@ public class ControladorAlgoritme {
         return distribucioTeclat;
     }
 
-    // Funcions auxiliars per a preparar problema QAP
+    // ---------------------------------------------------------------------------- //
+    //                            Funcions privades
+    // ---------------------------------------------------------------------------- //
+
+    /**
+     * Calcula la matriu de flux per al problema QAP.
+     *
+     * @param lpf     Mapa de freqüència de paraules.
+     * @param alfabet Llista d'alfabet.
+     * @return La matriu de flux generada per al QAP.
+     */
     private int[][] calcularMatriuFlux(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
         int n = alfabet.size();
         int[][] flux = new int[n][n];
@@ -95,6 +133,14 @@ public class ControladorAlgoritme {
     
         return flux;
     }
+    
+    /**
+     * Calcula la matriu de costos per al problema QAP.
+     *
+     * @param files    Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     * @return La matriu de costos generada per al QAP.
+     */
     private int[][] calcularMatriuCostos(int files, int columnes) {
         int n = files * columnes;
         int[][] costos = new int[n][n];
@@ -124,7 +170,13 @@ public class ControladorAlgoritme {
         return costos;
     }
     
-    // Funcions auxiliars per a preparar problema LAP
+    /**
+     * Calcula el vector de freqüències per al LAP.
+     *
+     * @param lpf     Mapa de freqüència de paraules.
+     * @param alfabet Llista d'alfabet.
+     * @return El vector de freqüències generat per al LAP.
+     */
     public int[] calcularVectorFrequencies(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
         int[] frequencia = new int[alfabet.size()];
 
@@ -143,6 +195,14 @@ public class ControladorAlgoritme {
 
         return frequencia;
     }
+    
+    /**
+     * Calcula el vector de costos per al LAP.
+     *
+     * @param files    Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     * @return El vector de costos generat per al LAP.
+     */
     public int[] calcularVectorCostos(int files, int columnes) {
         int[] costos = new int[files * columnes]; // Tamaño del array según el número de teclas
 
@@ -157,6 +217,7 @@ public class ControladorAlgoritme {
 
         return costos;
     } 
+    
     private double obtenirCostMinim(int i, int j, int files, int columnes) {
         double cantInferiorEsq = calcularDistanciaEuclidiana(i, j, files - 1, 0);
         double cantInferiorDreta = calcularDistanciaEuclidiana(i, j, files - 1, columnes - 1);
