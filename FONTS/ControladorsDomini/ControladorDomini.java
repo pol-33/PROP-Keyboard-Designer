@@ -3,6 +3,9 @@ package ControladorsDomini;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Classe ControladorDomini. Gestiona la capa de domini del sistema.
+ */
 
 public class ControladorDomini {
     //Instancia singleton del Controlador de Domini
@@ -14,6 +17,9 @@ public class ControladorDomini {
 
     private String usuariActiu = null;
 
+    // ---------------------------------------------------------------------------- //
+    //                              Constructora                                    //
+    // ---------------------------------------------------------------------------- //
     private ControladorDomini() {
         ctrlTeclat = ControladorTeclat.obtenirInstancia();
         ctrlUsuari = ControladorUsuari.obtenirInstancia();
@@ -32,79 +38,171 @@ public class ControladorDomini {
     // ---------------------------------------------------------------------------- //
     //                                   Getters                             
     // ---------------------------------------------------------------------------- //
-    
+
+    /**
+     * Retorna una llista de noms dels usuaris existents.
+     * @return ArrayList<String> que representa la llista de noms dels usuaris.
+     */
     public ArrayList<String> getLlistaUsuaris() {
         return ctrlUsuari.getLlistaUsuaris();
     }
 
-    public ArrayList<Integer> getAlfabets(String nomUsuari) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
-        return ctrlUsuari.getAlfabets(nomUsuari);
+    /**
+     * Retorna una llista de noms dels alfabets existents de l'usuari loggejat.
+     * @return ArrayList<Integer> que representa la llista de noms dels alfabets.
+     * @throws Exception Si l'usuari no ha inciat sessió
+     */
+    public ArrayList<Integer> getAlfabets() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
+        return ctrlUsuari.getAlfabets(usuariActiu);
     }
 
-    public String getIdiomaAlfabet(String nomUsuari, Integer idAlfabet) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    /**
+     * Retorna el nom de l'idioma de l'alfabet demanat, que pertany a l'usuari loggejat.
+     * @param idAlfabet Identificador de l'alfabet
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
+     */
+    public String getIdiomaAlfabet(Integer idAlfabet) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus alfabets");
+        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
         return ctrlAlfabet.getIdioma(idAlfabet);
     }
 
-    public ArrayList<Character> getLletresAlfabet(String nomUsuari, Integer idAlfabet) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    /**
+     * Retorna les lletres de l'alfabet demanat, que pertany a l'usuari loggejat.
+     * @param idAlfabet Identificador de l'alfabet
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
+     */
+    public ArrayList<Character> getLletresAlfabet(Integer idAlfabet) {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus alfabets");
+        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
         return ctrlAlfabet.getLletres(idAlfabet);
     }
 
-    public ArrayList<Integer> getEntrades(String nomUsuari, Integer idAlfabet) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+    /**
+     * Retorna les entrades associades a l'alfabet demanat, que pertany a l'usuari loggejat.
+     * @param idAlfabet Identificador de l'alfabet
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
+     */
+    public ArrayList<Integer> getEntrades(Integer idAlfabet) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
         return ctrlAlfabet.getEntrades(idAlfabet);
     }
 
-    public String getTypeEntrada(String nomUsuari, Integer idEntrada) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+    /**
+     * Retorna el tipus de l'entrada demanada, "text" o "lpf" que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return String que representa el tipus de l'entrada. Pot ser "text" o "lpf"
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
+     */
+    public String getTypeEntrada(Integer idEntrada) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getTypeEntrada(idEntrada);
     }
 
-    public String getNomEntrada(String nomUsuari, Integer idEntrada) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+    /**
+     * Retorna el nom de l'entrada demanada, que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return String que representa el nom de l'entrada
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
+     */
+    public String getNomEntrada(Integer idEntrada) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getNomEntrada(idEntrada);
     }
 
-    public String getContingutEntrada(String nomUsuari, Integer idEntrada) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure les teves entrades si no has iniciat sessio");
+    /**
+     * Retorna el contingut de l'entrada demanada, que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return String que representa el contingut de l'entrada
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
+     */
+    public String getContingutEntrada(Integer idEntrada) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getContingutEntrada(idEntrada);
     }
 
-    public Integer getTeclat(String nomUsuari, Integer idEntrada) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    /**
+     * Retorna el teclat associat a l'entrada demanada, que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return Integer que representa l'identificador del teclat associat a l'entrada
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
+     */
+    public Integer getTeclat(Integer idEntrada) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getTeclat(idEntrada);
     }
 
-    public ArrayList<Character> getTecles(String nomUsuari, Integer idTeclat) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    /**
+     * Retorna les tecles associat a l'alfabet demanat, que pertany a l'usuari loggejat.
+     * @param idTeclat
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Character> getTecles(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
         return ctrlTeclat.getTecles(idTeclat);
     }
 
-    public int getFiles(String nomUsuari, Integer idTeclat) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    public int getFiles(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
         return ctrlTeclat.getFiles(idTeclat);
     }
 
-    public int getColumnes(String nomUsuari, Integer idTeclat) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    public int getColumnes(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
+        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
         return ctrlTeclat.getColumnes(idTeclat);
     }
 
-    public ArrayList<Integer> getTeclatsAlfabet(String nomUsuari, Integer idAlfabet) {
-        if (!usuariActiu.equals(nomUsuari)) throw new Exception("No pots veure els teus teclats si no has iniciat sessio");
+    public ArrayList<Integer> getTeclatsAlfabet(Integer idAlfabet) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
         ArrayList<Integer> idEntrades = ctrlAlfabet.getEntrades(idAlfabet);
-        ArrayList<Integer> idTeclats = new ArrayList<>();
+        ArrayList<Integer> idsTeclats = new ArrayList<>();
         for (Integer idEntrada : idEntrades) {
-            idTeclats.add(ctrlEntrada.getTeclat(idEntrada));
+            idsTeclats.add(ctrlEntrada.getTeclat(idEntrada));
         }
-        return idTeclats;
+        return idsTeclats;
     }
 
     public Boolean usuariIniciatSessio() {
         return (usuariActiu != null);
     }
+
+    // ---------------------------------------------------------------------------- //
+    //                       Private class methods                                  //
+    // ---------------------------------------------------------------------------- //
+
+    private boolean entradaEsdUsuari(String idUsuari, Integer idEntrada) {
+        ArrayList<Integer> idsAlfabets = ctrlUsuari.getAlfabets(idUsuari);
+        boolean esdUsuari = false;
+
+        int i = 0;
+        while (!esdUsuari && idsAlfabets.size() > i) {
+            Integer idAlfabet = idsAlfabets.get(i);
+            if (ctrlAlfabet.getEntrades(idAlfabet).contains(idEntrada)) esdUsuari = true;
+        }
+        return esdUsuari;
+    }
+
 
     // ---------------------------------------------------------------------------- //
     //                                   Usuaris                             
@@ -152,7 +250,7 @@ public class ControladorDomini {
 
 
     // ---------------------------------------------------------------------------- //
-    //                                   Teclats                             
+    //                                   Teclats                                    //
     // ---------------------------------------------------------------------------- //
     public Integer crearTeclatDuesMans(Integer idEntrada, Integer idAlfabet, int files, int columnes) {
         HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
