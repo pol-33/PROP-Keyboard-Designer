@@ -2,6 +2,9 @@ package Domini;
 
 import java.util.ArrayList;
 
+/**
+ * Representa un teclat.
+ */
 public class Teclat {
 
     // ---------------------------------------------------------------------------- //
@@ -18,6 +21,14 @@ public class Teclat {
     //                                   Creadora
     // ---------------------------------------------------------------------------- //
 
+    /**
+     * 
+     * @param assignacions ArrayList de l'ordre de les lletres en el teclat
+     * @param idEntrada Identificador d l'entrada a la que esta asociat
+     * @param numFiles Numero de files del layout
+     * @param numColumnes Numero de columnes del layout
+     * @param id Identificador del teclat
+     */
     public Teclat(ArrayList<Character> assignacions, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
         this.assignacions = assignacions;
         this.idEntrada = idEntrada;
@@ -34,6 +45,9 @@ public class Teclat {
     //                                   Getters
     // ---------------------------------------------------------------------------- //
 
+    /**
+     * @return ArrayList<Character>
+     */
     public ArrayList<Character> getAssignacions() {
         return this.assignacions;
     }
@@ -51,6 +65,10 @@ public class Teclat {
     public Integer getColumnes() {
         return this.numColumnes;
     }
+    
+    /** 
+     * @return Integer
+     */
     public Integer getIdEntrada() {
         return this.idEntrada;
     }

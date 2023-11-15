@@ -1,6 +1,15 @@
 package Domini;
 
+/**
+ * S'encarrega de resoldre el QAP, utilitzant hill climbing
+ */
 public class AlgoritmeQAP {
+    /**
+     * Resol un problema QAP en general
+     * @param fluxos Matriu que representa el nombre de vegades que dues lletres estan juntes
+     * @param costos Matriu que representa el cost entre dues tecles
+     * @return
+     */
     public int[] resoldreQAP(int[][] fluxos, int[][] costos) {
         int tamanyProblema = fluxos.length;
         int[] solucio = new int[tamanyProblema];
@@ -17,6 +26,15 @@ public class AlgoritmeQAP {
         return solucio;
     }
 
+    /**
+     * Resol un problema de hill climbing, on l'estat es el vector de assignacions,
+     * els operadors son swaps d'elements, i l'heuristica es calcula en funcio del 
+     * problema QAP (amb matrius de fluxos i costos)
+     * @param solucioActual
+     * @param fluxos
+     * @param costos
+     * @param costActual
+     */
     private void hillClimbing(int[] solucioActual, int[][] fluxos, int[][] costos, int costActual) {
         boolean millora = true;
     
@@ -38,7 +56,7 @@ public class AlgoritmeQAP {
                     if (nouCost < millorCost) {
                         // Actualitzem cost
                         millorCost = nouCost;
-                        millora = true;
+                        millora = true; // amb aixo sortirem dels fors i comencem una nova iteracio
                     }
                     else {
                         // deixem la solucio com estava, desfem el swap
@@ -48,11 +66,16 @@ public class AlgoritmeQAP {
                     }
                 }
             }
-            
-            costActual = millorCost; // Actualizar el costo actual al mejor costo encontrado
         }
     }
     
+    /**
+     * Calcula el cost de una solucio concreta tenint en compte els fluxos i costos
+     * @param solucio
+     * @param fluxos
+     * @param costos
+     * @return
+     */
     private int calcularCostSolucio(int[] solucio, int[][] fluxos, int[][] costos) {
         int costTotal = 0;
         int n = solucio.length;

@@ -4,6 +4,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class AlgoritmeLAP {
+    /**
+     * Resol un problema general LAP. Simplement ordena les frequecies de grans
+     * a petites i els costos de petits a grans. Despres, ordena succesivament la
+     * frequencia mes gran amb el cost mes petit.
+     * @param frecuencies
+     * @param costos
+     * @return
+     */
     public int[] resoldreCostosConstants(int[] frecuencies, int[] costos) {
         int tamanyProblema = frecuencies.length;
 
