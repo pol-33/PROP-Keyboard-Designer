@@ -39,13 +39,6 @@ public class ControladorAlgoritme {
     * @return Una llista amb la distribució de lletres a tecles optimitzada.
     */
     public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
-        // Si sobren tecles afegim caracters en blanc a l'alfabet
-        int tamanyAlfabet = alfabet.size();
-        while (tamanyAlfabet < files * columnes) {
-            tamanyAlfabet++;
-            alfabet.add(' ');
-        }
-
         // Crear les matrius de flux i costos del problema QAP que resoldrem
         int[][] flux = calcularMatriuFlux(lpf, alfabet);
         int[][] distancia = calcularMatriuCostos(files, columnes);
@@ -58,6 +51,13 @@ public class ControladorAlgoritme {
         ArrayList<Character> distribucioTeclat = new ArrayList<>();
         for (int i = 0; i < distribucioOptima.length; i++) {
             distribucioTeclat.add(alfabet.get(distribucioOptima[i]));
+        }
+
+        // Si sobren tecles afegim caracters en blanc a l'alfabet
+        int tamanyTeclat = distribucioTeclat.size();
+        while (tamanyTeclat < files * columnes) {
+            tamanyTeclat++;
+            distribucioTeclat.add(' ');
         }
 
         return distribucioTeclat;

@@ -1,48 +1,68 @@
 package Domini;
 
-import java.util.Arrays;
-
 public class AlgoritmeQAP {
+    public int[] resoldreQAP(int[][] fluxos, int[][] costos) {
+        int tamanyProblema = fluxos.length;
+        int[] solucio = new int[tamanyProblema];
 
-    // funcio principal
-    public int[] resoldreQAP(int[][] flux, int[][] distancia) {
-        int n = flux.length;
-        int[] mejorSolucion = new int[n];
-        boolean[] asignado = new boolean[n];
-        Arrays.fill(asignado, false);
+        // Generem una solucio inicial per ordre on les lletres s'asignen
+        // a tecles per ordre
+        for (int i = 0; i < tamanyProblema; i++) {
+            solucio[i] = i;
+        }
 
-        for (int i = 0; i < n; i++) {
-            int mejorIndice = -1;
-            int mejorCoste = Integer.MAX_VALUE;
+        // cridem a hill climbing
+        hillClimbing(solucio, fluxos, costos, calcularCostSolucio(solucio, fluxos, costos));
+        
+        return solucio;
+    }
 
-            for (int j = 0; j < n; j++) {
-                if (!asignado[j]) {
-                    int costoTotal = calcularCostoTotal(j, asignado, flux, distancia);
-                    if (costoTotal < mejorCoste) {
-                        mejorCoste = costoTotal;
-                        mejorIndice = j;
+    private void hillClimbing(int[] solucioActual, int[][] fluxos, int[][] costos, int costActual) {
+        boolean millora = true;
+    
+        while (millora) {
+            millora = false;
+            int millorCost = costActual;
+    
+            for (int i = 0; i < solucioActual.length && !millora; i++) {
+                for (int j = i + 1; j < solucioActual.length && !millora; j++) {
+                    // Intercanviem els dos elements per generar una nova solucio
+                    int auxSwap = solucioActual[i];
+                    solucioActual[i] = solucioActual[j];
+                    solucioActual[j] = auxSwap;
+                    
+                    // Calcular el cost de la nova solucio
+                    int nouCost = calcularCostSolucio(solucioActual, fluxos, costos);
+    
+                    // Comprovar si el swap millora el cost
+                    if (nouCost < millorCost) {
+                        // Actualitzem cost
+                        millorCost = nouCost;
+                        millora = true;
+                    }
+                    else {
+                        // deixem la solucio com estava, desfem el swap
+                        auxSwap = solucioActual[i];
+                        solucioActual[i] = solucioActual[j];
+                        solucioActual[j] = auxSwap;
                     }
                 }
             }
-
-            mejorSolucion[i] = mejorIndice;
-            asignado[mejorIndice] = true;
+            
+            costActual = millorCost; // Actualizar el costo actual al mejor costo encontrado
         }
-
-        return mejorSolucion;
     }
-     // calculra cost de asignacio parcial
-    private int calcularCostoTotal(int indice, boolean[] asignado, int[][] flux, int[][] distancia) {
-        int costoTotal = 0;
-        int n = asignado.length;
+    
+    private int calcularCostSolucio(int[] solucio, int[][] fluxos, int[][] costos) {
+        int costTotal = 0;
+        int n = solucio.length;
 
         for (int i = 0; i < n; i++) {
-            if (asignado[i]) {
-                costoTotal += flux[indice][i] * distancia[i][indice];
+            for (int j = 0; j < n; j++) {
+                costTotal += fluxos[i][j] * costos[solucio[i]][solucio[j]];
             }
         }
 
-        return costoTotal;
+        return costTotal;
     }
 }
-
