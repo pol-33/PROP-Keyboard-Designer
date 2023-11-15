@@ -238,4 +238,44 @@ public class ControladorDomini {
         }
     }
 
+    //Retorna true si l'usuari està autenticat o fals altrament
+    public boolean usuariAutenticat() {
+        return (usuariActiu != null);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    //Crea un alfabet
+    public void crearAlfabet(String idioma, String textAlfabet) throws Exception {
+        usuariActiu.crearAlfabet(idioma, textAlfabet);
+        System.out.println("S'ha creat correctament l'alfabet: " + idioma);
+    }
+
+    //Llista els alfabets
+    public void llistarAlfabets() throws Exception {
+        usuariActiu.llistarAlfabets();
+    }
+
+    public void eliminarAlfabet(String idioma) throws Exception {
+        usuariActiu.eliminarAlfabet(idioma);
+        System.out.println("S'ha eliminat correctament l'idioma " + idioma);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    public void crearText(String idioma, String nomEntrada, String contingutEntrada) throws Exception {
+        usuariActiu.crearText(idioma, nomEntrada, contingutEntrada);
+        System.out.println("S'ha creat correctament el text " + nomEntrada);
+    }
+
+    public void crearLPF(String idioma, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
+        usuariActiu.crearLPF(idioma, nomEntrada, contingutEntrada);
+        System.out.println("S'ha creat correctament la llista de paraules amb frequencia " + nomEntrada);
+    }
+
+    public void llistarTexts() throws Exception {
+        usuariActiu.llistarTexts();
+    }
+
+    public void llistarLPFs() throws Exception {
+        usuariActiu.llistarLPFs();
+    }
 }
