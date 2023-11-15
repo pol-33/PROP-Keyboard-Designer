@@ -68,6 +68,20 @@ public class ControladorUsuari {
 
         return llistaUsuaris;
     }
+
+    /**
+     *
+     * Retorna una llista dels ids dels alfabets associats a un usuari.
+     *
+     * @return ArrayList<Integer> que representa la llista d'ids dels alfabets.
+     * @throws   Exception Si el nom d'usuari és null o no existeix.
+     */
+    public ArrayList<Integer> getAlfabets(String nomUsuari) throws Exception {
+        if (nomUsuari == null) throw new Exception("El nom d'usuari no pot ser null");
+        Usuari usuari = usuaris.get(nomUsuari);
+        if (usuari == null) throw new Exception("No existeix cap usuari amb aquest nom");
+        return usuari.getIDsAlfabets();
+    }
     // ---------------------------------------------------------------------------- //
     //                                   Funcions
     // ---------------------------------------------------------------------------- //
@@ -120,5 +134,21 @@ public class ControladorUsuari {
         if(usuari == null) throw new Exception("No existeix cap usuari amb aquest nom");
 
         return usuari.contrasenyaCorrecta(contrasenya);
+    }
+
+
+    /**
+     *
+     *  Modifica un usuari
+     *
+     * @param nomUsuari  Nom de l'usuari
+     * @param contrasenya  Contrasenya per comprovar
+     * @throws   Exception Si el nom d'usuari és null o no existeix.
+     */
+    public void modificarUsuari(String nomUsuari, String contrasenya) throws Exception {
+        if (nomUsuari == null) throw new Exception("El nom d'usuari no pot ser null");
+        Usuari usuari = usuaris.get(nomUsuari);
+        if (usuari == null) throw new Exception("No existeix cap usuari amb aquest nom");
+        usuari.setContrasenya(contrasenya);
     }
 }
