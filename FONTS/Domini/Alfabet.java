@@ -4,144 +4,145 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Classe Alfabet. Representa l'alfabet d'un idioma, as a dir, un conjunt de lletres no repetides d'un sol caracter.
+ */
+
 public class Alfabet {
     //class attributes
     private ArrayList<Character> lletres;
     private String idioma;
-    private HashMap<String, Text> textos;
-    private HashMap<String, LPF> lpfs;
+    private Integer idAlfabet;
+    private ArrayList<Integer> idEntrades;
 
-    //constructora
-    public Alfabet(String idioma, ArrayList<Character> lletres) throws Exception {
-        if (lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduït lletres repetides");
-        this.lletres = lletres;
+
+    // ---------------------------------------------------------------------------- //
+    //                              Constructora                                    //
+    // ---------------------------------------------------------------------------- //
+    public Alfabet(String idioma, Integer idAlfabet, String lletres_separades_comes) throws Exception {
         this.idioma = idioma;
-    }
-
-    public Alfabet(String idioma, String lletres_separades_comes) throws Exception {
+        this.idAlfabet = idAlfabet;
         this.lletres = obtenir_lletres(lletres_separades_comes);
-        this.idioma = idioma;
     }
 
-    //getters
+    // ---------------------------------------------------------------------------- //
+    //                                 Getters                                      //
+    // ---------------------------------------------------------------------------- //
+
+    /**
+     * Retorna les lletres de l'alfabet.
+     * @return ArrayList amb les lletres de l'alfabet.
+     */
     public ArrayList<Character> getLletres() {
         return lletres;
     }
 
+    /**
+     * Retorna l'idioma de l'alfabet.
+     * @return String amb l'idioma de l'alfabet.
+     */
     public String getIdioma() {
         return idioma;
     }
 
-    public int getNumLletres() {
-        return lletres.size();
+    /**
+     * Retorna l'identificador de l'alfabet.
+     * @return Integer amb l'identificador de l'alfabet.
+     */
+    public Integer getIdAlfabet() {
+        return idAlfabet;
     }
 
-    public int getNumTextos() {
-        return textos.size();
+    /**
+     * Retorna els identificadors de les entrades associades a l'alfabet.
+     * @return ArrayList amb els identificadors de les entrades associades a l'alfabet.
+     */
+    public ArrayList<Integer> getEntrades() {
+        return idEntrades;
     }
 
-    public int getNumLPFs() {
-        return lpfs.size();
-    }
 
-    public Text getText(String nom) throws Exception {
-        Text text = textos.get(nom);
-        if (text == null) throw new Exception("ERROR: no existeix cap text amb aquest nom");
-        return text;
-    }
-
-    public LPF getLPF(String nom) throws Exception {
-        LPF lpf = lpfs.get(nom);
-        if (lpf == null) throw new Exception("ERROR: no existeix cap LPF amb aquest nom");
-        return lpf;
-    }
-
-    public HashMap<String, Text> getTextos() {
-        return textos;
-    }
-
-    public HashMap<String, LPF> getLPFs() {
-        return lpfs;
-    }
-
-    //setters
-    public void setLletres(ArrayList<Character> lletres) {
-        this.lletres = lletres;
-    }
-
+    // ---------------------------------------------------------------------------- //
+    //                                 Setters                                      //
+    // ---------------------------------------------------------------------------- //
+    /**
+     * Modifica l'idioma de l'alfabet.
+     * @param idioma Nou idioma de l'alfabet.
+     */
     public void setIdioma(String idioma) {
         this.idioma = idioma;
     }
 
-    // private class methods
+    // ---------------------------------------------------------------------------- //
+    //                       Private class methods                                  //
+    // ---------------------------------------------------------------------------- //
 
-    // Obte un ArrayList de lletres a partir d'un String de lletres separades per comes.
+    /**
+     * Obte un ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
+     * @param lletres_separades_comes String no buit de lletres no repetides separades per comes.
+     * @return ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
+     * @throws Exception Si les lletres son de multiples caracters
+     * @throws Exception Si l'alfabet no ta cap lletra
+     * @throws Exception Si s'han introduit lletres repetides
+     */
     private ArrayList<Character> obtenir_lletres(String lletres_separades_comes) throws Exception {
         String[] lletres_separades = lletres_separades_comes.split(",");
         ArrayList<Character> lletres = new ArrayList<Character>();
 
         for (String s : lletres_separades) {
-            if (s.length() != 1) throw new Exception("ERROR: les lletres només poden tenir un caràcter");
-            lletres.add(s.charAt(0));
+            if (s.length() > 1) throw new Exception("ERROR: les lletres nomas poden tenir un caracter");
+            if (s.length() != 0) lletres.add(s.charAt(0));
         }
 
+        if (lletres.isEmpty()) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
+
         // Verifica si hi ha lletres repetides.
-        if(lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduït lletres repetides");
+        if(lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduit lletres repetides");
         return lletres;
     }
 
-    // Comprova si hi ha lletres repetides a l'alfabet.
+    /**
+     * Comprova si hi ha lletres repetides en un conjunt de caracters.
+     * @param lletres ArrayList de lletres a comprovar.
+     * @return True si hi ha lletres repetides en un conjunt de caracters, false altrament.
+     */
     private boolean lletres_repetides(ArrayList<Character> lletres) {
-        HashSet<Character> set = new HashSet<Character>(lletres);
+        HashSet<Character> set = new HashSet<>(lletres);
         return set.size() != lletres.size();
     }
 
-    // Comprova si hi ha lletres d'una LPF no contingudes a l'alfabet.
-    private boolean lletres_no_contingudes(HashMap<String, Integer> lpf_map) {
-        for (String paraula : lpf_map.keySet()) {
-            for (int i = 0; i < paraula.length(); i++) {
-                if (!lletres.contains(paraula.charAt(i))) return true;
-            }
-        }
-        return false;
+    // ---------------------------------------------------------------------------- //
+    //                       Public class methods                                   //
+    // ---------------------------------------------------------------------------- //
+    /**
+     * Associa una entrada a l'alfabet.
+     * @param idEntrada Identificador de l'entrada a associar.
+     * @throws Exception Si l'entrada ja pertany a l'alfabet.
+     */
+    public void associarEntrada(Integer idEntrada) throws Exception {
+        if (idEntrades.contains(idEntrada)) throw new Exception("ERROR: l'entrada ja pertany a l'alfabet");
+        idEntrades.add(idEntrada);
     }
 
-    // public class methods
-
-    // Crear un text a partir d'un String.
-    public Text crearText(String nom, String text) throws Exception {
-        Text t = new Text(nom, lletres, text);
-        HashMap<String, Integer> lpf_map = t.getLPF();
-        if (lletres_no_contingudes(lpf_map)) throw new Exception("ERROR: el text conté lletres no contingudes a l'alfabet");
-        textos.put(nom, t);
-        return t;
+    /**
+     * Desvincula una entrada de l'alfabet.
+     * @param idEntrada Identificador de l'entrada a desvincular.
+     * @throws Exception Si l'entrada no pertany a l'alfabet.
+     */
+    public void desvincularEntrada(Integer idEntrada) throws Exception {
+        if (!idEntrades.contains(idEntrada)) throw new Exception("ERROR: l'entrada no pertany a l'alfabet");
+        idEntrades.remove(idEntrada);
     }
 
-    // Crear una LPF a partir d'un HashMap<String, int>.
-    public LPF crearLPF(String nom, HashMap<String, Integer> lpf) throws Exception {
-        if (lletres_no_contingudes(lpf)) throw new Exception("ERROR: la LPF conté lletres no contingudes a l'alfabet");
-        LPF l = new LPF(nom, lletres, lpf);
-        lpfs.put(nom, l);
-        return l;
+    /**
+     * Afegeix una nova lletra a l'alfabet.
+     * @param lletra Lletra a afegir.
+     * @throws Exception Si la lletra ja pertany a l'alfabet.
+     * @throws Exception Si la lletra as null.
+     */
+    public void afegirLletra(Character lletra) throws Exception {
+        if (lletra == null) throw new Exception("ERROR: la lletra no pot ser null");
+        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra ja pertany a l'alfabet");
+        lletres.add(lletra);
     }
-
-    // Eliminar un text de l'alfabet.
-    public void eliminarText(String nom) {
-        // eliminar Text amb nom = nom de textos
-        textos.remove(nom);
-    }
-
-    // Eliminar una LPF de l'alfabet.
-    public void eliminarLPF(String nom) {
-        lpfs.remove(nom);
-    }
-
-    // Imprimir les lletres de l'alfabet.
-    public void imprimirLletres() {
-        for (Character c : lletres) {
-            System.out.print(c + ",");
-        }
-        System.out.println();
-    }
-
 }
