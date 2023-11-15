@@ -26,7 +26,7 @@ public class Usuari {
     private String contrasenya;
 
     // Punter cap a alfabets
-    private ArrayList<String> idsAlfabets;
+    private ArrayList<Integer> idsAlfabets;
 
     // ---------------------------------------------------------------------------- //
     //                                   Creadora
@@ -139,7 +139,7 @@ public class Usuari {
      *
      * @return ArrayList que conté els IDs dels alfabetes de l'usuari.
      */
-    public ArrayList<String> getIDsAlfabets() {
+    public ArrayList<Integer> getIDsAlfabets() {
         return idsAlfabets;
     }
 
@@ -194,7 +194,7 @@ public class Usuari {
      *
      * @param idAlfabet El identificador de l'alfabet a afegir.
      */
-    public void afegirAlfabet(String idAlfabet){
+    public void afegirAlfabet(Integer idAlfabet){
         if(!idsAlfabets.contains(idAlfabet)) idsAlfabets.add(idAlfabet);
     }
 
