@@ -22,4 +22,14 @@ public abstract class Entrada {
     public HashMap<String, Integer> getLPF() {
         return this.lpf;
     }
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Funcions
+    // ---------------------------------------------------------------------------- //
+    public void asociarTeclat(Integer idTeclat) throws Exception {
+        if (this.idTeclat == null) {
+            throw new Exception("L'entrada ja té un teclat associat");
+        }
+        this.idTeclat = idTeclat;
+    }
 }

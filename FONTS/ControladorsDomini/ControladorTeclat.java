@@ -145,7 +145,7 @@ public class ControladorTeclat {
      * @return Llista de caracters que representen les lletres al teclat per files.
      * @throws   Exception No existeix un teclat amb aquell identificador.
      */
-    public ArrayList<Character> getAssignacionsTeclat(Integer idTeclat) throws Exception { 
+    public ArrayList<Character> getTecles(Integer idTeclat) throws Exception { 
 
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getAssignacions();
@@ -161,8 +161,23 @@ public class ControladorTeclat {
      *
      * @return Llista de ids de teclat
      */
-    public ArrayList<Integer> getLlistaIdTeclats() { 
+    public ArrayList<Integer> getLlistaIdTeclats() throws Exception { 
         ArrayList<Integer> llistaIdTeclats = new ArrayList<>(conjuntTeclats.keySet());
         return llistaIdTeclats;
+    }
+    
+    /**
+     * Obte l'identificador de l'entrada associada a un tecalt
+     * @param idTeclat
+     * @return
+     * @throws Exception
+     */
+    public Integer getEntrada(Integer idTeclat) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getIdEntrada();
+        } 
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
     }
 }

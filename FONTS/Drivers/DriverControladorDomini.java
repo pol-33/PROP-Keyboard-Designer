@@ -3,6 +3,7 @@ package Drivers;
 import ControladorsDomini.ControladorDomini;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DriverControladorDomini {
@@ -56,7 +57,7 @@ public class DriverControladorDomini {
                     if (!driverCtrlDomini.testUsuariAutenticat()) {
                         System.out.println("Has d'haver iniciat sessio per a poder fer aquesta funcionalitat");
                         break;
-                    };
+                    }
                     System.out.println("Introdueix l'idioma de l'alfabet");
                     idioma = in.next();
                     System.out.println("Introdueix les lletres de l'alfabet");
@@ -68,10 +69,18 @@ public class DriverControladorDomini {
                     if (!driverCtrlDomini.testUsuariAutenticat()) {
                         System.out.println("Has d'haver iniciat sessio per a poder fer aquesta funcionalitat");
                         break;
-                    };
-                    driverCtrlDomini.testUsuariAutenticat();
+                    }
                     driverCtrlDomini.testLlistarAlfabets();
                     break;
+
+                case 7:
+                    if (!driverCtrlDomini.testUsuariAutenticat()) {
+                        System.out.println("Has d'haver iniciat sessio per a poder fer aquesta funcionalitat");
+                        break;
+                    };
+                    System.out.println("Introdueix el nom de l'alfabet a eliminar");
+                    idioma = in.next();
+                    driverCtrlDomini.testEliminarAlfabet(idioma);
             }
         }
     }
@@ -85,6 +94,11 @@ public class DriverControladorDomini {
         System.out.println("4 - Veure tots els usuaris registrats");
         System.out.println("5 - Crear alfabet");
         System.out.println("6 - Llistar alfabets");
+        System.out.println("7 - Eliminar alfabet");
+        System.out.println("8 - Crear text");
+        System.out.println("9 - Crear llista de paraules amb frequencia");
+        System.out.println("10 - Llistar textos");
+        System.out.println("11 - Llistar llistes de paraules amb frequencia");
     }
 
     //Invoca la creacio d'usuari
@@ -109,9 +123,7 @@ public class DriverControladorDomini {
     public void testTancarSessio() {
         try {
             ctrlDomini.tancarSessio();
-            ;
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
         }
     }
@@ -144,6 +156,38 @@ public class DriverControladorDomini {
     public void testEliminarAlfabet(String idioma) {
         try {
             ctrlDomini.eliminarAlfabet(idioma);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testCrearText(String idioma, String nomEntrada, String text) {
+        try {
+            ctrlDomini.crearText(idioma, nomEntrada, text);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testCrearLPF(String idioma, String nomEntrada, HashMap<String, Integer> lpf) {
+        try {
+            ctrlDomini.crearLPF(idioma, nomEntrada, lpf);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testLlistarTexts() {
+        try {
+            ctrlDomini.llistarTexts();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testLlistarLPFs() {
+        try {
+            ctrlDomini.llistarLPFs();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

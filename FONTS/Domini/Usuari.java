@@ -26,7 +26,7 @@ public class Usuari {
     private String contrasenya;
 
     // Punter cap a alfabets
-    private ArrayList<String> idsAlfabets;
+    private ArrayList<Integer> idsAlfabets;
 
     // ---------------------------------------------------------------------------- //
     //                                   Creadora
@@ -46,16 +46,79 @@ public class Usuari {
         this.idsAlfabets = new ArrayList<>();
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters
-    // ---------------------------------------------------------------------------- //
+    //
+    public void crearAlfabet(String nomAlfabet, String textAlfabet) throws Exception{
+        if (alfabets.containsKey(nomAlfabet)) throw new Exception("Ja existeix un alfabet d'aquest idioma");
+        Alfabet nouAlfabet = new Alfabet(nomAlfabet, textAlfabet);
+        this.alfabets.put(nomAlfabet, nouAlfabet);
+    }
 
-    /**
-     *
-     * Obté el nom d'usuari.
-     *
-     * @return Cadena de text que representa el nom d'usuari.
-     */
+    //Funcio per a llistar alfabets
+    public void llistarAlfabets() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("L'usuari no té alfabets");
+        System.out.println("Aquests son els alfabets:");
+        alfabets.forEach((idioma, Alfabet) -> {
+            System.out.println("Idioma: " + idioma);
+            System.out.println("Lletres de l'idioma: ");
+            Alfabet.imprimirLletres();
+        });
+    }
+
+    public void eliminarAlfabet(String idioma) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        alfabets.remove(idioma);
+    }
+
+    //
+    public void crearText (String idioma, String nomEntrada, String contingutEntrada) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        Alfabet alfabet = alfabets.get(idioma);
+        alfabet.crearText(nomEntrada, contingutEntrada);//contingut del text
+    }
+
+    //
+    public void crearLPF (String idioma, String nomEntrada, HashMap<String, Integer> contingutEntrada) throws Exception {
+        if (!alfabets.containsKey(idioma)) {
+            throw new Exception("No existeix un alfabet d'aquest idioma");
+        }
+        Alfabet alfabet = alfabets.get(idioma);
+        alfabet.crearLPF(nomEntrada, contingutEntrada);
+    }
+
+    public void llistarTexts() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("No existeixen textos ni alfabets");
+        alfabets.forEach((idioma, alfabet) -> {
+            System.out.println(idioma);
+            alfabet.llistarTexts();
+        });
+    }
+
+    public void llistarLPFs() throws Exception {
+        if (alfabets.isEmpty()) throw new Exception("No existeixen llistes de paraules frequents ni alfabets");
+        alfabets.forEach((idioma, alfabet) -> {
+            System.out.println(idioma);
+            alfabet.llistarLPFs();
+        });
+    }
+
+    /*
+   // public void crearTeclat (String nomTeclat, String nomAlfabet) {
+        Alfabet alfabet = alfabets.find(nomAlfabet);
+        alfabet.crearTeclat(nomTeclat);
+    }
+*/
+    /*
+    public void eliminarAlfabet(Alfabet nomAlfabet) throws Exception{
+        OptionalDouble index = this.alfabets.stream().filter(alfabet -> alfabet.getNomAlfabet().equals(nomAlfabet)).findFirst();
+        if(index.isPresent()) this.alfabets.remove(index.getAsInt());
+        else throw new Exception("No existeix cap alfabet amb aquest nom");
+    }
+    */
+    // Funcio per obtindre el nom d'un usuari
     public String getNomUsuari() {
         return nomUsuari;
     }
@@ -76,7 +139,7 @@ public class Usuari {
      *
      * @return ArrayList que conté els IDs dels alfabetes de l'usuari.
      */
-    public ArrayList<String> getIDsAlfabets() {
+    public ArrayList<Integer> getIDsAlfabets() {
         return idsAlfabets;
     }
 
@@ -131,7 +194,7 @@ public class Usuari {
      *
      * @param idAlfabet El identificador de l'alfabet a afegir.
      */
-    public void afegirAlfabet(String idAlfabet){
+    public void afegirAlfabet(Integer idAlfabet){
         if(!idsAlfabets.contains(idAlfabet)) idsAlfabets.add(idAlfabet);
     }
 
