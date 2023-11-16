@@ -4,38 +4,35 @@ import java.util.ArrayList;
 
 public class Teclat {
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Atributs
-    // ---------------------------------------------------------------------------- //
-
-    protected ArrayList<Character> assignacions;
+    protected ArrayList<Character> distribucio;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Creadora
-    // ---------------------------------------------------------------------------- //
-
-    public Teclat(ArrayList<Character> assignacions, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
-        this.assignacions = assignacions;
+    //------------------------------Constructora-----------------------------------//
+    /**
+     * Contructora de teclat
+     * @param distribucio  Lletres ordenades per files
+     * @param idEntrada Id de la entrada vinculada
+     * @param numFiles Nombre de files
+     * @param numColumnes Nombre de columnes
+     * @param id Id del teclat
+     */
+    public Teclat(ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+        this.distribucio = distribucio;
         this.idEntrada = idEntrada;
         this.numFiles = numFiles;
         this.numColumnes = numColumnes;
         this.id = id;
     }
 
-    
+    //-----------------------------Getters------------------------------------//
     /** 
      * @return ArrayList<Character>
      */
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters
-    // ---------------------------------------------------------------------------- //
-
-    public ArrayList<Character> getAssignacions() {
-        return this.assignacions;
+    public ArrayList<Character> getDistribucio() {
+        return this.distribucio;
     }
     
     /** 
@@ -51,7 +48,12 @@ public class Teclat {
     public Integer getColumnes() {
         return this.numColumnes;
     }
-    public Integer getIdEntrada() {
+    
+    /**
+     * 
+     * @return Integer
+     */
+    public Integer getIdEntradaVinculada() {
         return this.idEntrada;
     }
 }

@@ -11,18 +11,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorEntrada {
-    // ---------------------------------------------------------------------------- //
-    //                                   Atributs
-    // ---------------------------------------------------------------------------- //
+
     private HashMap<Integer, Entrada> conjuntEntrades;
 
     private Integer contador = 0;
 
     private static ControladorEntrada ctrlEntrada;
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Creadora
-    // ---------------------------------------------------------------------------- //
+    //-------------------------------Contructora------------------------------//
     public ControladorEntrada() {
         this.conjuntEntrades = new HashMap<>();
     }
@@ -34,18 +30,16 @@ public class ControladorEntrada {
         return ctrlEntrada;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters
-    // ---------------------------------------------------------------------------- //
-    public String getNomEntrada(Integer id) throws Exception {
-        if (!conjuntEntrades.containsKey(id)) throw new Exception("No existeix una entrada amb aquest identificador");
-        Entrada entrada = conjuntEntrades.get(id);
+    //------------------------------Getters------------------------------//
+    public String getNomEntrada(Integer idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idEntrada);
         return entrada.getNom();
     }
 
-    public String getTypeEntrada(Integer id) throws Exception {
-        if (!conjuntEntrades.containsKey(id)) throw new Exception("No existeix una entrada amb aquest identificador");
-        Entrada entrada = conjuntEntrades.get(id);
+    public String getTypeEntrada(Integer idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idEntrada);
         if (entrada instanceof Text) {
             return "text";
         } else {
@@ -53,17 +47,32 @@ public class ControladorEntrada {
         }
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Funcions
-    // ---------------------------------------------------------------------------- //
-    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres) throws Exception {
-        Text nouText = new Text(nomEntrada, contador, lletres, contingutEntrada);
+    public HashMap<String, Integer> getLpfEntrada(Integer idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idEntrada);
+        return entrada.getLPF();
+    }
+
+    public ArrayList<Integer> getIdTeclatsVinculatsAEntrada(Integer idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idEntrada);
+        return entrada.getTeclatsVinculats();
+    }
+
+    public Integer getIdAlfabetVinculatAEntrada(int idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idEntrada);
+        return entrada.getIdAlfabetVinculat();
+    }
+    //---------------------------Metodes publics---------------------------//
+    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+        Text nouText = new Text(nomEntrada, contador, lletres, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouText);
         contador++;
     }
 
-    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres) throws Exception {
-        LPF nouLPF = new LPF(nomEntrada, contador, lletres, contingutEntrada);
+    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+        LPF nouLPF = new LPF(nomEntrada, contador, lletres, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouLPF);
         contador++;
     }
@@ -74,29 +83,24 @@ public class ControladorEntrada {
         conjuntEntrades.remove(id);
     }
 
-    public void asociarTeclat(Integer idEntrada, Integer idTeclat) throws Exception {
-        if (!conjuntEntrades.containsKey(id)) throw new Exception("No existeix una entrada amb aquest identificador");
+    public void vincularTeclatAEntrada(Integer idEntrada, Integer idTeclat) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
 
         Entrada entrada = conjuntEntrades.get(idEntrada);
-        entrada.asociarTeclat(idTeclat);
+        entrada.vincularTeclat(idTeclat);
     }
 
-    public void importarText(String nomEntrada,
-                             String localitzacio_fitxer,
-                             ArrayList<Character> lletres) throws Exception
-    {
+    public void importarText(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         Path path = Paths.get(localitzacio_fitxer);
         String contingutFitxer = new String(Files.readAllBytes(path));
-        this.crearText(nomEntrada, contingutFitxer, lletres);
+        this.crearText(nomEntrada, contingutFitxer, lletres, idAlfabet);
     }
 
-    public void importarLPF(String nomEntrada,
-                            String localitzacio_fitxer,
-                            ArrayList<Character> lletres) throws Exception
-    {
+    public void importarLPF(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         //FALTA CREAR FUNCIO PER LLEGIR LA LPF
     }
 
+    //---------------------------Metodes provats---------------------------//
     //El format de la lpf en string ha de ser de Paraula␣Frequencia\n
     private HashMap<String, Integer> formatejarALPF(String input) {
         HashMap<String, Integer> lpf = new HashMap<>();

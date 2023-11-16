@@ -7,12 +7,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Classe ControladorAlfabet. Gestiona un conjunt d'alfabets, i s'encarrega
  * de crear, modificar i eliminar els alfabets.
  */
-
 public class ControladorAlfabet {
     private HashMap<Integer, Alfabet> conjuntAlfabets;
     private Integer comptador;
@@ -20,9 +20,7 @@ public class ControladorAlfabet {
     //Instancia singleton del Controlador d'Alfabets
     private static ControladorAlfabet ctrlAlfabet;
 
-    // ---------------------------------------------------------------------------- //
-    //                              Constructora                                    //
-    // ---------------------------------------------------------------------------- //
+    //-----------------------------Constructora---------------------------//
     public ControladorAlfabet() {
         conjuntAlfabets = new HashMap<>();
         comptador = 0;
@@ -36,9 +34,7 @@ public class ControladorAlfabet {
         return ctrlAlfabet;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                Funcions de gestio del conjunt d'alfabets                     //
-    // ---------------------------------------------------------------------------- //
+    //---------------------------Crear i eliminar---------------------------//
     /**
      * Crea un nou alfabet a partir d'un conjunt de lletres separades per comes.
      * @param idioma Nom de l'idioma de l'alfabet
@@ -48,14 +44,14 @@ public class ControladorAlfabet {
      *      * @throws Exception Si s'intenta crear un alfabet amb lletres repetides
      *      * @throws Exception Si s'intenta crear un alfabet sense cap lletra
      */
-    public Integer crearAlfabet(String idioma, String lletres_separades_comes) throws Exception {
+    public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
 
         // creem un identificador per al nou alfabet
         Integer idAlfabet = comptador;   // de moment estaran ordenats
         comptador++;
 
         // creem un alfabet nou
-        Alfabet nouAlfabet = new Alfabet(idioma, idAlfabet, lletres_separades_comes);
+        Alfabet nouAlfabet = new Alfabet(nomAlfabet, idAlfabet, lletres);
 
         // afegim el teclat al conjunt
         conjuntAlfabets.put(idAlfabet, nouAlfabet);
@@ -73,17 +69,14 @@ public class ControladorAlfabet {
         conjuntAlfabets.remove(idAlfabet);
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                 Getters                                      //
-    // ---------------------------------------------------------------------------- //
-
+    //-----------------------------Getters--------------------------------//
     /**
      * Obte les lletres de l'alfabet
      * @param idAlfabet Identificador de l'alfabet
      * @return ArrayList amb les lletres de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public ArrayList<Character> getLletres(Integer idAlfabet) throws Exception {
+    public ArrayList<Character> getLletresAlfabet(Integer idAlfabet) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
         return alfabet.getLletres();
@@ -95,10 +88,10 @@ public class ControladorAlfabet {
      * @return String amb l'idioma de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public String getIdioma(Integer idAlfabet) throws Exception {
+    public String getNomAlfabet(Integer idAlfabet) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        return alfabet.getIdioma();
+        return alfabet.getNom();
     }
 
     /**
@@ -107,31 +100,31 @@ public class ControladorAlfabet {
      * @return ArrayList amb els identificadors de les entrades associades a l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public ArrayList<Integer> getEntrades(Integer idAlfabet) throws Exception {
+    public ArrayList<Integer> getEntradesVinculadesAlfabet(Integer idAlfabet) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
         return alfabet.getEntrades();
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                 Setters                                      //
-    // ---------------------------------------------------------------------------- //
-
+    public ArrayList<Integer> getIdAlfabets() {
+        ArrayList<Integer> llistaIds = new ArrayList<>(conjuntAlfabets.keySet());
+        return llistaIds; 
+    }
+    
+    //----------------------------Setters----------------------------------//
     /**
      * Modifica el nom de l'idioma de l'alfabet
      * @param idAlfabet Identificador de l'alfabet
      * @param idioma Nou nom de l'idioma de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public void setIdioma(Integer idAlfabet, String idioma) throws Exception {
+    public void setNomAlfabet(Integer idAlfabet, String idioma) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-        alfabet.setIdioma(idioma);
+        alfabet.setNom(idioma);
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                           Metodes publics                                    //
-    // ---------------------------------------------------------------------------- //
+    //---------------------------Metodes publics---------------------------//
 
     /**
      * Associa una entrada a l'alfabet
@@ -139,11 +132,11 @@ public class ControladorAlfabet {
      * @param idEntrada Identificador de l'entrada a associar
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public void associarEntrada(Integer idAlfabet, Integer idEntrada) throws Exception {
+    public void vincularEntradaAlfabet(Integer idAlfabet, Integer idEntrada) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
 
-        alfabet.associarEntrada(idEntrada);
+        alfabet.vincularEntrada(idEntrada);
     }
 
     /**
@@ -152,33 +145,14 @@ public class ControladorAlfabet {
      * @param idEntrada Identificador de l'entrada a desvincular
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
-    public void desvincularEntrada(Integer idAlfabet, Integer idEntrada) throws Exception {
+    public void desvincularEntradaAlfabet(Integer idAlfabet, Integer idEntrada) throws Exception {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
 
         alfabet.desvincularEntrada(idEntrada);
     }
 
-    /**
-     * Comprova que les lletres d'una lpf estiguin contingudes a l'alfabet
-     * @param idAlfabet Identificador de l'alfabet
-     * @param lpf_map HashMap amb les paraules de la lpf i el seu nombre d'aparicions
-     * @return Retorna true si totes les lletres de totes les lps estan contingudes a l'alfabet, fals en cas contrari
-     * @throws Exception Si no existeix cap alfabet amb l'identificador donat
-     */
-    public boolean lletres_no_contingudes(Integer idAlfabet, HashMap<String, Integer> lpf_map) throws Exception {
-        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
-        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
-
-        ArrayList<Character> lletres = alfabet.getLletres();
-        for (String s : lpf_map.keySet()) {
-            for (int i = 0; i < s.length(); i++) {
-                if (!lletres.contains(s.charAt(i))) return false;
-            }
-        }
-        return true;
-    }
-
+    
     /**
      * Importa un alfabet a partir d'un fitxer de text que conte lletres d'un sol caracter i no repetides separades per comes
      * @param idioma Nom de l'idioma de l'alfabet
@@ -192,7 +166,7 @@ public class ControladorAlfabet {
         Path path = Paths.get(localitzacioFitxer);
         String contingutFitxer = new String(Files.readAllBytes(path));
 
-        crearAlfabet(idioma, contingutFitxer);
+        crearAlfabet(idioma, csvACharArray(contingutFitxer));
     }
 
     /**
@@ -207,5 +181,58 @@ public class ControladorAlfabet {
         Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
         if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
         alfabet.afegirLletra(lletra);
+    }
+
+    //---------------------------Metodes privats---------------------------//
+    
+    /**
+     * Comprova que les lletres d'una lpf estiguin contingudes a l'alfabet
+     * @param idAlfabet Identificador de l'alfabet
+     * @param lpf_map HashMap amb les paraules de la lpf i el seu nombre d'aparicions
+     * @return Retorna true si totes les lletres de totes les lps estan contingudes a l'alfabet, fals en cas contrari
+     * @throws Exception Si no existeix cap alfabet amb l'identificador donat
+     */
+    private boolean lletres_no_contingudes(Integer idAlfabet, HashMap<String, Integer> lpf_map) throws Exception {
+        Alfabet alfabet = conjuntAlfabets.get(idAlfabet);
+        if (alfabet == null) throw new Exception("ERROR: no existeix cap alfabet amb aquest id");
+
+        ArrayList<Character> lletres = alfabet.getLletres();
+        for (String s : lpf_map.keySet()) {
+            for (int i = 0; i < s.length(); i++) {
+                if (!lletres.contains(s.charAt(i))) return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Comprova si hi ha lletres repetides en un conjunt de caracters.
+     * @param lletres ArrayList de lletres a comprovar.
+     * @return True si hi ha lletres repetides en un conjunt de caracters, false altrament.
+     */
+    private boolean lletres_repetides(ArrayList<Character> lletres) {
+        HashSet<Character> set = new HashSet<>(lletres);
+        return set.size() != lletres.size();
+    }
+
+     /**
+     * Obte un ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
+     * @param lletres_separades_comes String no buit de lletres no repetides separades per comes.
+     * @return ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
+     * @throws Exception Si les lletres son de multiples caracters
+     * @throws Exception Si l'alfabet no ta cap lletra
+     * @throws Exception Si s'han introduit lletres repetides
+     */
+    private ArrayList<Character> csvACharArray (String lletresSeparadesPerComes) throws Exception {
+        String[] lletres_separades = lletresSeparadesPerComes.split(",");
+        ArrayList<Character> lletres = new ArrayList<Character>();
+        for (String s : lletres_separades) {
+            if (s.length() > 1) throw new Exception("ERROR: les lletres nomas poden tenir un caracter");
+            if (s.length() != 0) lletres.add(s.charAt(0));
+        }
+        if (lletres.isEmpty()) throw new Exception("ERROR: l'alfabet ha de tenir almenys una lletra");
+        // Verifica si hi ha lletres repetides.
+        if(lletres_repetides(lletres)) throw new Exception("ERROR: s'han introduit lletres repetides");
+        return lletres;
     }
 }

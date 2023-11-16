@@ -12,11 +12,12 @@ public class Text extends Entrada{
     // ---------------------------------------------------------------------------- //
     //                                   Constructora
     // ---------------------------------------------------------------------------- //
-    public Text(String nomEntrada, Integer id, ArrayList<Character> lletres, String contingutEntrada) throws Exception {
+    public Text(String nomEntrada, Integer id, ArrayList<Character> lletres, String contingutEntrada, Integer idAlfabet) throws Exception {
         if(contingutEntrada == null) throw new Exception("ERROR: El contingut del text no pot ser nul");
         this.nom = nomEntrada;
         this.id = id;
         this.text = contingutEntrada;
+        this.idAlfabet = idAlfabet;
         calculateLPF();
     }
 
