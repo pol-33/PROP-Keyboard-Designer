@@ -1,5 +1,7 @@
 package domini.controladors;
 
+import domini.classes.Usuari;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,14 +12,16 @@ import java.util.HashMap;
 public class ControladorDomini {
     //Instancia singleton del Controlador de Domini
     private static ControladorDomini ctrl;
+    private ControladorPersistencia ctrlPersistencia;
     private ControladorTeclat ctrlTeclat;
     private ControladorEntrada ctrlEntrada;
     private ControladorAlfabet ctrlAlfabet;
 
-    private String usuariActiu = null;
+    private Usuari usuariActiu;
 
     //-------------------------------Contructora------------------------------//
     private ControladorDomini() {
+        ctrlPersistencia = ControladorPersistencia.obtenirInstancia();
         ctrlTeclat = ControladorTeclat.obtenirInstancia();
         ctrlEntrada = ControladorEntrada.obtenirInstancia();
         ctrlAlfabet = ControladorAlfabet.obtenirInstancia();
@@ -157,11 +161,11 @@ public class ControladorDomini {
      */
     public ArrayList<Integer> getTeclatsAlfabet(Integer idAlfabet) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
-        ArrayList<Integer> idEntrades = ctrlAlfabet.getEntrades(idAlfabet);
+        if (!ctrlAlfabet.getIdAlfabets().contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
+        ArrayList<Integer> idEntrades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
         ArrayList<Integer> idsTeclats = new ArrayList<>();
         for (Integer idEntrada : idEntrades) {
-            idsTeclats.add(ctrlEntrada.getTeclat(idEntrada));
+            idsTeclats.addAll(ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada));
         }
         return idsTeclats;
     }
@@ -183,15 +187,34 @@ public class ControladorDomini {
      * @return boolean amb valor true si l'usuari especificat te l'entrada especificada, false en cas contrari
      */
     private boolean entradaEsdUsuari(String idUsuari, Integer idEntrada) {
-        ArrayList<Integer> idsAlfabets = ctrlUsuari.getAlfabets(idUsuari);
+        ArrayList<Integer> idsAlfabets = ctrlAlfabet.getIdAlfabets();
         boolean esdUsuari = false;
 
         int i = 0;
         while (!esdUsuari && idsAlfabets.size() > i) {
             Integer idAlfabet = idsAlfabets.get(i);
-            if (ctrlAlfabet.getEntrades(idAlfabet).contains(idEntrada)) esdUsuari = true;
+            if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) esdUsuari = true;
         }
         return esdUsuari;
+    }
+
+    private void carregarInfoUsuari(String nomUsuari) {
+        xx info ctrlPersistencia.getInfo();
+        // carregar els alfabets
+        // carregar els textos
+        // carregar les lpf
+        // carregar els teclats
+    }
+
+    private void guardarInfoUsuari() {
+        // generar xx amb la info
+        ctrlPersistencia.guardarInfoUsuari(usuariActiu.getNom(), xx);
+    }
+
+    private void resetInfoPrograma() {
+        ctrlAlfabet.resetAlfabets();
+        ctrlEntrada.resetEntrades();
+        ctrlTeclat.resetTeclats();
     }
 
     //--------------------------------Usuari---------------------------------//
@@ -203,7 +226,8 @@ public class ControladorDomini {
      * @throws Exception Si ja existeix un usuari amb aquest nom.
      */
     public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
-        ctrlUsuari.crearUsuari(nomUsuari, contrasenya);
+        ArrayList<String> nomUsuarisExistents = ctrlPersistencia.getUsuarisExistents();
+        usuariActiu.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
     }
 
     /**
@@ -212,18 +236,10 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha iniciat sessió
      * @throws Exception Si s'intenta eliminar un usuari que no sigui el propi
      */
-    public void eliminarUsuari(String nomUsuari) throws Exception {
+    public void eliminarUsuari() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder eliminar un usuari");
-        if (usuariActiu.equals(nomUsuari)) {
-            ArrayList<Integer> idsAlfabet = ctrlUsuari.getAlfabets(nomUsuari);
-            for (Integer idAlfabet : idsAlfabet) {
-                ctrlAlfabet.eliminarAlfabet(idAlfabet);
-            }
-            ctrlUsuari.eliminarUsuari(nomUsuari);
-            usuariActiu = null;
-        }
-        else throw new Exception("No pots eliminar un usuari que no sigui el teu");
-
+            ctrlPersistencia.eliminarUsuari(usuariActiu.getNom());
+            tancarSessio();
     }
 
     /**
@@ -235,9 +251,11 @@ public class ControladorDomini {
      */
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
         if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
-        Boolean resultat = ctrlUsuari.comprovaContrasenya(nomUsuari, contrasenya);
-        if (!resultat) throw new Exception("Usuari o contrasenya incorrectes");
-        usuariActiu = nomUsuari;
+        HashMap<String, String> usuarisContrasenyes = ctrlPersistencia.getUsuarisContrasenyes();
+        boolean dadesCorrectes = usuariActiu.verificarIniciSessio(nomUsuari, contrasenya, usuarisContrasenyes);
+        if (dadesCorrectes) usuariActiu = new Usuari(nomUsuari, contrasenya);
+        else throw new Exception("Usuari o contrasenya incorrectes");
+        carregarInfoUsuari(nomUsuari);
     }
 
     /**
@@ -248,6 +266,8 @@ public class ControladorDomini {
         if (usuariActiu == null) {
             throw new Exception("Has d'haver iniciat sessio per a poder tancar-la");
         }
+        guardarInfoUsuari();
+        resetInfoPrograma();
         usuariActiu = null;
     }
 
@@ -258,7 +278,7 @@ public class ControladorDomini {
      */
     public void modificarContrasenyaUsuari(String contrasenya) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder modificar un usuari");
-        ctrlUsuari.modificarContrasenyaUsuari(usuariActiu, contrasenya);
+        usuariActiu.modificarContrasenya(contrasenya);
     }
 
 

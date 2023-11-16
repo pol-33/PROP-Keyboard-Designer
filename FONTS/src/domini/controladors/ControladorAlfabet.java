@@ -183,6 +183,10 @@ public class ControladorAlfabet {
         alfabet.afegirLletra(lletra);
     }
 
+    public void resetAlfabets {
+        conjuntAlfabets = new HashMap<>();
+    }
+
     //---------------------------Metodes privats---------------------------//
     
     /**
