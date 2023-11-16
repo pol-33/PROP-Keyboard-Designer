@@ -17,7 +17,7 @@ public class ControladorDomini {
     private ControladorEntrada ctrlEntrada;
     private ControladorAlfabet ctrlAlfabet;
 
-    private Usuari usuariActiu;
+    private Usuari usuariActiu = null;
 
     //-------------------------------Contructora------------------------------//
     private ControladorDomini() {
@@ -232,14 +232,12 @@ public class ControladorDomini {
 
     /**
      * Elimina un usuari existent.
-     * @param nomUsuari Nom de l'usuari a eliminar
-     * @throws Exception Si l'usuari no ha iniciat sessió
      * @throws Exception Si s'intenta eliminar un usuari que no sigui el propi
      */
     public void eliminarUsuari() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder eliminar un usuari");
-            ctrlPersistencia.eliminarUsuari(usuariActiu.getNom());
-            tancarSessio();
+        ctrlPersistencia.eliminarUsuari(usuariActiu.getNom());
+        tancarSessio();
     }
 
     /**
@@ -281,6 +279,16 @@ public class ControladorDomini {
         usuariActiu.modificarContrasenya(contrasenya);
     }
 
+
+    /**
+     * Modifica el nom de l'usuari actiu.
+     * @param nomUsuari Nova contrasenya
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
+    public void modificarNomUsuari(String nomUsuari) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder modificar un usuari");
+        usuariActiu.modificarNomUsuari(nomUsuari);
+    }
 
     //--------------------------------Teclats---------------------------------//
 
