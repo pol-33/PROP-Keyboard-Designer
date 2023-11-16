@@ -13,18 +13,13 @@ import Domini.Teclat;
  * entrada.
  */ 
 public class ControladorTeclat {
-    // ---------------------------------------------------------------------------- //
-    //                                   Atributs
-    // ---------------------------------------------------------------------------- //
+    
     private HashMap<Integer, Teclat> conjuntTeclats;
     private Integer contador = 0;
 
     private static ControladorTeclat ctrlTeclats;
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Creadora
-    // ---------------------------------------------------------------------------- //
-
+    //-------------------------------Contructora------------------------------//
     /** 
      *
      * Constructora de la clase. 
@@ -48,10 +43,7 @@ public class ControladorTeclat {
         return ctrlTeclats;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                           Funcions publiques
-    // ---------------------------------------------------------------------------- //
-
+    //---------------------------Metodes publics---------------------------//
     /** 
      *
      * Crear teclat dues mans
@@ -133,10 +125,7 @@ public class ControladorTeclat {
         }
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters
-    // ---------------------------------------------------------------------------- //
-
+    //------------------------------Getters------------------------------//
     /** 
      *
      * Obte la distribucio de les lletres en les tecles de un teclat
@@ -145,36 +134,46 @@ public class ControladorTeclat {
      * @return Llista de caracters que representen les lletres al teclat per files.
      * @throws   Exception No existeix un teclat amb aquell identificador.
      */
-    public ArrayList<Character> getTecles(Integer idTeclat) throws Exception { 
-
+    public ArrayList<Character> getDistribucioTeclat(Integer idTeclat) throws Exception { 
         if (conjuntTeclats.containsKey(idTeclat)) {
-            return conjuntTeclats.get(idTeclat).getAssignacions();
+            return conjuntTeclats.get(idTeclat).getDistribucio();
         } 
         else {
             throw new Exception("No existeix el teclat amb aquest id");
         }
     }
 
+    public Integer getIdEntradaVinculadaTeclat(Integer idTeclat) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getIdEntradaVinculada();
+        } 
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
     /** 
      *
      * Obte la llista de identificadors dels teclats creats
      *
      * @return Llista de ids de teclat
      */
-    public ArrayList<Integer> getLlistaIdTeclats() throws Exception { 
+    public ArrayList<Integer> getIdTeclats() { 
         ArrayList<Integer> llistaIdTeclats = new ArrayList<>(conjuntTeclats.keySet());
         return llistaIdTeclats;
     }
-    
-    /**
-     * Obte l'identificador de l'entrada associada a un tecalt
-     * @param idTeclat
-     * @return
-     * @throws Exception
-     */
-    public Integer getEntrada(Integer idTeclat) throws Exception {
+
+    public Integer getFilesTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
-            return conjuntTeclats.get(idTeclat).getIdEntrada();
+            return conjuntTeclats.get(idTeclat).getFiles();
+        } 
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
+
+    public Integer getColumnesTeclat(Integer idTeclat) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getColumnes();
         } 
         else {
             throw new Exception("No existeix el teclat amb aquest id");

@@ -2,54 +2,37 @@ package Domini;
 
 import java.util.ArrayList;
 
-/**
- * Representa un teclat.
- */
 public class Teclat {
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Atributs
-    // ---------------------------------------------------------------------------- //
-
-    protected ArrayList<Character> assignacions;
+    protected ArrayList<Character> distribucio;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Creadora
-    // ---------------------------------------------------------------------------- //
-
+    //------------------------------Constructora-----------------------------------//
     /**
-     * 
-     * @param assignacions ArrayList de l'ordre de les lletres en el teclat
-     * @param idEntrada Identificador d l'entrada a la que esta asociat
-     * @param numFiles Numero de files del layout
-     * @param numColumnes Numero de columnes del layout
-     * @param id Identificador del teclat
+     * Contructora de teclat
+     * @param distribucio  Lletres ordenades per files
+     * @param idEntrada Id de la entrada vinculada
+     * @param numFiles Nombre de files
+     * @param numColumnes Nombre de columnes
+     * @param id Id del teclat
      */
-    public Teclat(ArrayList<Character> assignacions, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
-        this.assignacions = assignacions;
+    public Teclat(ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+        this.distribucio = distribucio;
         this.idEntrada = idEntrada;
         this.numFiles = numFiles;
         this.numColumnes = numColumnes;
         this.id = id;
     }
 
-    
+    //-----------------------------Getters------------------------------------//
     /** 
      * @return ArrayList<Character>
      */
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters
-    // ---------------------------------------------------------------------------- //
-
-    /**
-     * @return ArrayList<Character>
-     */
-    public ArrayList<Character> getAssignacions() {
-        return this.assignacions;
+    public ArrayList<Character> getDistribucio() {
+        return this.distribucio;
     }
     
     /** 
@@ -66,10 +49,11 @@ public class Teclat {
         return this.numColumnes;
     }
     
-    /** 
+    /**
+     * 
      * @return Integer
      */
-    public Integer getIdEntrada() {
+    public Integer getIdEntradaVinculada() {
         return this.idEntrada;
     }
 }

@@ -16,9 +16,7 @@ public class ControladorDomini {
 
     private String usuariActiu = null;
 
-    // ---------------------------------------------------------------------------- //
-    //                              Constructora                                    //
-    // ---------------------------------------------------------------------------- //
+    //-------------------------------Contructora------------------------------//
     private ControladorDomini() {
         ctrlTeclat = ControladorTeclat.obtenirInstancia();
         ctrlEntrada = ControladorEntrada.obtenirInstancia();
@@ -41,9 +39,9 @@ public class ControladorDomini {
      * @return ArrayList<Integer> que representa la llista de noms dels alfabets.
      * @throws Exception Si l'usuari no ha inciat sessió
      */
-    public ArrayList<Integer> getAlfabets() throws Exception {
+    public ArrayList<Integer> getIdAlfabets() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
-        return ctrlUsuari.getAlfabets(usuariActiu);
+        return ctrlAlfabet.getIdAlfabets();
     }
 
     /**
@@ -52,10 +50,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
      */
-    public String getIdiomaAlfabet(Integer idAlfabet) throws Exception {
+    public String getNomAlfabet(Integer idAlfabet) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus alfabets");
-        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
-        return ctrlAlfabet.getIdioma(idAlfabet);
+        return ctrlAlfabet.getNomAlfabet(idAlfabet);
     }
 
     /**
@@ -64,10 +61,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
      */
-    public ArrayList<Character> getLletresAlfabet(Integer idAlfabet) {
+    public ArrayList<Character> getLletresAlfabet(Integer idAlfabet) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus alfabets");
-        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
-        return ctrlAlfabet.getLletres(idAlfabet);
+        return ctrlAlfabet.getLletresAlfabet(idAlfabet);
     }
 
     /**
@@ -76,10 +72,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
      */
-    public ArrayList<Integer> getEntrades(Integer idAlfabet) throws Exception {
+    public ArrayList<Integer> getIdEntradesVinculadesAlfabet(Integer idAlfabet) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!ctrlUsuari.getAlfabets(usuariActiu).contains(idAlfabet)) throw new Exception("L'usuari no te un alfabet amb aquest identificador");
-        return ctrlAlfabet.getEntrades(idAlfabet);
+        return ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
     }
 
     /**
@@ -91,7 +86,6 @@ public class ControladorDomini {
      */
     public String getTypeEntrada(Integer idEntrada) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getTypeEntrada(idEntrada);
     }
 
@@ -104,21 +98,7 @@ public class ControladorDomini {
      */
     public String getNomEntrada(Integer idEntrada) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
         return ctrlEntrada.getNomEntrada(idEntrada);
-    }
-
-    /**
-     * Retorna el contingut de l'entrada demanada, que pertany a l'usuari loggejat.
-     * @param idEntrada Identificador de l'entrada
-     * @return String que representa el contingut de l'entrada
-     * @throws Exception Si l'usuari no ha inciat sessió
-     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
-     */
-    public String getContingutEntrada(Integer idEntrada) throws Exception {
-        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
-        return ctrlEntrada.getContingutEntrada(idEntrada);
     }
 
     /**
@@ -128,10 +108,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te una entrada amb aquest identificador
      */
-    public Integer getTeclat(Integer idEntrada) throws Exception {
+    public ArrayList<Integer> getIdTeclatsVinculatsAEntrada(Integer idEntrada) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te una entrada amb aquest identificador");
-        return ctrlEntrada.getTeclat(idEntrada);
+        return ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
     }
 
     /**
@@ -141,11 +120,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un teclat amb aquest identificador
      */
-    public ArrayList<Character> getTecles(Integer idTeclat) throws Exception {
+    public ArrayList<Character> getDistribucioTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
-        return ctrlTeclat.getTecles(idTeclat);
+        return ctrlTeclat.getDistribucioTeclat(idTeclat);
     }
 
     /**
@@ -155,11 +132,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un teclat amb aquest identificador
      */
-    public int getFiles(Integer idTeclat) throws Exception {
+    public int getFilesTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
-        return ctrlTeclat.getFiles(idTeclat);
+         return ctrlTeclat.getFilesTeclat(idTeclat);
     }
 
     /**
@@ -169,11 +144,9 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un teclat amb aquest identificador
      */
-    public int getColumnes(Integer idTeclat) throws Exception {
+    public int getColumnesTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        Integer idEntrada = ctrlTeclat.getEntrada(idTeclat);
-        if (!entradaEsdUsuari(usuariActiu, idEntrada)) throw new Exception("L'usuari no te un teclat amb aquest identificador");
-        return ctrlTeclat.getColumnes(idTeclat);
+        return ctrlTeclat.getColumnesTeclat(idTeclat);
     }
 
     /**
@@ -305,13 +278,13 @@ public class ControladorDomini {
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
      */
-    public Integer crearTeclatDuesMans(Integer idEntrada, Integer idAlfabet, int files, int columnes) {
-        HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
-        ArrayList<Character> alfabet = ctrlAlfabet.getLletres(idAlfabet);
-
+    public Integer crearTeclatDuesMans(Integer idEntrada, Integer idAlfabet, int files, int columnes) throws Exception {
+        HashMap<String, Integer> lfp = ctrlEntrada.getLpfEntrada(idEntrada);
+        ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
+ 
         Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(lfp, alfabet, idEntrada, files, columnes);
 
-        ctrlEntrada.asociarTeclat(idEntrada, idTeclat);
+        ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
         return idTeclat;
     }
 
@@ -323,67 +296,50 @@ public class ControladorDomini {
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
      */
-    public Integer crearTeclatPolzes(Integer idEntrada, Integer idAlfabet, int files, int columnes) {
-        HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
-        ArrayList<Character> alfabet = ctrlAlfabet.getLletres(idAlfabet);
+    public Integer crearTeclatPolzes(Integer idEntrada, Integer idAlfabet, int files, int columnes) throws Exception {
+        HashMap<String, Integer> lfp = ctrlEntrada.getLpfEntrada(idEntrada);
+        ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
 
         Integer idTeclat = ctrlTeclat.crearTeclatPolzes(lfp, alfabet, idEntrada, files, columnes);
 
-        ctrlEntrada.asociarTeclat(idEntrada, idTeclat);
+        ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
         return idTeclat;
     }
-
-    public void eliminarTeclat(Integer idTeclat) {
+   
+    public void eliminarTeclat(Integer idTeclat) throws Exception {
         ctrlTeclat.eliminarTeclat(idTeclat);
     }
 
-    public void modificarTeclat(Integer idTeclat, Integer idEntrada, Integer idAlfabet, int files, int columnes) {
-        HashMap<String, Integer> lfp = ctrlEntrada.getLPF(idEntrada);
-        ArrayList<Character> alfabet = ctrlAlfabet.getLletres(idAlfabet);
-
-        ctrlTeclat.modificarTeclat(idTeclat, lfp, alfabet, idEntrada, files, columnes);
+    //--------------------------------Entrades---------------------------------//
+    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+        ctrlEntrada.crearText(nomEntrada, contingutEntrada, lletres, idAlfabet);
     }
 
-    public ArrayList<Character> getLletresTeclat(Integer idTeclat) {
-        return ctrlTeclat.getLletresTeclat(idTeclat);
+    public void importarText(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+        ctrlEntrada.importarText(nomEntrada, localitzacio_fitxer, lletres, idAlfabet);
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Entrada                             
-    // ---------------------------------------------------------------------------- //
-    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres) throws Exception {
-        ctrlEntrada.crearText(nomEntrada, contingutEntrada, lletres);
-    }
-
-    public void importarText(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres) throws Exception {
-        ctrlEntrada.importarText(nomEntrada, localitzacio_fitxer, lletres);
-    }
-
-    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres) throws Exception {
-        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, lletres);
+    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, lletres, idAlfabet);
     }
 
     public void importarLPF(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres) throws Exception {
         ctrlEntrada.importarLPF(nomEntrada, localitzacio_fitxer, lletres);
     }
 
-    public void eliminarEntrada(Integer id) throws Exception {
-        int idAlfabet = ctrlEntrada.getAlfabet(id);
-        ctrlEntrada.eliminarEntrada(id);
-        ctrlAlfabet.desvincularEntrada(idAlfabet, id);
+    public void eliminarEntrada(Integer idEntrada) throws Exception {
+        int idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
+        ctrlEntrada.eliminarEntrada(idEntrada);
+        ctrlAlfabet.desvincularEntradaAlfabet(idAlfabet, idEntrada);
     }
 
-    // modificar text i lpf?
-
-    // ---------------------------------------------------------------------------- //
-    //                                   Alfabet                             
-    // ---------------------------------------------------------------------------- //
-    public Integer crearAlfabet(String idioma, String lletres_separades_comes) throws Exception {
-        return ctrlAlfabet.crearAlfabet(idioma, lletres_separades_comes);
+    //--------------------------------Alfabets---------------------------------//
+    public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
+        return ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
     }
 
-    public void importarAlfabet(String idioma, String localitzacio_fitxer) throws Exception {
-        ctrlAlfabet.importarAlfabet(idioma, localitzacio_fitxer);
+    public void importarAlfabet(String nomAlfabet, String localitzacio_fitxer) throws Exception {
+        ctrlAlfabet.importarAlfabet(nomAlfabet, localitzacio_fitxer);
     }
 
     // Modifica l'alfabet afegint-hi una lletra nova
@@ -392,9 +348,15 @@ public class ControladorDomini {
     }
 
     public void eliminarAlfabet(Integer idAlfabet) throws Exception {
-        ArrayList<Integer> entradesContingudes = ctrlAlfabet.getEntrades(idAlfabet);
+        // Si s'elimina un alfabet es borren totes les entrades i teclats que deriven
+        // d'aquest
+        ArrayList<Integer> entradesVinculades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
         ctrlAlfabet.eliminarAlfabet(idAlfabet);
-        for (Integer idEntrada : entradesContingudes) {
+        for (Integer idEntrada : entradesVinculades) {
+            ArrayList<Integer> teclatsVinculats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
+            for (Integer idTeclat : teclatsVinculats) {
+                ctrlTeclat.eliminarTeclat(idTeclat);
+            }
             ctrlEntrada.eliminarEntrada(idEntrada);
         }
     }

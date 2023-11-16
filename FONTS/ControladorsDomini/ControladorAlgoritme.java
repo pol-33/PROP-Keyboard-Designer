@@ -13,6 +13,7 @@ import java.util.Map;
 public class ControladorAlgoritme {
     private static ControladorAlgoritme ctrl;
 
+    //-------------------------------Contructora------------------------------//
     /**
      * Obté una instància del ControladorAlgoritme (patró Singleton).
      *
@@ -25,10 +26,7 @@ public class ControladorAlgoritme {
         return ctrl;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                            Funcions publiques
-    // ---------------------------------------------------------------------------- //
-
+    //---------------------------Metodes publics---------------------------//
     /**
     * Calcula la distribució de lletres a tecles per a un teclat de dues mans.
     *
@@ -97,10 +95,7 @@ public class ControladorAlgoritme {
         return distribucioTeclat;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                            Funcions privades
-    // ---------------------------------------------------------------------------- //
-
+    //---------------------------Metodes privats---------------------------//
     /**
      * Calcula la matriu de flux per al problema QAP.
      *
@@ -177,7 +172,7 @@ public class ControladorAlgoritme {
      * @param alfabet Llista d'alfabet.
      * @return El vector de freqüències generat per al LAP.
      */
-    public int[] calcularVectorFrequencies(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
+    private int[] calcularVectorFrequencies(HashMap<String, Integer> lpf, ArrayList<Character> alfabet) {
         int[] frequencia = new int[alfabet.size()];
 
         for (Map.Entry<String, Integer> entry : lpf.entrySet()) {
@@ -203,7 +198,7 @@ public class ControladorAlgoritme {
      * @param columnes Nombre de columnes del teclat.
      * @return El vector de costos generat per al LAP.
      */
-    public int[] calcularVectorCostos(int files, int columnes) {
+    private int[] calcularVectorCostos(int files, int columnes) {
         int[] costos = new int[files * columnes]; // Tamaño del array según el número de teclas
 
         int index = 0;
@@ -218,12 +213,30 @@ public class ControladorAlgoritme {
         return costos;
     } 
     
+    /**
+     * Obte el cost minim de la tecla (i, j) en funcio a la distancia
+     * minima a una de les dues cantonades inferiors.
+     * @param i index fila
+     * @param j index columna
+     * @param files numero de files
+     * @param columnes numero de columnes
+     * @return double
+     */
     private double obtenirCostMinim(int i, int j, int files, int columnes) {
         double cantInferiorEsq = calcularDistanciaEuclidiana(i, j, files - 1, 0);
         double cantInferiorDreta = calcularDistanciaEuclidiana(i, j, files - 1, columnes - 1);
 
         return Math.min(cantInferiorEsq, cantInferiorDreta);
     }
+    
+    /**
+     * Calcula la distancia euclidiana entre dos punts
+     * @param i1
+     * @param j1
+     * @param i2
+     * @param j2
+     * @return
+     */
     private double calcularDistanciaEuclidiana(int i1, int j1, int i2, int j2) {
         double distancia = Math.sqrt(Math.pow(i1 - i2, 2) + Math.pow(j1 - j2, 2));
         return distancia;
