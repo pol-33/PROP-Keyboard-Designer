@@ -120,13 +120,4 @@ public class Usuari {
         return contrasenyaGuardada != null && contrasenyaGuardada.equals(contrasenya);
     }
 
-    /**
-     * Comprova si la contrasenya introduïda coincideix amb la contrasenya de l'usuari.
-     *
-     * @param contrasenya La contrasenya a comprovar.
-     * @return True si les contrasenyes coincideixen, false en cas contrari.
-     */
-    public boolean contrasenyaCorrecta(String contrasenya) {
-        return this.contrasenya.equals(contrasenya);
-    }
 }
