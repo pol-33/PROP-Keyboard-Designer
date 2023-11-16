@@ -1,6 +1,6 @@
-package ControladorsDomini;
+package domini.controladors;
 
-import Domini.Alfabet;
+import domini.classes.Alfabet;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

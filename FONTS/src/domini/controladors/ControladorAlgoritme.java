@@ -1,7 +1,7 @@
-package ControladorsDomini;
+package domini.controladors;
 
-import Domini.AlgoritmeQAP;
-import Domini.AlgoritmeLAP;
+import domini.classes.AlgoritmeQAP;
+import domini.classes.AlgoritmeLAP;
 
 import java.util.ArrayList;
 import java.util.HashMap;

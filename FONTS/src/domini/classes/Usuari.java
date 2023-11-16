@@ -1,9 +1,6 @@
-package Domini;
-
-import Domini.Alfabet;
+package domini.classes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Classe Usuari. Representa un usuari en el sistema, amb els seus detalls com

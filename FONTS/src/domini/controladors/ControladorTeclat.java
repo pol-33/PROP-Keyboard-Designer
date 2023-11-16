@@ -1,9 +1,9 @@
-package ControladorsDomini;
+package domini.controladors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Domini.Teclat;
+import domini.classes.Teclat;
 
 
  /**

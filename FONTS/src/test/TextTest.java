@@ -1,6 +1,6 @@
-package JUnit;
+package test;
 
-import Domini.Text;
+import domini.classes.Text;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

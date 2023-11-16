@@ -1,8 +1,8 @@
-package ControladorsDomini;
+package domini.controladors;
 
-import Domini.Entrada;
-import Domini.LPF;
-import Domini.Text;
+import domini.classes.Entrada;
+import domini.classes.LPF;
+import domini.classes.Text;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

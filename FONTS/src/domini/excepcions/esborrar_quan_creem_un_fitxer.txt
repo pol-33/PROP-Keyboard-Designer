@@ -4,6 +4,6 @@ En esta carpeta principal se encuentran diferentes ficheros con distintos format
 
 	->DOCS(directorio): El directorio contiene los archivos de documentacion del proyecto: diagramas de clases y casos de uso, con sus respectivas descripciones, y un documento que informa sobre las estructuras de datos y algoritmos.
 
-	->EXE(directorio): Dentro del directorio podemos encontrar los diferentes ejecutables del programas, los .class de todas las classes y drivers. Aqui tenemos, tambien el ejecutable del main y de los driver para poder usar el programa y probar los drivers junto con las pruebas del JUnit.
+	->EXE(directorio): Dentro del directorio podemos encontrar los diferentes ejecutables del programas, los .class de todas las domini.classes y drivers. Aqui tenemos, tambien el ejecutable del main y de los driver para poder usar el programa y probar los drivers junto con las pruebas del test.
 
-	->FONTS(directorio): contiene todos los .java del programa, drivers, stubs i JUnit.
+	->FONTS(directorio): contiene todos los .java del programa, drivers, stubs i test.

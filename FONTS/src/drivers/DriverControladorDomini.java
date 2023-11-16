@@ -1,8 +1,7 @@
-package Drivers;
+package drivers;
 
-import ControladorsDomini.ControladorDomini;
+import domini.controladors.ControladorDomini;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Scanner;
 

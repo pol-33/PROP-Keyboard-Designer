@@ -1,4 +1,4 @@
-package Domini;
+package domini.classes;
 
 public class AlgoritmeQAP {
     public int[] resoldreQAP(int[][] fluxos, int[][] costos) {

@@ -1,10 +1,10 @@
-package Drivers;
+package drivers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import ControladorsDomini.ControladorAlgoritme;
+import domini.controladors.ControladorAlgoritme;
 
 public class DriverControladorAlgoritme {
     private final ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();

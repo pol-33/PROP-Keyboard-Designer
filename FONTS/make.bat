@@ -1,10 +1,10 @@
 
 
-javac --release 11 Domini/*.java
-javac --release 11 Drivers/*.java
-javac --release 11 ControladorsDomini/*.java
-javac --release 11 Excepcions/*.java
-move Domini\*.class ..\EXE\CLASS\Domini
-move Drivers\*.class ..\EXE\CLASS\Drivers
-move ControladorsDomini\*.class ..\EXE\CLASS\ControladorsDomini
-move Excepcions\*.class ..\EXE\CLASS\Excepcions
+javac --release 11 domini.classes/*.java
+javac --release 11 drivers/*.java
+javac --release 11 domini.controladors/*.java
+javac --release 11 domini.excepcions/*.java
+move domini.classes\*.class ..\EXE\CLASS\domini.classes
+move drivers\*.class ..\EXE\CLASS\drivers
+move domini.controladors\*.class ..\EXE\CLASS\domini.controladors
+move domini.excepcions\*.class ..\EXE\CLASS\domini.excepcions

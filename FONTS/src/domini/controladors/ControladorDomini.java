@@ -1,4 +1,4 @@
-package ControladorsDomini;
+package domini.controladors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,9 +31,8 @@ public class ControladorDomini {
         return ctrl;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Getters                                    //
-    // ---------------------------------------------------------------------------- //
+    //--------------------------------Getters---------------------------------//
+
     /**
      * Retorna una llista de noms dels alfabets existents de l'usuari loggejat.
      * @return ArrayList<Integer> que representa la llista de noms dels alfabets.
@@ -175,9 +174,8 @@ public class ControladorDomini {
         return (usuariActiu != null);
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                       Private class methods                                  //
-    // ---------------------------------------------------------------------------- //
+    //-------------------------Private class methods-------------------------//
+
     /**
      * Comprova si les lletres d'un alfabet estan repetides.
      * @param idUsuari Identificador de l'usuari
@@ -196,9 +194,7 @@ public class ControladorDomini {
         return esdUsuari;
     }
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Usuaris                                    //
-    // ---------------------------------------------------------------------------- //
+    //--------------------------------Usuari---------------------------------//
 
     /**
      * Crea un usuari a partir d'un nom i contrasenya.
@@ -266,9 +262,7 @@ public class ControladorDomini {
     }
 
 
-    // ---------------------------------------------------------------------------- //
-    //                                   Teclats                                    //
-    // ---------------------------------------------------------------------------- //
+    //--------------------------------Teclats---------------------------------//
 
     /**
      * Crea un teclat optimitzat per a dues mans a partir d'un alfabet i el nombre de files i columnes que ha de tenir el teclat.
