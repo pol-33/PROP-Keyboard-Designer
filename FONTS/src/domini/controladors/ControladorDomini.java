@@ -199,7 +199,7 @@ public class ControladorDomini {
     }
 
     private void carregarInfoUsuari(String nomUsuari) {
-        xx info ctrlPersistencia.getInfo();
+        //xx info ctrlPersistencia.getInfo();
         // carregar els alfabets
         // carregar els textos
         // carregar les lpf

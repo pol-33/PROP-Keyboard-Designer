@@ -19,6 +19,7 @@ public class Alfabet {
         this.nom = nomAlfabet;
         this.id = idAlfabet;
         this.lletres = lletresAlfabet;
+        this.idEntrades = new ArrayList<>();
     }
 
     //-----------------------------Getters--------------------------------//
@@ -58,7 +59,7 @@ public class Alfabet {
     //-----------------------------Setters---------------------------//
     /**
      * Modifica l'idioma de l'alfabet.
-     * @param idioma Nou idioma de l'alfabet.
+     * @param nomAlfabet Nou idioma de l'alfabet.
      */
     public void setNom(String nomAlfabet) {
         this.nom = nomAlfabet;

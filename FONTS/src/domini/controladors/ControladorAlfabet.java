@@ -37,8 +37,8 @@ public class ControladorAlfabet {
     //---------------------------Crear i eliminar---------------------------//
     /**
      * Crea un nou alfabet a partir d'un conjunt de lletres separades per comes.
-     * @param idioma Nom de l'idioma de l'alfabet
-     * @param lletres_separades_comes Conjunt de lletres d'un sol caracter i no repetides de l'alfabet separades per comes
+     * @param nomAlfabet Nom de l'alfabet
+     * @param lletres Conjunt de lletres d'un sol caracter i no repetides de l'alfabet separades per comes
      * @return Retorna l'identificador de l'alfabet creat
      * @throws Exception Si s'intenta crear un alfabet amb lletres de multiples caracters
      *      * @throws Exception Si s'intenta crear un alfabet amb lletres repetides
@@ -183,7 +183,7 @@ public class ControladorAlfabet {
         alfabet.afegirLletra(lletra);
     }
 
-    public void resetAlfabets {
+    public void resetAlfabets(){
         conjuntAlfabets = new HashMap<>();
     }
 
@@ -221,7 +221,7 @@ public class ControladorAlfabet {
 
      /**
      * Obte un ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
-     * @param lletres_separades_comes String no buit de lletres no repetides separades per comes.
+     * @param lletresSeparadesPerComes String no buit de lletres no repetides separades per comes.
      * @return ArrayList de lletres a partir d'un String no buit de lletres no repetides separades per comes.
      * @throws Exception Si les lletres son de multiples caracters
      * @throws Exception Si l'alfabet no ta cap lletra
