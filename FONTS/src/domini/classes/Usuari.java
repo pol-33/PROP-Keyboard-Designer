@@ -33,11 +33,6 @@ public class Usuari {
      * i prepara una llista per als IDs dels alfabetes associats.
      */
     public Usuari(String nomUsuari, String contrasenya) throws Exception {
-
-        if (nomUsuari.length() > MAX_LENGTH) throw new Exception("El nom d'usuari no pot superar els 15 caracters");
-        if (contrasenya.length() > MAX_LENGTH) throw new Exception("La contrasenya no pot superar els 15 caracters");
-        if (nomUsuari == null || nomUsuari.isEmpty()) throw new Exception("El nom d'usuari no pot ser buit");
-        if (contrasenya == null || contrasenya.isEmpty()) throw new Exception("La contrasenya no pot ser buida");
         this.nomUsuari = nomUsuari;
         this.contrasenya = contrasenya;
     }
@@ -91,19 +86,35 @@ public class Usuari {
     // ---------------------------------------------------------------------------- //
     //                                   Funcions
     // ---------------------------------------------------------------------------- //
-
+    /**
+     * Crear un usuari i mirar si el nom d'usuari ja existeix
+     *
+     * @param nomUsuari   Nom d'usuari a crear.
+     * @param contrasenya Contrasenya a crear.
+     * @param nomUsuarisContrasenyes Llista amb el nom i contrasenya de tots els usuaris.
+     * @throws Exception Si el nom d'usuari ja existeix.
+     */
+    public static Usuari iniciarSessio(String nomUsuari, String contrasenya, HashMap<String, String> nomUsuarisContrasenyes) throws Exception {
+        if (!nomUsuarisContrasenyes.containsKey(nomUsuari)) throw new Exception("No existeix cap usuari amb aquest nom");
+        if (!contrasenya.equals(nomUsuarisContrasenyes.get(nomUsuari))) throw new Exception("La contrasenya no es correcte");
+        return new Usuari(nomUsuari, contrasenya);
+    }
 
     /**
      * Crear un usuari i mirar si el nom d'usuari ja existeix
      *
      * @param nomUsuari   Nom d'usuari a crear.
      * @param contrasenya Contrasenya a crear.
+     * @param nomUsuarisExistents Llista amb el nom de tots els usuaris.
      * @throws Exception Si el nom d'usuari ja existeix.
      */
-    public void crearUsuari(String nomUsuari, String contrasenya, ArrayList<String> nomUsuarisExistents) throws Exception {
+    public static Usuari crearUsuari(String nomUsuari, String contrasenya, ArrayList<String> nomUsuarisExistents) throws Exception {
+        if (nomUsuari.length() > MAX_LENGTH) throw new Exception("El nom d'usuari no pot superar els 15 caracters");
+        if (contrasenya.length() > MAX_LENGTH) throw new Exception("La contrasenya no pot superar els 15 caracters");
+        if (nomUsuari.isEmpty()) throw new Exception("El nom d'usuari no pot ser buit");
+        if (contrasenya.isEmpty()) throw new Exception("La contrasenya no pot ser buida");
         if (nomUsuarisExistents.contains(nomUsuari)) throw new Exception("El nom d'usuari ja existeix");
-        this.nomUsuari = nomUsuari;
-        this.contrasenya = contrasenya;
+        return new Usuari(nomUsuari, contrasenya);
     }
 
     /**

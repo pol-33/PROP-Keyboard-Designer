@@ -18,15 +18,21 @@ public class ControladorPersistencia {
         return ctrl;
     }
 
+    //--------------------------------Usuari---------------------------------//
     public ArrayList<String> getUsuarisExistents() {
         return null;
     }
 
-    public void eliminarUsuari(String nomUsuari) {
-
-    }
 
     public HashMap<String, String> getUsuarisContrasenyes() {
         return null;
+    }
+
+    public void guardarUsuari(String nomUsuari, String contrasenya) {
+
+    }
+
+    public void eliminarUsuari(String nomUsuari) {
+
     }
 }

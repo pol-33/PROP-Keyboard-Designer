@@ -144,7 +144,7 @@ public class ControladorDomini {
      */
     public int getFilesTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-         return ctrlTeclat.getFilesTeclat(idTeclat);
+        return ctrlTeclat.getFilesTeclat(idTeclat);
     }
 
     /**
@@ -199,11 +199,6 @@ public class ControladorDomini {
         // carregar els teclats
     }
 
-    private void guardarInfoUsuari() {
-        // generar xx amb la info
-        //ctrlPersistencia.guardarInfoUsuari(usuariActiu.getNom(), xx);
-    }
-
     private void resetInfoPrograma() {
         ctrlAlfabet.resetAlfabets();
         ctrlEntrada.resetEntrades();
@@ -211,16 +206,16 @@ public class ControladorDomini {
     }
 
     //--------------------------------Usuari---------------------------------//
-
     /**
-     * Crea un usuari a partir d'un nom i contrasenya.
+     * Crea un usuari i inicia sessió a partir d'un nom i contrasenya, també el persisteix.
      * @param nomUsuari Nom de l'usuari a crear
      * @param contrasenya Contrasenya de l'usuari
      * @throws Exception Si ja existeix un usuari amb aquest nom.
      */
     public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
         ArrayList<String> nomUsuarisExistents = ctrlPersistencia.getUsuarisExistents();
-        usuariActiu.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
+        usuariActiu = Usuari.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
+        ctrlPersistencia.guardarUsuari(nomUsuari, contrasenya);
     }
 
     /**
@@ -241,14 +236,11 @@ public class ControladorDomini {
      * @throws Exception Si la combinació usuari-contraseya és incorrecta
      */
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
-        usuariActiu = new Usuari(nomUsuari, contrasenya);
-        return;
-        /*if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
-        HashMap<String, String> usuarisContrasenyes = ctrlPersistencia.getUsuarisContrasenyes();
-        boolean dadesCorrectes = usuariActiu.verificarIniciSessio(nomUsuari, contrasenya, usuarisContrasenyes);
-        if (dadesCorrectes) usuariActiu = new Usuari(nomUsuari, contrasenya);
-        else throw new Exception("Usuari o contrasenya incorrectes");
-        carregarInfoUsuari(nomUsuari);*/
+        if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
+        HashMap<String, String> nomUsuarisContrasenyes = ctrlPersistencia.getUsuarisContrasenyes();
+
+        usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, nomUsuarisContrasenyes);
+        carregarInfoUsuari(nomUsuari);
     }
 
     /**
@@ -259,7 +251,6 @@ public class ControladorDomini {
         if (usuariActiu == null) {
             throw new Exception("Has d'haver iniciat sessio per a poder tancar-la");
         }
-        guardarInfoUsuari();
         resetInfoPrograma();
         usuariActiu = null;
     }
@@ -290,7 +281,6 @@ public class ControladorDomini {
     /**
      * Crea un teclat optimitzat per a dues mans a partir d'un alfabet i el nombre de files i columnes que ha de tenir el teclat.
      * @param idEntrada Identificador de l'entrada
-     * @param idAlfabet Identificador de l'alfabet
      * @param files Nombre de files del teclat
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
@@ -309,7 +299,6 @@ public class ControladorDomini {
     /**
      * Crea un teclat optiitzat per a polzes a partir d'un alfabet i el nombre de files i columnes que ha de tenir el teclat.
      * @param idEntrada Identificador de l'entrada
-     * @param idAlfabet Identificador de l'alfabet
      * @param files Nombre de files del teclat
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
