@@ -55,7 +55,7 @@ public class ControladorTeclat {
      * @param columnes  Nombre de columnes del layout del teclat
      * @return Enter que representa el identificador del teclat creat
      */
-    public Integer crearTeclatDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
+    public Integer crearTeclatDuesMans(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) {
 
         
@@ -68,7 +68,7 @@ public class ControladorTeclat {
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabet, files, columnes);
 
         // creem un teclat nou
-        Teclat nouTeclat = new Teclat(teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
+        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
 
         // afegim el teclat al conjunt
         conjuntTeclats.put(idTeclat, nouTeclat);
@@ -87,7 +87,7 @@ public class ControladorTeclat {
      * @param columnes  Nombre de columnes del layout del teclat
      * @return Enter que representa el identificador del teclat creat
      */
-    public Integer crearTeclatPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
+    public Integer crearTeclatPolzes(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) {
 
 
@@ -100,7 +100,7 @@ public class ControladorTeclat {
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
 
         // creem un teclat nou
-        Teclat nouTeclat = new Teclat(teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
+        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
 
         // afegim el teclat al conjunt
         conjuntTeclats.put(idTeclat, nouTeclat);
@@ -125,6 +125,9 @@ public class ControladorTeclat {
         }
     }
 
+    public void resetTeclats() {
+        conjuntTeclats = new HashMap<>();
+    }
     //------------------------------Getters------------------------------//
     /** 
      *
@@ -162,6 +165,14 @@ public class ControladorTeclat {
         return llistaIdTeclats;
     }
 
+    public String getNomTeclat(Integer idTeclat) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getNom();
+        } 
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
     public Integer getFilesTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getFiles();

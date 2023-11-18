@@ -1,7 +1,7 @@
 package domini.controladors;
 
 import domini.classes.Usuari;
-
+import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,7 +46,14 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
         return ctrlAlfabet.getIdAlfabets();
     }
-
+    public ArrayList<Integer> getIdEntrades() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
+        return ctrlEntrada.getIdEntrades();
+    }
+    public ArrayList<Integer> getIdTeclats() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
+        return ctrlTeclat.getIdTeclats();
+    }
     /**
      * Retorna el nom de l'idioma de l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet
@@ -152,6 +159,10 @@ public class ControladorDomini {
         return ctrlTeclat.getColumnesTeclat(idTeclat);
     }
 
+    public String getNomTeclat(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        return ctrlTeclat.getNomTeclat(idTeclat);
+    }
     /**
      * Retorna els identificadors dels teclats associats a l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet
@@ -180,24 +191,6 @@ public class ControladorDomini {
 
     //-------------------------Private class methods-------------------------//
 
-    /**
-     * Comprova si les lletres d'un alfabet estan repetides.
-     * @param idUsuari Identificador de l'usuari
-     * @param idEntrada Identificador de l'entrada
-     * @return boolean amb valor true si l'usuari especificat te l'entrada especificada, false en cas contrari
-     */
-    private boolean entradaEsdUsuari(String idUsuari, Integer idEntrada) {
-        ArrayList<Integer> idsAlfabets = ctrlAlfabet.getIdAlfabets();
-        boolean esdUsuari = false;
-
-        int i = 0;
-        while (!esdUsuari && idsAlfabets.size() > i) {
-            Integer idAlfabet = idsAlfabets.get(i);
-            if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) esdUsuari = true;
-        }
-        return esdUsuari;
-    }
-
     private void carregarInfoUsuari(String nomUsuari) {
         //xx info ctrlPersistencia.getInfo();
         // carregar els alfabets
@@ -208,7 +201,7 @@ public class ControladorDomini {
 
     private void guardarInfoUsuari() {
         // generar xx amb la info
-        ctrlPersistencia.guardarInfoUsuari(usuariActiu.getNom(), xx);
+        //ctrlPersistencia.guardarInfoUsuari(usuariActiu.getNom(), xx);
     }
 
     private void resetInfoPrograma() {
@@ -248,12 +241,14 @@ public class ControladorDomini {
      * @throws Exception Si la combinació usuari-contraseya és incorrecta
      */
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
-        if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
+        usuariActiu = new Usuari(nomUsuari, contrasenya);
+        return;
+        /*if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
         HashMap<String, String> usuarisContrasenyes = ctrlPersistencia.getUsuarisContrasenyes();
         boolean dadesCorrectes = usuariActiu.verificarIniciSessio(nomUsuari, contrasenya, usuarisContrasenyes);
         if (dadesCorrectes) usuariActiu = new Usuari(nomUsuari, contrasenya);
         else throw new Exception("Usuari o contrasenya incorrectes");
-        carregarInfoUsuari(nomUsuari);
+        carregarInfoUsuari(nomUsuari);*/
     }
 
     /**
@@ -300,11 +295,12 @@ public class ControladorDomini {
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
      */
-    public Integer crearTeclatDuesMans(Integer idEntrada, Integer idAlfabet, int files, int columnes) throws Exception {
+    public Integer crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) throws Exception {
         HashMap<String, Integer> lfp = ctrlEntrada.getLpfEntrada(idEntrada);
+        Integer idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
         ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
  
-        Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(lfp, alfabet, idEntrada, files, columnes);
+        Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
         return idTeclat;
@@ -318,11 +314,12 @@ public class ControladorDomini {
      * @param columnes Nombre de columnes del teclat
      * @return Integer que representa l'identificador del teclat creat
      */
-    public Integer crearTeclatPolzes(Integer idEntrada, Integer idAlfabet, int files, int columnes) throws Exception {
+    public Integer crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) throws Exception {
         HashMap<String, Integer> lfp = ctrlEntrada.getLpfEntrada(idEntrada);
+        Integer idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
         ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
 
-        Integer idTeclat = ctrlTeclat.crearTeclatPolzes(lfp, alfabet, idEntrada, files, columnes);
+        Integer idTeclat = ctrlTeclat.crearTeclatPolzes(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
         return idTeclat;
@@ -333,20 +330,20 @@ public class ControladorDomini {
     }
 
     //--------------------------------Entrades---------------------------------//
-    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        ctrlEntrada.crearText(nomEntrada, contingutEntrada, lletres, idAlfabet);
+    public void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
+        ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
-    public void importarText(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        ctrlEntrada.importarText(nomEntrada, localitzacio_fitxer, lletres, idAlfabet);
+    public void importarText(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
+        ctrlEntrada.importarText(nomEntrada, localitzacio_fitxer, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
-    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, lletres, idAlfabet);
+    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
+        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
-    public void importarLPF(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres) throws Exception {
-        ctrlEntrada.importarLPF(nomEntrada, localitzacio_fitxer, lletres);
+    public void importarLPF(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
+        ctrlEntrada.importarLPF(nomEntrada, localitzacio_fitxer, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
     public void eliminarEntrada(Integer idEntrada) throws Exception {
@@ -364,7 +361,6 @@ public class ControladorDomini {
         ctrlAlfabet.importarAlfabet(nomAlfabet, localitzacio_fitxer);
     }
 
-    // Modifica l'alfabet afegint-hi una lletra nova
     public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
         ctrlAlfabet.afegirLletraAlfabet(idAlfabet, lletra);
     }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Teclat {
 
     protected ArrayList<Character> distribucio;
+    protected String nom;
     protected Integer numFiles;
     protected Integer numColumnes;
     protected Integer idEntrada;
@@ -19,12 +20,13 @@ public class Teclat {
      * @param numColumnes Nombre de columnes
      * @param id Id del teclat
      */
-    public Teclat(ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+    public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
         this.distribucio = distribucio;
         this.idEntrada = idEntrada;
         this.numFiles = numFiles;
         this.numColumnes = numColumnes;
         this.id = id;
+        this.nom = nom;
     }
 
     //-----------------------------Getters------------------------------------//
@@ -42,6 +44,9 @@ public class Teclat {
         return this.numFiles;
     }
     
+    public String getNom() {
+        return nom;
+    }
     /** 
      * @return Integer
      */

@@ -18,6 +18,7 @@ public class Text extends Entrada{
         this.id = id;
         this.text = contingutEntrada;
         this.idAlfabet = idAlfabet;
+        this.idTeclats = new ArrayList<>();
         calculateLPF();
     }
 

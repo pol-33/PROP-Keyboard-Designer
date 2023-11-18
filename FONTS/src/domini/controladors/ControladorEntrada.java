@@ -64,6 +64,11 @@ public class ControladorEntrada {
         Entrada entrada = conjuntEntrades.get(idEntrada);
         return entrada.getIdAlfabetVinculat();
     }
+
+    public ArrayList<Integer> getIdEntrades() {
+        ArrayList<Integer> llistaIds = new ArrayList<>(conjuntEntrades.keySet());
+        return llistaIds; 
+    }
     //---------------------------Metodes publics---------------------------//
     public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         Text nouText = new Text(nomEntrada, contador, lletres, contingutEntrada, idAlfabet);
@@ -98,6 +103,10 @@ public class ControladorEntrada {
 
     public void importarLPF(String nomEntrada, String localitzacio_fitxer, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         //FALTA CREAR FUNCIO PER LLEGIR LA LPF
+    }
+
+    public void resetEntrades() {
+        conjuntEntrades = new HashMap<>();
     }
 
     //---------------------------Metodes provats---------------------------//

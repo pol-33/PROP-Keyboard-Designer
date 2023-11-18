@@ -16,5 +16,6 @@ public class LPF extends Entrada {
         this.id = id;
         this.lpf = contingutEntrada;
         this.idAlfabet = idAlfabet;
+        this.idTeclats = new ArrayList<>();
     }
 }
