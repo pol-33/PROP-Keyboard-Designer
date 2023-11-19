@@ -7,268 +7,269 @@ public class ProgramaConsola {
 
     public static void main(String[] args) {
         try {
-            controlador.iniciarSessio("nombreUsuario", "contrasenya");
+            controlador.crearUsuari("UsuariDefault", "1234");
 
-            int opcion;
+            int opcio;
             do {
                 mostrarMenu();
-                opcion = obtenerOpcion();
+                opcio = obtenirOpcio();
 
                 try {
-                    procesarOpcion(opcion);
+                    processarOpcio(opcio);
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
-            } while (opcion != 9);
+            } while (opcio != 9);
 
             controlador.tancarSessio();
-            System.out.println("Saliendo...");
+            System.out.println("Sortint...");
         } catch (Exception e) {
-            System.out.println("Error al iniciar sesión: " + e.getMessage());
+            System.out.println("Error en iniciar sessió: " + e.getMessage());
         }
     }
 
     private static void mostrarMenu() {
         System.out.println("====== Menú ======");
-        System.out.println("1. Crear Alfabeto");
-        System.out.println("2. Crear Texto");
+        System.out.println("1. Crear Alfabet");
+        System.out.println("2. Crear Text");
         System.out.println("3. Crear LPF");
-        System.out.println("4. Crear Teclado");
-        System.out.println("5. Ver Alfabetos");
-        System.out.println("6. Ver Textos");
-        System.out.println("7. Ver Teclados");
-        System.out.println("8. Ver Teclados, Alfabetos y Textos");
-        System.out.println("9. Salir");
+        System.out.println("4. Crear Teclat");
+        System.out.println();
+        System.out.println("5. Veure Alfabets");
+        System.out.println("6. Veure Entrades");
+        System.out.println("7. Veure Teclats");
+        System.out.println();
+        System.out.println("8. Sortir");
         System.out.println("==================");
-        System.out.println("Ingrese una opción:");
+        System.out.println("Introdueix una opció:");
     }
 
-    private static int obtenerOpcion() {
-        int opcion;
+    private static int obtenirOpcio() {
+        int opcio;
         while (true) {
             try {
-                opcion = scanner.nextInt();
-                if (opcion >= 1 && opcion <= 9) {
+                opcio = scanner.nextInt();
+                if (opcio >= 1 && opcio <= 9) {
                     break;
                 } else {
-                    System.out.println("Ingrese una opción válida (1-9):");
+                    System.out.println("Introdueix una opció vàlida (1-8):");
                 }
             } catch (Exception e) {
-                System.out.println("Ingrese una opción válida (1-9):");
+                System.out.println("Introdueix una opció vàlida (1-8):");
                 scanner.next();
             }
         }
-        return opcion;
+        return opcio;
     }
 
-    private static void procesarOpcion(int opcion) throws Exception {
-        switch (opcion) {
+    private static void processarOpcio(int opcio) throws Exception {
+        switch (opcio) {
             case 1:
-                crearAlfabeto();
+                crearAlfabet();
                 break;
             case 2:
-                crearTexto();
+                crearText();
                 break;
             case 3:
                 crearLPF();
                 break;
             case 4:
-                crearTeclado();
+                crearTeclat();
                 break;
             case 5:
-                verAlfabetos();
+                veureAlfabets();
                 break;
             case 6:
-                verTextos();
+                veureEntrades();
                 break;
             case 7:
-                verTeclados();
+                veureTeclats();
                 break;
             case 8:
-                verTodo();
-                break;
-            case 9:
-                System.out.println("Saliendo...");
+                System.out.println("Sortint...");
                 break;
             default:
-                System.out.println("Opción no válida");
+                System.out.println("Opció no vàlida");
                 break;
         }
     }
 
-    private static void crearAlfabeto() {
+    private static void crearAlfabet() {
         try {
-            System.out.println("==== Crear Nuevo Alfabeto ====");
-            System.out.println("Ingrese el nombre del nuevo alfabeto:");
+            System.out.println("==== Crear Nou Alfabet ====");
+            System.out.println("Introdueix el nom del nou alfabet:");
             scanner.nextLine();
-            String nombreAlfabeto = scanner.nextLine();
-            System.out.println("Ingrese las letras del alfabeto separadas por espacios:");
-            String[] letrasInput = scanner.nextLine().split(" ");
-            ArrayList<Character> letras = new ArrayList<>();
-            for (String letra : letrasInput) {
-                letras.add(letra.charAt(0));
+            String nomAlfabet = scanner.nextLine();
+            System.out.println("Introdueix les lletres de l'alfabet separades per espais:");
+            String[] lletresInput = scanner.nextLine().split(" ");
+            ArrayList<Character> lletres = new ArrayList<>();
+            for (String lletra : lletresInput) {
+                lletres.add(lletra.charAt(0));
             }
-            controlador.crearAlfabet(nombreAlfabeto, letras);
-            System.out.println("Alfabeto '" + nombreAlfabeto + "' creado con éxito.");
+            controlador.crearAlfabet(nomAlfabet, lletres);
+            System.out.println("Alfabet '" + nomAlfabet + "' creat amb èxit.");
         } catch (Exception e) {
-            System.out.println("Error al crear el alfabeto: " + e.getMessage());
+            System.out.println("Error en crear l'alfabet: " + e.getMessage());
         }
     }
-    
-    private static void crearTexto() {
+
+    private static void crearText() {
         try {
-            System.out.println("==== Crear Nuevo Texto ====");
-            System.out.println("Ingrese el nombre del nuevo texto:");
+            System.out.println("==== Crear Nou Text ====");
+            System.out.println("Introdueix el nom del nou text:");
             scanner.nextLine();
-            String nombreTexto = scanner.nextLine();
-            System.out.println("Ingrese el contenido del texto:");
-            String contenido = scanner.nextLine();
-            System.out.println("Seleccione el alfabeto para el texto:");
-            mostrarAlfabetos();
-            int idAlfabeto = scanner.nextInt();
-            controlador.crearText(nombreTexto, contenido, idAlfabeto);
-            System.out.println("Texto '" + nombreTexto + "' creado con éxito.");
+            String nomText = scanner.nextLine();
+            System.out.println("Introdueix el contingut del text:");
+            String contingut = scanner.nextLine();
+            System.out.println("Selecciona l'alfabet per al text:");
+            mostrarAlfabets();
+            int idAlfabet = scanner.nextInt();
+            controlador.crearText(nomText, contingut, idAlfabet);
+            System.out.println("Text '" + nomText + "' creat amb èxit.");
         } catch (Exception e) {
-            System.out.println("Error al crear el texto: " + e.getMessage());
+            System.out.println("Error en crear el text: " + e.getMessage());
         }
     }
-    
+
     private static void crearLPF() {
         try {
-            System.out.println("==== Crear Nuevo LPF ====");
-            System.out.println("Ingrese el nombre del nuevo LPF:");
+            System.out.println("==== Crear Nou LPF ====");
+            System.out.println("Introdueix el nom del nou LPF:");
             scanner.nextLine();
-            String nombreLPF = scanner.nextLine();
-            System.out.println("Ingrese los pares de valores (String, int) separados por espacios:");
-            String[] valores = scanner.nextLine().split(" ");
+            String nomLPF = scanner.nextLine();
+            System.out.println("Introdueix els parells de valors (String, int) separats per espais:");
+            String[] valors = scanner.nextLine().split(" ");
             HashMap<String, Integer> lpf = new HashMap<>();
-            for (int i = 0; i < valores.length; i += 2) {
-                String key = valores[i];
-                int value = Integer.parseInt(valores[i + 1]);
-                lpf.put(key, value);
+            for (int i = 0; i < valors.length; i += 2) {
+                String clau = valors[i];
+                int valor = Integer.parseInt(valors[i + 1]);
+                lpf.put(clau, valor);
             }
-            System.out.println("Seleccione el alfabeto para el LPF:");
-            mostrarAlfabetos();
-            int idAlfabeto = scanner.nextInt();
-            controlador.crearLPF(nombreLPF, lpf, idAlfabeto);
-            System.out.println("LPF '" + nombreLPF + "' creado con éxito.");
+            System.out.println("Selecciona l'alfabet per al LPF:");
+            mostrarAlfabets();
+            int idAlfabet = scanner.nextInt();
+            controlador.crearLPF(nomLPF, lpf, idAlfabet);
+            System.out.println("LPF '" + nomLPF + "' creat amb èxit.");
         } catch (Exception e) {
-            System.out.println("Error al crear el LPF: " + e.getMessage());
+            System.out.println("Error en crear el LPF: " + e.getMessage());
         }
     }
-    
-    private static void crearTeclado() {
+
+    private static void crearTeclat() {
         try {
-            System.out.println("==== Crear Nuevo Teclado ====");
-            System.out.println("Ingrese el nombre del nuevo teclado:");
+            System.out.println("==== Crear Nou Teclat ====");
+            System.out.println("Introdueix el nom del nou teclat:");
             scanner.nextLine();
-            String nombreTeclado = scanner.nextLine();
-            System.out.println("Seleccione el texto asociado al teclado:");
+            String nomTeclat = scanner.nextLine();
+            System.out.println("Selecciona el text associat al teclat:");
             mostrarTextos();
-            int idTexto = scanner.nextInt();
-            System.out.println("Ingrese el número de filas del teclado:");
-            int filas = scanner.nextInt();
-            System.out.println("Ingrese el número de columnas del teclado:");
-            int columnas = scanner.nextInt();
-            controlador.crearTeclatPolzes(nombreTeclado, idTexto, filas, columnas);
-            System.out.println("Teclado '" + nombreTeclado + "' creado con éxito.");
+            int idText = scanner.nextInt();
+            System.out.println("Introdueix el nombre de files del teclat:");
+            int files = scanner.nextInt();
+            System.out.println("Introdueix el nombre de columnes del teclat:");
+            int columnes = scanner.nextInt();
+            controlador.crearTeclatPolzes(nomTeclat, idText, files, columnes);
+            System.out.println("Teclat '" + nomTeclat + "' creat amb èxit.");
         } catch (Exception e) {
-            System.out.println("Error al crear el teclado: " + e.getMessage());
+            System.out.println("Error en crear el teclat: " + e.getMessage());
         }
     }
-    
-    private static void verAlfabetos() {
+
+    private static void veureAlfabets() {
         try {
-            ArrayList<Integer> idsAlfabetos = controlador.getIdAlfabets();
-            System.out.println("Alfabetos:");
-            for (Integer id : idsAlfabetos) {
-                String nombre = controlador.getNomAlfabet(id);
-                System.out.println(nombre);
+            ArrayList<Integer> idsAlfabets = controlador.getIdAlfabets();
+            System.out.println("==== Els teus alfabets ====");
+            for (Integer id : idsAlfabets) {
+                String nom = controlador.getNomAlfabet(id);
+                ArrayList<Character> lletres = controlador.getLletresAlfabet(id);
+                System.out.println(nom + ": " + lletres.toString());
             }
         } catch (Exception e) {
-            System.out.println("Error al ver los alfabetos: " + e.getMessage());
+            System.out.println("Error en veure els alfabets: " + e.getMessage());
         }
     }
-    
-    private static void verTextos() {
+
+    private static void veureEntrades() {
         try {
             ArrayList<Integer> idsTextos = controlador.getIdEntrades();
-            System.out.println("Textos:");
+            System.out.println("==== Les teves entrades ====");
             for (Integer id : idsTextos) {
-                String nombre = controlador.getNomEntrada(id);
-                System.out.println(nombre);
+                String nom = controlador.getNomEntrada(id);
+                String tipus = controlador.getTypeEntrada(id);
+                System.out.println(nom + ": " + tipus);
             }
         } catch (Exception e) {
-            System.out.println("Error al ver los textos: " + e.getMessage());
+            System.out.println("Error en veure els textos: " + e.getMessage());
         }
     }
-    
-    private static void verTeclados() {
+
+    private static void veureTeclats() {
         try {
-            ArrayList<Integer> idsTeclados = controlador.getIdTeclats();
-            System.out.println("Teclados:");
-            for (Integer id : idsTeclados) {
-                String nombre = controlador.getNomTeclat(id);
-                int columnas = controlador.getColumnesTeclat(id);
-                ArrayList<Character> distribucion = controlador.getDistribucioTeclat(id);
+            ArrayList<Integer> idsTeclats = controlador.getIdTeclats();
+            System.out.println("==== Els teus teclats ====");
+            for (Integer id : idsTeclats) {
+                String nom = controlador.getNomTeclat(id);
+                int files = controlador.getFilesTeclat(id);
+                int columnes = controlador.getColumnesTeclat(id);
+                ArrayList<Character> distribucio = controlador.getDistribucioTeclat(id);
     
-                System.out.println("Nombre: " + nombre);
-                System.out.println("Columnas: " + columnas);
-                System.out.println("Distribución:");
+                System.out.println();
+                System.out.println(nom + ":");
+                System.out.println("Files: " + files);
+                System.out.println("Columnes: " + columnes);
+                System.out.println("Distribució:");
+    
+                // Imprimir borde superior
+                for (int i = 0; i < columnes * 4 + 1; i++) {
+                    System.out.print("-");
+                }
+                System.out.println();
     
                 int contador = 0;
-                for (char letra : distribucion) {
-                    System.out.print(letra + " ");
-                    contador++;
-                    if (contador == columnas) {
-                        System.out.println();
-                        contador = 0;
+                for (int i = 0; i < files; i++) {
+                    System.out.print("| "); // Línea vertical izquierda
+                    for (int j = 0; j < columnes; j++) {
+                        System.out.print("[" + distribucio.get(contador) + "] ");
+                        contador++;
                     }
+                    System.out.println("|"); // Línea vertical derecha
                 }
+    
+                // Imprimir borde inferior
+                for (int i = 0; i < columnes * 4 + 1; i++) {
+                    System.out.print("-");
+                }
+                System.out.println();
                 System.out.println();
             }
         } catch (Exception e) {
-            System.out.println("Error al ver los teclados: " + e.getMessage());
+            System.out.println("Error al ver los teclats: " + e.getMessage());
         }
     }
     
-    private static void verTodo() {
+    private static void mostrarAlfabets() {
         try {
-            System.out.println("==== Ver Todo ====");
-            System.out.println("Alfabetos:");
-            verAlfabetos();
-            System.out.println("Textos:");
-            verTextos();
-            System.out.println("Teclados:");
-            verTeclados();
-        } catch (Exception e) {
-            System.out.println("Error al ver todo: " + e.getMessage());
-        }
-    }
-    
-    private static void mostrarAlfabetos() {
-        try {
-            ArrayList<Integer> idsAlfabetos = controlador.getIdAlfabets();
-            System.out.println("Alfabetos disponibles:");
-            for (int i = 0; i < idsAlfabetos.size(); i++) {
-                String nombre = controlador.getNomAlfabet(idsAlfabetos.get(i));
-                System.out.println((i) + ". " + nombre);
+            ArrayList<Integer> idsAlfabets = controlador.getIdAlfabets();
+            System.out.println("Alfabets disponibles:");
+            for (int i = 0; i < idsAlfabets.size(); i++) {
+                String nom = controlador.getNomAlfabet(idsAlfabets.get(i));
+                System.out.println((i) + ". " + nom);
             }
         } catch (Exception e) {
-            System.out.println("Error al mostrar los alfabetos: " + e.getMessage());
+            System.out.println("Error en mostrar els alfabets: " + e.getMessage());
         }
     }
-    
+
     private static void mostrarTextos() {
         try {
             ArrayList<Integer> idsTextos = controlador.getIdEntrades();
             System.out.println("Textos disponibles:");
             for (int i = 0; i < idsTextos.size(); i++) {
-                String nombre = controlador.getNomEntrada(idsTextos.get(i));
-                System.out.println((i) + ". " + nombre);
+                String nom = controlador.getNomEntrada(idsTextos.get(i));
+                System.out.println((i) + ". " + nom);
             }
         } catch (Exception e) {
-            System.out.println("Error al mostrar los textos: " + e.getMessage());
+            System.out.println("Error en mostrar els textos: " + e.getMessage());
         }
     }
 }

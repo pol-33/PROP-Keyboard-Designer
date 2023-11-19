@@ -20,12 +20,12 @@ public class ControladorPersistencia {
 
     //--------------------------------Usuari---------------------------------//
     public ArrayList<String> getUsuarisExistents() {
-        return null;
+        return new ArrayList<String>();
     }
 
 
     public HashMap<String, String> getUsuarisContrasenyes() {
-        return null;
+        return new HashMap<String, String>();
     }
 
     public void guardarUsuari(String nomUsuari, String contrasenya) {
