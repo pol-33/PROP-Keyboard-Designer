@@ -193,10 +193,68 @@ public class ControladorDomini {
 
     private void carregarInfoUsuari(String nomUsuari) {
         //xx info ctrlPersistencia.getInfo();
-        // carregar els alfabets
+
+        //Alfabets
+        ArrayList<String> alfabets = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
+        carregar
         // carregar els textos
         // carregar les lpf
         // carregar els teclats
+    }
+
+    //Els alfabets segueixen el següent format:
+    //id,nom,lletra1.lletra2. ... .lletran, idEntrada1.idEntrada2. ... . idEntradan
+    private void carregarAlfabets(ArrayList<String> alfabets) {
+        Integer id;
+        String nomAlfabet;
+        ArrayList<Character> lletres;
+        ArrayList<Integer> idEntrades;
+
+        for (String alfabet : alfabets) {
+
+        }
+    }
+
+    //Les entrades segueixen el format:
+    //Textos: id,nom,text,..
+    //LPFs: id,nom,Paraula1.Freq1.Paraula2.Freq2. ... .Paraulan.Freqn, idTeclat1.idTeclat2. ... .idTeclatn
+    private void carregarEntrades(ArrayList<String> entrades) {
+        Integer id;
+        String nomEntrada;
+        String text;
+        HashMap<String, Integer> lpf;
+        ArrayList<Integer> idTeclats;
+
+        for (String entrada : entrades) {
+
+        }
+    }
+
+    //Els teclats segueixen el seguent format
+    //id,nom,numFiles,numColumnes,tecla1.tecla2. ... .teclan
+    private void carregarTeclats(ArrayList<String> teclats) {
+        Integer id;
+        String nomTeclat;
+        Integer numFiles, numColumnes;
+        ArrayList<Character> distribucio = new ArrayList<>();
+
+        for (String teclat : teclats) {
+            String[] atributs = teclat.split(",");
+
+            id = Integer.valueOf(atributs[0]);
+            nomTeclat = atributs[1];
+            numFiles = Integer.valueOf(atributs[2]);
+            numColumnes = Integer.valueOf(atributs[3]);
+
+            String[] lletres = atributs[4].split("\\.");
+            for (String lletra : lletres) {
+                distribucio.add(lletra.charAt(0));
+            }
+
+            //HEM DE CREAR UNA CREADORA DE TECLAT QUE NO HAGI DE PASSAR PER ALGORITME
+        }
+
+
     }
 
     private void resetInfoPrograma() {
