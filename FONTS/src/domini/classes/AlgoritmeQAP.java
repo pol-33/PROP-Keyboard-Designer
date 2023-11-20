@@ -1,19 +1,15 @@
 package domini.classes;
 
 public class AlgoritmeQAP {
+    /**
+     * Resol un problema QAP mitjançant Hill Climbing
+     * @param fluxos Matriu de fluxos del problema QAP
+     * @param costos Matriu de costos del problema QAP
+     * @return int[] representant les asignacions
+     */
     public int[] resoldreQAP(int[][] fluxos, int[][] costos) {
-        int tamanyProblema = fluxos.length;
-        int[] solucio = new int[tamanyProblema];
-
-        // Generem una solucio inicial per ordre on les lletres s'asignen
-        // a tecles per ordre
-        for (int i = 0; i < tamanyProblema; i++) {
-            solucio[i] = i;
-        }
-
         // cridem a hill climbing
-        HillClimbing hillClimbing = new HillClimbing(solucio, fluxos, costos);
-        hillClimbing.resoldre();
-        return hillClimbing.getSolucio();
+        HillClimbing hillClimbing = new HillClimbing(fluxos, costos);
+        return hillClimbing.resoldreVarisIntentents(10);
     }
 }

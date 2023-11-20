@@ -168,7 +168,18 @@ public class ProgramaConsola {
             int files = scanner.nextInt();
             System.out.println("Introdueix el nombre de columnes del teclat:");
             int columnes = scanner.nextInt();
-            controlador.crearTeclatPolzes(nomTeclat, idText, files, columnes);
+            
+            System.out.println("Quin algoritme vols utilitzar?");
+            System.out.println("0. Algoritme per a teclat de portatil");
+            System.out.println("1. Algoritme per a teclat de mobil");
+            int tipusTeclat = scanner.nextInt();
+            if (tipusTeclat == 0) {
+                controlador.crearTeclatDuesMans(nomTeclat, idText, files, columnes);
+            }
+            else {
+                controlador.crearTeclatPolzes(nomTeclat, idText, files, columnes);
+            }
+
             System.out.println("Teclat '" + nomTeclat + "' creat amb èxit.");
         } catch (Exception e) {
             System.out.println("Error en crear el teclat: " + e.getMessage());
