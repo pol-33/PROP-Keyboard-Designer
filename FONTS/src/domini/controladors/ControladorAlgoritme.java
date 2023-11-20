@@ -44,7 +44,11 @@ public class ControladorAlgoritme {
     * @param columnes Nombre de columnes del teclat.
     * @return Una llista amb la distribució de lletres a tecles optimitzada.
     */
-    public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
+    public ArrayList<Character> calcularDistribucioDuesMans(HashMap<String, Integer> lpf,
+     ArrayList<Character> alfabet, int files, int columnes) throws Exception{
+        if (files * columnes < alfabet.size())
+            throw new Exception("No caben totes les lletres dins del layout proposat per files i columnes.");
+
         int[][] flux = calcularMatriuFlux(lpf, alfabet);
         int[][] distancia = calcularMatriuCostos(files, columnes);
 
@@ -72,7 +76,10 @@ public class ControladorAlgoritme {
      * @param columnes Nombre de columnes del teclat.
      * @return Una llista amb la distribució de lletres a tecles optimitzada.
      */
-    public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) {
+    public ArrayList<Character> calcularDistribucioPolzes(HashMap<String, Integer> lpf,
+     ArrayList<Character> alfabet, int files, int columnes) throws Exception {
+        if (files * columnes < alfabet.size())
+            throw new Exception("No caben totes les lletres dins del layout proposat per files i columnes.");
 
         int tamanyAlfabet = alfabet.size();
         while (tamanyAlfabet < files * columnes) {
