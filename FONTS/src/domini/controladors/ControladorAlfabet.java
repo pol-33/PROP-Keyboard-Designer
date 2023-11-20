@@ -14,19 +14,31 @@ import java.util.HashSet;
  * de crear, modificar i eliminar els alfabets.
  */
 public class ControladorAlfabet {
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
+
     private HashMap<Integer, Alfabet> conjuntAlfabets;
     private Integer comptador;
-
-    //Instancia singleton del Controlador d'Alfabets
     private static ControladorAlfabet ctrlAlfabet;
 
-    //-----------------------------Constructora---------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Constructora
+    // ---------------------------------------------------------------------------- //
+
+    /**
+     * Constructora de la clase. Inicialitza el conjunt d'alfabets del sistema.
+     */
     public ControladorAlfabet() {
         conjuntAlfabets = new HashMap<>();
         comptador = 0;
     }
 
-    // Metode per obtenir l'instancia singleton
+    /**
+     * Obtenir la instància singleton de ControladorAlfabet.
+     * @return La instància única de ControladorAlfabet.
+     */
     public static ControladorAlfabet obtenirInstancia() {
         if (ctrlAlfabet == null) {
             ctrlAlfabet = new ControladorAlfabet();
@@ -34,7 +46,10 @@ public class ControladorAlfabet {
         return ctrlAlfabet;
     }
 
-    //---------------------------Crear i eliminar---------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Crear i eliminar
+    // ---------------------------------------------------------------------------- //
+
     /**
      * Crea un nou alfabet a partir d'un conjunt de lletres separades per comes.
      * @param nomAlfabet Nom de l'alfabet
@@ -46,14 +61,11 @@ public class ControladorAlfabet {
      */
     public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
 
-        // creem un identificador per al nou alfabet
         Integer idAlfabet = comptador;   // de moment estaran ordenats
         comptador++;
 
-        // creem un alfabet nou
         Alfabet nouAlfabet = new Alfabet(nomAlfabet, idAlfabet, lletres);
 
-        // afegim el teclat al conjunt
         conjuntAlfabets.put(idAlfabet, nouAlfabet);
 
         return idAlfabet;
@@ -69,7 +81,10 @@ public class ControladorAlfabet {
         conjuntAlfabets.remove(idAlfabet);
     }
 
-    //-----------------------------Getters--------------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
+
     /**
      * Obte les lletres de l'alfabet
      * @param idAlfabet Identificador de l'alfabet
@@ -106,12 +121,18 @@ public class ControladorAlfabet {
         return alfabet.getEntrades();
     }
 
+    /**
+     * Retorna una llista amb els identificadors de tots els alfabets.
+     * @return ArrayList amb els identificadors de tots els alfabets.
+     */
     public ArrayList<Integer> getIdAlfabets() {
         ArrayList<Integer> llistaIds = new ArrayList<>(conjuntAlfabets.keySet());
         return llistaIds; 
     }
-    
-    //----------------------------Setters----------------------------------//
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Setters
+    // ---------------------------------------------------------------------------- //
     /**
      * Modifica el nom de l'idioma de l'alfabet
      * @param idAlfabet Identificador de l'alfabet
@@ -124,8 +145,9 @@ public class ControladorAlfabet {
         alfabet.setNom(idioma);
     }
 
-    //---------------------------Metodes publics---------------------------//
-
+    // ---------------------------------------------------------------------------- //
+    //                                   Metodes publics
+    // ---------------------------------------------------------------------------- //
     /**
      * Associa una entrada a l'alfabet
      * @param idAlfabet Identificador de l'alfabet
@@ -152,7 +174,6 @@ public class ControladorAlfabet {
         alfabet.desvincularEntrada(idEntrada);
     }
 
-    
     /**
      * Importa un alfabet a partir d'un fitxer de text que conte lletres d'un sol caracter i no repetides separades per comes
      * @param idioma Nom de l'idioma de l'alfabet
@@ -162,10 +183,8 @@ public class ControladorAlfabet {
      * @throws Exception Si s'intenta crear un alfabet sense cap lletra
      */
     public void importarAlfabet(String idioma, String localitzacioFitxer) throws Exception {
-        // llegir fitxer i guardar contingut a contingutFitxer
         Path path = Paths.get(localitzacioFitxer);
         String contingutFitxer = new String(Files.readAllBytes(path));
-
         crearAlfabet(idioma, csvACharArray(contingutFitxer));
     }
 
@@ -183,12 +202,17 @@ public class ControladorAlfabet {
         alfabet.afegirLletra(lletra);
     }
 
+
+    /**
+     * Reinicialitzar el conjunt d'alfabets gestionats per aquest controlador
+     */
     public void resetAlfabets(){
         conjuntAlfabets = new HashMap<>();
     }
 
-    //---------------------------Metodes privats---------------------------//
-    
+    // ---------------------------------------------------------------------------- //
+    //                                   Metodes privats
+    // ---------------------------------------------------------------------------- //
     /**
      * Comprova que les lletres d'una lpf estiguin contingudes a l'alfabet
      * @param idAlfabet Identificador de l'alfabet

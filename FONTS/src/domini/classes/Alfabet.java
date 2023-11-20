@@ -3,29 +3,43 @@ package domini.classes;
 import java.util.ArrayList;
 
 /**
- * Classe Alfabet. Representa l'alfabet d'un idioma, as a dir, un conjunt de lletres no repetides d'un sol caracter.
+ * Classe Alfabet. Representa l'alfabet d'un idioma, és a dir, un conjunt de lletres no repetides d'un sol caracter.
  */
-
 public class Alfabet {
-    //class attributes
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
+
     private ArrayList<Character> lletres;
     private String nom;
     private Integer id;
     private ArrayList<Integer> idEntrades;
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Constructora
+    // ---------------------------------------------------------------------------- //
 
-    //---------------------------Constructora-----------------------------//
-    public Alfabet(String nomAlfabet, Integer idAlfabet, ArrayList<Character> lletresAlfabet) throws Exception {
+    /**
+     * Contructora d'Alfabet
+     * @param nomAlfabet Nom de l'alfabet
+     * @param idAlfabet Identificador de l'alfabet
+     * @param lletresAlfabet Lletres de l'alfabet
+     */
+    public Alfabet(String nomAlfabet, Integer idAlfabet, ArrayList<Character> lletresAlfabet) {
         this.nom = nomAlfabet;
         this.id = idAlfabet;
         this.lletres = lletresAlfabet;
         this.idEntrades = new ArrayList<>();
     }
 
-    //-----------------------------Getters--------------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
+
     /**
      * Retorna les lletres de l'alfabet.
-     * @return ArrayList amb les lletres de l'alfabet.
+     * @return ArrayList de caracters amb les lletres de l'alfabet.
      */
     public ArrayList<Character> getLletres() {
         return lletres;
@@ -49,14 +63,17 @@ public class Alfabet {
 
     /**
      * Retorna els identificadors de les entrades associades a l'alfabet.
-     * @return ArrayList amb els identificadors de les entrades associades a l'alfabet.
+     * @return ArrayList d'integer amb els identificadors de les entrades associades a l'alfabet.
      */
     public ArrayList<Integer> getEntrades() {
         return idEntrades;
     }
 
 
-    //-----------------------------Setters---------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Setters
+    // ---------------------------------------------------------------------------- //
+
     /**
      * Modifica l'idioma de l'alfabet.
      * @param nomAlfabet Nou idioma de l'alfabet.
@@ -65,7 +82,10 @@ public class Alfabet {
         this.nom = nomAlfabet;
     }
 
-    //---------------------------Metodes publics---------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Funcions
+    // ---------------------------------------------------------------------------- //
+
     /**
      * Associa una entrada a l'alfabet.
      * @param idEntrada Identificador de l'entrada a associar.

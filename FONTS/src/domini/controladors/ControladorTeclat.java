@@ -13,28 +13,31 @@ import domini.classes.Teclat;
  * entrada.
  */ 
 public class ControladorTeclat {
+
+     // ---------------------------------------------------------------------------- //
+     //                                   Atributs
+     // ---------------------------------------------------------------------------- //
     
     private HashMap<Integer, Teclat> conjuntTeclats;
     private Integer contador = 0;
-
     private static ControladorTeclat ctrlTeclats;
 
-    //-------------------------------Contructora------------------------------//
-    /** 
-     *
-     * Constructora de la clase. 
-     *
-     */
+     // ---------------------------------------------------------------------------- //
+     //                                   Constructora
+     // ---------------------------------------------------------------------------- //
+
+     /**
+      * Constructora de la clase. Inicialitza el conjunt de teclats.
+      */
     public ControladorTeclat() { 
 
         conjuntTeclats = new HashMap<>();
     }
 
-    /** 
-     *
-     * It is a constructor. 
-     *
-     */
+     /**
+      * Obtenir la instància singleton de ControladorTeclat.
+      * @return La instància única de ControladorTeclat.
+      */
     public static ControladorTeclat obtenirInstancia() { 
 
         if (ctrlTeclats == null) {
@@ -43,77 +46,61 @@ public class ControladorTeclat {
         return ctrlTeclats;
     }
 
-    //---------------------------Metodes publics---------------------------//
-    /** 
-     *
+     // ---------------------------------------------------------------------------- //
+     //                                   Metodes publics
+     // ---------------------------------------------------------------------------- //
+
+     /**
      * Crear teclat dues mans
-     *
      * @param lpf  Llista de paraules amb frequencies per a calcular la distribucio optima 
      * @param alfabet  Conjunt de lletres a colocar en el teclat 
      * @param uidEntrada  Identificador de l'entrada d'on prove la lpf
      * @param files  Nombre de files al layout del teclat 
      * @param columnes  Nombre de columnes del layout del teclat
-     * @return Enter que representa el identificador del teclat creat
+     * @return Enter que representa l'identificador del teclat creat
      */
     public Integer crearTeclatDuesMans(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) {
 
-        
-        // creem un identificador per al nou teclat
-        Integer idTeclat = contador;   // de moment estaran ordenats
+        Integer idTeclat = contador;
         contador++;
 
-        // necessitem calcular un ArrayList<Character>, la distribucio del teclat 
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabet, files, columnes);
 
-        // creem un teclat nou
         Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
-
-        // afegim el teclat al conjunt
         conjuntTeclats.put(idTeclat, nouTeclat);
-
         return idTeclat;
     }
 
-    /** 
-     *
+    /**
      * Crear teclat polzes
-     *
      * @param lpf  Llista de paraules amb frequencies per a calcular la distribucio optima 
      * @param alfabet  Conjunt de lletres a colocar en el teclat 
      * @param uidEntrada  Identificador de l'entrada d'on prove la lpf
      * @param files  Nombre de files al layout del teclat 
      * @param columnes  Nombre de columnes del layout del teclat
-     * @return Enter que representa el identificador del teclat creat
+     * @return Enter que representa l'identificador del teclat creat
      */
     public Integer crearTeclatPolzes(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) {
 
 
-        // creem un identificador per al nou teclat
-        Integer idTeclat = contador;   // de moment estaran ordenats
+        Integer idTeclat = contador;
         contador++;
 
-        // necessitem calcular un ArrayList<Character>, la distribucio del teclat
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
 
-        // creem un teclat nou
         Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
-
-        // afegim el teclat al conjunt
         conjuntTeclats.put(idTeclat, nouTeclat);
-
         return idTeclat;
     }
 
-    /** 
-     *
+    /**
      * Eliminar teclat
-     *
      * @param idTeclat  Identificador del teclat a borrar. 
-     * @throws   Exception No existeix un teclat amb aquell identificador. 
+     * @throws Exception No existeix un teclat amb aquell identificador.
      */
     public void eliminarTeclat(Integer idTeclat) throws Exception { 
 
@@ -125,17 +112,22 @@ public class ControladorTeclat {
         }
     }
 
+     /**
+      * Reinicialitza el conjunt de teclats, eliminant tots els existents.
+      */
     public void resetTeclats() {
         conjuntTeclats = new HashMap<>();
     }
-    //------------------------------Getters------------------------------//
-    /** 
-     *
+
+     // ---------------------------------------------------------------------------- //
+     //                                   Getters
+     // ---------------------------------------------------------------------------- //
+
+    /**
      * Obte la distribucio de les lletres en les tecles de un teclat
-     *
      * @param idTeclat  Identificador del teclat que volem consultar
      * @return Llista de caracters que representen les lletres al teclat per files.
-     * @throws   Exception No existeix un teclat amb aquell identificador.
+     * @throws Exception No existeix un teclat amb aquell identificador.
      */
     public ArrayList<Character> getDistribucioTeclat(Integer idTeclat) throws Exception { 
         if (conjuntTeclats.containsKey(idTeclat)) {
@@ -146,6 +138,12 @@ public class ControladorTeclat {
         }
     }
 
+     /**
+      * Obté l'identificador de l'entrada vinculada a un teclat.
+      * @param idTeclat Identificador del teclat a consultar.
+      * @return Identificador de l'entrada vinculada.
+      * @throws Exception Si no existeix un teclat amb aquest identificador.
+      */
     public Integer getIdEntradaVinculadaTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getIdEntradaVinculada();
@@ -154,17 +152,21 @@ public class ControladorTeclat {
             throw new Exception("No existeix el teclat amb aquest id");
         }
     }
-    /** 
-     *
-     * Obte la llista de identificadors dels teclats creats
-     *
-     * @return Llista de ids de teclat
+    /**
+     * Obte la llista d'identificadors dels teclats creats
+     * @return Llista d'ids de teclat
      */
     public ArrayList<Integer> getIdTeclats() { 
         ArrayList<Integer> llistaIdTeclats = new ArrayList<>(conjuntTeclats.keySet());
         return llistaIdTeclats;
     }
 
+     /**
+      * Obté el nom d'un teclat.
+      * @param idTeclat Identificador del teclat a consultar.
+      * @return Nom del teclat.
+      * @throws Exception Si no existeix un teclat amb aquest identificador.
+      */
     public String getNomTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getNom();
@@ -173,6 +175,13 @@ public class ControladorTeclat {
             throw new Exception("No existeix el teclat amb aquest id");
         }
     }
+
+     /**
+      * Obté el nombre de files d'un teclat.
+      * @param idTeclat Identificador del teclat a consultar.
+      * @return Nombre de files del teclat.
+      * @throws Exception Si no existeix un teclat amb aquest identificador.
+      */
     public Integer getFilesTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getFiles();
@@ -182,6 +191,12 @@ public class ControladorTeclat {
         }
     }
 
+     /**
+      * Obté el nombre de columnes d'un teclat.
+      * @param idTeclat Identificador del teclat a consultar.
+      * @return Nombre de columnes del teclat.
+      * @throws Exception Si no existeix un teclat amb aquest identificador.
+      */
     public Integer getColumnesTeclat(Integer idTeclat) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
             return conjuntTeclats.get(idTeclat).getColumnes();

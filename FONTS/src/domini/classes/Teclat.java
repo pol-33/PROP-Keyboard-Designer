@@ -2,7 +2,15 @@ package domini.classes;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Teclat. Representa un teclat dins del sistema amb una distribució específica de caràcters,
+ * així com informació relacionada amb el seu nom, dimensions, identificador i l'entrada vinculada.
+ */
 public class Teclat {
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
 
     protected ArrayList<Character> distribucio;
     protected String nom;
@@ -11,14 +19,18 @@ public class Teclat {
     protected Integer idEntrada;
     protected Integer id;
 
-    //------------------------------Constructora-----------------------------------//
+    // ---------------------------------------------------------------------------- //
+    //                                   Constructora
+    // ---------------------------------------------------------------------------- //
+
     /**
-     * Contructora de teclat
-     * @param distribucio  Lletres ordenades per files
-     * @param idEntrada Id de la entrada vinculada
-     * @param numFiles Nombre de files
-     * @param numColumnes Nombre de columnes
-     * @param id Id del teclat
+     * Constructora de Teclat
+     * @param nom Nom del teclat
+     * @param distribucio Distribució de caràcters del teclat ordenats per files
+     * @param idEntrada Identificador de l'entrada vinculada al teclat
+     * @param numFiles Nombre de files del teclat
+     * @param numColumnes Nombre de columnes del teclat
+     * @param id Identificador únic del teclat
      */
     public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
         this.distribucio = distribucio;
@@ -29,34 +41,45 @@ public class Teclat {
         this.nom = nom;
     }
 
-    //-----------------------------Getters------------------------------------//
-    /** 
-     * @return ArrayList<Character>
+    // ---------------------------------------------------------------------------- //
+    //                                   Getters
+    // ---------------------------------------------------------------------------- //
+
+    /**
+     * Retorna la distribució de caràcters del teclat.
+     * @return ArrayList de caràcters amb la distribució del teclat.
      */
     public ArrayList<Character> getDistribucio() {
         return this.distribucio;
     }
-    
-    /** 
-     * @return Integer
+
+    /**
+     * Retorna el nombre de files del teclat.
+     * @return Integer amb el nombre de files del teclat.
      */
     public Integer getFiles() {
         return this.numFiles;
     }
-    
+
+    /**
+     * Retorna el nom del teclat.
+     * @return String amb el nom del teclat.
+     */
     public String getNom() {
         return nom;
     }
-    /** 
-     * @return Integer
+
+    /**
+     * Retorna el nombre de columnes del teclat.
+     * @return Integer amb el nombre de columnes del teclat.
      */
     public Integer getColumnes() {
         return this.numColumnes;
     }
-    
+
     /**
-     * 
-     * @return Integer
+     * Retorna l'identificador de l'entrada vinculada al teclat.
+     * @return Integer amb l'identificador de l'entrada vinculada.
      */
     public Integer getIdEntradaVinculada() {
         return this.idEntrada;
