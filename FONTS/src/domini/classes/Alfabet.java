@@ -21,7 +21,7 @@ public class Alfabet {
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Contructora d'Alfabet
+     * Contructora d'Alfabet.
      * @param nomAlfabet Nom de l'alfabet
      * @param idAlfabet Identificador de l'alfabet
      * @param lletresAlfabet Lletres de l'alfabet

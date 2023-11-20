@@ -99,7 +99,6 @@ public class Usuari {
 
     /**
      * Crea un nou usuari en el sistema.
-     *
      * @param nomUsuari Nom d'usuari a crear.
      * @param contrasenya Contrasenya per al nou usuari.
      * @param nomUsuarisExistents Llista amb noms d'usuari existents.

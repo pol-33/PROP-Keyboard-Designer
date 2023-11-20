@@ -18,7 +18,7 @@ public class Text extends Entrada{
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Constructora de Text
+     * Constructora de Text.
      * @param nomEntrada Nom de l'entrada associada al text
      * @param id Identificador del text
      * @param lletres Llista de caràcters (pot ser utilitzada per funcionalitats específiques)

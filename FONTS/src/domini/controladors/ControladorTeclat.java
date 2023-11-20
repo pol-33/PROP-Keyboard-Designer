@@ -9,7 +9,7 @@ import domini.classes.Teclat;
  /**
  * Classe ControladorTeclat. Gestiona un conjunt de teclats, i s'encarrega
  * de crear, modificar i eliminar els teclats. Coneix a ControladorAlgoritme,
- * i parla amb ell per tal de crear les distribucions optimes per a cada
+ * i parla amb ell per tal de crear les distribucions óptimes per a cada
  * entrada.
  */ 
 public class ControladorTeclat {

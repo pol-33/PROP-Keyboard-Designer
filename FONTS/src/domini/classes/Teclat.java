@@ -24,7 +24,7 @@ public class Teclat {
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Constructora de Teclat
+     * Constructora de Teclat.
      * @param nom Nom del teclat
      * @param distribucio Distribució de caràcters del teclat ordenats per files
      * @param idEntrada Identificador de l'entrada vinculada al teclat

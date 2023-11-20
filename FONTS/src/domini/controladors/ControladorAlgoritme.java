@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe ControladorAlgoritme, encarregat de la gestió dels dos algorismes de distribució de lletres a tecles.
+ * Classe ControladorAlgoritme. Encarregat de la gestió dels dos algorismes de distribució de lletres a tecles.
  */
 public class ControladorAlgoritme {
 
@@ -35,6 +35,7 @@ public class ControladorAlgoritme {
     // ---------------------------------------------------------------------------- //
     //                                   Metodes publics
     // ---------------------------------------------------------------------------- //
+
     /**
     * Calcula la distribució de lletres a tecles per a un teclat de dues mans.
     * @param lpf Mapa de freqüència de paraules.
@@ -203,7 +204,7 @@ public class ControladorAlgoritme {
     }
 
     /**
-     * Obte el cost minim de la tecla (i, j) en funcio a la distancia
+     * Obte el cost minim de la tecla (i, j) en funcio a la distancia.
      * minima a una de les dues cantonades inferiors.
      * @param i index fila
      * @param j index columna
@@ -218,12 +219,12 @@ public class ControladorAlgoritme {
     }
 
     /**
-     * Calcula la distancia euclidiana entre dos punts
-     * @param i1
-     * @param j1
-     * @param i2
-     * @param j2
-     * @return
+     * Calcula la distància euclidiana entre dos punts (i1, j1) i (i2, j2). Utilitzat per calcular distàncies al teclat.
+     * @param i1 Índex de fila del primer punt.
+     * @param j1 Índex de columna del primer punt.
+     * @param i2 Índex de fila del segon
+     * @param j2 Índex de colimna del segon punt.
+     * @return Double amb la distància Euclidiana entre els dos punts.
      */
     private double calcularDistanciaEuclidiana(int i1, int j1, int i2, int j2) {
         double distancia = Math.sqrt(Math.pow(i1 - i2, 2) + Math.pow(j1 - j2, 2));

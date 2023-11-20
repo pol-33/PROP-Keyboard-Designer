@@ -72,7 +72,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Elimina un alfabet del conjunt d'alfabets
+     * Elimina un alfabet del conjunt d'alfabets.
      * @param idAlfabet Identificador de l'alfabet a eliminar
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
      */
@@ -86,7 +86,7 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Obte les lletres de l'alfabet
+     * Obte les lletres de l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @return ArrayList amb les lletres de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -98,7 +98,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Obte l'idioma de l'alfabet
+     * Obte l'idioma de l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @return String amb l'idioma de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -110,7 +110,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Obte les entrades associades a l'alfabet
+     * Obte les entrades associades a l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @return ArrayList amb els identificadors de les entrades associades a l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -133,8 +133,9 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
     //                                   Setters
     // ---------------------------------------------------------------------------- //
+
     /**
-     * Modifica el nom de l'idioma de l'alfabet
+     * Modifica el nom de l'idioma de l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @param idioma Nou nom de l'idioma de l'alfabet
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -149,7 +150,7 @@ public class ControladorAlfabet {
     //                                   Metodes publics
     // ---------------------------------------------------------------------------- //
     /**
-     * Associa una entrada a l'alfabet
+     * Associa una entrada a l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @param idEntrada Identificador de l'entrada a associar
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -162,7 +163,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Desvincula una entrada de l'alfabet
+     * Desvincula una entrada de l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @param idEntrada Identificador de l'entrada a desvincular
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -175,7 +176,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Importa un alfabet a partir d'un fitxer de text que conte lletres d'un sol caracter i no repetides separades per comes
+     * Importa un alfabet a partir d'un fitxer de text que conte lletres d'un sol caracter i no repetides separades per comes.
      * @param idioma Nom de l'idioma de l'alfabet
      * @param localitzacioFitxer String amb el path del fitxer de text
      * @throws Exception Si s'intenta crear un alfabet amb lletres de multiples caracters
@@ -189,7 +190,7 @@ public class ControladorAlfabet {
     }
 
     /**
-     * Afegeix una nova lletra a l'alfabet
+     * Afegeix una nova lletra a l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @param lletra Lletra a afegir
      * @throws Exception Si no existeix cap alfabet amb l'identificador donat
@@ -204,7 +205,7 @@ public class ControladorAlfabet {
 
 
     /**
-     * Reinicialitzar el conjunt d'alfabets gestionats per aquest controlador
+     * Reinicialitzar el conjunt d'alfabets gestionats per aquest controlador.
      */
     public void resetAlfabets(){
         conjuntAlfabets = new HashMap<>();
@@ -214,7 +215,7 @@ public class ControladorAlfabet {
     //                                   Metodes privats
     // ---------------------------------------------------------------------------- //
     /**
-     * Comprova que les lletres d'una lpf estiguin contingudes a l'alfabet
+     * Comprova que les lletres d'una lpf estiguin contingudes a l'alfabet.
      * @param idAlfabet Identificador de l'alfabet
      * @param lpf_map HashMap amb les paraules de la lpf i el seu nombre d'aparicions
      * @return Retorna true si totes les lletres de totes les lps estan contingudes a l'alfabet, fals en cas contrari
