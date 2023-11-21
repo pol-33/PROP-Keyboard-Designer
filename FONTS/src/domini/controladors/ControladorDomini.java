@@ -211,11 +211,28 @@ public class ControladorDomini {
     private void carregarAlfabets(ArrayList<String> alfabets) {
         Integer id;
         String nomAlfabet;
-        ArrayList<Character> lletres;
-        ArrayList<Integer> idEntrades;
+        ArrayList<Character> lletres = new ArrayList<>();
+        ArrayList<Integer> idEntrades = new ArrayList<>();
 
         for (String alfabet : alfabets) {
+            //Definim tots els atributs necessaris en tipus natius de JAVA
+            String[] atributs = alfabet.split(",");
 
+            id = Integer.valueOf(atributs[0]);
+            nomAlfabet = atributs[1];
+
+            String[] lletresEnString = atributs[2].split("\\.");
+            for (String lletraString : lletresEnString) {
+                lletres.add(lletraString.charAt(0));
+            }
+
+            String[] idEntradesString = atributs[3].split("\\.");
+            for (String idEntradaString : idEntradesString) {
+                idEntrades.add(Integer.valueOf(idEntradaString.charAt(0)));
+            }
+
+            //Instanciem l'alfabet
+            ctrlAlfabet.carregarAlfabet(id, nomAlfabet, lletres, idEntrades);
         }
     }
 
@@ -272,6 +289,7 @@ public class ControladorDomini {
         ArrayList<Character> distribucio = new ArrayList<>();
 
         for (String teclat : teclats) {
+            //Definim tots els atributs necessaris en tipus natius de JAVA
             String[] atributs = teclat.split(",");
 
             id = Integer.valueOf(atributs[0]);
@@ -285,6 +303,7 @@ public class ControladorDomini {
                 distribucio.add(lletra.charAt(0));
             }
 
+            //Instanciem el teclat
             ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes);
         }
     }
