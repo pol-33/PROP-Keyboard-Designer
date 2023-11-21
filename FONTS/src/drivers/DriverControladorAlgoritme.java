@@ -10,42 +10,46 @@ public class DriverControladorAlgoritme {
     private final ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
 
     public static void main(String[] args) {
-        DriverControladorAlgoritme driverCtrlAlgoritme = new DriverControladorAlgoritme();
+        try {
+            DriverControladorAlgoritme driverCtrlAlgoritme = new DriverControladorAlgoritme();
 
-        Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(System.in);
 
-        System.out.println("Driver del Controlador d'Algoritme");
-        boolean running = true;
+            System.out.println("Driver del Controlador d'Algoritme");
+            boolean running = true;
 
-        while (running) {
-            System.out.println("\nEscull una opció:");
-            System.out.println("1. Ordenar amb algoritme per a dues mans (QAP)");
-            System.out.println("2. Ordenar amb algortime per dos polzes (LAP)");
-            System.out.println("3. Sortir");
+            while (running) {
+                System.out.println("\nEscull una opció:");
+                System.out.println("1. Ordenar amb algoritme per a dues mans (QAP)");
+                System.out.println("2. Ordenar amb algortime per dos polzes (LAP)");
+                System.out.println("3. Sortir");
 
-            int opcio = in.nextInt();
-            in.nextLine(); // Netegem el buffer d'entrada
+                int opcio = in.nextInt();
+                in.nextLine(); // Netegem el buffer d'entrada
 
-            switch (opcio) {
-                case 1:
-                    driverCtrlAlgoritme.ordenarLlistaAlgoritmeDuesMans(in);
-                    break;
-                case 2:
-                    driverCtrlAlgoritme.ordenarLlistaAlgoritmePolzes(in);
-                    break;
-                case 3:
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Opció invàlida.");
+                switch (opcio) {
+                    case 1:
+                        driverCtrlAlgoritme.ordenarLlistaAlgoritmeDuesMans(in);
+                        break;
+                    case 2:
+                        driverCtrlAlgoritme.ordenarLlistaAlgoritmePolzes(in);
+                        break;
+                    case 3:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Opció invàlida.");
+                }
             }
-        }
 
-        System.out.println("Driver finalitzat.");
-        in.close();
+            System.out.println("Driver finalitzat.");
+            in.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void ordenarLlistaAlgoritmePolzes(Scanner in) {
+    private void ordenarLlistaAlgoritmePolzes(Scanner in) throws Exception {
         System.out.println("Escull una opció:");
         System.out.println("1. Introduir un text");
         System.out.println("2. Introduir una llista de paraules amb freqüències");
@@ -75,8 +79,8 @@ public class DriverControladorAlgoritme {
 
         imprimirTeclat(files, columnes, llistaOrdenada);
     }
-    
-    private void ordenarLlistaAlgoritmeDuesMans(Scanner in) {
+
+    private void ordenarLlistaAlgoritmeDuesMans(Scanner in) throws Exception {
         System.out.println("Escull una opció:");
         System.out.println("1. Introduir un text");
         System.out.println("2. Introduir una llista de paraules amb freqüències");

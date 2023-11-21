@@ -52,7 +52,7 @@ public class ControladorPersistencia {
     }
 
     //--------------------------------Entrada---------------------------------//
-    public ArrayList<String> getEntradesAlfabet(Integer idAlfabet) {
+    public ArrayList<String> getEntradesUsuari(String nomUsuari) {
         return new ArrayList<>();
     }
 
@@ -70,7 +70,7 @@ public class ControladorPersistencia {
     }
 
     //--------------------------------Teclat---------------------------------//
-    public ArrayList<String> getTeclatsEntrada(Integer idEntrada) {
+    public ArrayList<String> getTeclatsUsuari(String nomUsuari) {
         return new ArrayList<>();
     }
 

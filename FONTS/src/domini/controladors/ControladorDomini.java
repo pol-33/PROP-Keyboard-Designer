@@ -192,15 +192,18 @@ public class ControladorDomini {
 
     //-------------------------Private class methods-------------------------//
 
-    private void carregarInfoUsuari(String nomUsuari) {
-        //xx info ctrlPersistencia.getInfo();
+    private void carregarInfoUsuari(String nomUsuari) throws Exception {
+        //Carregar alfabets de l'usuari
+        ArrayList<String> alfabetsEnCSV = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
+        carregarAlfabets(alfabetsEnCSV);
 
-        //Alfabets
-        ArrayList<String> alfabets = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
+        //Carregar entrades de l'usuari
+        ArrayList<String> entradesEnCSV = ctrlPersistencia.getEntradesUsuari(nomUsuari);
+        carregarEntrades(entradesEnCSV);
 
-        // carregar els textos
-        // carregar les lpf
-        // carregar els teclats
+        //Carregar teclats de l'usuari
+        ArrayList<String> teclatsEnCSV = ctrlPersistencia.getTeclatsUsuari(nomUsuari);
+        carregarTeclats(teclatsEnCSV);
     }
 
     //Els alfabets segueixen el següent format:
@@ -254,6 +257,8 @@ public class ControladorDomini {
             if (Objects.equals(tipus, "text")) {
                 text = atributs[6];
                 ctrlEntrada.carregarText(id, nomEntrada, text, idAlfabet, lpf);
+            } else {
+                ctrlEntrada.carregarLPF(id, nomEntrada, lpf, idAlfabet);
             }
         }
     }
@@ -282,8 +287,6 @@ public class ControladorDomini {
 
             ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes);
         }
-
-
     }
 
     private void resetInfoPrograma() {
