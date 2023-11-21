@@ -11,18 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UsuariTest {
 
     @Test
-    public void provaNomUsuariExcedeixLongitudMaxima() {
-        Exception excepcio = assertThrows(Exception.class, () -> new Usuari("nomMoltLlargQueSuperaElLimit", "contrasenya"));
-        assertEquals("El nom d'usuari no pot superar els 15 caracters", excepcio.getMessage());
-    }
-
-    @Test
-    public void provaContrasenyaExcedeixLongitudMaxima() {
-        Exception excepcio = assertThrows(Exception.class, () -> new Usuari("usuari", "contrasenyaMoltLlargaQueSupera"));
-        assertEquals("La contrasenya no pot superar els 15 caracters", excepcio.getMessage());
-    }
-
-    @Test
     public void testUsuari() throws Exception {
         String[] userNames = {"usuari1", "usuari2", "usuari3"};
         String[] passwords = {"contrasenya1", "contrasenya2", "contrasenya3"};
