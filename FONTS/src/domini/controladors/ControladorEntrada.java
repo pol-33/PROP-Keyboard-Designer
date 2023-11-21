@@ -29,7 +29,7 @@ public class ControladorEntrada {
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Constructor privat. Inicialitza el conjunt d'entrades del sistema.
+     * Constructor. Inicialitza el conjunt d'entrades del sistema.
      */
     public ControladorEntrada() {
         this.conjuntEntrades = new HashMap<>();
@@ -141,6 +141,15 @@ public class ControladorEntrada {
         return contador-1;
     }
 
+    /**
+     * Carrega el text amb els paràmetres donats.
+     * @param id
+     * @param nomEntrada
+     * @param contingutEntrada
+     * @param idAlfabet
+     * @param lpf
+     * @throws Exception
+     */
     public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet, HashMap<String, Integer> lpf) throws Exception {
         Text nouText = new Text(nomEntrada, id, contingutEntrada, idAlfabet, lpf);
         conjuntEntrades.put(id, nouText);

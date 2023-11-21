@@ -1,7 +1,6 @@
 package domini.controladors;
 
 import domini.classes.Alfabet;
-import domini.classes.LPF;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -150,6 +149,14 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
     //                                   Metodes publics
     // ---------------------------------------------------------------------------- //
+
+    /**
+     * Carrega l'alfabet amb els parametres donats generant l'instància d'aquest
+     * @param id
+     * @param nom
+     * @param lletres
+     * @param idEntrades
+     */
     public void carregarAlfabet(Integer id, String nom, ArrayList<Character> lletres, ArrayList<Integer> idEntrades) {
         Alfabet nouAlfabet = new Alfabet(nom, id, lletres, idEntrades);
         conjuntAlfabets.put(id, nouAlfabet);
