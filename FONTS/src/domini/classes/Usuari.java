@@ -23,7 +23,6 @@ public class Usuari {
 
     /**
      * Constructor de la classe Usuari. Inicialitza un usuari amb un nom i contrasenya.
-     *
      * @param nomUsuari   Nom d'usuari.
      * @param contrasenya Contrasenya de l'usuari.
      * @throws Exception Si el nom o la contrasenya no compleixen amb els requisits.
