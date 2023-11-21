@@ -21,6 +21,9 @@ public class ControladorDomini {
     private Usuari usuariActiu = null;
 
     //-------------------------------Contructora------------------------------//
+    /**
+     * Constructor.
+     */
     private ControladorDomini() {
         ctrlPersistencia = ControladorPersistencia.obtenirInstancia();
         ctrlTeclat = ControladorTeclat.obtenirInstancia();
@@ -47,10 +50,22 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
         return ctrlAlfabet.getIdAlfabets();
     }
+
+    /**
+     * Obté els identificadors de les entrades
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> getIdEntrades() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
         return ctrlEntrada.getIdEntrades();
     }
+
+    /**
+     * Obte els identificadors dels teclats
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> getIdTeclats() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
         return ctrlTeclat.getIdTeclats();
@@ -160,6 +175,12 @@ public class ControladorDomini {
         return ctrlTeclat.getColumnesTeclat(idTeclat);
     }
 
+    /**
+     * obté el nom del teclat identificat per idTeclat
+     * @param idTeclat
+     * @return
+     * @throws Exception
+     */
     public String getNomTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getNomTeclat(idTeclat);
@@ -192,6 +213,11 @@ public class ControladorDomini {
 
     //-------------------------Private class methods-------------------------//
 
+    /**
+     * Carrega de persistencia i instancia una classe
+     * @param nomUsuari
+     * @throws Exception
+     */
     private void carregarInfoUsuari(String nomUsuari) throws Exception {
         //Carregar alfabets de l'usuari
         ArrayList<String> alfabetsEnCSV = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
@@ -208,6 +234,13 @@ public class ControladorDomini {
 
     //Els alfabets segueixen el següent format:
     //id,nom,lletra1.lletra2. ... .lletran, idEntrada1.idEntrada2. ... . idEntradan
+
+    /**
+     * Carrega els alfabets de persistència i instancia les classses.
+     * Els alfabets segueixen el següent format:
+     * id,nom,lletra1.lletra2. ... .lletran, idEntrada1.idEntrada2. ... . idEntradan
+     * @param alfabets
+     */
     private void carregarAlfabets(ArrayList<String> alfabets) {
         Integer id;
         String nomAlfabet;
@@ -236,10 +269,14 @@ public class ControladorDomini {
         }
     }
 
-    //Les entrades segueixen el format:
-    //"tipus,id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
-    //L'atribut tipus pot prendre el valor de "text" o "lpf".
-    //L'atribut text només estarà present si el tipus és "text"
+    /**
+     * Carrega les entrades de persistencia i instancia les classses.
+     * "tipus,id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
+     * L'atribut tipus pot prendre el valor de "text" o "lpf".
+     * L'atribut text només estarà present si el tipus és "text"
+     * @param entrades
+     * @throws Exception
+     */
     private void carregarEntrades(ArrayList<String> entrades) throws Exception {
         String tipus;
         Integer id;
@@ -280,8 +317,13 @@ public class ControladorDomini {
         }
     }
 
-    //Els teclats segueixen el seguent format
-    //id,nom,numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
+    /**
+     * Carrega els teclats de persistencia i instancia les classses.
+     * Els teclats segueixen el seguent format
+     * id,nom,numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
+     * @param teclats
+     * @throws Exception
+     */
     private void carregarTeclats(ArrayList<String> teclats) throws Exception {
         Integer id, idEntrada;
         String nomTeclat;
@@ -308,6 +350,9 @@ public class ControladorDomini {
         }
     }
 
+    /**
+     * Borra de memòria totes les instàncies de les classes
+     */
     private void resetInfoPrograma() {
         ctrlAlfabet.resetAlfabets();
         ctrlEntrada.resetEntrades();
@@ -325,16 +370,6 @@ public class ControladorDomini {
         ArrayList<String> nomUsuarisExistents = ctrlPersistencia.getUsuarisExistents();
         usuariActiu = Usuari.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
         ctrlPersistencia.guardarUsuari(nomUsuari, contrasenya);
-    }
-
-    /**
-     * Elimina un usuari existent.
-     * @throws Exception Si s'intenta eliminar un usuari que no sigui el propi
-     */
-    public void eliminarUsuari() throws Exception {
-        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder eliminar un usuari");
-        ctrlPersistencia.eliminarUsuari(usuariActiu.getNom());
-        tancarSessio();
     }
 
     /**
@@ -424,13 +459,26 @@ public class ControladorDomini {
         ctrlPersistencia.guardarTeclat(idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat), idEntrada);
         return idTeclat;
     }
-   
+
+    /**
+     * Elimina el teclat identificat per idTeclat
+     * @param idTeclat
+     * @throws Exception
+     */
     public void eliminarTeclat(Integer idTeclat) throws Exception {
         ctrlTeclat.eliminarTeclat(idTeclat);
         ctrlPersistencia.eliminarTeclat(idTeclat);
     }
 
     //--------------------------------Entrades---------------------------------//
+
+    /**
+     * Crea un text amb els paràmetres donats
+     * @param nomEntrada
+     * @param contingutEntrada
+     * @param idAlfabet
+     * @throws Exception
+     */
     public void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
@@ -439,10 +487,24 @@ public class ControladorDomini {
         ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
     }
 
+    /**
+     * Importa el text donat un path i el crea
+     * @param nomEntrada
+     * @param localitzacio_fitxer
+     * @param idAlfabet
+     * @throws Exception
+     */
     public void importarText(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
         ctrlEntrada.importarText(nomEntrada, localitzacio_fitxer, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
+    /**
+     * Crea una lpf a partir dels paràmetres donats
+     * @param nomEntrada
+     * @param contingutEntrada
+     * @param idAlfabet
+     * @throws Exception
+     */
     public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idLPF = ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
@@ -451,10 +513,22 @@ public class ControladorDomini {
         ctrlPersistencia.guardarLPF(idLPF, nomEntrada, contingutEntrada, idTeclats);
     }
 
+    /**
+     * Importa la lpf donat un path i el crea
+     * @param nomEntrada
+     * @param localitzacio_fitxer
+     * @param idAlfabet
+     * @throws Exception
+     */
     public void importarLPF(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
         ctrlEntrada.importarLPF(nomEntrada, localitzacio_fitxer, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
     }
 
+    /**
+     * Elimina l'endtrada identificada per idEntrada
+     * @param idEntrada
+     * @throws Exception
+     */
     public void eliminarEntrada(Integer idEntrada) throws Exception {
         int idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
         ctrlEntrada.eliminarEntrada(idEntrada);
@@ -465,6 +539,14 @@ public class ControladorDomini {
     }
 
     //--------------------------------Alfabets---------------------------------//
+
+    /**
+     * Crea l'alfabet amb els paràmetres donats
+     * @param nomAlfabet
+     * @param lletres
+     * @return
+     * @throws Exception
+     */
     public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
         Integer idAlfabet = ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
 
@@ -473,17 +555,28 @@ public class ControladorDomini {
         return idAlfabet;
     }
 
+    /**
+     * Importa l'alfabet donat un path i el crea
+     * @param nomAlfabet
+     * @param localitzacio_fitxer
+     * @throws Exception
+     */
     public void importarAlfabet(String nomAlfabet, String localitzacio_fitxer) throws Exception {
         ctrlAlfabet.importarAlfabet(nomAlfabet, localitzacio_fitxer);
     }
 
+    /**
+     * Afegeix la lletra lletra a l'alfabet identificat per idAlfabet
+     * @param idAlfabet
+     * @param lletra
+     * @throws Exception
+     */
     public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
         ctrlAlfabet.afegirLletraAlfabet(idAlfabet, lletra);
     }
 
+    //Elimina l'alfabet identificat per idAlfabet
     public void eliminarAlfabet(Integer idAlfabet) throws Exception {
-        // Si s'elimina un alfabet es borren totes les entrades i teclats que deriven
-        // d'aquest
         ArrayList<Integer> entradesVinculades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
         ctrlAlfabet.eliminarAlfabet(idAlfabet);
         for (Integer idEntrada : entradesVinculades) {
