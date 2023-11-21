@@ -134,10 +134,11 @@ public class ControladorEntrada {
      * @param idAlfabet Identificador de l'alfabet associat.
      * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
-    public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+    public Integer crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         Text nouText = new Text(nomEntrada, contador, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouText);
         contador++;
+        return contador-1;
     }
 
     public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet, HashMap<String, Integer> lpf) throws Exception {
@@ -158,10 +159,11 @@ public class ControladorEntrada {
      * @param idAlfabet Identificador de l'alfabet associat.
      * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
-    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
+    public Integer crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
         LPF nouLPF = new LPF(nomEntrada, contador, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouLPF);
         contador++;
+        return contador-1;
     }
 
     public void carregarLPF(Integer id, String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {

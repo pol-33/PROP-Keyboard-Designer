@@ -402,6 +402,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
+        ctrlPersistencia.guardarTeclat(idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat), idEntrada);
         return idTeclat;
     }
 
@@ -420,16 +421,22 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatPolzes(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
+        ctrlPersistencia.guardarTeclat(idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat), idEntrada);
         return idTeclat;
     }
    
     public void eliminarTeclat(Integer idTeclat) throws Exception {
         ctrlTeclat.eliminarTeclat(idTeclat);
+        ctrlPersistencia.eliminarTeclat(idTeclat);
     }
 
     //--------------------------------Entrades---------------------------------//
     public void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
-        ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
+        Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
+
+        //Guardem el text a persistencia
+        ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
+        ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
     }
 
     public void importarText(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
@@ -437,7 +444,11 @@ public class ControladorDomini {
     }
 
     public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
-        ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
+        Integer idLPF = ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
+
+        //Guardem la lpf a persistencia
+        ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idLPF);
+        ctrlPersistencia.guardarLPF(idLPF, nomEntrada, contingutEntrada, idTeclats);
     }
 
     public void importarLPF(String nomEntrada, String localitzacio_fitxer, Integer idAlfabet) throws Exception {
@@ -448,11 +459,18 @@ public class ControladorDomini {
         int idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
         ctrlEntrada.eliminarEntrada(idEntrada);
         ctrlAlfabet.desvincularEntradaAlfabet(idAlfabet, idEntrada);
+
+        //Borrem l'entrada de persistencia
+        ctrlPersistencia.eliminarEntrada(idEntrada);
     }
 
     //--------------------------------Alfabets---------------------------------//
     public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
-        return ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
+        Integer idAlfabet = ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
+
+        ArrayList<Integer> idEntrades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
+        ctrlPersistencia.guardarAlfabet(idAlfabet, nomAlfabet, lletres, idEntrades);
+        return idAlfabet;
     }
 
     public void importarAlfabet(String nomAlfabet, String localitzacio_fitxer) throws Exception {
