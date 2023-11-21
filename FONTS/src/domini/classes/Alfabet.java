@@ -33,6 +33,13 @@ public class Alfabet {
         this.idEntrades = new ArrayList<>();
     }
 
+    public Alfabet(String nomAlfabet, Integer idAlfabet, ArrayList<Character> lletresAlfabet, ArrayList<Integer> idEntrades) {
+        this.nom = nomAlfabet;
+        this.id = idAlfabet;
+        this.lletres = lletresAlfabet;
+        this.idEntrades = idEntrades;
+    }
+
     // ---------------------------------------------------------------------------- //
     //                                   Getters
     // ---------------------------------------------------------------------------- //

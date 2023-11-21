@@ -1,6 +1,7 @@
 package domini.controladors;
 
 import domini.classes.Alfabet;
+import domini.classes.LPF;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -149,6 +150,16 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
     //                                   Metodes publics
     // ---------------------------------------------------------------------------- //
+    public void carregarAlfabet(Integer id, String nom, ArrayList<Character> lletres, ArrayList<Integer> idEntrades) {
+        Alfabet nouAlfabet = new Alfabet(nom, id, lletres, idEntrades);
+        conjuntAlfabets.put(id, nouAlfabet);
+        if (id > comptador) {
+            comptador = id+1;
+        } else {
+            ++comptador;
+        }
+    }
+
     /**
      * Associa una entrada a l'alfabet.
      * @param idAlfabet Identificador de l'alfabet

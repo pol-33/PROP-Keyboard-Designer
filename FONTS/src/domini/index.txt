@@ -1,0 +1,2 @@
+classes : En aquest directori es troben totes les classes del domini
+controladors : En aquest directori es troben els controladors del domini

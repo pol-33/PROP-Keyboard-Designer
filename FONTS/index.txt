@@ -1,0 +1,2 @@
+-> lib : La carpeta lib conté les llibreries usades per el programa
+-> src : Es conté tot el codi de la primera entrega
