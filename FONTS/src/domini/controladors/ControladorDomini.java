@@ -4,6 +4,7 @@ import domini.classes.Usuari;
 import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Classe ControladorDomini. Gestiona la capa de domini del sistema.
@@ -196,7 +197,7 @@ public class ControladorDomini {
 
         //Alfabets
         ArrayList<String> alfabets = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
-        carregar
+
         // carregar els textos
         // carregar les lpf
         // carregar els teclats
@@ -216,24 +217,51 @@ public class ControladorDomini {
     }
 
     //Les entrades segueixen el format:
-    //Textos: id,nom,text,..
-    //LPFs: id,nom,Paraula1.Freq1.Paraula2.Freq2. ... .Paraulan.Freqn, idTeclat1.idTeclat2. ... .idTeclatn
-    private void carregarEntrades(ArrayList<String> entrades) {
+    //"tipus,id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
+    //L'atribut tipus pot prendre el valor de "text" o "lpf".
+    //L'atribut text només estarà present si el tipus és "text"
+    private void carregarEntrades(ArrayList<String> entrades) throws Exception {
+        String tipus;
         Integer id;
+        Integer idAlfabet;
         String nomEntrada;
         String text;
-        HashMap<String, Integer> lpf;
-        ArrayList<Integer> idTeclats;
+        HashMap<String, Integer> lpf = new HashMap<>();
+        ArrayList<Integer> idTeclats = new ArrayList<>();
 
         for (String entrada : entrades) {
+            //Definim tots els atributs necessaris en tipus natius de JAVA
+            String[] atributs = entrada.split(",");
 
+            tipus = atributs[0];
+            id = Integer.valueOf(atributs[1]);
+            nomEntrada = atributs[2];
+            idAlfabet = Integer.valueOf(atributs[3]);
+
+            String[] paraulesIFrequencies = atributs[4].split("\\.");
+            for (String paraulaIFreq : paraulesIFrequencies) {
+                String paraula = paraulaIFreq.split(":")[0];
+                Integer frequencia = Integer.valueOf(paraulaIFreq.split(":")[1]);
+                lpf.put(paraula, frequencia);
+            }
+
+            String[] identificadorsTeclats = atributs[5].split("\\.");
+            for (String identificadorTeclat : identificadorsTeclats) {
+                idTeclats.add(Integer.valueOf(identificadorTeclat.charAt(0)));
+            }
+
+            //Instanciem el text o lpf a través del controlador
+            if (Objects.equals(tipus, "text")) {
+                text = atributs[6];
+                ctrlEntrada.carregarText(id, nomEntrada, text, idAlfabet, lpf);
+            }
         }
     }
 
     //Els teclats segueixen el seguent format
-    //id,nom,numFiles,numColumnes,tecla1.tecla2. ... .teclan
-    private void carregarTeclats(ArrayList<String> teclats) {
-        Integer id;
+    //id,nom,numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
+    private void carregarTeclats(ArrayList<String> teclats) throws Exception {
+        Integer id, idEntrada;
         String nomTeclat;
         Integer numFiles, numColumnes;
         ArrayList<Character> distribucio = new ArrayList<>();
@@ -245,13 +273,14 @@ public class ControladorDomini {
             nomTeclat = atributs[1];
             numFiles = Integer.valueOf(atributs[2]);
             numColumnes = Integer.valueOf(atributs[3]);
+            idEntrada = Integer.valueOf(atributs[4]);
 
-            String[] lletres = atributs[4].split("\\.");
+            String[] lletres = atributs[5].split("\\.");
             for (String lletra : lletres) {
                 distribucio.add(lletra.charAt(0));
             }
 
-            //HEM DE CREAR UNA CREADORA DE TECLAT QUE NO HAGI DE PASSAR PER ALGORITME
+            ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes);
         }
 
 

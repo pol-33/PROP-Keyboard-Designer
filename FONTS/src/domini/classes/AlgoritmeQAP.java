@@ -10,6 +10,6 @@ public class AlgoritmeQAP {
     public int[] resoldreQAP(int[][] fluxos, int[][] costos) {
         // cridem a hill climbing
         HillClimbing hillClimbing = new HillClimbing(fluxos, costos);
-        return hillClimbing.resoldreVarisIntentents(10);
+        return hillClimbing.resoldreVarisIntentents(50);
     }
 }

@@ -108,13 +108,17 @@ public class ControladorTeclat {
      * @return
      * @throws Exception
      */
-    public Integer crearTeclat(String nom, ArrayList<Character> distribucio,
-        int idTeclat, int idEntrada, int files, int columnes) throws Exception {
+    public void carregarTeclat(String nom, ArrayList<Character> distribucio,
+        int id, int idEntrada, int files, int columnes) {
         
-        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, idTeclat);
-        conjuntTeclats.put(idTeclat, nouTeclat);
-        
-        return idTeclat;
+        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, id);
+        conjuntTeclats.put(id, nouTeclat);
+
+        if (id > contador) {
+            contador = id+1;
+        } else {
+            ++contador;
+        }
     }
     
     /**

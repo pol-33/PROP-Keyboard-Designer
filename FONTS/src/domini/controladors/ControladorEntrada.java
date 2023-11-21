@@ -135,9 +135,19 @@ public class ControladorEntrada {
      * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
     public void crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        Text nouText = new Text(nomEntrada, contador, lletres, contingutEntrada, idAlfabet);
+        Text nouText = new Text(nomEntrada, contador, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouText);
         contador++;
+    }
+
+    public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet, HashMap<String, Integer> lpf) throws Exception {
+        Text nouText = new Text(nomEntrada, id, contingutEntrada, idAlfabet, lpf);
+        conjuntEntrades.put(id, nouText);
+        if (id > contador) {
+            contador = id+1;
+        } else {
+            ++contador;
+        }
     }
 
     /**
@@ -149,9 +159,19 @@ public class ControladorEntrada {
      * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
     public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        LPF nouLPF = new LPF(nomEntrada, contador, lletres, contingutEntrada, idAlfabet);
+        LPF nouLPF = new LPF(nomEntrada, contador, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouLPF);
         contador++;
+    }
+
+    public void carregarLPF(Integer id, String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
+        LPF nouLPF = new LPF(nomEntrada, id, contingutEntrada, idAlfabet);
+        conjuntEntrades.put(id, nouLPF);
+        if (id > contador) {
+            contador = id+1;
+        } else {
+            ++contador;
+        }
     }
 
     /**
