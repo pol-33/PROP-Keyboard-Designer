@@ -23,6 +23,16 @@ public abstract class Entrada {
     //                                   Getters
     // ---------------------------------------------------------------------------- //
 
+
+    /**
+     * Retorna els idTeclats
+     * @return ArrayList<Integer> amb els ids 
+     */
+    public ArrayList<Integer> getIdTeclats() {
+        return new ArrayList<>(idTeclats);
+    }
+
+
     /**
      * Retorna el nom de l'entrada.
      * @return String amb el nom de l'entrada.

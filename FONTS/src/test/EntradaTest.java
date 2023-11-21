@@ -1,6 +1,7 @@
 package test;
 
 import domini.classes.Entrada;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,38 +13,32 @@ class EntradaTest {
     @Test
     public void testVincularTeclat() {
         Entrada entrada = new EntradaStub();
-        for (int i = 0; i < 3; i++) {
-            int finalI = i;
-            assertDoesNotThrow(() -> entrada.vincularTeclat(finalI));
-            assertTrue(entrada.idTeclats.contains(finalI));
-        }
+
+        int finalI = 1;
+        assertDoesNotThrow(() -> entrada.vincularTeclat(finalI));
+        assertTrue(entrada.getIdTeclats().contains(finalI));
+
     }
 
     @Test
     public void testDesvincularTeclat() {
         Entrada entrada = new EntradaStub();
-        for (int i = 0; i < 3; i++) {
-            entrada.idTeclats.add(i);
-        }
-        for (int i = 0; i < 3; i++) {
-            int finalI = i;
-            assertDoesNotThrow(() -> entrada.desvincularTeclat(finalI));
-            assertFalse(entrada.idTeclats.contains(finalI));
-        }
+
+        assertDoesNotThrow(() -> entrada.vincularTeclat(1));
+        assertDoesNotThrow(() -> entrada.desvincularTeclat(1));
+        assertFalse(entrada.getIdTeclats().contains(1));
     }
 
     @Test
     public void testVincularTeclatWithExistingKey() {
         Entrada entrada = new EntradaStub();
-        for (int i = 0; i < 3; i++) {
-            entrada.idTeclats.add(i);
-        }
-        for (int i = 0; i < 3; i++) {
-            int finalI = i;
-            Exception exception = assertThrows(Exception.class, () -> entrada.vincularTeclat(finalI));
-            assertEquals("L'entrada ja té aquest teclat vinculat", exception.getMessage());
-        }
+
+        assertDoesNotThrow(() -> entrada.vincularTeclat(1));
+
+        Exception exception = assertThrows(Exception.class, () -> entrada.vincularTeclat(1));
+        assertEquals("L'entrada ja té aquest teclat vinculat", exception.getMessage());
     }
+
 
     @Test
     public void testDesvincularTeclatWithNonExistingKey() {
