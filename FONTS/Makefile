@@ -22,8 +22,8 @@ jars:
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
 
-executaDriverControladorDomini:
-	java --release 11 -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
+executaDriverControladorAlgoritme:
+	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
 
 AlfabetTest: all
 	java -cp $(JUNIT_JARS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore test.AlfabetTest
