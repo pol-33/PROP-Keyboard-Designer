@@ -1,6 +1,7 @@
 package domini.classes;
 
 public class AlgoritmeQAP {
+
     /**
      * Resol un problema QAP mitjançant Hill Climbing
      * @param fluxos Matriu de fluxos del problema QAP

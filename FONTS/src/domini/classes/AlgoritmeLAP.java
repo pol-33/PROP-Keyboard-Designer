@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class AlgoritmeLAP {
+
     /**
      * Resol un problema LAP, donats els vectors de frequencies i costos.
      * Cal tenir en compte que els costos han de ser constants per a cada

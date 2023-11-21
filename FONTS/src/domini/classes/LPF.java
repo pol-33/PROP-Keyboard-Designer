@@ -18,7 +18,6 @@ public class LPF extends Entrada {
      * Constructora de LPF.
      * @param nomEntrada Nom de la entrada LPF.
      * @param id Identificador de la entrada LPF.
-     * @param lletres Llista de caràcters.
      * @param contingutEntrada HashMap amb el contingut de la LPF (paraula i la seva freqüència).
      * @param idAlfabet Identificador de l'alfabet associat a aquesta entrada LPF.
      * @throws Exception Si alguna de les freqüències de les paraules és negativa.

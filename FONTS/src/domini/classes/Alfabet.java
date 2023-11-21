@@ -33,6 +33,13 @@ public class Alfabet {
         this.idEntrades = new ArrayList<>();
     }
 
+    /**
+     * Contructora d'Alfabet.
+     * @param nomAlfabet Nom de l'alfabet
+     * @param idAlfabet Identificador de l'alfabet
+     * @param lletresAlfabet Lletres de l'alfabet
+     * @param idEntrades Identificadors de les entrades associades a l'alfabet
+     */
     public Alfabet(String nomAlfabet, Integer idAlfabet, ArrayList<Character> lletresAlfabet, ArrayList<Integer> idEntrades) {
         this.nom = nomAlfabet;
         this.id = idAlfabet;
