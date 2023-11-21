@@ -100,8 +100,7 @@ public class HillClimbing {
         int costTotal = 0;
         int n = solucioActual.length;
 
-        // El cost es la mutiplicacio de cada flux per al cost de les caselles
-        // entre les quals hi ha aquest flux
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 costTotal += fluxos[i][j] * costos[solucioActual[i]][solucioActual[j]];
@@ -120,12 +119,10 @@ public class HillClimbing {
     private int[] generarSolucioAleatoria(int n, Random random) {
         int[] solucioAleatoria = new int[n];
 
-        // Inicialiatiltza una solucio ordenada
         for (int i = 0; i < n; i++) {
             solucioAleatoria[i] = i;
         }
 
-        // Desordena la solucio de manera aleatoria
         for (int i = n - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
             int temp = solucioAleatoria[i];

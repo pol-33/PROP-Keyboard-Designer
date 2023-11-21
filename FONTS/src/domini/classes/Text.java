@@ -79,17 +79,14 @@ public class Text extends Entrada{
      * Calcula la Freqüència de les Paraules (LPF) del contingut textual.
      */
     private void calculateLPF() {
-        //Converteix el text en un array de Strings (totes les paraules)
         String[] paraules = this.text.split(" ");
 
         HashMap<String, Integer> lpf = new HashMap<>();
 
         for (String paraula : paraules) {
-            // Neteja la paraula de signes de puntuació y la converteix minúscules
             paraula = paraula.replaceAll("[^a-zA-Z]", "").toLowerCase();
 
             if (!paraula.isEmpty()) { //ignorem les paraules buides
-                //si la paraula encara no té frequencia li assigna frequencia 1, sino li assigna el valor que tenia +1
                 lpf.merge(paraula, 1, Integer::sum);
             }
         }
