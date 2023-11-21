@@ -60,7 +60,7 @@ public class ControladorTeclat {
      * @return Enter que representa l'identificador del teclat creat
      */
     public Integer crearTeclatDuesMans(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
-     Integer uidEntrada, Integer files, Integer columnes) {
+     Integer uidEntrada, Integer files, Integer columnes) throws Exception {
 
         Integer idTeclat = contador;
         contador++;
@@ -83,7 +83,7 @@ public class ControladorTeclat {
      * @return Enter que representa l'identificador del teclat creat
      */
     public Integer crearTeclatPolzes(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
-     Integer uidEntrada, Integer files, Integer columnes) {
+     Integer uidEntrada, Integer files, Integer columnes) throws Exception {
 
 
         Integer idTeclat = contador;
@@ -96,7 +96,27 @@ public class ControladorTeclat {
         conjuntTeclats.put(idTeclat, nouTeclat);
         return idTeclat;
     }
-
+    
+    /**
+     * Crea un teclat donada la seva distribucio, sense pasar per algoritme
+     * @param nom Nom del teclat
+     * @param distribucio Distribucio de les lletres en el teclat
+     * @param idTeclat Identificador del teclat
+     * @param idEntrada Identificador de l'entrada associada
+     * @param files Nombre de files al layout del teclat
+     * @param columnes Nombre de columnes al layout del teclat
+     * @return
+     * @throws Exception
+     */
+    public Integer crearTeclat(String nom, ArrayList<Character> distribucio,
+        int idTeclat, int idEntrada, int files, int columnes) throws Exception {
+        
+        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, idTeclat);
+        conjuntTeclats.put(idTeclat, nouTeclat);
+        
+        return idTeclat;
+    }
+    
     /**
      * Eliminar teclat
      * @param idTeclat  Identificador del teclat a borrar. 
