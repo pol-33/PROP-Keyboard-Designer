@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-class AlfabetTest {
+public class AlfabetTest {
 
     @Test
     public void testConstructorValidData() throws Exception {

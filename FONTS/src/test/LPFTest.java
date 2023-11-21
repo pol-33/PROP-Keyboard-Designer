@@ -10,21 +10,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class LPFTest {
 
     @Test
-    public void provaConstructorAmbFrequenciesPositives() throws Exception {
+    public void provaConstructorAmbFrequenciesPositives() {
         HashMap<String, Integer> contingutEntrada = new HashMap<>();
         contingutEntrada.put("paraula1", 1);
         contingutEntrada.put("paraula2", 2);
 
-        LPF lpf = new LPF("LPFTest", 1, new ArrayList<>(), contingutEntrada, 2);
-        assertNotNull(lpf, "L'objecte LPF no hauria de ser null si es proporcionen frequencies positives");
+        assertDoesNotThrow(() -> new LPF("LPFTest", 1, contingutEntrada, 2),
+                "No hauria d'haver excepció amb frequencies positives");
     }
+
 
     @Test
     public void provaConstructorAmbFrequenciaNegativa() {
         HashMap<String, Integer> contingutEntrada = new HashMap<>();
         contingutEntrada.put("paraula1", -1); // Frequencia negativa
 
-        Exception excepcio = assertThrows(Exception.class, () -> new LPF("LPFTest", 1, new ArrayList<>(), contingutEntrada, 2));
-        assertEquals("Una paraula no pot tenir frequencia negativa", excepcio.getMessage());
+        Exception excepcio = assertThrows(Exception.class, () -> new LPF("LPFTest", 1, contingutEntrada, 2));
+        assertEquals("Una paraula no pot tenir frequencia negativa", excepcio.getMessage(), "El missatge d'excepció hauria de ser correcte");
     }
 }
