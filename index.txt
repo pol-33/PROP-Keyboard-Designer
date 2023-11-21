@@ -1,9 +1,7 @@
-En esta carpeta principal se encuentran diferentes ficheros con distintos formatos. Tenemos dividido el directorio en subdirectorios y subdirectorios de estos ultimos (carpetas dentro de carpetas):
+En aquesta carpeta principal hi ha diversos fitxers amb formats diferents. Hem organitzat el directori en subdirectoris i subdirectoris d'aquests últims (carpetes dins d'altres carpetes):
 
-	->DATA(directorio): Este directorio contiene todos los archivos de entrada necesarios para poder ejecutar el programa
+-> DOCS : Aquest directori inclou els arxius de documentació del projecte: estructura de classes per persona, diagrames de classes i casos d'ús, amb les seves corresponents descripcions, i un document que detalla les estructures de dades i algorismes.
 
-	->DOCS(directorio): El directorio contiene los archivos de documentacion del proyecto: diagramas de clases y casos de uso, con sus respectivas descripciones, y un documento que informa sobre las estructuras de datos y algoritmos.
+-> EXE : Dins aquest directori trobarem els diferents executables del programa, els .class de totes les domini.classes i drivers. També hi ha l'executable del programa principal i dels drivers per utilitzar el programa i provar els drivers juntament amb les proves del test.
 
-	->EXE(directorio): Dentro del directorio podemos encontrar los diferentes ejecutables del programas, los .class de todas las domini.classes y drivers. Aqui tenemos, tambien el ejecutable del main y de los driver para poder usar el programa y probar los drivers junto con las pruebas del test.
-
-	->FONTS(directorio): contiene todos los .java del programa, drivers, stubs i test.
+-> FONTS : Conté tots els .java del programa, drivers, stubs i proves.

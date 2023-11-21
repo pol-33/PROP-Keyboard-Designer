@@ -1,0 +1,4 @@
+-> domini : Es troben totes les classes pertanyents al domini
+-> drivers : Es contenen tots els drivers que testejaràn els controladors
+-> persistencia : Es troben totes les classes pertanyents a la persistencia
+-> test : Es troben tots els tests unitaris JUnits que testejen les funcions de les classes del domini
