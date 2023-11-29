@@ -1,14 +1,13 @@
 package test;
 
 import domini.classes.Usuari;
-import org.junit.jupiter.api.Test;
 import java.util.HashMap;
-
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-class UsuariTest {
+public class UsuariTest {
 
     @Test
     public void testUsuari() throws Exception {
@@ -17,8 +16,8 @@ class UsuariTest {
 
         for (int i = 0; i < userNames.length; i++) {
             Usuari usuari = new Usuari(userNames[i], passwords[i]);
-            assertEquals(userNames[i], usuari.getNom(), "El nom no és correcte");
-            assertEquals(passwords[i], usuari.getContrasenya(), "La contrasenya no és correcte");
+            assertEquals("El nom no és correcte", userNames[i], usuari.getNom());
+            assertEquals("La contrasenya no és correcte", passwords[i], usuari.getContrasenya());
         }
     }
 
@@ -34,7 +33,7 @@ class UsuariTest {
 
         for (int i = 0; i < userNames.length; i++) {
             Usuari usuari = new Usuari(userNames[i], passwords[i]);
-            assertTrue(usuari.verificarIniciSessio(userNames[i], passwords[i], usuarisContrasenyes),"La verificació de l'inici de sessió hauria de ser correcta");
+            assertTrue("La verificació de l'inici de sessió hauria de ser correcta", usuari.verificarIniciSessio(userNames[i], passwords[i], usuarisContrasenyes));
         }
     }
 
@@ -48,9 +47,9 @@ class UsuariTest {
         }
 
         for (String nomUsuariExist : existingUserNames) {
-            assertThrows(Exception.class,
-                    () -> new Usuari(nomUsuariExist, "contrasenyaTest").crearUsuari(nomUsuariExist, "contrasenyaTest", nomUsuarisExistents),
-                    "Hauria de llançar una excepció ja que l'usuari " + nomUsuariExist + " ja existeix");
+            assertThrows("Hauria de llançar una excepció ja que l'usuari " + nomUsuariExist + " ja existeix",
+                    Exception.class,
+                    () -> new Usuari(nomUsuariExist, "contrasenyaTest").crearUsuari(nomUsuariExist, "contrasenyaTest", nomUsuarisExistents));
         }
     }
 }

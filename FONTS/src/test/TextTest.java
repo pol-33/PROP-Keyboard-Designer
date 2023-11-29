@@ -1,14 +1,13 @@
 package test;
 
 import domini.classes.Text;
-import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import static org.junit.jupiter.api.Assertions.*;
 
-class TextTest{
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class TextTest{
     @Test
     public void provaConstructor() throws Exception {
         Text text = new Text("ProvaText", 1, "hello world", 2);
@@ -17,8 +16,8 @@ class TextTest{
         Field campLPF = Text.class.getSuperclass().getDeclaredField("lpf");
         campLPF.setAccessible(true);
         HashMap<String, Integer> lpf = (HashMap<String, Integer>) campLPF.get(text);
-        assertNotNull(lpf, "El hashmap LPF no pot ser null");
-        assertTrue(lpf.containsKey("hello") && lpf.containsKey("world"), "El hashmap LPF hauria de contenir les paraules del text");
+        assertNotNull("El hashmap LPF no pot ser null", lpf);
+        assertTrue("El hashmap LPF hauria de contenir les paraules del text", lpf.containsKey("hello") && lpf.containsKey("world"));
     }
 
     @Test
@@ -41,9 +40,9 @@ class TextTest{
         Field campLPF = Text.class.getSuperclass().getDeclaredField("lpf");
         campLPF.setAccessible(true);
         HashMap<String, Integer> lpf = (HashMap<String, Integer>) campLPF.get(text);
-        assertNotNull(lpf, "El hashmap LPF no hauria de ser null");
-        assertEquals(2, (int) lpf.get("hello"), "El recompte de LPF per 'hello' hauria de ser 2");
-        assertEquals(1, (int) lpf.get("world"), "El recompte de LPF per 'world' hauria de ser 1");
+        assertNotNull("El hashmap LPF no hauria de ser null", lpf);
+        assertEquals("El recompte de LPF per 'hello' hauria de ser 2", 2, (int) lpf.get("hello"));
+        assertEquals("El recompte de LPF per 'world' hauria de ser 1", 1, (int) lpf.get("world"));
     }
 @Test
     public void provaCalculateLPFOnSetText() throws Exception {
@@ -54,8 +53,8 @@ class TextTest{
         Field campLPF = Text.class.getSuperclass().getDeclaredField("lpf");
         campLPF.setAccessible(true);
         HashMap<String, Integer> lpf = (HashMap<String, Integer>) campLPF.get(text);
-        assertNotNull(lpf, "El hashmap LPF no hauria de ser null");
-        assertEquals(2, (int) lpf.get("new"), "El recompte de LPF per 'new' hauria de ser 2");
-        assertEquals(1, (int) lpf.get("text"), "El recompte de LPF per 'text' hauria de ser 1");
+        assertNotNull("El hashmap LPF no hauria de ser null", lpf);
+        assertEquals("El recompte de LPF per 'new' hauria de ser 2", 2, (int) lpf.get("new"));
+        assertEquals("El recompte de LPF per 'text' hauria de ser 1", 1, (int) lpf.get("text"));
     }
 }

@@ -1,13 +1,11 @@
 package test;
 
 import domini.classes.Alfabet;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class AlfabetTest {
 
@@ -23,7 +21,7 @@ public class AlfabetTest {
             Alfabet alfabet = new Alfabet("Catala" + i, i, listOfLetterSets.get(i));
             assertNotNull(alfabet);
             assertEquals("Catala" + i, alfabet.getNom());
-            assertEquals(i, alfabet.getId());
+            assertEquals((int)i, (Object)alfabet.getId());
             assertEquals(listOfLetterSets.get(i), alfabet.getLletres());
         }
     }

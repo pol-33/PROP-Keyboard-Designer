@@ -1,21 +1,29 @@
 package test;
 
 import domini.classes.Entrada;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-class EntradaTest {
+public class EntradaTest {
     @Test
     public void testVincularTeclat() {
         Entrada entrada = new EntradaStub();
 
         int finalI = 1;
-        assertDoesNotThrow(() -> entrada.vincularTeclat(finalI));
+
+        // Equivalent del mètode de JUnit 5 assertDoesNotThrow() amb JUnit 4
+        try {
+            entrada.vincularTeclat(finalI);
+            // Si no hi ha excepcions, el test passa
+        } catch (Exception e) {
+            // Si n'hi ha, es produeix un fail
+            fail("Unexpected exception: " + e.getMessage());
+        }
+
         assertTrue(entrada.getIdTeclats().contains(finalI));
 
     }
@@ -24,8 +32,24 @@ class EntradaTest {
     public void testDesvincularTeclat() {
         Entrada entrada = new EntradaStub();
 
-        assertDoesNotThrow(() -> entrada.vincularTeclat(1));
-        assertDoesNotThrow(() -> entrada.desvincularTeclat(1));
+        // Equivalent del mètode de JUnit 5 assertDoesNotThrow() amb JUnit 4
+        try {
+            entrada.vincularTeclat(1);
+            // Si no hi ha excepcions, el test passa
+        } catch (Exception e) {
+            // Si n'hi ha, es produeix un fail
+            fail("Unexpected exception: " + e.getMessage());
+        }
+
+        // Equivalent del mètode de JUnit 5 assertDoesNotThrow() amb JUnit 4
+        try {
+            entrada.desvincularTeclat(1);
+            // Si no hi ha excepcions, el test passa
+        } catch (Exception e) {
+            // Si n'hi ha, es produeix un fail
+            fail("Unexpected exception: " + e.getMessage());
+        }
+
         assertFalse(entrada.getIdTeclats().contains(1));
     }
 
@@ -33,7 +57,14 @@ class EntradaTest {
     public void testVincularTeclatWithExistingKey() {
         Entrada entrada = new EntradaStub();
 
-        assertDoesNotThrow(() -> entrada.vincularTeclat(1));
+        // Equivalent del mètode de JUnit 5 assertDoesNotThrow() amb JUnit 4
+        try {
+            entrada.vincularTeclat(1);
+            // Si no hi ha excepcions, el test passa
+        } catch (Exception e) {
+            // Si n'hi ha, es produeix un fail
+            fail("Unexpected exception: " + e.getMessage());
+        }
 
         Exception exception = assertThrows(Exception.class, () -> entrada.vincularTeclat(1));
         assertEquals("L'entrada ja té aquest teclat vinculat", exception.getMessage());

@@ -1,15 +1,14 @@
 package test;
 
 import domini.classes.Teclat;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-class TeclatTest {
+public class TeclatTest {
     @Test
     public void testConstructorInitialization() throws NoSuchFieldException, IllegalAccessException {
         ArrayList<Character> distribucio = new ArrayList<>(Arrays.asList('a', 'b', 'c'));
@@ -24,27 +23,27 @@ class TeclatTest {
 
         Field distribucioField = teclat.getClass().getDeclaredField("distribucio");
         distribucioField.setAccessible(true);
-        assertEquals(distribucio, distribucioField.get(teclat), "Field 'distribucio' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'distribucio' no s'ha inicialitzat correctament.", distribucio, distribucioField.get(teclat));
 
         Field nomField = teclat.getClass().getDeclaredField("nom");
         nomField.setAccessible(true);
-        assertEquals(nom, nomField.get(teclat), "Field 'nom' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'nom' no s'ha inicialitzat correctament.", nom, nomField.get(teclat));
 
         Field numFilesField = teclat.getClass().getDeclaredField("numFiles");
         numFilesField.setAccessible(true);
-        assertEquals(numFiles, numFilesField.get(teclat), "Field 'numFiles' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'numFiles' no s'ha inicialitzat correctament.", numFiles, numFilesField.get(teclat));
 
         Field numColumnesField = teclat.getClass().getDeclaredField("numColumnes");
         numColumnesField.setAccessible(true);
-        assertEquals(numColumnes, numColumnesField.get(teclat), "Field 'numColumnes' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'numColumnes' no s'ha inicialitzat correctament.", numColumnes, numColumnesField.get(teclat));
 
         Field idField = teclat.getClass().getDeclaredField("id");
         idField.setAccessible(true);
-        assertEquals(id, idField.get(teclat), "Field 'id' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'id' no s'ha inicialitzat correctament.", id, idField.get(teclat));
 
         Field idEntradaField = teclat.getClass().getDeclaredField("idEntrada");
         idEntradaField.setAccessible(true);
-        assertEquals(idEntrada, idEntradaField.get(teclat), "Field 'idEntrada' no s'ha inicialitzat correctament.");
+        assertEquals("Field 'idEntrada' no s'ha inicialitzat correctament.", idEntrada, idEntradaField.get(teclat));
 
     }
 }
