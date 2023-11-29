@@ -7,7 +7,7 @@ CLASS_OUTPUT =	../EXE/out/
 
 JAR_OUTPUT =	../EXE/
 
-JUNIT_JARS = ./lib/junit-4.13.2.jar:./lib/hamcrest-core-1.3.jar:./lib/junit-jupiter-5.4.2.jar:./lib/junit-jupiter-api-5.4.2.jar:./lib/apiguardian-api-1.0.0.jar
+JUNIT_JARS = ./lib/junit/junit/4.13.1/junit-4.13.1.jar:./lib/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
 
 JUNIT_TESTS = ./src/test/*.java
 
@@ -22,8 +22,10 @@ jars:
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
 
-executaDriverControladorAlgoritme:
+executaDriverControladorAlgoritme: jars
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
+
+AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
 
 AlfabetTest: all
 	java -cp $(JUNIT_JARS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore test.AlfabetTest
