@@ -24,7 +24,7 @@ public class ControladorDomini {
     /**
      * Constructor.
      */
-    private ControladorDomini() {
+    public ControladorDomini() {
         ctrlPersistencia = ControladorPersistencia.obtenirInstancia();
         ctrlTeclat = ControladorTeclat.obtenirInstancia();
         ctrlEntrada = ControladorEntrada.obtenirInstancia();
