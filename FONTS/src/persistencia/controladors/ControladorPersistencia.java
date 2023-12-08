@@ -2,10 +2,15 @@ package persistencia.controladors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.*;
 
 public class ControladorPersistencia {
     
     private static ControladorPersistencia ctrl;
+    private FileInputStream fileInputStream;
+    private FileOutputStream fileOutputStream;
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
     
     private ControladorPersistencia() {
     }
@@ -82,6 +87,35 @@ public class ControladorPersistencia {
     }
 
     public void eliminarTeclat(Integer id) {
+    }
+
+    //--------------------------------Obrir/Tancar---------------------------------//
+
+    //Mètode per obrir un fitxer amb mode lectura
+    private void obrirFitxerLectura(String nomFitxer) throws IOException {
+        fileOutputStream = new FileOutputStream("../../DATA/"+nomFitxer);
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+    }
+
+    // Mètode per obrir un fitxer amb mode escriptura
+    private void obrirFitxerEscriptura(String nomFitxer) throws IOException {
+        fileOutputStream = new FileOutputStream("../../DATA/"+nomFitxer);
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+    }
+
+    // Mètode per tancar InputStream
+    private void tancarInputStream() throws IOException {
+        objectInputStream.close();
+    }
+
+    // Mètode per tancar OutputStream
+    private void tancarOutputStream() throws IOException {
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+    // Mètode per escriure objecte
+    private void escriureObjecte(Object objecte) throws IOException {
+        objectOutputStream.writeObject(objecte);
     }
 
 }
