@@ -3,15 +3,12 @@ package persistencia.controladors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ControladorPersistencia {
     
     private static ControladorPersistencia ctrl;
-    private FileInputStream fileInputStream;
-    private FileOutputStream fileOutputStream;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
 
     private ControladorPersistencia() {
     }
@@ -150,7 +147,7 @@ public class ControladorPersistencia {
      */
     public ArrayList<Integer> getAlfabetsDeUsuari(String nomUsuari) throws IOException {
         ArrayList<Integer> idAlfabets = new ArrayList<>();
-        File file = new File("usuario_alfabets.csv");
+        File file = new File("usuari_alfabets.csv");
         if (file.exists()) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
@@ -427,7 +424,7 @@ public class ControladorPersistencia {
      * @throws IOException Si es produeix un error durant l'escriptura a l'arxiu.
      */
     public void afegirRelacionUsuariAlfabet(String nomUsuari, Integer idAlfabet) throws IOException {
-        File file = new File("usuario_alfabets.csv");
+        File file = new File("usuari_alfabets.csv");
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -436,6 +433,76 @@ public class ControladorPersistencia {
             String line = nomUsuari + "," + idAlfabet;
             bw.write(line);
             bw.newLine();
+        }
+    }
+
+    /**
+     * Elimina la relació entre un usuari i un teclat del fitxer CSV.
+     * @param nomUsuari El nom de l'usuari implicat en la relació a eliminar.
+     * @param idTeclat Identificador del teclat implicat en la relació a eliminar.
+     * @throws IOException Si hi ha un error en la lectura o escriptura de l'arxiu.
+     */
+    public void eliminarRelacionUsuariTeclat(String nomUsuari, Integer idTeclat) throws IOException {
+        File inputFile = new File("usuari_teclats.csv");
+
+        if (!inputFile.exists()) {
+            System.out.println("ERROR: no existeix el document");
+            return;
+        }
+
+        List<String> relacionsModificades;
+        relacionsModificades = new ArrayList<>();
+
+        // LLEGIR EL DOCUMENT I GUARDAR LES RELACIONS QUE NO ES VOLEN ELIMINAR
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                String[] data = currentLine.split(",");
+                if (!(data[0].equals(nomUsuari) && data[1].equals(String.valueOf(idTeclat)))) {
+                    relacionsModificades.add(currentLine);
+                }
+            }
+        }
+
+        //  Reescriu l'arxiu amb les relacions modificades
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(inputFile, false))) {
+            for (String linea : relacionsModificades) {
+                writer.write(linea);
+                writer.newLine();
+            }
+        }
+    }
+
+    /**
+     * Elimina la relació entre un usuari i un alfabet del fitxer CSV.
+     * @param nomUsuari El nom de l'usuari implicat en la relació a eliminar.
+     * @param idAlfabet Identificador de l'alfabet implicat en la relació a eliminar.
+     * @throws IOException Si es produeix un error durant la lectura o escriptura de l'arxiu.
+     */
+    public void eliminarRelacionUsuariAlfabet(String nomUsuari, Integer idAlfabet) throws IOException {
+        File inputFile = new File("usuari_alfabets.csv");
+        List<String> relacionsModificades = new ArrayList<>();
+
+        if (!inputFile.exists()) {
+            System.out.println("El archivo no existe.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                String[] data = currentLine.split(",");
+                if (!(data[0].equals(nomUsuari) && data[1].equals(String.valueOf(idAlfabet)))) {
+                    relacionsModificades.add(currentLine);
+                }
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(inputFile, false))) {
+            for (String linea : relacionsModificades) {
+                writer.write(linea);
+                writer.newLine();
+            }
         }
     }
 
