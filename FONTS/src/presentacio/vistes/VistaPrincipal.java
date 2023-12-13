@@ -1,109 +1,126 @@
 package presentacio.vistes;
 
 import presentacio.controladors.ControladorPresentacio;
+import presentacio.elements.*;
 
 import javax.swing.*;
+
+import domini.controladors.ControladorDomini;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.*;
+import java.util.List;
+
 
 public class VistaPrincipal extends JFrame {
-    // Llista
-    private JList<String> llistaTeclats;
+    
+    private JFrame frame;
+    private JTabbedPane tabbedPane;
 
-    // Botons de creació i eliminació
-    private JButton btnCrearTeclat, btnEliminarTeclat;
+    private JPanel panellAlfabets;
+    private JButton btCrearAlfabet, btModificarAlfabet, btEliminarAlfabet;
+    private JList<ElementAlfabetLlista> jListAlfabets;
 
-    // Mapa per emmagatzemar noms de teclats i els seus IDs
-    private Map<String, Set<Integer>> mapaTeclats;
+    public void tancar() {
+        frame.setVisible(false);
+    }
+    public void mostrar() {
+        frame.setVisible(true);
+    } 
 
     public VistaPrincipal() {
-        // Configuració del frame
-        setTitle("Gestió de Teclats");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
-        setLayout(new BorderLayout());
-
-        // Inicialització del mapa
-        mapaTeclats = new HashMap<>();
-        // Exemple amb teclats que tenen el mateix nom
-        afegirTeclat("Teclat 1", 1);
-        afegirTeclat("Teclat 2", 2);
-        afegirTeclat("Teclat 1", 3);
-
-        // Inicialització de la llista
-        llistaTeclats = new JList<>(mapaTeclats.keySet().toArray(new String[0]));
-
-        // Inicialització dels botons
-        btnCrearTeclat = new JButton("Crear Teclat");
-        btnEliminarTeclat = new JButton("Eliminar Teclat");
-
-        // Afegir listeners als botons
-        btnEliminarTeclat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarConfirmacioEliminarTeclat();
-            }
-        });
-
-        // Afegir la llista i els botons al frame
-        add(new JScrollPane(llistaTeclats), BorderLayout.CENTER);
-
-        JPanel panelBotons = new JPanel(new FlowLayout());
-        panelBotons.add(btnCrearTeclat);
-        panelBotons.add(btnEliminarTeclat);
-        add(panelBotons, BorderLayout.SOUTH);
-
-        // Mostrar el frame
-        setVisible(true);
+        initComponents();
+        initUI();
     }
 
-    // Mètode per afegir teclat al mapa
-    private void afegirTeclat(String nomTeclat, int id) {
-        if (!mapaTeclats.containsKey(nomTeclat)) {
-            mapaTeclats.put(nomTeclat, new HashSet<>());
+    private void initComponents() {
+        frame = new JFrame("Vista principal");
+        tabbedPane = new JTabbedPane();
+
+        panellAlfabets = new JPanel(); // GridLayout con 3 columnas y espaciado
+        btCrearAlfabet = new JButton("Nou Alfabet");
+        btModificarAlfabet = new JButton("Modificar Alfabet Seleccionat");
+        btEliminarAlfabet = new JButton("Eliminar Alfabet Seleccionat");
+    }
+
+    private void initUI() {
+        initAlfabets();
+        tabbedPane.addTab("Entrades", new JPanel());
+        tabbedPane.addTab("Teclats", new JPanel());
+
+        frame.add(tabbedPane);
+
+        // Configuramos la ventana
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 600);
+
+        // Centrar la ventana en la pantalla
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+    }
+
+    private void initAlfabets() {
+        panellAlfabets.setLayout(new BoxLayout(panellAlfabets, BoxLayout.Y_AXIS));
+    
+        JPanel panellBotonsAlfabet = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panellBotonsAlfabet.setMaximumSize(new Dimension(Short.MAX_VALUE, 30)); // Establece el ancho máximo
+        panellBotonsAlfabet.add(btCrearAlfabet);
+        panellBotonsAlfabet.add(btModificarAlfabet);
+        panellBotonsAlfabet.add(btEliminarAlfabet);
+
+        // Configuración de las acciones de los botones
+        btCrearAlfabet.addActionListener(e -> crearAlfabet());
+        btModificarAlfabet.addActionListener(e -> modificarAlfabet());
+        btEliminarAlfabet.addActionListener(e -> eliminarAlfabet());
+    
+        ArrayList<ElementAlfabetLlista> elementsAlfabets = new ArrayList<>();
+        ArrayList<Character> lletresANG = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+        ArrayList<Character> lletresCAST = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+        ArrayList<Character> lletresCAT = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+        elementsAlfabets.add(new ElementAlfabetLlista(1, "Angles", lletresANG));
+        elementsAlfabets.add(new ElementAlfabetLlista(2, "Castella", lletresCAST));
+        elementsAlfabets.add(new ElementAlfabetLlista(3, "Catala", lletresCAT));
+    
+        DefaultListModel<ElementAlfabetLlista> listModel = new DefaultListModel<>();
+        for (ElementAlfabetLlista elemento : elementsAlfabets) {
+            listModel.addElement(elemento);
         }
-        mapaTeclats.get(nomTeclat).add(id);
+    
+        jListAlfabets = new JList<>(listModel);
+        jListAlfabets.setCellRenderer(new ElementAlfabetListRenderer());
+    
+        panellAlfabets.add(new JScrollPane(jListAlfabets));
+        panellAlfabets.add(panellBotonsAlfabet);
+    
+        tabbedPane.addTab("Alfabet", panellAlfabets);
     }
 
-    // Mètode per eliminar el teclat seleccionat
-    private void eliminarTeclatSeleccionat() {
-        String nomTeclatSeleccionat = llistaTeclats.getSelectedValue(); // Obté el nom del teclat seleccionat
-        if (nomTeclatSeleccionat != null) {
-            int resposta = mostrarConfirmacioEliminarTeclat();
-            if (resposta == JOptionPane.YES_OPTION) {
-                Set<Integer> idsTeclat = mapaTeclats.get(nomTeclatSeleccionat); // Obté els IDs corresponents al nom del teclat
-                // Aquí podríeu fer alguna lògica per seleccionar quin ID voleu eliminar
-                // En aquest exemple, simplement eliminem el primer ID de la col·lecció
-                if (!idsTeclat.isEmpty()) {
-                    int idAEliminar = idsTeclat.iterator().next();
-                    idsTeclat.remove(idAEliminar); // Elimina l'ID del conjunt de IDs del teclat
-                    if (idsTeclat.isEmpty()) {
-                        mapaTeclats.remove(nomTeclatSeleccionat); // Si no hi ha més IDs associats, esborra el teclat del mapa
-                    }
-                    actualizarLlista(); // Actualitza la llista de teclats
-                }
+    private void crearAlfabet() {
+        // Lógica para crear un nuevo alfabeto
+        // Por ejemplo:
+        
+    }
+
+    private void modificarAlfabet() {
+        // Lógica para modificar un alfabeto seleccionado
+        
+    }
+
+    private void eliminarAlfabet() {
+        int selectedIndex = jListAlfabets.getSelectedIndex();
+        if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap alfabet seleccionat!");
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el alfabeto seleccionado?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.NO_OPTION) return;
+         
+        DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
+            model.remove(selectedIndex);
+            try {
+            //ControladorPresentacio.eliminarAlfabet(model.get(selectedIndex).getId());
             }
-        }
-    }
+            catch (Exception e) {
 
-    // Mètode per actualitzar la llista de teclats després de l'eliminació
-    private void actualizarLlista() {
-        llistaTeclats.setListData(mapaTeclats.keySet().toArray(new String[0]));
-    }
-
-    // Mètode per mostrar la confirmació de l'eliminació del teclat
-    private int mostrarConfirmacioEliminarTeclat() {
-        return JOptionPane.showConfirmDialog(
-                this,
-                "Segur que vols eliminar aquest teclat?",
-                "Confirmació",
-                JOptionPane.YES_NO_OPTION
-        );
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaPrincipal());
+            }
     }
 }

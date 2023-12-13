@@ -3,8 +3,9 @@ package presentacio.vistes;
 import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.event.*;
+
 
 public class VistaLogin {
 
@@ -21,20 +22,27 @@ public class VistaLogin {
         setActionListeners();
     }
 
+    public void tancar() {
+        frame.setVisible(false);
+    }
+    public void mostrar() {
+        frame.setVisible(true);
+    }
+    
     private void initComponents() {
         frame = new JFrame("LogIn");
         panel = new JPanel();
 
-        userLabel = new JLabel("Usuari: ");
-        passwordLabel = new JLabel("Password: ");
+        userLabel = new JLabel("Usuario: ");
+        passwordLabel = new JLabel("Contraseña: ");
         userTextField = new JTextField(20);
         passwordField = new JPasswordField(20);
-        loginButton = new JButton("Iniciar sessió");
-        signUpButton = new JButton("Registrar-se");
+        loginButton = new JButton("Iniciar sesión");
+        signUpButton = new JButton("Registrarse");
     }
 
     private void initUI() {
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridLayout(4, 2, 5, 5)); // Grid layout para organizar los componentes
         panel.add(userLabel);
         panel.add(userTextField);
         panel.add(passwordLabel);
@@ -43,9 +51,17 @@ public class VistaLogin {
         panel.add(signUpButton);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(panel);
+        frame.add(panel); // Agregar el panel al frame
+
+        // Hacer la ventana un poco más grande
+        frame.setSize(400, 200);
+
+        // Centrar la ventana en la pantalla
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+
         frame.pack();
-        frame.setVisible(true);
+
     }
 
     private void setActionListeners() {
@@ -56,7 +72,6 @@ public class VistaLogin {
                 String username = userTextField.getText();
                 char[] password = passwordField.getPassword();
                 ControladorPresentacio.iniciarSessio(username, password.toString());
-                frame.setVisible(false);
             }
         });
 
@@ -67,7 +82,6 @@ public class VistaLogin {
                 String username = userTextField.getText();
                 char[] password = passwordField.getPassword();
                 ControladorPresentacio.crearUsuari(username, password.toString());
-                frame.setVisible(false);
             }
         });
     }

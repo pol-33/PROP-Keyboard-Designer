@@ -10,20 +10,23 @@ import presentacio.vistes.*;
 
 public class ControladorPresentacio {
     
-    private JFrame frame;
+    private static VistaLogin vLogin;
 
     /** Instància del controlador de domini */
     private static ControladorDomini ctrlDomini = new ControladorDomini();
 
 
     public static void startAplicacio() {
-        VistaLogin vLogin = new VistaLogin();
+        vLogin = new VistaLogin();
+        vLogin.mostrar();
     }
 
     public static void crearUsuari(String usuari, String contrasenya) {
         try {
             ctrlDomini.crearUsuari(usuari, contrasenya);
             VistaPrincipal vPrincipal = new VistaPrincipal();
+            vPrincipal.mostrar();
+            vLogin.tancar();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -33,6 +36,9 @@ public class ControladorPresentacio {
     public static void iniciarSessio(String usuari, String contrasenya) {
         try {
             ctrlDomini.iniciarSessio(usuari, contrasenya);
+            VistaPrincipal vPrincipal = new VistaPrincipal();
+            vPrincipal.mostrar();
+            vLogin.tancar();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
