@@ -104,19 +104,12 @@ public class VistaCrearAlfabet extends JFrame {
                     alphabetSymbols.add(symbolListModel.getElementAt(i));
                 }
                 ControladorPresentacio.crearAlfabet(alphabetName, alphabetSymbols);
+                setVisible(false);
             }
         });
         add(createAlphabetButton);
 
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new VistaCrearAlfabet();
-            }
-        });
     }
 }
 
