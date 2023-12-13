@@ -185,6 +185,12 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getNomTeclat(idTeclat);
     }
+    
+    public static Integer getIdEntradaVinculadaTeclat(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        return ctrlTeclat.getIdEntradaVinculadaTeclat(idTeclat);
+    }
+    
     /**
      * Retorna els identificadors dels teclats associats a l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet

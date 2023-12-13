@@ -8,16 +8,20 @@ public class ElementAlfabetListRenderer extends JPanel implements ListCellRender
     private JLabel letrasLabel;
 
     public ElementAlfabetListRenderer() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new BorderLayout());
         setOpaque(true);
 
         nomLabel = new JLabel();
         nomLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        add(nomLabel);
+        nomLabel.setPreferredSize(new Dimension(100, 20)); // Establece un tamaño para el nombre
+        nomLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // Añade un pequeño margen
 
         letrasLabel = new JLabel();
         letrasLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        add(letrasLabel);
+        letrasLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // Añade un pequeño margen
+
+        add(nomLabel, BorderLayout.WEST);
+        add(letrasLabel, BorderLayout.CENTER);
     }
 
     @Override
@@ -40,4 +44,3 @@ public class ElementAlfabetListRenderer extends JPanel implements ListCellRender
         return this;
     }
 }
-

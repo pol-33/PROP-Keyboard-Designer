@@ -4,8 +4,8 @@ import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VistaLogin {
 
@@ -23,15 +23,17 @@ public class VistaLogin {
     }
 
     public void tancar() {
-        frame.setVisible(false);
+        frame.dispose();
     }
+
     public void mostrar() {
         frame.setVisible(true);
     }
-    
+
     private void initComponents() {
         frame = new JFrame("LogIn");
         panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir un margen al panel
 
         userLabel = new JLabel("Usuario: ");
         passwordLabel = new JLabel("Contraseña: ");
@@ -39,49 +41,54 @@ public class VistaLogin {
         passwordField = new JPasswordField(20);
         loginButton = new JButton("Iniciar sesión");
         signUpButton = new JButton("Registrarse");
+
+        // Estilizar los botones
+        loginButton.setBackground(Color.LIGHT_GRAY);
+        signUpButton.setBackground(Color.LIGHT_GRAY);
     }
 
     private void initUI() {
-        panel.setLayout(new GridLayout(4, 2, 5, 5)); // Grid layout para organizar los componentes
+        panel.setLayout(new GridLayout(3, 2, 10, 10)); // Grid layout para organizar los componentes
+
+        // Añadir componentes al panel
         panel.add(userLabel);
         panel.add(userTextField);
         panel.add(passwordLabel);
         panel.add(passwordField);
-        panel.add(loginButton);
-        panel.add(signUpButton);
 
+        // Crear un panel separado para los botones
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(loginButton);
+        buttonPanel.add(signUpButton);
+
+        // Agregar paneles al frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel); // Agregar el panel al frame
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Hacer la ventana un poco más grande
-        frame.setSize(400, 200);
+        // Centrar la ventana en la pantalla y ajustar tamaño
+        frame.setSize(350, 200);
+        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 
-        // Centrar la ventana en la pantalla
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-
-        frame.pack();
-
+        frame.setVisible(true); // Hacer visible la ventana
     }
 
     private void setActionListeners() {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lògica per iniciar sessió
                 String username = userTextField.getText();
                 char[] password = passwordField.getPassword();
-                ControladorPresentacio.iniciarSessio(username, password.toString());
+                ControladorPresentacio.iniciarSessio(username, new String(password)); // Convertir la contraseña a String
             }
         });
 
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lògica per registrar-se
                 String username = userTextField.getText();
                 char[] password = passwordField.getPassword();
-                ControladorPresentacio.crearUsuari(username, password.toString());
+                ControladorPresentacio.crearUsuari(username, new String(password)); // Convertir la contraseña a String
             }
         });
     }

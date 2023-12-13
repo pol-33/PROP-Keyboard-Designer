@@ -5,29 +5,35 @@ import java.awt.*;
 
 public class ElementEntradaListRenderer extends JPanel implements ListCellRenderer<ElementEntradaLlista> {
     private JLabel nomLabel;
-    private JLabel tipus;
-    private JLabel nomAlfabet;
-    private JLabel contingutPreview;
+    private JLabel tipusLabel;
+    private JLabel nomAlfabetLabel;
+    private JLabel contingutPreviewLabel;
 
     public ElementEntradaListRenderer() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new BorderLayout());
         setOpaque(true);
+        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new GridLayout(0, 1));
 
         nomLabel = new JLabel();
-        nomLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        add(nomLabel);
+        nomLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        textPanel.add(nomLabel);
 
-        tipus = new JLabel();
-        tipus.setHorizontalAlignment(SwingConstants.LEFT);
-        add(tipus);
+        tipusLabel = new JLabel();
+        tipusLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        textPanel.add(tipusLabel);
 
-        nomAlfabet = new JLabel();
-        nomAlfabet.setHorizontalAlignment(SwingConstants.LEFT);
-        add(nomAlfabet);
+        nomAlfabetLabel = new JLabel();
+        nomAlfabetLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        textPanel.add(nomAlfabetLabel);
 
-        contingutPreview = new JLabel();
-        contingutPreview.setHorizontalAlignment(SwingConstants.LEFT);
-        add(contingutPreview);
+        contingutPreviewLabel = new JLabel();
+        contingutPreviewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        textPanel.add(contingutPreviewLabel);
+
+        add(textPanel, BorderLayout.CENTER);
     }
 
     @Override
@@ -45,11 +51,10 @@ public class ElementEntradaListRenderer extends JPanel implements ListCellRender
         }
 
         nomLabel.setText(value.getNom());
-        tipus.setText(value.getTipus());
-        nomAlfabet.setText(value.getNomAlfabet());
-        contingutPreview.setText(value.getContingutPreview());
+        tipusLabel.setText("Tipus: " + value.getTipus());
+        nomAlfabetLabel.setText("Alfabet: " + value.getNomAlfabet());
+        contingutPreviewLabel.setText(value.getContingutPreview());
 
         return this;
     }
 }
-
