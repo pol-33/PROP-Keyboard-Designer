@@ -244,7 +244,7 @@ public class ControladorPresentacio {
     // Metodes per a la gestio de Texts
     public static void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) {
         try {
-            int idEntrada = ControladorDomini.crearText(nomEntrada, contingutEntrada, idAlfabet);
+            int idEntrada = ctrlDomini.crearText(nomEntrada, contingutEntrada, idAlfabet);
             vPrincipal.afegirEntrada(idEntrada);
         }
         catch (Exception e) {
