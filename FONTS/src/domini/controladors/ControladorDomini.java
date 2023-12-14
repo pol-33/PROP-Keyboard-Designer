@@ -32,7 +32,7 @@ public class ControladorDomini {
     }
 
     //Metode per obtenir l'instància singleton
-    public ControladorDomini obtenirInstancia() {
+    public static ControladorDomini obtenirInstancia() {
         if (ctrl == null) {
             ctrl = new ControladorDomini();
         }
