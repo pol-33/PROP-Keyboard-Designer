@@ -1,7 +1,10 @@
 CLASS_INPUT =	./src/domini/classes/*.java \
 				./src/domini/controladors/*.java \
 				./src/persistencia/controladors/*.java \
-				./src/ProgramaConsola.java
+				./src/presentacio/vistes/*.java \
+				./src/presentacio/elements/*.java \
+                ./src/presentacio/controladors/*.java \
+                ./src/drivers/*.java
 
 CLASS_OUTPUT =	../EXE/out/
 
@@ -20,10 +23,13 @@ all:
 jars:
 	javac --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT) ./src/drivers/*.java
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
-	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
+	jar cmvf ./src/drivers/DriverControladorPresentacio.mf $(JAR_OUTPUT)DriverControladorPresentacio.jar -C $(CLASS_OUTPUT) .
 
 executaDriverControladorAlgoritme: jars
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
+
+executaDriverControladorPresentacio: jars
+	java -jar $(JAR_OUTPUT)DriverControladorPresentacio.jar
 
 AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
 
