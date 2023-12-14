@@ -93,21 +93,16 @@ public class VistaCrearTeclat {
         if (indiceSeleccionado != -1) {
             ArrayList<Integer> idEntradas = ControladorPresentacio.getIdEntrades();
             Integer idEntradaSeleccionada = idEntradas.get(indiceSeleccionado);
-            try {
-                int files = (int) filesSpinner.getValue();
-                int columnes = (int) columnesSpinner.getValue();
-                int tipusTeclat = tipusComboBox.getSelectedIndex();
+            int files = (int) filesSpinner.getValue();
+            int columnes = (int) columnesSpinner.getValue();
+            int tipusTeclat = tipusComboBox.getSelectedIndex();
 
-                if (tipusTeclat == 0)
-                    ControladorPresentacio.crearTeclatDuesMans(nombreTeclado, idEntradaSeleccionada, files, columnes);
-                else
-                    ControladorPresentacio.crearTeclatPolzes(nombreTeclado, idEntradaSeleccionada, files, columnes);
+            if (tipusTeclat == 0)
+                ControladorPresentacio.crearTeclatDuesMans(nombreTeclado, idEntradaSeleccionada, files, columnes);
+            else
+                ControladorPresentacio.crearTeclatPolzes(nombreTeclado, idEntradaSeleccionada, files, columnes);
 
-                frame.dispose();
-                JOptionPane.showMessageDialog(frame, "Teclado creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Error al crear el teclado.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            frame.dispose();
         } else {
             JOptionPane.showMessageDialog(frame, "No se ha seleccionado ninguna entrada.", "Error", JOptionPane.ERROR_MESSAGE);
         }

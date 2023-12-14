@@ -33,5 +33,6 @@ public class LPF extends Entrada {
         this.lpf = contingutEntrada; // Asignación correcta después de la validación
         this.idAlfabet = idAlfabet;
         this.idTeclats = new ArrayList<>();
+        this.tipus = 1;
     }
 }

@@ -110,11 +110,16 @@ public class ControladorDomini {
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te una entrada amb aquest identificador
      */
-    public String getTypeEntrada(Integer idEntrada) throws Exception {
+    public Integer getTipusEntrada(Integer idEntrada) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
-        return ctrlEntrada.getTypeEntrada(idEntrada);
+        return ctrlEntrada.getTipusEntrada(idEntrada);
     }
 
+    public String getTextEntrada(Integer idEntrada) throws Exception {
+         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        return ctrlEntrada.getTextEntrada(idEntrada);
+    }
+    
     /**
      * Retorna el nom de l'entrada demanada, que pertany a l'usuari loggejat.
      * @param idEntrada Identificador de l'entrada
@@ -476,6 +481,14 @@ public class ControladorDomini {
         ctrlPersistencia.eliminarTeclat(idTeclat);
     }
 
+    public void modificarFilesColumnesTeclat(Integer idTeclat, int files, int columnes) throws Exception {
+        int idEntrada = ctrlTeclat.getIdEntradaVinculadaTeclat(idTeclat);
+        HashMap<String, Integer> lpf = ctrlEntrada.getLpfEntrada(idEntrada);
+        Integer idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
+        ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
+
+        ctrlTeclat.modificarFilesColumnesTeclat(idTeclat, lpf, alfabet, files, columnes);
+    }
     //--------------------------------Entrades---------------------------------//
 
     /**

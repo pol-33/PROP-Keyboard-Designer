@@ -28,7 +28,7 @@ public class VistaPrincipal extends JFrame {
     private JList<ElementAlfabetLlista> jListAlfabets;
 
     private JPanel panellEntrades;
-    private JButton btCrearEntrada, btModificarEntrada, btEliminarEntrada;
+    private JButton btCrearText, btCrearLPF, btModificarEntrada, btEliminarEntrada;
     private JList<ElementEntradaLlista> jListEntrades;
 
     private JPanel panellTeclats;
@@ -140,19 +140,20 @@ public class VistaPrincipal extends JFrame {
         panellEntrades.setLayout(new BoxLayout(panellEntrades, BoxLayout.Y_AXIS));
 
         // Botons
-        btCrearEntrada = new JButton("Nova Entrada");
-        btModificarEntrada = new JButton("Modificar Entrada Seleccionada");
-        btEliminarEntrada = new JButton("Eliminar Entrada Seleccionada");
+        btCrearText = new JButton("Nou text");
+        btCrearLPF = new JButton("Nova LPF");
+        btModificarEntrada = new JButton("Modificar");
+        btEliminarEntrada = new JButton("Eliminar");
 
         // Configuracio de les accions dels botons d'Entrades
-        btCrearEntrada.addActionListener(e -> crearEntrada());
+        btCrearText.addActionListener(e -> crearEntrada());
         btModificarEntrada.addActionListener(e -> modificarEntrada());
         btEliminarEntrada.addActionListener(e -> eliminarEntrada());
 
         // Creacio del panell de botons per a les Entrades
         JPanel panelBotonsEntrades = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelBotonsEntrades.setMaximumSize(new Dimension(Short.MAX_VALUE, 30)); // Estableix l'ample maxim
-        panelBotonsEntrades.add(btCrearEntrada);
+        panelBotonsEntrades.add(btCrearText);
         panelBotonsEntrades.add(btModificarEntrada);
         panelBotonsEntrades.add(btEliminarEntrada);
 
@@ -173,9 +174,9 @@ public class VistaPrincipal extends JFrame {
         panellTeclats.setLayout(new BoxLayout(panellTeclats, BoxLayout.Y_AXIS));
 
         // Botons
-        btCrearTeclat = new JButton("Nou Teclat");
-        btModificarTeclat = new JButton("Modificar Teclat Seleccionat");
-        btEliminarTeclat = new JButton("Eliminar Teclat Seleccionat");
+        btCrearTeclat = new JButton("Crear no teclat");
+        btModificarTeclat = new JButton("Modificar files i columnes");
+        btEliminarTeclat = new JButton("Eliminar");
         btVeureTeclat = new JButton("Veure Teclat Seleccionat");
 
         // Configuracio de les accions dels botons dels Teclats
@@ -244,19 +245,6 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
-    // * metodo que llama el btEliminarTeclat
-    private void eliminarTeclat() {
-        int selectedIndex = jListTeclats.getSelectedIndex();
-        if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap entrada seleccionat!");
-
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el seleccionat?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.NO_OPTION) return;
-         
-        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
-        model.remove(selectedIndex);
-        ControladorPresentacio.eliminarTeclat(model.get(selectedIndex).getId());
-    }
-    
     // * Metode per afegir un alfabet a la llista
     public void afegirAlfabet(int idAlfabeto) {
         String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(idAlfabeto);
@@ -264,6 +252,19 @@ public class VistaPrincipal extends JFrame {
         DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
         ElementAlfabetLlista nuevoAlfabeto = new ElementAlfabetLlista(idAlfabeto, nombreAlfabeto, letrasAlfabeto);
         model.addElement(nuevoAlfabeto);
+    }
+    
+    public void actualitzarTeclatLlista(int idTeclat) {
+        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
+
+        for (int i = 0; i < model.size(); i++) {
+            if (model.get(i).getId() == idTeclat) {
+                model.remove(i);
+                break;
+            }
+        }
+
+        afegirTeclat(idTeclat);
     }
 
     // * Metode per afegir un teclat a la llista
@@ -278,18 +279,22 @@ public class VistaPrincipal extends JFrame {
         model.addElement(nuevoTeclado);
     }
 
-    // ! ------------------- METODES DELS BOTONS ------------------------------
-
     // * Metode per afegir una entrada a la llista
     public void afegirEntrada(int idEntrada) {
         String nombreEntrada = ControladorPresentacio.getNomEntrada(idEntrada);
-        String tipoEntrada = ControladorPresentacio.getTypeEntrada(idEntrada);
+        Integer tipus = ControladorPresentacio.getTipusEntrada(idEntrada);
+        String nomTipus = "";
+        if (tipus == 0) nomTipus = "Text";
+        else nomTipus = "LPF";
+
         String nombreAlfabeto = "cal implementar mes a domini"; // Obtener el nombre del alfabeto según tu lógica
         String contingutPreview = "cal implementar mes a domini"; // Obtener una vista previa según tu lógica
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
-        ElementEntradaLlista nuevaEntrada = new ElementEntradaLlista(idEntrada, nombreEntrada, tipoEntrada, contingutPreview, nombreAlfabeto);
+        ElementEntradaLlista nuevaEntrada = new ElementEntradaLlista(idEntrada, nombreEntrada, nomTipus, contingutPreview, nombreAlfabeto);
         model.addElement(nuevaEntrada);
     }
+
+    // ! ------------------- METODES DELS BOTONS ------------------------------
 
     // * Metode que crida el btCrearAlfabet
     private void crearAlfabet() {
@@ -314,7 +319,7 @@ public class VistaPrincipal extends JFrame {
         ControladorPresentacio.eliminarAlfabet(model.get(indexSeleccionat).getId());
     }
     
-    // TODO metode que crida el btCrearEntrada
+    // TODO metode que crida el btCrearText
     // ! Falta moder crear una LPF
     private void crearEntrada() {
         VistaCrearText vCrearText = new VistaCrearText();
@@ -347,8 +352,29 @@ public class VistaPrincipal extends JFrame {
 
     // TODO metode que crida el btModificarTeclat
     private void modificarTeclat() {
+        int indexSeleccionat = jListTeclats.getSelectedIndex();
+        if (indexSeleccionat == -1) JOptionPane.showMessageDialog(this, "Cap teclat seleccionat!");
+
+        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
+        int idTeclatSeleccionat = model.get(indexSeleccionat).getId();
+
+        VistaModificarTeclat vModificarTeclat = new VistaModificarTeclat(idTeclatSeleccionat);
+        vModificarTeclat.mostrar();
     }
 
+    // * metodo que llama el btEliminarTeclat
+    private void eliminarTeclat() {
+        int selectedIndex = jListTeclats.getSelectedIndex();
+        if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap entrada seleccionat!");
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el seleccionat?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.NO_OPTION) return;
+         
+        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
+        model.remove(selectedIndex);
+        ControladorPresentacio.eliminarTeclat(model.get(selectedIndex).getId());
+    }
+    
     // * metode que crida el btVeureTeclat
     private void veureTeclat() {
         int indexSeleccionat = jListTeclats.getSelectedIndex();

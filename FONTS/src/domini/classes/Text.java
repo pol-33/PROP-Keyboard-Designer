@@ -16,14 +16,6 @@ public class Text extends Entrada{
     // ---------------------------------------------------------------------------- //
     //                                   Constructora
     // ---------------------------------------------------------------------------- //
-    public Text(String nomEntrada, Integer id, String contingutEntrada, Integer idAlfabet, HashMap<String, Integer> lpf) throws Exception {
-        if(contingutEntrada == null) throw new Exception("ERROR: El contingut del text no pot ser nul");
-        this.nom = nomEntrada;
-        this.id = id;
-        this.text = contingutEntrada;
-        this.idAlfabet = idAlfabet;
-        this.lpf = lpf;
-    }
 
     /**
      * Constructora de Text.
@@ -40,6 +32,7 @@ public class Text extends Entrada{
         this.text = contingutEntrada;
         this.idAlfabet = idAlfabet;
         this.idTeclats = new ArrayList<>();
+        this.tipus = 0;
         calculateLPF();
     }
 

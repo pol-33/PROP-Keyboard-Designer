@@ -68,7 +68,7 @@ public class ControladorTeclat {
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabet, files, columnes);
 
-        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
+        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat, 0);
         conjuntTeclats.put(idTeclat, nouTeclat);
         return idTeclat;
     }
@@ -92,7 +92,7 @@ public class ControladorTeclat {
         ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
         ArrayList<Character> teclesAmbLletres = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
 
-        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat);
+        Teclat nouTeclat = new Teclat(nom, teclesAmbLletres, uidEntrada, files, columnes, idTeclat, 1);
         conjuntTeclats.put(idTeclat, nouTeclat);
         return idTeclat;
     }
@@ -130,6 +130,30 @@ public class ControladorTeclat {
 
         if (conjuntTeclats.containsKey(idTeclat)) {
             conjuntTeclats.remove(idTeclat);
+        } 
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
+
+    public void modificarFilesColumnesTeclat(Integer idTeclat, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, int files, int columnes) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+
+            // recalcular la distribucio del teclat
+            int tipus = conjuntTeclats.get(idTeclat).getTipus();
+            if (tipus == 0) {
+                ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
+                ArrayList<Character> distribucio = ctrlAlgoritme.calcularDistribucioDuesMans(lpf, alfabet, files, columnes);
+                conjuntTeclats.get(idTeclat).setDistribucio(distribucio);
+            }
+            else {
+                ControladorAlgoritme ctrlAlgoritme = new ControladorAlgoritme();
+                ArrayList<Character> distribucio = ctrlAlgoritme.calcularDistribucioPolzes(lpf, alfabet, files, columnes);
+                conjuntTeclats.get(idTeclat).setDistribucio(distribucio);
+            }
+
+            // modificar files i columnes
+            conjuntTeclats.get(idTeclat).modificarFilesColumnes(files, columnes);
         } 
         else {
             throw new Exception("No existeix el teclat amb aquest id");

@@ -84,11 +84,13 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error al tancar sessio: " + e.getMessage());
         }
     }
+    
     // Métodos para la gestión de Alfabetos
     public static void crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
             vPrincipal.afegirAlfabet(idAlfabet);
+            JOptionPane.showMessageDialog(null, "A;lfabet creat amb exit");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
@@ -136,9 +138,9 @@ public class ControladorPresentacio {
         }
     }
 
-    public static String getTypeEntrada (int idEntrada) {
+    public static Integer getTipusEntrada (int idEntrada) {
         try {
-            return ctrlDomini.getTypeEntrada(idEntrada);
+            return ctrlDomini.getTipusEntrada(idEntrada);
         } catch (Exception e) {
             return null;
         }
@@ -225,6 +227,7 @@ public class ControladorPresentacio {
         try {
             int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
@@ -235,9 +238,22 @@ public class ControladorPresentacio {
         try {
             int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
+            JOptionPane.showMessageDialog(null, "Teclat creat amb exit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+        }
+    }
+
+    public static void modificarFilesColumnesTeclat(Integer idTeclat, int files, int columnes) {
+        try {
+            ctrlDomini.modificarFilesColumnesTeclat(idTeclat, files, columnes);
+            vPrincipal.actualitzarTeclatLlista(idTeclat);
+
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el teclat: " + e.getMessage());
         }
     }
 

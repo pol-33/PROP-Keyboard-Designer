@@ -12,21 +12,26 @@ public class ElementTeclatListRenderer extends JPanel implements ListCellRendere
         setLayout(new BorderLayout());
         setOpaque(true);
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        
+        JPanel textPanel = new JPanel(new BorderLayout());
 
         nomLabel = new JLabel();
         nomLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        textPanel.add(nomLabel);
+        nomLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        textPanel.add(nomLabel, BorderLayout.WEST); // Alinea nomLabel a la izquierda
 
-        nomEntradaLabel = new JLabel();
-        nomEntradaLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        textPanel.add(nomEntradaLabel);
+
 
         filesColumnesLabel = new JLabel();
         filesColumnesLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        textPanel.add(filesColumnesLabel);
+        filesColumnesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        textPanel.add(filesColumnesLabel, BorderLayout.CENTER);
+
+        nomEntradaLabel = new JLabel();
+        nomEntradaLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        nomEntradaLabel.setHorizontalAlignment(SwingConstants.RIGHT); // Alinea infoLabel a la izquierda
+        textPanel.add(nomEntradaLabel, BorderLayout.EAST); // Coloca infoLabel a la derecha
+
 
         add(textPanel, BorderLayout.CENTER);
     }
@@ -45,8 +50,8 @@ public class ElementTeclatListRenderer extends JPanel implements ListCellRendere
             setForeground(list.getForeground());
         }
 
-        nomLabel.setText("Nom: " + value.getNom());
-        nomEntradaLabel.setText("Nom Entrada: " + value.getNomEntrada());
+        nomLabel.setText(value.getNom());
+        nomEntradaLabel.setText(value.getNomEntrada());
         filesColumnesLabel.setText("Files x Columnes: " + value.getFiles() + "x" + value.getColumnes());
 
         return this;
