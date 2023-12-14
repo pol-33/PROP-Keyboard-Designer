@@ -74,11 +74,21 @@ public class ControladorPresentacio {
         }
     }
 
+    public static void tancarSessio() {
+        try {
+            ctrlDomini.tancarSessio();
+            vPrincipal.tancar();
+            vLogin = new VistaLogin();
+            vLogin.mostrar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al tancar sessio: " + e.getMessage());
+        }
+    }
     // Métodos para la gestión de Alfabetos
     public static void crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
-            ctrlDomini.crearAlfabet(nomAlfabet, lletres);
-            vPrincipal.initAlfabets();
+            int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
+            vPrincipal.afegirAlfabet(idAlfabet);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
@@ -184,6 +194,16 @@ public class ControladorPresentacio {
         }
     }
 
+    public static ArrayList<Character> getDistribucioTeclat (int idTeclat) {
+        try {
+            return ctrlDomini.getDistribucioTeclat(idTeclat);
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al veure el teclat: " + e.getMessage());
+            return null;
+        }
+    }
+    
     public static ArrayList<Integer> getIdTeclats () {
         try {
             return ctrlDomini.getIdTeclats();
@@ -200,15 +220,36 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
+    
+    public static void crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
+        try {
+            int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
+            vPrincipal.afegirTeclat(idTeclat);
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+        }
+    }
+
+    public static void crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
+        try {
+            int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
+            vPrincipal.afegirTeclat(idTeclat);
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+        }
+    }
 
     // Metodes per a la gestio de Texts
     public static void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) {
         try {
-            ControladorDomini.crearText(nomEntrada, contingutEntrada, idAlfabet);
-            vPrincipal.initEntrades();
+            int idEntrada = ControladorDomini.crearText(nomEntrada, contingutEntrada, idAlfabet);
+            vPrincipal.afegirEntrada(idEntrada);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el text: " + e.getMessage());
         }
     }
-}
+
+   }

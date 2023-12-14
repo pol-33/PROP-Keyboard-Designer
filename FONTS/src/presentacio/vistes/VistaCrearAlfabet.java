@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle.Control;
 
 public class VistaCrearAlfabet extends JFrame {
     private JTextField symbolField;
@@ -112,5 +111,3 @@ public class VistaCrearAlfabet extends JFrame {
         setVisible(true);
     }
 }
-
-
