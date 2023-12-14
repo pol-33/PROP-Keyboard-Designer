@@ -13,12 +13,12 @@ import java.util.Objects;
 public class ControladorDomini {
     //Instancia singleton del Controlador de Domini
     private static ControladorDomini ctrl;
-    private ControladorPersistencia ctrlPersistencia;
-    private ControladorTeclat ctrlTeclat;
-    private ControladorEntrada ctrlEntrada;
-    private ControladorAlfabet ctrlAlfabet;
+    private static ControladorPersistencia ctrlPersistencia;
+    private static ControladorTeclat ctrlTeclat;
+    private static ControladorEntrada ctrlEntrada;
+    private static ControladorAlfabet ctrlAlfabet;
 
-    private Usuari usuariActiu = null;
+    private static Usuari usuariActiu = null;
 
     //-------------------------------Contructora------------------------------//
     /**
@@ -32,7 +32,7 @@ public class ControladorDomini {
     }
 
     //Metode per obtenir l'instància singleton
-    public static ControladorDomini obtenirInstancia() {
+    public ControladorDomini obtenirInstancia() {
         if (ctrl == null) {
             ctrl = new ControladorDomini();
         }
@@ -185,6 +185,12 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getNomTeclat(idTeclat);
     }
+    
+    public Integer getIdEntradaVinculadaTeclat(Integer idTeclat) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        return ctrlTeclat.getIdEntradaVinculadaTeclat(idTeclat);
+    }
+    
     /**
      * Retorna els identificadors dels teclats associats a l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet
@@ -479,12 +485,14 @@ public class ControladorDomini {
      * @param idAlfabet
      * @throws Exception
      */
-    public void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
+    public Integer crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
         //Guardem el text a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
         ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
+
+        return idText;
     }
 
     /**
@@ -505,12 +513,14 @@ public class ControladorDomini {
      * @param idAlfabet
      * @throws Exception
      */
-    public void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
+    public Integer crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idLPF = ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
         //Guardem la lpf a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idLPF);
         ctrlPersistencia.guardarLPF(idLPF, nomEntrada, contingutEntrada, idTeclats);
+
+        return idLPF;
     }
 
     /**
