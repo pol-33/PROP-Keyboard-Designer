@@ -31,6 +31,9 @@ executaDriverControladorAlgoritme: jars
 executaDriverControladorPresentacio: jars
 	java -jar $(JAR_OUTPUT)DriverControladorPresentacio.jar
 
+executaDriverControladorPersistencia: jars
+	java -jar $(JAR_OUTPUT)DriverControladorPersistencia.jar
+
 AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
 
 AlfabetTest: all
