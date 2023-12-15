@@ -93,7 +93,7 @@ public class VistaPrincipal extends JFrame {
     }
 
     private void initUIMenu() {
-        btTancarSesio = new JButton("Tancar Sessio");
+        btTancarSesio = new JButton("Tancar Sessió");
         btTancarSesio.addActionListener(e -> tancarSessio());
 
         panellMenu.add(btTancarSesio);
@@ -322,7 +322,7 @@ public class VistaPrincipal extends JFrame {
     // TODO metode que crida el btCrearText
     // ! Falta moder crear una LPF
     private void crearEntrada() {
-        VistaCrearText vCrearText = new VistaCrearText();
+        VistaCrearEntrada vCrearText = new VistaCrearEntrada();
         vCrearText.mostrar();
     }
 

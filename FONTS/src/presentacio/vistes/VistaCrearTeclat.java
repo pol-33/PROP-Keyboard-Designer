@@ -31,25 +31,25 @@ public class VistaCrearTeclat {
     }
 
     private void initComponents() {
-        frame = new JFrame("Crear Teclado");
+        frame = new JFrame("Crear Teclat");
         JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
 
-        JLabel nomLabel = new JLabel("Nombre del teclado:");
+        JLabel nomLabel = new JLabel("Nom del teclat:");
         nomTextField = new JTextField();
 
         JLabel entradaLabel = new JLabel("Seleccionar entrada:");
         entradaComboBox = new JComboBox<>();
 
-        JLabel filesLabel = new JLabel("Número de filas:");
+        JLabel filesLabel = new JLabel("Número de files:");
         filesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
-        JLabel columnesLabel = new JLabel("Número de columnas:");
+        JLabel columnesLabel = new JLabel("Número de columnes:");
         columnesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
         JLabel tipusLabel = new JLabel("Algoritme a utilizar:");
         tipusComboBox = new JComboBox<>();
-        tipusComboBox.addItem("Algoritme per a teclats de portatil");
-        tipusComboBox.addItem("Algoritme per a teclats tactils");
+        tipusComboBox.addItem("Algoritme per a teclats de portatil (dues mans)");
+        tipusComboBox.addItem("Algoritme per a teclats tactils (dos dits)");
         tipusComboBox.setSelectedIndex(0);
 
         panel.add(nomLabel);
@@ -63,7 +63,7 @@ public class VistaCrearTeclat {
         panel.add(tipusLabel);
         panel.add(tipusComboBox);
 
-        JButton crearButton = new JButton("Crear Teclado");
+        JButton crearButton = new JButton("Crear Teclat");
         crearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 crearTeclado();
@@ -103,8 +103,9 @@ public class VistaCrearTeclat {
                 ControladorPresentacio.crearTeclatPolzes(nombreTeclado, idEntradaSeleccionada, files, columnes);
 
             frame.dispose();
+            JOptionPane.showMessageDialog(frame, "Teclat creat correctament.", "Èxit", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(frame, "No se ha seleccionado ninguna entrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "No s'ha seleccionat cap entrada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
