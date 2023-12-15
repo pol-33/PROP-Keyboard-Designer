@@ -93,7 +93,7 @@ public class VistaPrincipal extends JFrame {
     }
 
     private void initUIMenu() {
-        btTancarSesio = new JButton("Tancar Sessio");
+        btTancarSesio = new JButton("Tancar Sessió");
         btTancarSesio.addActionListener(e -> tancarSessio());
 
         panellMenu.add(btTancarSesio);

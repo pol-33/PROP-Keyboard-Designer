@@ -35,12 +35,12 @@ public class VistaLogin {
         panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir un margen al panel
 
-        userLabel = new JLabel("Usuario: ");
-        passwordLabel = new JLabel("Contraseña: ");
+        userLabel = new JLabel("Usuari: ");
+        passwordLabel = new JLabel("Contrasenya: ");
         userTextField = new JTextField(20);
         passwordField = new JPasswordField(20);
-        loginButton = new JButton("Iniciar sesión");
-        signUpButton = new JButton("Registrarse");
+        loginButton = new JButton("Iniciar sessió");
+        signUpButton = new JButton("Registrar-se");
 
         // Estilizar los botones
         loginButton.setBackground(Color.LIGHT_GRAY);
