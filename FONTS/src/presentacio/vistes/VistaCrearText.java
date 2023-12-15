@@ -27,21 +27,21 @@ public class VistaCrearText {
     }
 
     private void initComponents() {
-        frame = new JFrame("Crear Texto");
+        frame = new JFrame("Crear Text");
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
-        JLabel nomLabel = new JLabel("Nombre de la entrada:");
+        JLabel nomLabel = new JLabel("Nom de la entrada:");
         nomTextField = new JTextField(20);
 
-        JLabel contingutLabel = new JLabel("Contenido:");
+        JLabel contingutLabel = new JLabel("Contingut:");
         contingutTextArea = new JTextArea(15, 20);
         JScrollPane scrollPane = new JScrollPane(contingutTextArea);
 
-        JLabel alfabetLabel = new JLabel("Seleccionar alfabeto:");
+        JLabel alfabetLabel = new JLabel("Seleccionar alfabet:");
         alfabetComboBox = new JComboBox<>();
 
         panel.add(nomLabel, gbc);
@@ -51,7 +51,7 @@ public class VistaCrearText {
         panel.add(alfabetLabel, gbc);
         panel.add(alfabetComboBox, gbc);
 
-        JButton crearButton = new JButton("Crear Texto");
+        JButton crearButton = new JButton("Crear Text");
         crearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 crearTexto();
@@ -84,13 +84,13 @@ public class VistaCrearText {
             Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado);
             try {
                 ControladorPresentacio.crearText(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
-                JOptionPane.showMessageDialog(frame, "Texto creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Text creat correctament.", "Èxit", JOptionPane.INFORMATION_MESSAGE);
                 frame.dispose();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Error al crear el texto.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Error en crear el text.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(frame, "No se ha seleccionado ningún alfabeto.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "No s'ha seleccionat cap alfabet.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

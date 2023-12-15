@@ -1,10 +1,13 @@
 package presentacio.controladors;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
+import javax.swing.*;
+
 import domini.controladors.ControladorDomini;
 import presentacio.elements.ElementAlfabetLlista;
 import presentacio.vistes.*;
@@ -252,4 +255,77 @@ public class ControladorPresentacio {
         }
     }
 
-   }
+    public static void crearLPF(String nombreEntrada, HashMap<String, Integer> contenidoEntrada, Integer idAlfabetSeleccionado) {
+        try {
+            int idEntrada = ctrlDomini.crearLPF(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
+            vPrincipal.afegirEntrada(idEntrada);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el LPF: " + e.getMessage());
+        }
+    }
+
+    public static void importarLPF(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String nombreEntrada = scanner.nextLine();
+        HashMap<String, Integer> contenidoEntrada = new HashMap<>();
+        while (scanner.hasNextLine()) {
+            String[] parts = scanner.nextLine().split(" ");
+            String word = parts[0];
+            int frequency = Integer.parseInt(parts[1]);
+            contenidoEntrada.put(word, frequency);
+        }
+        scanner.close();
+
+        // Get the ids of the existing alphabets
+        ArrayList<Integer> idAlfabets = getIdAlfabets();
+        // Get the names of the existing alphabets
+        ArrayList<String> nombresAlfabets = new ArrayList<>();
+        for (Integer id : idAlfabets) {
+            nombresAlfabets.add(getNomAlfabet(id));
+        }
+
+        // Create a JComboBox with the names of the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>(nombresAlfabets.toArray(new String[0]));
+
+        // Show a dialog to select an alphabet
+        int result = JOptionPane.showConfirmDialog(null, alfabetComboBox, "Seleccionar alfabeto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // If the user clicked "OK", create the LPF with the selected alphabet
+        if (result == JOptionPane.OK_OPTION) {
+            int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+            Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado);
+            crearLPF(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
+        }
+    }
+
+    public static void importarText(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String nombreEntrada = scanner.nextLine();
+        StringBuilder contenidoEntrada = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            contenidoEntrada.append(scanner.nextLine()).append("\n");
+        }
+        scanner.close();
+
+        // Get the ids of the existing alphabets
+        ArrayList<Integer> idAlfabets = getIdAlfabets();
+        // Get the names of the existing alphabets
+        ArrayList<String> nombresAlfabets = new ArrayList<>();
+        for (Integer id : idAlfabets) {
+            nombresAlfabets.add(getNomAlfabet(id));
+        }
+
+        // Create a JComboBox with the names of the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>(nombresAlfabets.toArray(new String[0]));
+
+        // Show a dialog to select an alphabet
+        int result = JOptionPane.showConfirmDialog(null, alfabetComboBox, "Seleccionar alfabeto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // If the user clicked "OK", create the Text with the selected alphabet
+        if (result == JOptionPane.OK_OPTION) {
+            int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+            Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado);
+            crearText(nombreEntrada, contenidoEntrada.toString(), idAlfabetSeleccionado);
+        }
+    }
+}

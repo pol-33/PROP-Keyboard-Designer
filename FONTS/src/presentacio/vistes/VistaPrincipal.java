@@ -317,7 +317,7 @@ public class VistaPrincipal extends JFrame {
     // TODO metode que crida el btCrearEntrada
     // ! Falta moder crear una LPF
     private void crearEntrada() {
-        VistaCrearText vCrearText = new VistaCrearText();
+        VistaCrearEntrada vCrearText = new VistaCrearEntrada();
         vCrearText.mostrar();
     }
 
