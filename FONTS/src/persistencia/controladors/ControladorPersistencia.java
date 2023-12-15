@@ -28,87 +28,87 @@ public class ControladorPersistencia {
     //--------------------------------Usuari---------------------------------//
 
 
-    void crearUsuari(String username) {}
+    public void crearUsuari(String username) {}
 
-    ArrayList<String> obtenirUsernames() {
+    public ArrayList<String> obtenirUsernames() {
         return null;
     }
 
-    ArrayList<String> obtenirPasswordUsuari(String username) {
+    public ArrayList<String> obtenirPasswordUsuari(String username) {
         return null;
     }
 
-    void modificarPasswordUsuari(String username, String password) {}
+    public void modificarPasswordUsuari(String username, String password) {}
 
-    void eliminarUsuari(String username) {}
+    public void eliminarUsuari(String username) {}
 
 
     //--------------------------------Alfabet---------------------------------//
 
-    void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<String> lletres){}
+    public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<String> lletres){}
 
-    ArrayList<Integer> obtenirIdsAlfabetsxUsuari(String username) {
+    public ArrayList<String> obtenirAlfabetsxUsuari(String username) {
         return null;
     }
 
-    ArrayList<Integer> obtenirIdsAlfabets() {
+    public ArrayList<Integer> obtenirIdsAlfabets() {
         return null;
     }
 
-    ArrayList<String> obtenirInfoAlfabet(Integer idAlfabet) {
+    public ArrayList<String> obtenirInfoAlfabet(Integer idAlfabet) {
         return null;
     }
 
-    void afegirLletraAlfabet(Integer idAlfabet) {}
+    public void afegirLletraAlfabet(Integer idAlfabet) {}
 
-    void eliminarAlfabet(Integer idAlfabet) {}
+    public void eliminarAlfabet(Integer idAlfabet) {}
 
 
     //--------------------------------Entrada---------------------------------//
 
-    void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text ) {}
+    public void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text ) {}
 
-    ArrayList<Integer> obtenirIdsEntradesxAlfabet(Integer idAlfabet) {
+    public ArrayList<String> obtenirEntradesxAlfabet(Integer idAlfabet) {
         return null;
     }
 
-    ArrayList<Integer> obtenirIdsEntrades() {
+    public ArrayList<Integer> obtenirIdsEntrades() {
         return null;
     }
 
-    ArrayList<Integer> obtenirInfoEntrada(Integer idEntrada) {
+    public ArrayList<Integer> obtenirInfoEntrada(Integer idEntrada) {
         return null;
     }
 
-    void modificarContingutEntrada(Integer idEntrada, HashMap<String, Integer> lpf, String text) {}
+    public void modificarContingutEntrada(Integer idEntrada, HashMap<String, Integer> lpf, String text) {}
 
-    void elimanrEntrada(Integer idEntrada) {}
+    public void elimanrEntrada(Integer idEntrada) {}
 
 
 
     //--------------------------------Teclat---------------------------------//
 
-    void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio){}
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio){}
 
 
-    ArrayList<Integer> obtenirIdsTeclatsxEntrada(Integer idEntrada) {
+    public ArrayList<String> obtenirTeclatsxEntrada(Integer idEntrada) {
         return null;
     }
 
-    ArrayList<Integer> obtenirIdsTeclats() {
+    public ArrayList<Integer> obtenirIdsTeclats() {
         return null;
     }
 
-    ArrayList<Integer> obtenirInfoTeclat(Integer idTeclat) {
+    public ArrayList<Integer> obtenirInfoTeclat(Integer idTeclat) {
         return null;
     }
 
-    void modifcarNumFilesTeclat(Integer idTeclat, Integer numFiles) {}
+    public void modifcarNumFilesTeclat(Integer idTeclat, Integer numFiles) {}
 
-    void modificarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {}
+    public void modificarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {}
 
-    void modificarDistribucio(Integer idTeclat, ArrayList<String> distribucio) {}
+    public void modificarDistribucio(Integer idTeclat, ArrayList<String> distribucio) {}
 
-    void eliminarTeclat(Integer idTeclat) {}
+    public void eliminarTeclat(Integer idTeclat) {}
 }
 
