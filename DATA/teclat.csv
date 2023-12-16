@@ -1,0 +1,5 @@
+id,nom,numFiles,numColumnes,distribucio
+1,teclat1,1,5,"a,b,c,d,ç"
+2,teclat2,1,5,"a,b,c,d,ç"
+3,teclat3,1,5,"a,b,c,d,ñ"
+4,teclat4,1,5,"a,b,c,d,ñ"
