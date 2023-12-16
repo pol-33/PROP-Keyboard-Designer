@@ -174,7 +174,7 @@ public class VistaPrincipal extends JFrame {
         panellTeclats.setLayout(new BoxLayout(panellTeclats, BoxLayout.Y_AXIS));
 
         // Botons
-        btCrearTeclat = new JButton("Crear no teclat");
+        btCrearTeclat = new JButton("Crear nou teclat");
         btModificarTeclat = new JButton("Modificar files i columnes");
         btEliminarTeclat = new JButton("Eliminar");
         btVeureTeclat = new JButton("Veure Teclat Seleccionat");
@@ -303,7 +303,17 @@ public class VistaPrincipal extends JFrame {
 
     // TODO metode que crida el btModificarAlfabet
     private void modificarAlfabet() {
-        // Logica per modificar un alfabet seleccionat
+        int indexSeleccionat = jListAlfabets.getSelectedIndex();
+        if (indexSeleccionat == -1) {
+            JOptionPane.showMessageDialog(this, "Cap alfabet seleccionat!");
+            return;
+        }
+
+        DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
+        int idAlfabetSeleccionat = model.get(indexSeleccionat).getId();
+
+        VistaModificarAlfabet vModificarAlfabet = new VistaModificarAlfabet(idAlfabetSeleccionat);
+        vModificarAlfabet.mostrar();
     }
 
     // * metode que crida el btEliminarAlfabet

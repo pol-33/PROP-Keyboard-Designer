@@ -344,4 +344,12 @@ public class ControladorPresentacio {
             crearText(nombreEntrada, contenidoEntrada.toString(), idAlfabetSeleccionado);
         }
     }
+
+    public static void modificarAlfabetAfegirLletra(Integer idAlfabet, Character letter) {
+        try {
+            ctrlDomini.afegirLletraAlfabet(idAlfabet, letter);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'alfabet: " + e.getMessage());
+        }
+    }
 }
