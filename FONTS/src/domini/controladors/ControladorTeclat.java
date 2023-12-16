@@ -109,9 +109,9 @@ public class ControladorTeclat {
      * @throws Exception
      */
     public void carregarTeclat(String nom, ArrayList<Character> distribucio,
-        int id, int idEntrada, int files, int columnes) {
+        int id, int idEntrada, int files, int columnes, int tipus) {
         
-        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, id);
+        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, id, tipus);
         conjuntTeclats.put(id, nouTeclat);
 
         if (id > contador) {

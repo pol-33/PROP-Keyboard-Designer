@@ -16,9 +16,10 @@ public class TeclatTest {
         Integer numFiles = 3;
         Integer numColumnes = 2;
         Integer id = 4;
+        Integer tipus = 0;
         String nom = "TeclatTest";
 
-        Teclat teclat = new Teclat(nom, distribucio, idEntrada, numFiles, numColumnes, id);
+        Teclat teclat = new Teclat(nom, distribucio, idEntrada, numFiles, numColumnes, id, tipus);
 
 
         Field distribucioField = teclat.getClass().getDeclaredField("distribucio");

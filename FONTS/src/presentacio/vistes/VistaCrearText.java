@@ -34,22 +34,21 @@ public class VistaCrearText {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
-        JLabel nomLabel = new JLabel("Nom de la entrada:");
+        JLabel nomLabel = new JLabel("Nom del text:");
         nomTextField = new JTextField(20);
+        panel.add(nomLabel, gbc);
+        panel.add(nomTextField, gbc);
+
+        JLabel alfabetLabel = new JLabel("Seleccionar alfabet:");
+        alfabetComboBox = new JComboBox<>();
+        panel.add(alfabetLabel, gbc);
+        panel.add(alfabetComboBox, gbc);
 
         JLabel contingutLabel = new JLabel("Contingut:");
         contingutTextArea = new JTextArea(15, 20);
         JScrollPane scrollPane = new JScrollPane(contingutTextArea);
-
-        JLabel alfabetLabel = new JLabel("Seleccionar alfabet:");
-        alfabetComboBox = new JComboBox<>();
-
-        panel.add(nomLabel, gbc);
-        panel.add(nomTextField, gbc);
         panel.add(contingutLabel, gbc);
         panel.add(scrollPane, gbc);
-        panel.add(alfabetLabel, gbc);
-        panel.add(alfabetComboBox, gbc);
 
         JButton crearButton = new JButton("Crear Text");
         crearButton.addActionListener(new ActionListener() {

@@ -140,7 +140,7 @@ public class VistaPrincipal extends JFrame {
         panellEntrades.setLayout(new BoxLayout(panellEntrades, BoxLayout.Y_AXIS));
 
         // Botons
-        btCrearText = new JButton("Nou text");
+        btCrearText = new JButton("Nova Entrada");
         btCrearLPF = new JButton("Nova LPF");
         btModificarEntrada = new JButton("Modificar");
         btEliminarEntrada = new JButton("Eliminar");

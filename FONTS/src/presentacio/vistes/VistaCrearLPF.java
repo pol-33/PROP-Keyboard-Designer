@@ -44,7 +44,7 @@ private void initComponents() {
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.gridwidth = GridBagConstraints.REMAINDER;
 
-    JLabel nomLabel = new JLabel("Nom de la entrada:");
+    JLabel nomLabel = new JLabel("Nom de la LPF:");
     nomTextField = new JTextField(20);
     entryPanel.add(nomLabel, gbc);
     entryPanel.add(nomTextField, gbc);

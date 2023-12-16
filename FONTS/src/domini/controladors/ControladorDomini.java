@@ -321,7 +321,7 @@ public class ControladorDomini {
             //Instanciem el text o lpf a través del controlador
             if (Objects.equals(tipus, "text")) {
                 text = atributs[6];
-                ctrlEntrada.carregarText(id, nomEntrada, text, idAlfabet, lpf);
+                ctrlEntrada.carregarText(id, nomEntrada, text, idAlfabet);
             } else {
                 ctrlEntrada.carregarLPF(id, nomEntrada, lpf, idAlfabet);
             }
@@ -338,7 +338,7 @@ public class ControladorDomini {
     private void carregarTeclats(ArrayList<String> teclats) throws Exception {
         Integer id, idEntrada;
         String nomTeclat;
-        Integer numFiles, numColumnes;
+        Integer numFiles, numColumnes, tipus;
         ArrayList<Character> distribucio = new ArrayList<>();
 
         for (String teclat : teclats) {
@@ -350,6 +350,7 @@ public class ControladorDomini {
             numFiles = Integer.valueOf(atributs[2]);
             numColumnes = Integer.valueOf(atributs[3]);
             idEntrada = Integer.valueOf(atributs[4]);
+            tipus = Integer.valueOf(atributs[5]);
 
             String[] lletres = atributs[5].split("\\.");
             for (String lletra : lletres) {
@@ -357,7 +358,7 @@ public class ControladorDomini {
             }
 
             //Instanciem el teclat
-            ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes);
+            ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
         }
     }
 

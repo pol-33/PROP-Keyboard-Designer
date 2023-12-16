@@ -206,7 +206,7 @@ public class ProgramaConsola {
             System.out.println("==== Les teves entrades ====");
             for (Integer id : idsTextos) {
                 String nom = controlador.getNomEntrada(id);
-                String tipus = controlador.getTypeEntrada(id);
+                Integer tipus = controlador.getTipusEntrada(id);
                 System.out.println(nom + ": " + tipus);
             }
         } catch (Exception e) {
