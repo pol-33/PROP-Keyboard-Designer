@@ -1,31 +1,24 @@
 package persistencia.classes;
 
-import java.io.BufferedReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import com.opencsv.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GestorUsuaris {
     // ---------------------------------------------------------------------------- //
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
-    private String filePath = "../../DATA/usuaris.csv";
-    private Path path = Paths.get(filePath);
+    private String usuarisPath = "../../DATA/usuaris.csv";
+    private String relacioUsuariAlfabetPath = "../../DATA/relacioUsuariAlfabet.csv";
 
-    public ArrayList<String> obtenirUsernames(String username) {
-        ArrayList<String> usernames = new ArrayList<>();
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-                usernames.add(values[0]);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void crearUsuari(String username, String contrasenya) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(usuarisPath)))  {
+            String[] usuari = { username, contrasenya};
+            writer.writeNext(usuari);
+        } catch (IOException e) {
+            e.getMessage();
         }
-
-        return usernames;
     }
+
 }
