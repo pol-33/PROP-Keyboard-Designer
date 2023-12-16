@@ -220,31 +220,31 @@ public class ControladorDomini {
     //-------------------------Private class methods-------------------------//
 
     /**
-     * Carrega de persistencia i instancia una classe
+     * Carrega de persistencia totes les classes de l'usuari i les instancia en el domini
      * @param nomUsuari
      * @throws Exception
      */
     private void carregarInfoUsuari(String nomUsuari) throws Exception {
         //Carregar alfabets de l'usuari
-        ArrayList<String> alfabetsEnCSV = ctrlPersistencia.getAlfabetsUsuari(nomUsuari);
+        ArrayList<String> alfabetsEnCSV = ctrlPersistencia.carregarAlfabets(nomUsuari);
         carregarAlfabets(alfabetsEnCSV);
 
-        //Carregar entrades de l'usuari
-        ArrayList<String> entradesEnCSV = ctrlPersistencia.getEntradesUsuari(nomUsuari);
-        carregarEntrades(entradesEnCSV);
+        //Carregar entrades de cada un dels alfabets
+        for (String alfabetEnCSV : alfabetsEnCSV) {
+            String idAlfabet = alfabetEnCSV.split(",")[0]; //obtenim l'id de l'alfabet
+            ArrayList<String> entradesEnCSV = ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
+            carregarEntrades(entradesEnCSV); //instanciem les entrades
+        }
 
         //Carregar teclats de l'usuari
         ArrayList<String> teclatsEnCSV = ctrlPersistencia.getTeclatsUsuari(nomUsuari);
         carregarTeclats(teclatsEnCSV);
     }
 
-    //Els alfabets segueixen el següent format:
-    //id,nom,lletra1.lletra2. ... .lletran, idEntrada1.idEntrada2. ... . idEntradan
-
     /**
      * Carrega els alfabets de persistència i instancia les classses.
      * Els alfabets segueixen el següent format:
-     * id,nom,lletra1.lletra2. ... .lletran, idEntrada1.idEntrada2. ... . idEntradan
+     * id,nom,"lletra1,lletra2, ... ,lletran", "idEntrada1,idEntrada2, ... ,idEntradan"
      * @param alfabets
      */
     private void carregarAlfabets(ArrayList<String> alfabets) {

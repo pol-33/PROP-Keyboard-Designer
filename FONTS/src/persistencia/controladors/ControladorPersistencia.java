@@ -1,11 +1,8 @@
 package persistencia.controladors;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.*;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.opencsv.*;
 
 public class ControladorPersistencia {
     
@@ -48,7 +45,7 @@ public class ControladorPersistencia {
     public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<String> lletres){}
 
     public ArrayList<String> carregarAlfabets(String username) {
-        return null;
+        new CSVWriter();
     }
 
     public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {}
