@@ -8,9 +8,6 @@ public class ControladorPersistencia {
     
     private static ControladorPersistencia ctrl;
 
-    private ControladorPersistencia() {
-    }
-
     /**
      * Mètode per obtenir la instància singleton del controlador.
      * @return La instància única del ControladorPersistencia.
@@ -45,7 +42,7 @@ public class ControladorPersistencia {
     public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<String> lletres){}
 
     public ArrayList<String> carregarAlfabets(String username) {
-        new CSVWriter();
+        return null;
     }
 
     public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {}

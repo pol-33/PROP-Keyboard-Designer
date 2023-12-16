@@ -6,11 +6,16 @@ CLASS_INPUT =	./src/domini/classes/*.java \
                 ./src/presentacio/controladors/*.java \
                 ./src/drivers/*.java
 
+CLASS_INPUT_PERSISTENCIA =  ./src/persistencia/controladors/*.java \
+                            ./src/persistencia/classes/*.java
+
 CLASS_OUTPUT =	../EXE/out/
 
 JAR_OUTPUT =	../EXE/
 
 JUNIT_JARS = ./lib/junit/junit/4.13.1/junit-4.13.1.jar:./lib/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
+
+OPENCSV_JARS = ./lib/opencsv-5.9.jar
 
 JUNIT_TESTS = ./src/test/*.java
 
@@ -25,13 +30,17 @@ jars:
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
 	jar cmvf ./src/drivers/DriverControladorPresentacio.mf $(JAR_OUTPUT)DriverControladorPresentacio.jar -C $(CLASS_OUTPUT) .
 
+jars_persistencia:
+	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT_PERSISTENCIA) ./src/drivers/DriverControladorPersistencia.java
+	jar cmvf ./src/drivers/DriverControladorPersistencia.mf $(JAR_OUTPUT)DriverControladorPersistencia.jar -C $(CLASS_OUTPUT) .
+
 executaDriverControladorAlgoritme: jars
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
 
 executaDriverControladorPresentacio: jars
 	java -jar $(JAR_OUTPUT)DriverControladorPresentacio.jar
 
-executaDriverControladorPersistencia: jars
+executaDriverControladorPersistencia: jars_persistencia
 	java -jar $(JAR_OUTPUT)DriverControladorPersistencia.jar
 
 AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
