@@ -149,10 +149,47 @@ public class ControladorPresentacio {
         }
     }
 
+    public static Integer getIdAlfabetDeLPF(Integer idLPF) {
+        try {
+            //return ctrlDomini.getIdAlfabetDeLPF(idLPF);
+            return 1;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir l'id de l'alfabet de l'LPF: " + e.getMessage());
+            return null;
+        }
+    }
+
     public static ArrayList<Integer> getIdEntrades () {
         try {
             return ctrlDomini.getIdEntrades();
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String getContingutText(Integer idText) {
+        try {
+            //return ctrlDomini.getContingutText(idText);
+            return "aqui es mostra el contingut del text quan s'implementi la funcio a domini";
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el contingut del text: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static HashMap<String, Integer> getContingutLPF(Integer idLPF) {
+        try {
+            //return ctrlDomini.getContingutLPF(idLPF);
+            HashMap<String, Integer> contingutProva = new HashMap<>();
+            contingutProva.put("funcio", 3);
+            contingutProva.put("obtenir", 4);
+            contingutProva.put("contingut", 1);
+            contingutProva.put("falta", 2);
+            contingutProva.put("implementar", 5);
+            contingutProva.put("domini", 6);
+            return contingutProva;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el contingut de l'LPF: " + e.getMessage());
             return null;
         }
     }
@@ -352,4 +389,21 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error al modificar l'alfabet: " + e.getMessage());
         }
     }
+
+    public static void modificarContingutText(Integer idEntrada, String newContent) {
+        try {
+            //ctrlDomini.modificarContingutText(idEntrada, newContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'entrada text: " + e.getMessage());
+        }
+    }
+
+    public static void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) {
+        try {
+            //ctrlDomini.modificarContingutLPF(idEntrada, newContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'entrada LPF: " + e.getMessage());
+        }
+    }
+
 }

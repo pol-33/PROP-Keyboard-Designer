@@ -45,7 +45,9 @@ public class VistaCrearText {
         panel.add(alfabetComboBox, gbc);
 
         JLabel contingutLabel = new JLabel("Contingut:");
-        contingutTextArea = new JTextArea(15, 20);
+        contingutTextArea = new JTextArea(15, 30);
+        contingutTextArea.setLineWrap(true); // Enable line wrapping
+        contingutTextArea.setWrapStyleWord(true); // Wrap lines at word boundaries
         JScrollPane scrollPane = new JScrollPane(contingutTextArea);
         panel.add(contingutLabel, gbc);
         panel.add(scrollPane, gbc);

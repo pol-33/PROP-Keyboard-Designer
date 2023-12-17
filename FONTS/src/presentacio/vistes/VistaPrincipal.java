@@ -5,13 +5,8 @@ import presentacio.elements.*;
 
 import javax.swing.*;
 
-import domini.controladors.ControladorDomini;
-
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
-import java.util.List;
-import java.util.ResourceBundle.Control;
 
 public class VistaPrincipal extends JFrame {
     
@@ -338,6 +333,23 @@ public class VistaPrincipal extends JFrame {
 
     // TODO metode que crida el btModificarEntrada
     private void modificarEntrada() {
+        int indexSeleccionat = jListEntrades.getSelectedIndex();
+        if (indexSeleccionat == -1) {
+            JOptionPane.showMessageDialog(this, "Cap entrada seleccionada!");
+            return;
+        }
+
+        DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
+        int idEntradaSeleccionada = model.get(indexSeleccionat).getId();
+        String tipusEntrada = model.get(indexSeleccionat).getTipus();
+
+        if (tipusEntrada.equals("Text")) {
+            VistaModificarText vModificarEntrada = new VistaModificarText(idEntradaSeleccionada);
+            vModificarEntrada.mostrar();
+        } else if (tipusEntrada.equals("LPF")) {
+            VistaModificarLPF vModificarLPF = new VistaModificarLPF(idEntradaSeleccionada);
+            vModificarLPF.mostrar();
+        }
     }
 
     // * metode que crida el btEliminarEntrada
