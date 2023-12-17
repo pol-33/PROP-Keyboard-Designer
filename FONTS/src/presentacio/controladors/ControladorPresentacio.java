@@ -1,10 +1,13 @@
 package presentacio.controladors;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
+import javax.swing.*;
+
 import domini.controladors.ControladorDomini;
 import presentacio.elements.ElementAlfabetLlista;
 import presentacio.vistes.*;
@@ -84,11 +87,13 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error al tancar sessio: " + e.getMessage());
         }
     }
+    
     // Métodos para la gestión de Alfabetos
     public static void crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
             vPrincipal.afegirAlfabet(idAlfabet);
+            JOptionPane.showMessageDialog(null, "A;lfabet creat amb exit");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
@@ -136,10 +141,20 @@ public class ControladorPresentacio {
         }
     }
 
-    public static String getTypeEntrada (int idEntrada) {
+    public static Integer getTipusEntrada (int idEntrada) {
         try {
-            return ctrlDomini.getTypeEntrada(idEntrada);
+            return ctrlDomini.getTipusEntrada(idEntrada);
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Integer getIdAlfabetDeLPF(Integer idLPF) {
+        try {
+            //return ctrlDomini.getIdAlfabetDeLPF(idLPF);
+            return 1;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir l'id de l'alfabet de l'LPF: " + e.getMessage());
             return null;
         }
     }
@@ -148,6 +163,33 @@ public class ControladorPresentacio {
         try {
             return ctrlDomini.getIdEntrades();
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String getContingutText(Integer idText) {
+        try {
+            //return ctrlDomini.getContingutText(idText);
+            return "aqui es mostra el contingut del text quan s'implementi la funcio a domini";
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el contingut del text: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static HashMap<String, Integer> getContingutLPF(Integer idLPF) {
+        try {
+            //return ctrlDomini.getContingutLPF(idLPF);
+            HashMap<String, Integer> contingutProva = new HashMap<>();
+            contingutProva.put("funcio", 3);
+            contingutProva.put("obtenir", 4);
+            contingutProva.put("contingut", 1);
+            contingutProva.put("falta", 2);
+            contingutProva.put("implementar", 5);
+            contingutProva.put("domini", 6);
+            return contingutProva;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el contingut de l'LPF: " + e.getMessage());
             return null;
         }
     }
@@ -225,6 +267,7 @@ public class ControladorPresentacio {
         try {
             int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
@@ -235,9 +278,22 @@ public class ControladorPresentacio {
         try {
             int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
+            JOptionPane.showMessageDialog(null, "Teclat creat amb exit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+        }
+    }
+
+    public static void modificarFilesColumnesTeclat(Integer idTeclat, int files, int columnes) {
+        try {
+            ctrlDomini.modificarFilesColumnesTeclat(idTeclat, files, columnes);
+            vPrincipal.actualitzarTeclatLlista(idTeclat);
+
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el teclat: " + e.getMessage());
         }
     }
 
@@ -252,4 +308,102 @@ public class ControladorPresentacio {
         }
     }
 
-   }
+    public static void crearLPF(String nombreEntrada, HashMap<String, Integer> contenidoEntrada, Integer idAlfabetSeleccionado) {
+        try {
+            int idEntrada = ctrlDomini.crearLPF(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
+            vPrincipal.afegirEntrada(idEntrada);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el LPF: " + e.getMessage());
+        }
+    }
+
+    public static void importarLPF(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String nombreEntrada = scanner.nextLine();
+        HashMap<String, Integer> contenidoEntrada = new HashMap<>();
+        while (scanner.hasNextLine()) {
+            String[] parts = scanner.nextLine().split(" ");
+            String word = parts[0];
+            int frequency = Integer.parseInt(parts[1]);
+            contenidoEntrada.put(word, frequency);
+        }
+        scanner.close();
+
+        // Get the ids of the existing alphabets
+        ArrayList<Integer> idAlfabets = getIdAlfabets();
+        // Get the names of the existing alphabets
+        ArrayList<String> nombresAlfabets = new ArrayList<>();
+        for (Integer id : idAlfabets) {
+            nombresAlfabets.add(getNomAlfabet(id));
+        }
+
+        // Create a JComboBox with the names of the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>(nombresAlfabets.toArray(new String[0]));
+
+        // Show a dialog to select an alphabet
+        int result = JOptionPane.showConfirmDialog(null, alfabetComboBox, "Seleccionar alfabeto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // If the user clicked "OK", create the LPF with the selected alphabet
+        if (result == JOptionPane.OK_OPTION) {
+            int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+            Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado);
+            crearLPF(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
+        }
+    }
+
+    public static void importarText(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String nombreEntrada = scanner.nextLine();
+        StringBuilder contenidoEntrada = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            contenidoEntrada.append(scanner.nextLine()).append("\n");
+        }
+        scanner.close();
+
+        // Get the ids of the existing alphabets
+        ArrayList<Integer> idAlfabets = getIdAlfabets();
+        // Get the names of the existing alphabets
+        ArrayList<String> nombresAlfabets = new ArrayList<>();
+        for (Integer id : idAlfabets) {
+            nombresAlfabets.add(getNomAlfabet(id));
+        }
+
+        // Create a JComboBox with the names of the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>(nombresAlfabets.toArray(new String[0]));
+
+        // Show a dialog to select an alphabet
+        int result = JOptionPane.showConfirmDialog(null, alfabetComboBox, "Seleccionar alfabeto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // If the user clicked "OK", create the Text with the selected alphabet
+        if (result == JOptionPane.OK_OPTION) {
+            int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+            Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado);
+            crearText(nombreEntrada, contenidoEntrada.toString(), idAlfabetSeleccionado);
+        }
+    }
+
+    public static void modificarAlfabetAfegirLletra(Integer idAlfabet, Character letter) {
+        try {
+            ctrlDomini.afegirLletraAlfabet(idAlfabet, letter);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'alfabet: " + e.getMessage());
+        }
+    }
+
+    public static void modificarContingutText(Integer idEntrada, String newContent) {
+        try {
+            //ctrlDomini.modificarContingutText(idEntrada, newContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'entrada text: " + e.getMessage());
+        }
+    }
+
+    public static void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) {
+        try {
+            //ctrlDomini.modificarContingutLPF(idEntrada, newContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar l'entrada LPF: " + e.getMessage());
+        }
+    }
+
+}
