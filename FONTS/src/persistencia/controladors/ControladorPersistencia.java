@@ -32,14 +32,18 @@ public class ControladorPersistencia {
         return gestorUsuaris.obtenirUsernames();
     }
 
-    public ArrayList<String> obtenirPasswordUsuari(String username) {
-        return null;
+    public String obtenirPasswordUsuari(String username) {
+        return gestorUsuaris.obtenirPasswordUsuari(username);
     }
 
-    public void modificarPasswordUsuari(String username, String password) {}
+    public void modificarPasswordUsuari(String username, String password) {
+        gestorUsuaris.eliminarUsuari(username);
+        gestorUsuaris.crearUsuari(username, password);
+    }
 
-    public void eliminarUsuari(String username) {}
-
+    public void eliminarUsuari(String username) {
+        gestorUsuaris.eliminarUsuari(username);
+    }
 
     //--------------------------------Alfabet---------------------------------//
 
