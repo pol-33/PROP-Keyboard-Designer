@@ -502,6 +502,9 @@ public class ControladorDomini {
     public Integer crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
+        // Vinculem el text a l'alfabet
+        ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, idText);
+
         //Guardem el text a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
         ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
@@ -529,6 +532,9 @@ public class ControladorDomini {
      */
     public Integer crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idLPF = ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
+
+        // Vinculem el text a l'alfabet
+        ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, idLPF);
 
         //Guardem la lpf a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idLPF);

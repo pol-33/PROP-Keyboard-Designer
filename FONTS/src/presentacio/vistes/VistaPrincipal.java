@@ -6,6 +6,8 @@ import presentacio.elements.*;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class VistaPrincipal extends JFrame {
@@ -34,8 +36,8 @@ public class VistaPrincipal extends JFrame {
     public VistaPrincipal() {
         initUI();
         carregaAlfabets();
-        carregaEntrades();
-        carregarTeclats();
+        carregaTotesEntrades();
+        carregaTotsTeclats();
     }
 
     // Mostra la finestra
@@ -145,6 +147,41 @@ public class VistaPrincipal extends JFrame {
         btModificarEntrada.addActionListener(e -> modificarEntrada());
         btEliminarEntrada.addActionListener(e -> eliminarEntrada());
 
+
+        // Create a JComboBox for the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>();
+        alfabetComboBox.addItem("Tots");
+        ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
+        for (Integer id : idAlfabets) {
+            String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(id);
+            alfabetComboBox.addItem(nombreAlfabeto);
+        }
+        alfabetComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+                if (indiceSeleccionado == 0) {
+                    carregaTotesEntrades();
+                }
+                else {
+                    Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado-1);
+                    carregaEntrades(idAlfabetSeleccionado);
+                }
+            }
+        });
+
+        // Create a JPanel for the JComboBox
+        JPanel alfabetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel filterLabel = new JLabel("Filtrar per idioma: ");
+        alfabetPanel.add(filterLabel);
+        alfabetPanel.add(alfabetComboBox);
+
+        // Set the maximum height of the alfabetPanel
+        alfabetPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, alfabetPanel.getPreferredSize().height));
+
+        // Add the JPanel to the BorderLayout.NORTH of panellEntrades
+        panellEntrades.add(alfabetPanel, BorderLayout.NORTH);
+
+
         // Creacio del panell de botons per a les Entrades
         JPanel panelBotonsEntrades = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelBotonsEntrades.setMaximumSize(new Dimension(Short.MAX_VALUE, 30)); // Estableix l'ample maxim
@@ -156,11 +193,10 @@ public class VistaPrincipal extends JFrame {
         DefaultListModel<ElementEntradaLlista> listModel = new DefaultListModel<ElementEntradaLlista>();
         jListEntrades = new JList<>(listModel);
         jListEntrades.setCellRenderer(new ElementEntradaListRenderer());
-        panellEntrades.add(new JScrollPane(jListEntrades));
+        panellEntrades.add(new JScrollPane(jListEntrades), BorderLayout.CENTER);
 
         // Afegim el panell dels botons a la pestanya
-        panellEntrades.add(panelBotonsEntrades);
-
+        panellEntrades.add(panelBotonsEntrades, BorderLayout.NORTH);
     }
 
     private void initUITeclats() {
@@ -179,6 +215,41 @@ public class VistaPrincipal extends JFrame {
         btModificarTeclat.addActionListener(e -> modificarTeclat());
         btEliminarTeclat.addActionListener(e -> eliminarTeclat());
         btVeureTeclat.addActionListener(e -> veureTeclat());
+
+
+        // Create a JComboBox for the alphabets
+        JComboBox<String> alfabetComboBox = new JComboBox<>();
+        alfabetComboBox.addItem("Tots");
+        ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
+        for (Integer id : idAlfabets) {
+            String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(id);
+            alfabetComboBox.addItem(nombreAlfabeto);
+        }
+        alfabetComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+                if (indiceSeleccionado == 0) {
+                    carregaTotsTeclats();
+                }
+                else {
+                    Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado-1);
+                    carregaTeclats(idAlfabetSeleccionado);
+                }
+            }
+        });
+
+        // Create a JPanel for the JComboBox
+        JPanel alfabetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel filterLabel = new JLabel("Filtrar per idioma: ");
+        alfabetPanel.add(filterLabel);
+        alfabetPanel.add(alfabetComboBox);
+
+        // Set the maximum height of the alfabetPanel
+        alfabetPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, alfabetPanel.getPreferredSize().height));
+
+        // Add the JPanel to the BorderLayout.NORTH of panellEntrades
+        panellTeclats.add(alfabetPanel, BorderLayout.NORTH);
+
 
         // Creacio del panell de botons per als Teclats
         JPanel panelBotonsTeclats = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -215,8 +286,13 @@ public class VistaPrincipal extends JFrame {
     }
 
     // Metode per inicialitzar la seccio d'Entrades
-    public void carregaEntrades() {
-        
+    public void carregaTotesEntrades() {
+        // Get the DefaultListModel associated with jListEntrades
+        DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
+
+        // Clear the model
+        model.clear();
+
         // Obtencio de dades d'Entrades i visualitzacio a la llista
         ArrayList<Integer> idEntrades = ControladorPresentacio.getIdEntrades();
 
@@ -224,15 +300,60 @@ public class VistaPrincipal extends JFrame {
         for (int id : idEntrades) {
             afegirEntrada(id);
         }
+    }
 
+    public void carregaEntrades(Integer idAlfabet) {
+        // Get the DefaultListModel associated with jListEntrades
+        DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
 
+        // Clear the model
+        model.clear();
+
+        // Obtencio de dades d'Entrades i visualitzacio a la llista
+        ArrayList<Integer> idEntrades = ControladorPresentacio.getIdEntradesVinculadesAlfabet(idAlfabet);
+
+        // Iteracio sobre les Entrades i creacio d'elements per a la llista
+        for (int id : idEntrades) {
+            afegirEntrada(id);
+        }
     }
     
     // Metode per inicialitzar la seccio dels Teclats
-    public void carregarTeclats() {
-        
+    public void carregaTotsTeclats() {
+        // Get the DefaultListModel associated with jListEntrades
+        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
+
+        // Clear the model
+        model.clear();
+
         // Obtencio de dades dels Teclats i visualitzacio a la llista
         ArrayList<Integer> idTeclats = ControladorPresentacio.getIdTeclats();
+
+        // Iteracio sobre els Teclats i creacio d'elements per a la llista
+        for (int id : idTeclats) {
+            afegirTeclat(id);
+        }
+    }
+
+    // Metode per inicialitzar la seccio dels Teclats
+    public void carregaTeclats(Integer idAlfabet) {
+        // Get the DefaultListModel associated with jListEntrades
+        DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
+
+        // Clear the model
+        model.clear();
+
+        // Obtencio de dades d'Entrades i visualitzacio a la llista
+        ArrayList<Integer> idEntrades = ControladorPresentacio.getIdEntradesVinculadesAlfabet(idAlfabet);
+        ArrayList<Integer> idTeclats = new ArrayList<>();
+
+        // Iteracio sobre les Entrades i creacio d'elements per a la llista
+        for (int id : idEntrades) {
+            ArrayList<Integer> idTeclatsEntrada = ControladorPresentacio.getIdTeclatsVinculatsAEntrada(id);
+            for (int idTeclat : idTeclatsEntrada) {
+                if (!idTeclats.contains(idTeclat)) idTeclats.add(idTeclat);
+            }
+        }
 
         // Iteracio sobre els Teclats i creacio d'elements per a la llista
         for (int id : idTeclats) {
