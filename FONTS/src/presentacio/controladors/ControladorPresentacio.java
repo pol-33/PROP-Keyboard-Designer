@@ -95,20 +95,22 @@ public class ControladorPresentacio {
     }
     
     // Métodos para la gestión de Alfabetos
-    public static void crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
+    public static int crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
             vPrincipal.afegirAlfabet(idAlfabet);
-            JOptionPane.showMessageDialog(null, "A;lfabet creat amb exit");
+            JOptionPane.showMessageDialog(null, "Alfabet creat amb èxit");
+            return 0;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            return -1;
         }
     }
 
     public static void eliminarAlfabet(Integer idAlfabet) {
         try {
             ctrlDomini.eliminarAlfabet(idAlfabet);
-            JOptionPane.showMessageDialog(null, "Alfabet eliminat amb exit!");
+            JOptionPane.showMessageDialog(null, "Alfabet eliminat amb èxit!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
@@ -399,6 +401,7 @@ public class ControladorPresentacio {
     public static void modificarAlfabetAfegirLletra(Integer idAlfabet, Character letter) {
         try {
             ctrlDomini.afegirLletraAlfabet(idAlfabet, letter);
+            vPrincipal.actualitzarAlfabetLlista(idAlfabet);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar l'alfabet: " + e.getMessage());
         }

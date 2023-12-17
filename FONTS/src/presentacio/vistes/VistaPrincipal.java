@@ -369,6 +369,20 @@ public class VistaPrincipal extends JFrame {
         ElementAlfabetLlista nuevoAlfabeto = new ElementAlfabetLlista(idAlfabeto, nombreAlfabeto, letrasAlfabeto);
         model.addElement(nuevoAlfabeto);
     }
+
+    // Metode per actualitzar un alfabet de la llista
+    public void actualitzarAlfabetLlista(int idAlfabet) {
+        DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
+
+        for (int i = 0; i < model.size(); i++) {
+            if (model.get(i).getId() == idAlfabet) {
+                model.remove(i);
+                break;
+            }
+        }
+
+        afegirAlfabet(idAlfabet);
+    }
     
     public void actualitzarTeclatLlista(int idTeclat) {
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();

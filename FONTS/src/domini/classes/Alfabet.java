@@ -27,6 +27,12 @@ public class Alfabet {
      * @param lletresAlfabet Lletres de l'alfabet
      */
     public Alfabet(String nomAlfabet, Integer idAlfabet, ArrayList<Character> lletresAlfabet) {
+        if (nomAlfabet == null || nomAlfabet.isEmpty()) {
+            throw new IllegalArgumentException("Nom no pot ser buit");
+        }
+        if (lletresAlfabet == null || lletresAlfabet.isEmpty()) {
+            throw new IllegalArgumentException("Lletres no pot ser buit");
+        }
         this.nom = nomAlfabet;
         this.id = idAlfabet;
         this.lletres = lletresAlfabet;
@@ -93,6 +99,9 @@ public class Alfabet {
      * @param nomAlfabet Nou idioma de l'alfabet.
      */
     public void setNom(String nomAlfabet) {
+        if (nom.isEmpty()) {
+            throw new IllegalArgumentException("Nom no pot ser buit");
+        }
         this.nom = nomAlfabet;
     }
 
@@ -128,7 +137,7 @@ public class Alfabet {
      */
     public void afegirLletra(Character lletra) throws Exception {
         if (lletra == null) throw new Exception("ERROR: la lletra no pot ser null");
-        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra ja pertany a l'alfabet");
+        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra '" + lletra + "' ja pertany a l'alfabet");
         lletres.add(lletra);
     }
 }

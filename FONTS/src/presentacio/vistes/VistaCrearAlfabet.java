@@ -24,7 +24,7 @@ public class VistaCrearAlfabet extends JFrame {
         setSize(500, 400);
         setLayout(null);
 
-        JLabel alphabetNameLabel = new JLabel("Nombre del alfabeto:");
+        JLabel alphabetNameLabel = new JLabel("Nom de l'alfabet: ");
         alphabetNameLabel.setBounds(20, 20, 150, 30);
         add(alphabetNameLabel);
 
@@ -32,7 +32,7 @@ public class VistaCrearAlfabet extends JFrame {
         alphabetNameField.setBounds(180, 20, 150, 30);
         add(alphabetNameField);
 
-        JLabel symbolFieldLabel = new JLabel("Añadir símbolo:");
+        JLabel symbolFieldLabel = new JLabel("Afegir símbol: ");
         symbolFieldLabel.setBounds(20, 60, 150, 30);
         add(symbolFieldLabel);
 
@@ -46,7 +46,7 @@ public class VistaCrearAlfabet extends JFrame {
         scrollPane.setBounds(20, 100, 150, 200);
         add(scrollPane);
 
-        addButton = new JButton("Agregar");
+        addButton = new JButton("Afegir");
         addButton.setBounds(340, 60, 100, 30);
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +71,7 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(deleteButton);
 
-        moveUpButton = new JButton("Arriba");
+        moveUpButton = new JButton("Amunt");
         moveUpButton.setBounds(340, 140, 100, 30);
         moveUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +86,7 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(moveUpButton);
 
-        moveDownButton = new JButton("Abajo");
+        moveDownButton = new JButton("Avall");
         moveDownButton.setBounds(340, 180, 100, 30);
         moveDownButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -101,7 +101,7 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(moveDownButton);
 
-        createAlphabetButton = new JButton("Crear Alfabeto");
+        createAlphabetButton = new JButton("Crear Alfabet");
         createAlphabetButton.setBounds(180, 320, 150, 30);
         createAlphabetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -110,8 +110,8 @@ public class VistaCrearAlfabet extends JFrame {
                 for (int i = 0; i < symbolListModel.getSize(); i++) {
                     alphabetSymbols.add(symbolListModel.getElementAt(i));
                 }
-                ControladorPresentacio.crearAlfabet(alphabetName, alphabetSymbols);
-                setVisible(false);
+                int ret = ControladorPresentacio.crearAlfabet(alphabetName, alphabetSymbols);
+                if (ret == 0) setVisible(false);
             }
         });
         add(createAlphabetButton);
