@@ -55,6 +55,43 @@ public class DriverControladorPersistencia {
                         System.out.println("Introdueix el nom d'usuari");
                         nomUsuari = in.next();
                         ctrl.eliminarUsuari(nomUsuari);
+                        break;
+
+                    case 6:
+                        System.out.println("Introdueix el nom d'usuari");
+                        nomUsuari = in.next();
+                        System.out.println("Introdueix l'id de l'alfabet");
+                        Integer id = in.nextInt();
+                        System.out.println("Introdueix el nom de l'alfabet");
+                        String nom = in.next();
+                        ArrayList<Character> lletres = new ArrayList<>();
+                        lletres.add('a');
+                        lletres.add('b');
+                        lletres.add('c');
+                        ctrl.crearAlfabet(nomUsuari, id, nom, lletres);
+                        break;
+
+                    case 7:
+                        System.out.println("Introdueix el nom d'usuari");
+                        nomUsuari = in.next();
+                        ArrayList<String> alfabets = ctrl.carregarAlfabets(nomUsuari);
+                        alfabets.forEach(alfabet -> System.out.println(alfabet));
+                        break;
+
+                    case 8:
+                        System.out.println("Introdueix l'id de l'alfabet");
+                        id = in.nextInt();
+                        ArrayList<Character> novesLletres = new ArrayList<>();
+                        novesLletres.add('k');
+                        novesLletres.add('z');
+                        ctrl.afegirLletresAlfabet(id, novesLletres);
+                        break;
+
+                    case 9:
+                        System.out.println("Introdueix l'id de l'alfabet");
+                        id = in.nextInt();
+                        ctrl.eliminarAlfabet(id);
+                        break;
                 }
             }
         } catch (Exception e) {
@@ -69,5 +106,11 @@ public class DriverControladorPersistencia {
         System.out.println("3 - Obtenir contrasenya usuari");
         System.out.println("4 - Modificar contrasenya usuari");
         System.out.println("5 - Eliminar usuari");
+        System.out.println("-------------------");
+        System.out.println("6 - Crear alfabet");
+        System.out.println("7 - Carregar alfabets");
+        System.out.println("8 - Modificar Alfabet");
+        System.out.println("9 - Eliminar Alfabet");
+        System.out.println("-------------------");
     }
 }
