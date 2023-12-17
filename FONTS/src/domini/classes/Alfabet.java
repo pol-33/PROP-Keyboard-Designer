@@ -56,7 +56,7 @@ public class Alfabet {
      * @return ArrayList de caracters amb les lletres de l'alfabet.
      */
     public ArrayList<Character> getLletres() {
-        return lletres;
+        return new ArrayList<>(lletres);
     }
 
     /**
@@ -80,7 +80,7 @@ public class Alfabet {
      * @return ArrayList d'integer amb els identificadors de les entrades associades a l'alfabet.
      */
     public ArrayList<Integer> getEntrades() {
-        return idEntrades;
+        return new ArrayList<>(idEntrades);
     }
 
 
