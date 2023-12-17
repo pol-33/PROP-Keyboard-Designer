@@ -1,6 +1,7 @@
 package domini.classes;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Classe Teclat. Representa un teclat dins del sistema amb una distribució específica de caràcters,
@@ -18,6 +19,7 @@ public class Teclat {
     protected Integer numColumnes;
     protected Integer idEntrada;
     protected Integer id;
+    protected Integer tipus;
 
     // ---------------------------------------------------------------------------- //
     //                                   Constructora
@@ -32,14 +34,32 @@ public class Teclat {
      * @param numColumnes Nombre de columnes del teclat
      * @param id Identificador únic del teclat
      */
-    public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id) {
+    public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id, Integer tipus) {
         this.distribucio = distribucio;
         this.idEntrada = idEntrada;
         this.numFiles = numFiles;
         this.numColumnes = numColumnes;
         this.id = id;
         this.nom = nom;
+        this.tipus = tipus;
     }
+
+    public void modificarFilesColumnes(int files, int columnes) throws Exception {
+        if (files * columnes < distribucio.size()) throw new Exception("Tamany inferior al nombre de lletres");
+        if (files < 0) throw new Exception("Hi ha d'haver minim una fila");
+        if (columnes < 0) throw new Exception("Hi ha d'haver minim una columna");
+        numFiles = files;
+        numColumnes = columnes;
+    }
+
+    public void modificarNom(String nom) throws Exception {
+        if (nom == "") throw new Exception("El nom no pot ser buit");
+        this.nom = nom;
+    }
+
+    public void setDistribucio(ArrayList<Character> novaDistribucio) {
+        distribucio = novaDistribucio;
+    } 
 
     // ---------------------------------------------------------------------------- //
     //                                   Getters
@@ -83,5 +103,9 @@ public class Teclat {
      */
     public Integer getIdEntradaVinculada() {
         return this.idEntrada;
+    }
+
+    public Integer getTipus() {
+        return tipus;
     }
 }

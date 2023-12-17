@@ -1,8 +1,8 @@
 package presentacio.vistes;
-
 import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,26 +20,34 @@ public class VistaCrearAlfabet extends JFrame {
 
     public VistaCrearAlfabet() {
         setTitle("Vista Alfabet");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(500, 400);
         setLayout(null);
 
+        JLabel alphabetNameLabel = new JLabel("Nombre del alfabeto:");
+        alphabetNameLabel.setBounds(20, 20, 150, 30);
+        add(alphabetNameLabel);
+
         alphabetNameField = new JTextField();
-        alphabetNameField.setBounds(20, 20, 150, 30);
+        alphabetNameField.setBounds(180, 20, 150, 30);
         add(alphabetNameField);
 
+        JLabel symbolFieldLabel = new JLabel("Añadir símbolo:");
+        symbolFieldLabel.setBounds(20, 60, 150, 30);
+        add(symbolFieldLabel);
+
         symbolField = new JTextField();
-        symbolField.setBounds(20, 60, 150, 30);
+        symbolField.setBounds(180, 60, 150, 30);
         add(symbolField);
 
         symbolListModel = new DefaultListModel<>();
         symbolList = new JList<>(symbolListModel);
         JScrollPane scrollPane = new JScrollPane(symbolList);
-        scrollPane.setBounds(20, 100, 150, 150);
+        scrollPane.setBounds(20, 100, 150, 200);
         add(scrollPane);
 
-        addButton = new JButton("Afegir");
-        addButton.setBounds(200, 60, 100, 30);
+        addButton = new JButton("Agregar");
+        addButton.setBounds(340, 60, 100, 30);
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String symbol = symbolField.getText();
@@ -51,8 +59,8 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(addButton);
 
-        deleteButton = new JButton("Esborrar");
-        deleteButton.setBounds(200, 100, 100, 30);
+        deleteButton = new JButton("Eliminar");
+        deleteButton.setBounds(340, 100, 100, 30);
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = symbolList.getSelectedIndex();
@@ -63,8 +71,8 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(deleteButton);
 
-        moveUpButton = new JButton("Amunt");
-        moveUpButton.setBounds(320, 100, 100, 30);
+        moveUpButton = new JButton("Arriba");
+        moveUpButton.setBounds(340, 140, 100, 30);
         moveUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = symbolList.getSelectedIndex();
@@ -78,8 +86,8 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(moveUpButton);
 
-        moveDownButton = new JButton("Avall");
-        moveDownButton.setBounds(320, 140, 100, 30);
+        moveDownButton = new JButton("Abajo");
+        moveDownButton.setBounds(340, 180, 100, 30);
         moveDownButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = symbolList.getSelectedIndex();
@@ -93,8 +101,8 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(moveDownButton);
 
-        createAlphabetButton = new JButton("Crear Alfabet");
-        createAlphabetButton.setBounds(200, 220, 150, 30);
+        createAlphabetButton = new JButton("Crear Alfabeto");
+        createAlphabetButton.setBounds(180, 320, 150, 30);
         createAlphabetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String alphabetName = alphabetNameField.getText();
@@ -108,6 +116,7 @@ public class VistaCrearAlfabet extends JFrame {
         });
         add(createAlphabetButton);
 
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }

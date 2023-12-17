@@ -1,12 +1,14 @@
 package persistencia.controladors;
 
+import persistencia.classes.GestorUsuaris;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.opencsv.*;
 
 public class ControladorPersistencia {
     
     private static ControladorPersistencia ctrl;
+    private GestorUsuaris gestorUsuaris = new GestorUsuaris();
 
     /**
      * Mètode per obtenir la instància singleton del controlador.
@@ -22,20 +24,26 @@ public class ControladorPersistencia {
     //--------------------------------Usuari---------------------------------//
 
 
-    public void crearUsuari(String username) {}
+    public void crearUsuari(String username, String password) {
+        gestorUsuaris.crearUsuari(username, password);
+    }
 
     public ArrayList<String> obtenirUsernames() {
-        return null;
+        return gestorUsuaris.obtenirUsernames();
     }
 
-    public ArrayList<String> obtenirPasswordUsuari(String username) {
-        return null;
+    public String obtenirPasswordUsuari(String username) {
+        return gestorUsuaris.obtenirPasswordUsuari(username);
     }
 
-    public void modificarPasswordUsuari(String username, String password) {}
+    public void modificarPasswordUsuari(String username, String password) {
+        gestorUsuaris.eliminarUsuari(username);
+        gestorUsuaris.crearUsuari(username, password);
+    }
 
-    public void eliminarUsuari(String username) {}
-
+    public void eliminarUsuari(String username) {
+        gestorUsuaris.eliminarUsuari(username);
+    }
 
     //--------------------------------Alfabet---------------------------------//
 

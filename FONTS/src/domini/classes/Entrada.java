@@ -18,6 +18,7 @@ public abstract class Entrada {
     protected HashMap<String, Integer> lpf;
     protected ArrayList<Integer> idTeclats;
     protected Integer idAlfabet;
+    protected Integer tipus;
 
     // ---------------------------------------------------------------------------- //
     //                                   Getters
@@ -65,6 +66,16 @@ public abstract class Entrada {
         return idAlfabet;
     }
 
+    public Integer getTipus() {
+        return tipus;
+    }
+
+
+
+    public String getText() {
+        return null;
+    }
+    
     // ---------------------------------------------------------------------------- //
     //                                   Funcions
     // ---------------------------------------------------------------------------- //

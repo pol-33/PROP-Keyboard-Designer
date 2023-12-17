@@ -68,16 +68,15 @@ public class ControladorEntrada {
      * @return El tipus de l'entrada.
      * @throws Exception Si no existeix una entrada amb aquest identificador.
      */
-    public String getTypeEntrada(Integer idEntrada) throws Exception {
+    public Integer getTipusEntrada(Integer idEntrada) throws Exception {
         if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
-        Entrada entrada = conjuntEntrades.get(idEntrada);
-        if (entrada instanceof Text) {
-            return "text";
-        } else {
-            return "lpf";
-        }
+        return conjuntEntrades.get(idEntrada).getTipus();
     }
-
+    
+    public String getTextEntrada(Integer idEntrada) throws Exception {
+        if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
+        return conjuntEntrades.get(idEntrada).getText();
+    }
     /**
      * Retorna la llista de paraules freqüents de l'entrada donada.
      * @param idEntrada Identificador de l'entrada.
@@ -150,8 +149,8 @@ public class ControladorEntrada {
      * @param lpf
      * @throws Exception
      */
-    public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet, HashMap<String, Integer> lpf) throws Exception {
-        Text nouText = new Text(nomEntrada, id, contingutEntrada, idAlfabet, lpf);
+    public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
+        Text nouText = new Text(nomEntrada, id, contingutEntrada, idAlfabet);
         conjuntEntrades.put(id, nouText);
         if (id > contador) {
             contador = id+1;
