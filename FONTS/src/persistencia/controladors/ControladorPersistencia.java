@@ -1,5 +1,6 @@
 package persistencia.controladors;
 
+import persistencia.classes.GestorAlfabets;
 import persistencia.classes.GestorUsuaris;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class ControladorPersistencia {
     
     private static ControladorPersistencia ctrl;
     private GestorUsuaris gestorUsuaris = new GestorUsuaris();
+    private GestorAlfabets gestorAlfabets = new GestorAlfabets();
 
     /**
      * Mètode per obtenir la instància singleton del controlador.
@@ -47,15 +49,29 @@ public class ControladorPersistencia {
 
     //--------------------------------Alfabet---------------------------------//
 
-    public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<String> lletres){}
-
-    public ArrayList<String> carregarAlfabets(String username) {
-        return null;
+    public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<Character> lletres){
+        gestorAlfabets.crearAlfabet(username, idAlfabet, nom, lletres);
     }
 
-    public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {}
+    public ArrayList<String> carregarAlfabets(String username) {
+        return gestorAlfabets.carregarAlfabets(username);
+    }
 
-    public void eliminarAlfabet(Integer idAlfabet) {}
+    public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {
+        String[] alfabet = gestorAlfabets.carregarAlfabet(idAlfabet);
+        if (alfabet != null) {
+            gestorAlfabets.eliminarAlfabet(idAlfabet);
+            if (alfabet.length > 2) {
+                alfabet[2] = alfabet[2] + "." + convertirArrayListToString(novesLletres);
+            }
+
+            gestorAlfabets.crearAlfabet(alfabet);
+        }
+    }
+
+    public void eliminarAlfabet(Integer idAlfabet) {
+        gestorAlfabets.eliminarAlfabet(idAlfabet);
+    }
 
 
     //--------------------------------Entrada---------------------------------//
@@ -84,5 +100,22 @@ public class ControladorPersistencia {
     public void modificarDistribucio(Integer idTeclat, ArrayList<Character> distribucio) {}
 
     public void eliminarTeclat(Integer idTeclat) {}
+
+    //--------------------------------Privat---------------------------------//
+    private static String convertirArrayListToString(ArrayList<Character> llista) {
+        StringBuilder result = new StringBuilder();
+
+        // Iterar sobre los elementos del ArrayList
+        for (int i = 0; i < llista.size(); i++) {
+            result.append(llista.get(i));
+
+            // Agregar una coma si no es el último elemento
+            if (i < llista.size() - 1) {
+                result.append(".");
+            }
+        }
+
+        return result.toString();
+    }
 }
 

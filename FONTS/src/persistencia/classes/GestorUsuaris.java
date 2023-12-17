@@ -4,21 +4,19 @@ import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 public class GestorUsuaris {
     // ---------------------------------------------------------------------------- //
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
-    private String usuarisPath = "../../DATA/usuaris.csv";
+    private String usuarisPath = "../../DATA/usuari.csv";
     private String relacioUsuariAlfabetPath = "../../DATA/relacioUsuariAlfabet.csv";
 
     public void crearUsuari(String username, String contrasenya) {
