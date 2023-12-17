@@ -41,7 +41,8 @@ executaDriverControladorPresentacio: jars
 	java -jar $(JAR_OUTPUT)DriverControladorPresentacio.jar
 
 executaDriverControladorPersistencia: jars_persistencia
-	java -jar $(JAR_OUTPUT)DriverControladorPersistencia.jar
+	cd ./../EXE/out && \
+    java -cp .:../../FONTS/lib/opencsv-5.9.jar:../../FONTS/lib/commons-lang3-3.14.0.jar drivers.DriverControladorPersistencia
 
 AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
 

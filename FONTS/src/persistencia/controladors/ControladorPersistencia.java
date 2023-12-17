@@ -29,7 +29,7 @@ public class ControladorPersistencia {
     }
 
     public ArrayList<String> obtenirUsernames() {
-        return null;
+        return gestorUsuaris.obtenirUsernames();
     }
 
     public ArrayList<String> obtenirPasswordUsuari(String username) {

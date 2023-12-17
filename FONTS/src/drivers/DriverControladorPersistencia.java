@@ -3,17 +3,47 @@ package drivers;
 
 import persistencia.controladors.ControladorPersistencia;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class DriverControladorPersistencia {
     private static ControladorPersistencia ctrl = ControladorPersistencia.obtenirInstancia();
 
     public static void main(String[] args) {
         try {
-            ctrl.crearUsuari("Jordi", "hola");
+            Scanner in = new Scanner(System.in);
+            int opcion = -1;
+            String nomUsuari, contrasenya;
 
-            System.out.println("Hola");
+            while (opcion != 0) {
+                imprimirOpcions();
+                opcion = in.nextInt();
+
+                switch (opcion) {
+                    case 0:
+                        in.close();
+                        break;
+
+                    case 1:
+                        System.out.println("Introdueix el nom d'usuari");
+                        nomUsuari = in.next();
+                        System.out.println("Introdueix la contrasenya");
+                        contrasenya = in.next();
+                        ctrl.crearUsuari(nomUsuari, contrasenya);
+
+                    case 2:
+                        ArrayList<String> usernames = ctrl.obtenirUsernames();
+                        System.out.println(usernames);
+                }
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+    private static void imprimirOpcions() {
+        System.out.println("0 - Finalitzar driver");
+        System.out.println("1 - Crear usuari");
+        System.out.println("2 - Obtenir Usernames");
     }
 }
