@@ -9,10 +9,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Classe GestorTeclats. Gestiona els teclats emmagatzemats en arxius CSV.
+ */
 public class GestorTeclats {
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     private String teclatPath = "../../DATA/teclat.csv";
     private String relacioEntradaTeclatPath = "../../DATA/relacioEntradaTeclat.csv";
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Mètodes
+    // ---------------------------------------------------------------------------- //
 
     /**
      * Crea un nou teclat i l'emmagatzema en un arxiu CSV.

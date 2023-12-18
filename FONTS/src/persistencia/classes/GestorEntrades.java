@@ -15,9 +15,16 @@ import java.util.List;
  * Classe GestorEntrades. Gestiona les entrades emmagatzemades en arxius CSV.
  */
 public class GestorEntrades {
-    // Rutes als arxius CSV per a entrades i les seves relacions amb l'alfabet.
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     private String entradesPath = "../../DATA/Entrades.csv";
     private String relacioEntradaAlfabetPath = "../../DATA/relacioEntradaTeclat.csv";
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Mètodes
+    // ---------------------------------------------------------------------------- //
 
     /**
      * Crea una nova entrada i l'emmagatzema en un arxiu CSV.
