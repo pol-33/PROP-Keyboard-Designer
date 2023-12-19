@@ -502,6 +502,9 @@ public class ControladorDomini {
     public Integer crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
+        // Vinculem el text a l'alfabet
+        ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, idText);
+
         //Guardem el text a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
         ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
@@ -530,6 +533,9 @@ public class ControladorDomini {
     public Integer crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
         Integer idLPF = ctrlEntrada.crearLPF(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
+        // Vinculem el text a l'alfabet
+        ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, idLPF);
+
         //Guardem la lpf a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idLPF);
         ctrlPersistencia.guardarLPF(idLPF, nomEntrada, contingutEntrada, idTeclats);
@@ -555,6 +561,12 @@ public class ControladorDomini {
      */
     public void eliminarEntrada(Integer idEntrada) throws Exception {
         int idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
+        ArrayList<Integer> idsTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
+
+        for (Integer idTeclat : idsTeclats) {
+            eliminarTeclat(idTeclat);
+        }
+
         ctrlEntrada.eliminarEntrada(idEntrada);
         ctrlAlfabet.desvincularEntradaAlfabet(idAlfabet, idEntrada);
 
@@ -602,13 +614,9 @@ public class ControladorDomini {
     //Elimina l'alfabet identificat per idAlfabet
     public void eliminarAlfabet(Integer idAlfabet) throws Exception {
         ArrayList<Integer> entradesVinculades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
-        ctrlAlfabet.eliminarAlfabet(idAlfabet);
         for (Integer idEntrada : entradesVinculades) {
-            ArrayList<Integer> teclatsVinculats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
-            for (Integer idTeclat : teclatsVinculats) {
-                ctrlTeclat.eliminarTeclat(idTeclat);
-            }
-            ctrlEntrada.eliminarEntrada(idEntrada);
+            eliminarEntrada(idEntrada);
         }
+        ctrlAlfabet.eliminarAlfabet(idAlfabet);
     }
 }

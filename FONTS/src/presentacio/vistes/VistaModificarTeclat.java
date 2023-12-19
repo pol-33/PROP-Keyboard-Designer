@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VistaModificarTeclat extends JFrame {
-    private JTextField tfFiles;
-    private JTextField tfColumnes;
+    private JSpinner tfFiles;
+    private JSpinner tfColumnes;
 
     public VistaModificarTeclat(Integer idTeclat) {
         initUI(idTeclat);
@@ -33,16 +33,16 @@ public class VistaModificarTeclat extends JFrame {
         JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel lblFiles = new JLabel("Nuevas filas:");
+        JLabel lblFiles = new JLabel("Noves files:");
         panel.add(lblFiles);
 
-        tfFiles = new JTextField();
+        tfFiles = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         panel.add(tfFiles);
 
-        JLabel lblColumnes = new JLabel("Nuevas columnas:");
+        JLabel lblColumnes = new JLabel("Noves columnes:");
         panel.add(lblColumnes);
 
-        tfColumnes = new JTextField();
+        tfColumnes = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         panel.add(tfColumnes);
 
         JButton btnAceptar = new JButton("Aceptar");
@@ -68,8 +68,8 @@ public class VistaModificarTeclat extends JFrame {
     }
 
     private void modificarTeclat(Integer idTeclat) {
-        int files = Integer.parseInt(tfFiles.getText());
-        int columnes = Integer.parseInt(tfColumnes.getText());
+        int files = (Integer) tfFiles.getValue();
+        int columnes = (Integer) tfColumnes.getValue();
 
         // Llamar al controlador para modificar el teclado con las nuevas filas y columnas
         ControladorPresentacio.modificarFilesColumnesTeclat(idTeclat, files, columnes);
