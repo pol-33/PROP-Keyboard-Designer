@@ -118,4 +118,54 @@ public class GestorTeclats {
             e.printStackTrace();
         }
     }
+    public void actualizarNumFilesTeclat(Integer idTeclat, Integer numFiles) {
+        actualizarTeclat(idTeclat, null, numFiles, null, null);
+    }
+
+    public void actualizarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {
+        actualizarTeclat(idTeclat, null, null, numColumnes, null);
+    }
+
+    public void actualizarDistribucioTeclat(Integer idTeclat, ArrayList<String> distribucio) {
+        actualizarTeclat(idTeclat, null, null, null, distribucio);
+    }
+
+    private void actualizarTeclat(Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+        List<String[]> teclatsActualizados = new ArrayList<>();
+        boolean teclatEncontrado = false;
+
+        try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row[0].equals(idTeclat.toString())) {
+                    String distribucioString = distribucio != null ? String.join(",", distribucio) : row[4];
+                    String[] teclatActualizado = {
+                            idTeclat.toString(),
+                            nom != null ? nom : row[1],
+                            numFiles != null ? numFiles.toString() : row[2],
+                            numColumnes != null ? numColumnes.toString() : row[3],
+                            distribucioString
+                    };
+                    teclatsActualizados.add(teclatActualizado);
+                    teclatEncontrado = true;
+                } else {
+                    teclatsActualizados.add(row);
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        if (teclatEncontrado) {
+            try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath))) {
+                writer.writeAll(teclatsActualizados);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 }

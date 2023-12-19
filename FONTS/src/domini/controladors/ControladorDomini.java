@@ -237,7 +237,7 @@ public class ControladorDomini {
         //Carregar entrades de cada un dels alfabets
         for (String alfabetEnCSV : alfabetsEnCSV) {
             String idAlfabet = alfabetEnCSV.split(",")[0]; //obtenim l'id de l'alfabet
-            ArrayList<String> entradesEnCSV = ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
+            ArrayList<String[]> entradesEnCSV = ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
             carregarEntrades(entradesEnCSV); //instanciem les entrades
         }
 

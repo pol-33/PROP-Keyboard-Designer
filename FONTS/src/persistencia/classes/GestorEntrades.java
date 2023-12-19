@@ -121,4 +121,34 @@ public class GestorEntrades {
             e.printStackTrace();
         }
     }
+
+    public void actualizarEntrada(Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
+        List<String[]> entradasActualizadas = new ArrayList<>();
+        boolean entradaEncontrada = false;
+
+        try (CSVReader reader = new CSVReader(new FileReader(entradesPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row[0].equals(idEntrada.toString())) {
+                    String tipus = lpf != null ? "0" : "1";
+                    String lpfString = lpf != null ? lpf.toString() : "";
+                    String[] entradaActualizada = { idEntrada.toString(), nom, tipus, lpfString, text };
+                    entradasActualizadas.add(entradaActualizada);
+                    entradaEncontrada = true;
+                } else {
+                    entradasActualizadas.add(row);
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        if (entradaEncontrada) {
+            try (CSVWriter writer = new CSVWriter(new FileWriter(entradesPath))) {
+                writer.writeAll(entradasActualizadas);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

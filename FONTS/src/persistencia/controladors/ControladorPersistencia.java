@@ -2,6 +2,9 @@ package persistencia.controladors;
 
 import persistencia.classes.GestorAlfabets;
 import persistencia.classes.GestorUsuaris;
+import persistencia.classes.GestorTeclats;
+import persistencia.classes.GestorEntrades;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +14,9 @@ public class ControladorPersistencia {
     private static ControladorPersistencia ctrl;
     private GestorUsuaris gestorUsuaris = new GestorUsuaris();
     private GestorAlfabets gestorAlfabets = new GestorAlfabets();
+
+    private GestorEntrades gestorEntrades = new GestorEntrades();
+    private GestorTeclats gestorTeclats = new GestorTeclats();
 
     /**
      * Mètode per obtenir la instància singleton del controlador.
@@ -76,31 +82,45 @@ public class ControladorPersistencia {
 
     //--------------------------------Entrada---------------------------------//
 
-    public void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, String tipus, HashMap<String, Integer> lpf, String text ) {}
+    public void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
+        gestorEntrades.crearEntrada(idAlfabet, idEntrada, nom, lpf, text);
+    }
 
-    public ArrayList<String> carregarEntrades(Integer idAlfabet) { return null; }
-
-    public void modificarContingutEntrada(Integer idEntrada, HashMap<String, Integer> lpf, String text) {}
-
-    public void elimanrEntrada(Integer idEntrada) {}
-
+    public ArrayList<String[]> carregarEntrades(Integer idAlfabet) {
+        return gestorEntrades.carregarEntrades(idAlfabet);
+    }
+    public void modificarContingutEntrada(Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
+        gestorEntrades.actualizarEntrada(idEntrada, nom, lpf, text);
+    }
+    public void eliminarEntrada(Integer idEntrada) {
+        gestorEntrades.eliminarEntrada(idEntrada);
+    }
 
 
     //--------------------------------Teclat---------------------------------//
 
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio){}
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+        gestorTeclats.crearTeclat(idEntrada, idTeclat, nom, numFiles, numColumnes, distribucio);
+    }
 
+    public ArrayList<String[]> carregarTeclats(Integer idEntrada) {
+        return gestorTeclats.carregarTeclats(idEntrada);
+    }
+    public void modificarNumFilesTeclat(Integer idTeclat, Integer numFiles) {
+        gestorTeclats.actualizarNumFilesTeclat(idTeclat, numFiles);
+    }
 
-    public ArrayList<String> carregarTeclats(Integer idEntrada) { return null; }
+    public void modificarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {
+        gestorTeclats.actualizarNumColumnesTeclat(idTeclat, numColumnes);
+    }
 
-    public void modifcarNumFilesTeclat(Integer idTeclat, Integer numFiles) {}
+    public void modificarDistribucio(Integer idTeclat, ArrayList<String> distribucio) {
+        gestorTeclats.actualizarDistribucioTeclat(idTeclat, distribucio);
+    }
 
-    public void modificarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {}
-
-    public void modificarDistribucio(Integer idTeclat, ArrayList<Character> distribucio) {}
-
-    public void eliminarTeclat(Integer idTeclat) {}
-
+    public void eliminarTeclat(Integer idTeclat) {
+        gestorTeclats.eliminarTeclat(idTeclat);
+    }
     //--------------------------------Privat---------------------------------//
     private static String convertirArrayListToString(ArrayList<Character> llista) {
         StringBuilder result = new StringBuilder();
