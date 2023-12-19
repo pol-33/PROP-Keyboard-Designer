@@ -1,23 +1,43 @@
 package persistencia.classes;
 
-import java.lang.reflect.Array;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+
+/**
+ * Classe GestorTeclats. Gestiona els teclats emmagatzemats en arxius CSV.
+ */
 public class GestorTeclats {
+
+    // ---------------------------------------------------------------------------- //
+    //                                   Atributs
+    // ---------------------------------------------------------------------------- //
     private String teclatPath = "../../DATA/teclat.csv";
     private String relacioEntradaTeclatPath = "../../DATA/relacioEntradaTeclat.csv";
 
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, Array<String> distribucio) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath, true))) {
-            // Convertir Array<String> a String pel el CSV
-            String distribucioString = "";
-            int length = Array.getLength(distribucio);
-            for (int i = 0; i < length; i++) {
-                distribucioString += Array.get(distribucio, i);
-                if (i < length - 1) {
-                    distribucioString += ",";
-                }
-            }
+    // ---------------------------------------------------------------------------- //
+    //                                   Mètodes
+    // ---------------------------------------------------------------------------- //
 
+    /**
+     * Crea un nou teclat i l'emmagatzema en un arxiu CSV.
+     * @param idEntrada Identificador de l'entrada associada.
+     * @param idTeclat Identificador del teclat.
+     * @param nom Nom del teclat.
+     * @param numFiles Número de files del teclat.
+     * @param numColumnes Número de columnes del teclat.
+     * @param distribucio Llista amb la distribució de teclas.
+     */
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath, true))) {
+            // Conversión de ArrayList<String> a String per al CSV
+            String distribucioString = String.join(",", distribucio);
             String[] teclatData = { idTeclat.toString(), nom, numFiles.toString(), numColumnes.toString(), distribucioString };
             writer.writeNext(teclatData);
         } catch (IOException e) {
@@ -32,8 +52,14 @@ public class GestorTeclats {
         }
     }
 
-    public List<String[]> carregarTeclats(Integer idEntrada) {
-        List<String[]> teclats = new ArrayList<>();
+
+    /**
+     * Carrega els teclats associats a una entrada específica.
+     * @param idEntrada Identificador de l'entrada.
+     * @return ArrayList de arrays de Strings representant els teclats.
+     */
+    public ArrayList<String[]> carregarTeclats(Integer idEntrada) {
+        ArrayList<String[]> teclats = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
@@ -41,16 +67,21 @@ public class GestorTeclats {
                     teclats.add(row);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
         return teclats;
     }
 
 
+    /**
+     * Elimina un teclat específic dels arxius CSV.
+     * @param idTeclat Identificador del teclat a eliminar.
+     */
     public void eliminarTeclat(Integer idTeclat) {
         // Eliminar teclat de teclat.csv
         List<String[]> updatedTeclats = new ArrayList<>();
+
         try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {

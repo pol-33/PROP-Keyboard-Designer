@@ -12,13 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe GestorAlfabets. Gestiona els alfàbets emmagatzemats en arxius CSV.
+ */
 public class GestorAlfabets {
+
     // ---------------------------------------------------------------------------- //
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
     private String alfabetsPath = "../../DATA/alfabet.csv";
     private String relacioUsuariAlfabetPath = "../../DATA/relacioUsuariAlfabet.csv";
 
+    // ---------------------------------------------------------------------------- //
+    //                                   Mètodes
+    // ---------------------------------------------------------------------------- //
+
+
+    /**
+     * Crea un nou alfabet i l'emmagatzema en un arxiu CSV.
+     * @param username Nom d'usuari.
+     * @param idAlfabet Identificador de l'alfabet.
+     * @param nom Nom de l'alfabet.
+     * @param lletres Llista de caràcters de l'alfabet.
+     */
     public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<Character> lletres) {
         //Creem l'alfabet al fitxer alfabet.csv
         try (CSVWriter writer = new CSVWriter(new FileWriter(alfabetsPath, true)))  {
@@ -41,6 +57,11 @@ public class GestorAlfabets {
         }
     }
 
+
+    /**
+     * Crea un nou alfabet a partir d'un array.
+     * @param alfabet Array amb la informació de l'alfabet.
+     */
     public void crearAlfabet(String[] alfabet) {
         try (CSVWriter writer = new CSVWriter(new FileWriter(alfabetsPath, true))) {
             writer.writeNext(alfabet);
@@ -48,6 +69,12 @@ public class GestorAlfabets {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Carrega un alfabet específic.
+     * @param idAlfabet Identificador de l'alfabet a carregar.
+     * @return Array de Strings amb la informació de l'alfabet.
+     */
 
     public String[] carregarAlfabet(Integer idAlfabet) {
         try (CSVReader reader = new CSVReader(new FileReader(alfabetsPath))) {
@@ -64,6 +91,12 @@ public class GestorAlfabets {
         return null;
     }
 
+
+    /**
+     * Carrega tots els alfàbets d'un usuari.
+     * @param username Nom d'usuari.
+     * @return ArrayList amb la informació de cada alfabet.
+     */
     public ArrayList<String> carregarAlfabets(String username) {
         //Obtenim els id's dels alfabets de l'usuari
         ArrayList<Integer> idAlfabets = new ArrayList<>();
@@ -97,6 +130,11 @@ public class GestorAlfabets {
         return alfabets;
     }
 
+
+    /**
+     * Elimina un alfabet específic dels arxius CSV.
+     * @param idAlfabet Identificador de l'alfabet a eliminar.
+     */
     public void eliminarAlfabet(Integer idAlfabet) {
         List<String[]> updatedRows = new ArrayList<>();
 
@@ -118,6 +156,13 @@ public class GestorAlfabets {
         }
     }
 
+
+    /**
+     * Converteix una llista d'objectes Character en una cadena de text.
+     * Cada caràcter es separa per un punt.
+     * @param llista ArrayList de Character a convertir.
+     * @return String resultant de la conversió.
+     */
     private static String convertirArrayListToString(ArrayList<Character> llista) {
         StringBuilder result = new StringBuilder();
 
@@ -134,6 +179,13 @@ public class GestorAlfabets {
         return result.toString();
     }
 
+
+    /**
+     * Converteix un array de Strings en una única cadena de text.
+     * Cada element de l'array es separa per una coma i un espai.
+     * @param array Array de Strings a convertir.
+     * @return String resultant de la conversió.
+     */
     private static String convertirArrayAString(String[] array) {
         return String.join(", ", array);
     }
