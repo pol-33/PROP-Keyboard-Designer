@@ -212,7 +212,7 @@ public class ControladorPresentacio {
 
     public static void eliminarEntrada(Integer idEntrada) {
         try {
-            ctrlDomini.eliminarAlfabet(idEntrada);
+            ctrlDomini.eliminarEntrada(idEntrada);
             JOptionPane.showMessageDialog(null, "Entrada eliminada amb exit!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -272,7 +272,7 @@ public class ControladorPresentacio {
 
     public static void eliminarTeclat(Integer idTeclat) {
         try {
-            ctrlDomini.eliminarAlfabet(idTeclat);
+            ctrlDomini.eliminarTeclat(idTeclat);
             JOptionPane.showMessageDialog(null, "Teclat eliminat amb exit!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());

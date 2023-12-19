@@ -17,6 +17,8 @@ public class VistaPrincipal extends JFrame {
     
     private JPanel panellMenu = new JPanel();
     JButton btTancarSesio;
+    JComboBox<String> alfabetComboBoxEntrades = new JComboBox<String>();
+    JComboBox<String> alfabetComboBoxTeclats = new JComboBox<String>();
 
     private JTabbedPane pestanyes;
 
@@ -148,21 +150,16 @@ public class VistaPrincipal extends JFrame {
         btEliminarEntrada.addActionListener(e -> eliminarEntrada());
 
 
-        // Create a JComboBox for the alphabets
-        JComboBox<String> alfabetComboBox = new JComboBox<>();
-        alfabetComboBox.addItem("Tots");
-        ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
-        for (Integer id : idAlfabets) {
-            String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(id);
-            alfabetComboBox.addItem(nombreAlfabeto);
-        }
-        alfabetComboBox.addActionListener(new ActionListener() {
+        updateAlfabetComboBoxes();
+
+        alfabetComboBoxEntrades.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+                int indiceSeleccionado = alfabetComboBoxEntrades.getSelectedIndex();
                 if (indiceSeleccionado == 0) {
                     carregaTotesEntrades();
                 }
-                else {
+                else if (indiceSeleccionado > 0) {
+                    ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
                     Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado-1);
                     carregaEntrades(idAlfabetSeleccionado);
                 }
@@ -171,9 +168,9 @@ public class VistaPrincipal extends JFrame {
 
         // Create a JPanel for the JComboBox
         JPanel alfabetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel filterLabel = new JLabel("Filtrar per idioma: ");
+        JLabel filterLabel = new JLabel("Filtrar entrades per idioma: ");
         alfabetPanel.add(filterLabel);
-        alfabetPanel.add(alfabetComboBox);
+        alfabetPanel.add(alfabetComboBoxEntrades);
 
         // Set the maximum height of the alfabetPanel
         alfabetPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, alfabetPanel.getPreferredSize().height));
@@ -217,21 +214,16 @@ public class VistaPrincipal extends JFrame {
         btVeureTeclat.addActionListener(e -> veureTeclat());
 
 
-        // Create a JComboBox for the alphabets
-        JComboBox<String> alfabetComboBox = new JComboBox<>();
-        alfabetComboBox.addItem("Tots");
-        ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
-        for (Integer id : idAlfabets) {
-            String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(id);
-            alfabetComboBox.addItem(nombreAlfabeto);
-        }
-        alfabetComboBox.addActionListener(new ActionListener() {
+        updateAlfabetComboBoxes();
+
+        alfabetComboBoxTeclats.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
+                int indiceSeleccionado = alfabetComboBoxTeclats.getSelectedIndex();
                 if (indiceSeleccionado == 0) {
                     carregaTotsTeclats();
                 }
-                else {
+                else if (indiceSeleccionado > 0) {
+                    ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
                     Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado-1);
                     carregaTeclats(idAlfabetSeleccionado);
                 }
@@ -240,9 +232,9 @@ public class VistaPrincipal extends JFrame {
 
         // Create a JPanel for the JComboBox
         JPanel alfabetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel filterLabel = new JLabel("Filtrar per idioma: ");
+        JLabel filterLabel = new JLabel("Filtrar teclats per idioma: ");
         alfabetPanel.add(filterLabel);
-        alfabetPanel.add(alfabetComboBox);
+        alfabetPanel.add(alfabetComboBoxTeclats);
 
         // Set the maximum height of the alfabetPanel
         alfabetPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, alfabetPanel.getPreferredSize().height));
@@ -429,6 +421,7 @@ public class VistaPrincipal extends JFrame {
     // * Metode que crida el btCrearAlfabet
     private void crearAlfabet() {
         VistaCrearAlfabet vCrearAlfabet = new VistaCrearAlfabet();
+        updateAlfabetComboBoxes();
     }
 
     // TODO metode que crida el btModificarAlfabet
@@ -449,14 +442,55 @@ public class VistaPrincipal extends JFrame {
     // * metode que crida el btEliminarAlfabet
     private void eliminarAlfabet() {
         int indexSeleccionat = jListAlfabets.getSelectedIndex();
-        if (indexSeleccionat == -1) JOptionPane.showMessageDialog(this, "Cap alfabet seleccionat!");
+        if (indexSeleccionat == -1) {
+            JOptionPane.showMessageDialog(this, "Cap alfabet seleccionat!");
+            return;
+        }
 
         int confirmacion = JOptionPane.showConfirmDialog(this, "Estas segur d'eliminar l'alfabet seleccionat?", "Confirmar eliminació", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.NO_OPTION) return;
-         
+        if (confirmacion == JOptionPane.NO_OPTION || confirmacion == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+
         DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
+        int idAlfabetSeleccionat = model.get(indexSeleccionat).getId();
+
+        // Check if the selected alphabet has any associated teclats
+        ArrayList<Integer> idEntrades = ControladorPresentacio.getIdEntradesVinculadesAlfabet(idAlfabetSeleccionat);
+        if (!idEntrades.isEmpty()) {
+            // If it does, display a new confirmation dialog
+            int confirmacionTeclats = JOptionPane.showConfirmDialog(this,
+                    "L'alfabet seleccionat té entrades associades que també s'eliminaran. \n" +
+                            "Si aquestes entrades tenen teclats associats aquests també s'eliminaran. \n\nVols continuar?",
+                    "Confirmar eliminació",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            if (confirmacionTeclats == JOptionPane.NO_OPTION || confirmacionTeclats == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
+        }
+
+        // Remember the selected alphabet in alfabetComboBoxes
+        String selectedAlphabetEntrades = (String) alfabetComboBoxEntrades.getSelectedItem();
+        String selectedAlphabetTeclats = (String) alfabetComboBoxTeclats.getSelectedItem();
+
+        // Proceed with the deletion
+        ControladorPresentacio.eliminarAlfabet(idAlfabetSeleccionat);
         model.remove(indexSeleccionat);
-        ControladorPresentacio.eliminarAlfabet(model.get(indexSeleccionat).getId());
+
+        updateAlfabetComboBoxes();
+
+        // Restore the selected alphabet in alfabetComboBoxes
+        alfabetComboBoxEntrades.setSelectedItem(selectedAlphabetEntrades);
+        alfabetComboBoxTeclats.setSelectedItem(selectedAlphabetTeclats);
+
+        // If the selected alphabet was deleted, select the first item
+        if (alfabetComboBoxEntrades.getSelectedItem() == null) {
+            alfabetComboBoxEntrades.setSelectedIndex(0);
+        }
+        if (alfabetComboBoxTeclats.getSelectedItem() == null) {
+            alfabetComboBoxTeclats.setSelectedIndex(0);
+        }
     }
     
     // TODO metode que crida el btCrearText
@@ -490,15 +524,50 @@ public class VistaPrincipal extends JFrame {
     // * metode que crida el btEliminarEntrada
     private void eliminarEntrada() {
         int indexSeleccionat = jListEntrades.getSelectedIndex();
-        if (indexSeleccionat == -1) JOptionPane.showMessageDialog(this, "Cap entrada seleccionat!");
+        if (indexSeleccionat == -1) {
+            JOptionPane.showMessageDialog(this, "Cap entrada seleccionat!");
+            return;
+        }
 
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas segur d'eliminar la entrada seleccionada?", "Confirmar eliminació", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.NO_OPTION) return;
-         
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "Estàs segur d'eliminar la entrada seleccionada?",
+                "Confirmar eliminació",
+                JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.NO_OPTION || confirmacion == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
+        int idEntradaSeleccionada = model.get(indexSeleccionat).getId();
+
+        // Check if the selected entry has any associated teclats
+        ArrayList<Integer> idTeclats = ControladorPresentacio.getIdTeclatsVinculatsAEntrada(idEntradaSeleccionada);
+        if (!idTeclats.isEmpty()) {
+            // If it does, display a new confirmation dialog
+            int confirmacionTeclats = JOptionPane.showConfirmDialog(this,
+                    "L'entrada seleccionada té teclats associats que també s'eliminaran. \n\nVols continuar?",
+                    "Confirmar eliminació",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            if (confirmacionTeclats == JOptionPane.NO_OPTION || confirmacionTeclats == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
+        }
+
+        // Proceed with the deletion
+        ControladorPresentacio.eliminarEntrada(idEntradaSeleccionada);
         model.remove(indexSeleccionat);
-        
-        ControladorPresentacio.eliminarEntrada(model.get(indexSeleccionat).getId());
+
+        // Update the teclats panel according to the alfabetComboBox status
+        int indiceSeleccionado = alfabetComboBoxTeclats.getSelectedIndex();
+        if (indiceSeleccionado == 0) {
+            carregaTotsTeclats();
+        }
+        else if (indiceSeleccionado > 0) {
+            ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
+            Integer idAlfabetSeleccionado = idAlfabets.get(indiceSeleccionado-1);
+            carregaTeclats(idAlfabetSeleccionado);
+        }
     }
 
     // * metode que crida el btCrearTeclat
@@ -522,14 +591,17 @@ public class VistaPrincipal extends JFrame {
     // * metodo que llama el btEliminarTeclat
     private void eliminarTeclat() {
         int selectedIndex = jListTeclats.getSelectedIndex();
-        if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap entrada seleccionat!");
+        if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap teclat seleccionat!");
 
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el seleccionat?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.NO_OPTION) return;
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "Estàs segur que vols eliminar el teclat seleccionat?",
+                "Confirmar eliminació",
+                JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.NO_OPTION || confirmacion == JOptionPane.CLOSED_OPTION) return;
          
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
-        model.remove(selectedIndex);
         ControladorPresentacio.eliminarTeclat(model.get(selectedIndex).getId());
+        model.remove(selectedIndex);
     }
     
     // * metode que crida el btVeureTeclat
@@ -547,5 +619,24 @@ public class VistaPrincipal extends JFrame {
     // * metode que crida el btTancarSessio
     private void tancarSessio() {
         ControladorPresentacio.tancarSessio();
+    }
+
+    private void updateAlfabetComboBoxes() {
+        // Update alfabetComboBoxEntrades
+        alfabetComboBoxEntrades.removeAllItems();
+        alfabetComboBoxEntrades.addItem("Tots");
+
+        // Update alfabetComboBoxTeclats
+        alfabetComboBoxTeclats.removeAllItems();
+        alfabetComboBoxTeclats.addItem("Tots");
+
+        ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
+        for (Integer id : idAlfabets) {
+            String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(id);
+
+            // Add the alphabet to both combo boxes
+            alfabetComboBoxEntrades.addItem(nombreAlfabeto);
+            alfabetComboBoxTeclats.addItem(nombreAlfabeto);
+        }
     }
 }

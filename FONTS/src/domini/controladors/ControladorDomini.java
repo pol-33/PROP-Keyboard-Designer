@@ -561,6 +561,12 @@ public class ControladorDomini {
      */
     public void eliminarEntrada(Integer idEntrada) throws Exception {
         int idAlfabet = ctrlEntrada.getIdAlfabetVinculatAEntrada(idEntrada);
+        ArrayList<Integer> idsTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
+
+        for (Integer idTeclat : idsTeclats) {
+            eliminarTeclat(idTeclat);
+        }
+
         ctrlEntrada.eliminarEntrada(idEntrada);
         ctrlAlfabet.desvincularEntradaAlfabet(idAlfabet, idEntrada);
 
@@ -608,13 +614,9 @@ public class ControladorDomini {
     //Elimina l'alfabet identificat per idAlfabet
     public void eliminarAlfabet(Integer idAlfabet) throws Exception {
         ArrayList<Integer> entradesVinculades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
-        ctrlAlfabet.eliminarAlfabet(idAlfabet);
         for (Integer idEntrada : entradesVinculades) {
-            ArrayList<Integer> teclatsVinculats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idEntrada);
-            for (Integer idTeclat : teclatsVinculats) {
-                ctrlTeclat.eliminarTeclat(idTeclat);
-            }
-            ctrlEntrada.eliminarEntrada(idEntrada);
+            eliminarEntrada(idEntrada);
         }
+        ctrlAlfabet.eliminarAlfabet(idAlfabet);
     }
 }
