@@ -109,7 +109,7 @@ public class DriverControladorPersistencia {
                         ctrl.crearEntrada(idAlfabet, idEntrada, nomEntrada, null, text);
                         break;
 
-                    case 11: // Cargar Entradas
+                    case 11: // Cargar Entrades
                         System.out.println("Introdueix l'id de l'alfabet");
                         idAlfabet = in.nextInt();
                         ArrayList<String[]> entrades = ctrl.carregarEntrades(idAlfabet);
@@ -122,19 +122,19 @@ public class DriverControladorPersistencia {
                         ctrl.eliminarEntrada(idEntrada);
                         break;
 
-                    case 13: // Modificar Contenido de Entrada
+                    case 13: // Modificar Contingut entrada
                         System.out.println("Introdueix l'id de l'entrada a modificar");
                         idEntrada = in.nextInt();
                         in.nextLine();  // Limpiar buffer del scanner
                         System.out.println("Introdueix el nom de l'entrada");
                         nomEntrada = in.nextLine();
                         System.out.println("Introdueix el nou text de l'entrada");
-                        nouText = in.nextLine(); // Permite leer una línea completa con espacios
+                        nouText = in.nextLine(); // llegir una linia amb espai
                         ctrl.modificarContingutEntrada(idEntrada, nomEntrada, null, nouText);
                         break;
 
 
-                    case 14: // Crear Teclado
+                    case 14: // Crear Teclat
                         System.out.println("Introdueix l'id de l'entrada");
                         idEntradaTeclat = in.nextInt();
                         System.out.println("Introdueix l'id del teclat");
@@ -155,14 +155,14 @@ public class DriverControladorPersistencia {
                         ctrl.crearTeclat(idEntradaTeclat, idTeclat, nomTeclat, numFiles, numColumnes, distribucio);
                         break;
 
-                    case 15: // Cargar Teclados
+                    case 15: // Cargar Teclat
                         System.out.println("Introdueix l'id de l'entrada");
                         idEntradaTeclat = in.nextInt();
                         ArrayList<String[]> teclats = ctrl.carregarTeclats(idEntradaTeclat);
                         teclats.forEach(teclat -> System.out.println(String.join(", ", teclat)));
                         break;
 
-                    case 16: // Eliminar Teclado
+                    case 16: // Eliminar Teclat
                         System.out.println("Introdueix l'id del teclat a eliminar");
                         idTeclat = in.nextInt();
                         ctrl.eliminarTeclat(idTeclat);
@@ -176,7 +176,7 @@ public class DriverControladorPersistencia {
                         ctrl.modificarNumFilesTeclat(idTeclat, numFiles);
                         break;
 
-                    case 18: // Modificar Número de Columnas de Teclado
+                    case 18: // Modificar Número de Columnes del teclat
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
                         System.out.println("Introdueix el nou número de columnes");
@@ -184,7 +184,7 @@ public class DriverControladorPersistencia {
                         ctrl.modificarNumColumnesTeclat(idTeclat, numColumnes);
                         break;
 
-                    case 19: // Modificar Distribución de Teclado
+                    case 19: // Modificar Distribució del teclta
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
                         in.nextLine(); // Limpiar buffer del scanner
