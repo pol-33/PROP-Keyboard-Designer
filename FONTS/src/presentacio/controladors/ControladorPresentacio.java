@@ -29,9 +29,9 @@ public class ControladorPresentacio {
     // Método para crear datos de prueba
     private static void crearProves() {
         try {
-            ArrayList<Character> lletresANG = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
-            ArrayList<Character> lletresCAST = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
-            ArrayList<Character> lletresCAT = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+            ArrayList<Character> lletresANG = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+            ArrayList<Character> lletresCAST = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+            ArrayList<Character> lletresCAT = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
             ArrayList<Character> vocals = new ArrayList<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
             int idAngles = ctrlDomini.crearAlfabet("Angles", lletresANG);
@@ -279,25 +279,29 @@ public class ControladorPresentacio {
         }
     }
     
-    public static void crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
+    public static int crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
-            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+            JOptionPane.showMessageDialog(null, "Teclat creat amb èxit");
+            return 0;
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+            return -1;
         }
     }
 
-    public static void crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
+    public static int crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
             JOptionPane.showMessageDialog(null, "Teclat creat amb exit");
+            return 0;
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+            return -1;
         }
     }
 
@@ -306,7 +310,7 @@ public class ControladorPresentacio {
             ctrlDomini.modificarFilesColumnesTeclat(idTeclat, files, columnes);
             vPrincipal.actualitzarTeclatLlista(idTeclat);
 
-            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb èxit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar el teclat: " + e.getMessage());
@@ -403,7 +407,7 @@ public class ControladorPresentacio {
             ctrlDomini.afegirLletraAlfabet(idAlfabet, letter);
             vPrincipal.actualitzarAlfabetLlista(idAlfabet);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar l'alfabet: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en modificar l'alfabet: " + e.getMessage());
         }
     }
 
@@ -411,7 +415,7 @@ public class ControladorPresentacio {
         try {
             //ctrlDomini.modificarContingutText(idEntrada, newContent);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar l'entrada text: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en modificar l'entrada text: " + e.getMessage());
         }
     }
 
