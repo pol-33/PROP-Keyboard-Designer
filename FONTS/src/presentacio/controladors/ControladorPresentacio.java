@@ -279,25 +279,29 @@ public class ControladorPresentacio {
         }
     }
     
-    public static void crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
+    public static int crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
-            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+            JOptionPane.showMessageDialog(null, "Teclat creat amb èxit");
+            return 0;
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+            return -1;
         }
     }
 
-    public static void crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
+    public static int crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
             vPrincipal.afegirTeclat(idTeclat);
             JOptionPane.showMessageDialog(null, "Teclat creat amb exit");
+            return 0;
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el teclat: " + e.getMessage());
+            return -1;
         }
     }
 
@@ -306,7 +310,7 @@ public class ControladorPresentacio {
             ctrlDomini.modificarFilesColumnesTeclat(idTeclat, files, columnes);
             vPrincipal.actualitzarTeclatLlista(idTeclat);
 
-            JOptionPane.showMessageDialog(null, "Teclat modificat amb exit");
+            JOptionPane.showMessageDialog(null, "Teclat modificat amb èxit");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar el teclat: " + e.getMessage());

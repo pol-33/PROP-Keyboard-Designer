@@ -97,13 +97,13 @@ public class VistaCrearTeclat {
             int columnes = (int) columnesSpinner.getValue();
             int tipusTeclat = tipusComboBox.getSelectedIndex();
 
+            int ret;
             if (tipusTeclat == 0)
-                ControladorPresentacio.crearTeclatDuesMans(nombreTeclado, idEntradaSeleccionada, files, columnes);
+                ret = ControladorPresentacio.crearTeclatDuesMans(nombreTeclado, idEntradaSeleccionada, files, columnes);
             else
-                ControladorPresentacio.crearTeclatPolzes(nombreTeclado, idEntradaSeleccionada, files, columnes);
+                ret = ControladorPresentacio.crearTeclatPolzes(nombreTeclado, idEntradaSeleccionada, files, columnes);
 
-            frame.dispose();
-            JOptionPane.showMessageDialog(frame, "Teclat creat correctament.", "Èxit", JOptionPane.INFORMATION_MESSAGE);
+            if (ret == 0) frame.dispose();
         } else {
             JOptionPane.showMessageDialog(frame, "No s'ha seleccionat cap entrada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
