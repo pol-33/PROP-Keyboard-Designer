@@ -1,6 +1,7 @@
 CLASS_INPUT =	./src/domini/classes/*.java \
 				./src/domini/controladors/*.java \
 				./src/persistencia/controladors/*.java \
+				./src/persistencia/classes/*.java \
 				./src/presentacio/vistes/*.java \
 				./src/presentacio/elements/*.java \
                 ./src/presentacio/controladors/*.java \
@@ -26,7 +27,7 @@ all:
 	javac --release 11 -cp $(JUNIT_JARS) -d $(CLASS_OUTPUT) $(CLASS_INPUT) $(JUNIT_TESTS)
 
 jars:
-	javac --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT) ./src/drivers/*.java
+	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT) ./src/drivers/*.java
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
 	jar cmvf ./src/drivers/DriverControladorPresentacio.mf $(JAR_OUTPUT)DriverControladorPresentacio.jar -C $(CLASS_OUTPUT) .
 
