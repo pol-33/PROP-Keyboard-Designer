@@ -1,6 +1,7 @@
 package domini.classes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Classe Alfabet. Representa l'alfabet d'un idioma, és a dir, un conjunt de lletres no repetides d'un sol caracter.
@@ -32,6 +33,9 @@ public class Alfabet {
         }
         if (lletresAlfabet == null || lletresAlfabet.isEmpty()) {
             throw new IllegalArgumentException("Lletres no pot ser buit");
+        }
+        if (lletres_repetides(lletresAlfabet)) {
+            throw new IllegalArgumentException("No poder haver-hi lletres repetides en un alfabet");
         }
         this.nom = nomAlfabet;
         this.id = idAlfabet;
@@ -137,7 +141,17 @@ public class Alfabet {
      */
     public void afegirLletra(Character lletra) throws Exception {
         if (lletra == null) throw new Exception("ERROR: la lletra no pot ser null");
-        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra '" + lletra + "' ja pertany a l'alfabet");
+        if (lletres.contains(lletra)) throw new Exception("ERROR: la lletra '" + lletra + "' ja pertany a l'alfabet i per tant no serà afegida");
         lletres.add(lletra);
+    }
+
+    /**
+     * Comprova si hi ha lletres repetides en un conjunt de caracters.
+     * @param lletres ArrayList de lletres a comprovar.
+     * @return True si hi ha lletres repetides en un conjunt de caracters, false altrament.
+     */
+    private boolean lletres_repetides(ArrayList<Character> lletres) {
+        HashSet<Character> set = new HashSet<>(lletres);
+        return set.size() != lletres.size();
     }
 }
