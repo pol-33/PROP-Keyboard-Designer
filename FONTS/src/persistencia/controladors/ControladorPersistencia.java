@@ -50,7 +50,13 @@ public class ControladorPersistencia {
     }
 
     public void eliminarUsuari(String username) {
-        gestorUsuaris.eliminarUsuari(username);
+        //Eliminem els usuaris
+        ArrayList<Integer> idsAlfabets = gestorUsuaris.eliminarUsuari(username);
+
+        //Eliminem els seus alfabets
+        for (Integer idAlfabet : idsAlfabets) {
+            eliminarAlfabet(idAlfabet);
+        }
     }
 
     //--------------------------------Alfabet---------------------------------//
@@ -76,6 +82,7 @@ public class ControladorPersistencia {
     }
 
     public void eliminarAlfabet(Integer idAlfabet) {
+        //Eliminem l'alfabet
         gestorAlfabets.eliminarAlfabet(idAlfabet);
     }
 

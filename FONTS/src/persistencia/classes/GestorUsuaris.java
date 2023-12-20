@@ -4,6 +4,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -94,12 +95,15 @@ public class GestorUsuaris {
 
 
     /**
-     * Elimina un usuari específic dels arxius CSV.
+     * Elimina un usuari específic dels arxius CSV,
+     * a més a més retorna un ArrayList amb els id's de tots els seus alfabets.
      * @param username Nom d'usuari a eliminar.
      */
-    public void eliminarUsuari(String username) {
+    public ArrayList<Integer> eliminarUsuari(String username) {
         List<String[]> updatedRows = new ArrayList<>();
+        ArrayList<Integer> idsAlfabets = new ArrayList<>();
 
+        //ELIMINEM L'USUARI
         try (CSVReader reader = new CSVReader(new FileReader(usuarisPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
@@ -116,5 +120,19 @@ public class GestorUsuaris {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //RETORNEM ELS ID'S DELS SEUS ALFABETS
+        try (CSVReader reader = new CSVReader(new FileReader(relacioUsuariAlfabetPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row.length > 1 && row[0].equals(username)) {
+                    idsAlfabets.add(Integer.valueOf(row[1]));
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        return idsAlfabets;
     }
 }
