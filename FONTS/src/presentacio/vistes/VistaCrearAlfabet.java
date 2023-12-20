@@ -2,6 +2,7 @@ package presentacio.vistes;
 import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,15 @@ public class VistaCrearAlfabet extends JFrame {
         add(symbolFieldLabel);
 
         symbolField = new JTextField();
+        // Only allow one character
+        ((AbstractDocument) symbolField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if ((fb.getDocument().getLength() + text.length() - length) <= 1) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         symbolField.setBounds(180, 60, 150, 30);
         add(symbolField);
 
