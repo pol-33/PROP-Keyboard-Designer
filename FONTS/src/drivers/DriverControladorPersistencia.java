@@ -13,7 +13,10 @@ public class DriverControladorPersistencia {
         try {
             Scanner in = new Scanner(System.in);
             int opcion = -1;
-            String nomUsuari, contrasenya;
+            String nomUsuari, contrasenya, nouText, nomTeclat, elem;
+            Integer idEntradaTeclat, idTeclat, numFiles, numColumnes;
+            ArrayList<String> distribucio;
+
 
             while (opcion != 0) {
                 imprimirOpcions();
@@ -92,6 +95,112 @@ public class DriverControladorPersistencia {
                         id = in.nextInt();
                         ctrl.eliminarAlfabet(id);
                         break;
+
+                    case 10: // Crear Entrada
+                        System.out.println("Introdueix l'id de l'alfabet");
+                        Integer idAlfabet = in.nextInt();
+                        System.out.println("Introdueix l'id de l'entrada");
+                        Integer idEntrada = in.nextInt();
+                        System.out.println("Introdueix el nom de l'entrada");
+                        String nomEntrada = in.next();
+                        System.out.println("Introdueix el text de l'entrada");
+                        String text = in.next(); // Simplificado, en la práctica podría requerir una entrada multilinea
+                        // Asumimos que no se usa el HashMap para este ejemplo
+                        ctrl.crearEntrada(idAlfabet, idEntrada, nomEntrada, null, text);
+                        break;
+
+                    case 11: // Cargar Entradas
+                        System.out.println("Introdueix l'id de l'alfabet");
+                        idAlfabet = in.nextInt();
+                        ArrayList<String[]> entrades = ctrl.carregarEntrades(idAlfabet);
+                        entrades.forEach(entrada -> System.out.println(String.join(", ", entrada)));
+                        break;
+
+                    case 12: // Eliminar Entrada
+                        System.out.println("Introdueix l'id de l'entrada");
+                        idEntrada = in.nextInt();
+                        ctrl.eliminarEntrada(idEntrada);
+                        break;
+
+                    case 13: // Modificar Contenido de Entrada
+                        System.out.println("Introdueix l'id de l'entrada a modificar");
+                        idEntrada = in.nextInt();
+                        in.nextLine();  // Limpiar buffer del scanner
+                        System.out.println("Introdueix el nom de l'entrada");
+                        nomEntrada = in.nextLine();
+                        System.out.println("Introdueix el nou text de l'entrada");
+                        nouText = in.nextLine(); // Permite leer una línea completa con espacios
+                        ctrl.modificarContingutEntrada(idEntrada, nomEntrada, null, nouText);
+                        break;
+
+
+                    case 14: // Crear Teclado
+                        System.out.println("Introdueix l'id de l'entrada");
+                        idEntradaTeclat = in.nextInt();
+                        System.out.println("Introdueix l'id del teclat");
+                        idTeclat = in.nextInt();
+                        in.nextLine(); // Limpiar buffer del scanner
+                        System.out.println("Introdueix el nom del teclat");
+                        nomTeclat = in.nextLine();
+                        System.out.println("Introdueix el número de files del teclat");
+                        numFiles = in.nextInt();
+                        System.out.println("Introdueix el número de columnes del teclat");
+                        numColumnes = in.nextInt();
+                        in.nextLine(); // Limpiar buffer del scanner
+                        distribucio = new ArrayList<>();
+                        System.out.println("Introduce los elementos de la distribución (finaliza con 'end')");
+                        while (!(elem = in.nextLine()).equals("end")) {
+                            distribucio.add(elem);
+                        }
+                        ctrl.crearTeclat(idEntradaTeclat, idTeclat, nomTeclat, numFiles, numColumnes, distribucio);
+                        break;
+
+                    case 15: // Cargar Teclados
+                        System.out.println("Introdueix l'id de l'entrada");
+                        idEntradaTeclat = in.nextInt();
+                        ArrayList<String[]> teclats = ctrl.carregarTeclats(idEntradaTeclat);
+                        teclats.forEach(teclat -> System.out.println(String.join(", ", teclat)));
+                        break;
+
+                    case 16: // Eliminar Teclado
+                        System.out.println("Introdueix l'id del teclat a eliminar");
+                        idTeclat = in.nextInt();
+                        ctrl.eliminarTeclat(idTeclat);
+                        break;
+
+                    case 17: // Modificar Número de Filas de Teclado
+                        System.out.println("Introdueix l'id del teclat");
+                        idTeclat = in.nextInt();
+                        System.out.println("Introdueix el nou número de files");
+                        numFiles = in.nextInt();
+                        ctrl.modificarNumFilesTeclat(idTeclat, numFiles);
+                        break;
+
+                    case 18: // Modificar Número de Columnas de Teclado
+                        System.out.println("Introdueix l'id del teclat");
+                        idTeclat = in.nextInt();
+                        System.out.println("Introdueix el nou número de columnes");
+                        numColumnes = in.nextInt();
+                        ctrl.modificarNumColumnesTeclat(idTeclat, numColumnes);
+                        break;
+
+                    case 19: // Modificar Distribución de Teclado
+                        System.out.println("Introdueix l'id del teclat");
+                        idTeclat = in.nextInt();
+                        in.nextLine(); // Limpiar buffer del scanner
+                        distribucio = new ArrayList<>();
+                        System.out.println("Introduce los elementos de la nueva distribución (finaliza con 'end')");
+                        while (!(elem = in.nextLine()).equals("end")) {
+                            distribucio.add(elem);
+                        }
+                        ctrl.modificarDistribucio(idTeclat, distribucio);
+                        break;
+
+
+
+
+
+
                 }
             }
         } catch (Exception e) {
@@ -101,16 +210,29 @@ public class DriverControladorPersistencia {
     }
     private static void imprimirOpcions() {
         System.out.println("0 - Finalitzar driver");
+        System.out.println("-------------------");
         System.out.println("1 - Crear usuari");
-        System.out.println("2 - Obtenir Usernames");
+        System.out.println("2 - Obtenir usernames");
         System.out.println("3 - Obtenir contrasenya usuari");
         System.out.println("4 - Modificar contrasenya usuari");
         System.out.println("5 - Eliminar usuari");
         System.out.println("-------------------");
         System.out.println("6 - Crear alfabet");
         System.out.println("7 - Carregar alfabets");
-        System.out.println("8 - Modificar Alfabet");
-        System.out.println("9 - Eliminar Alfabet");
+        System.out.println("8 - Modificar alfabet");
+        System.out.println("9 - Eliminar alfabet");
+        System.out.println("-------------------");
+        System.out.println("10 - Crear entrada");
+        System.out.println("11 - Carregar entrades");
+        System.out.println("12 - Eliminar entrada");
+        System.out.println("13 - Modificar contingut entrada");
+        System.out.println("-------------------");
+        System.out.println("14 - Crear teclat");
+        System.out.println("15 - Carregar teclats");
+        System.out.println("16 - Eliminar teclat");
+        System.out.println("17 - Modificar número de files de teclat");
+        System.out.println("18 - Modificar número de columnes de teclat");
+        System.out.println("19 - Modificar distribució de teclat");
         System.out.println("-------------------");
     }
 }
