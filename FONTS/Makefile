@@ -29,7 +29,7 @@ all:
 jars:
 	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT) ./src/drivers/*.java
 	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
-	jar cmvf ./src/drivers/DriverControladorPresentacio.mf $(JAR_OUTPUT)DriverControladorPresentacio.jar -C $(CLASS_OUTPUT) .
+	jar cmvf ./src/drivers/Main.mf $(JAR_OUTPUT)Main.jar -C $(CLASS_OUTPUT) .
 
 jars_persistencia:
 	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT_PERSISTENCIA) ./src/drivers/DriverControladorPersistencia.java
@@ -38,8 +38,8 @@ jars_persistencia:
 executaDriverControladorAlgoritme: jars
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
 
-executaDriverControladorPresentacio: jars
-	java -jar $(JAR_OUTPUT)DriverControladorPresentacio.jar
+executaAplicacio: jars
+	java -jar $(JAR_OUTPUT)Main.jar
 
 executaDriverControladorPersistencia: jars_persistencia
 	cd ./../EXE/out && \
