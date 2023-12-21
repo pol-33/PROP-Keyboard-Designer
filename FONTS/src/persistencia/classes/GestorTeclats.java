@@ -36,7 +36,7 @@ public class GestorTeclats {
      */
     public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
         try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath, true))) {
-            // Conversión de ArrayList<String> a String per al CSV
+            // Conversió de ArrayList<String> a String per al CSV
             String distribucioString = String.join(",", distribucio);
             String[] teclatData = { idTeclat.toString(), nom, numFiles.toString(), numColumnes.toString(), distribucioString };
             writer.writeNext(teclatData);
@@ -62,23 +62,23 @@ public class GestorTeclats {
         ArrayList<String> idsTeclatsAssociats = new ArrayList<>();
         ArrayList<String[]> teclatsComplets = new ArrayList<>();
 
-        // Leer relacioEntradaTeclatPath para encontrar teclados asociados a idEntrada
+        // Llegeix relacioEntradaTeclatPath per trobar els teclats associatsnidEntrada
         try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idEntrada.toString())) {
-                    idsTeclatsAssociats.add(row[1]); // Suponiendo que el id del teclado está en la segunda columna
+                    idsTeclatsAssociats.add(row[1]); // suposem que el id del telcta esta en la segona columna
                 }
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
 
-        // Leer teclatsPath para recopilar la información completa de cada teclado asociado
+        //  Llegeix teclatPath per recopilar la infom de cada teclat associat
         try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
-                if (idsTeclatsAssociats.contains(row[0])) { // Suponiendo que el id del teclado está en la primera columna de teclats.csv
+                if (idsTeclatsAssociats.contains(row[0])) { // Suposem que el id del telcta esta en la primera columna de teclatas.csv
                     teclatsComplets.add(row);
                 }
             }
@@ -134,18 +134,48 @@ public class GestorTeclats {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Actualitza el número de files d'un teclat específic.
+     * Aquest mètode delega en la funció 'actualizarTeclat' per realitzar l'actualització.
+     * @param idTeclat Identificador del teclat a actualitzar.
+     * @param numFiles Nou número de files que tindrà el teclat.
+     */
     public void actualizarNumFilesTeclat(Integer idTeclat, Integer numFiles) {
         actualizarTeclat(idTeclat, null, numFiles, null, null);
     }
 
+    /**
+     * Actualitza el número de columnes d'un teclat específic.
+     * Aquest mètode delega en la funció 'actualizarTeclat' per realitzar l'actualització.
+     * @param idTeclat Identificador del teclat a actualitzar.
+     * @param numColumnes Nou número de columnes que tindrà el teclat.
+     */
     public void actualizarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {
         actualizarTeclat(idTeclat, null, null, numColumnes, null);
     }
 
+
+    /**
+     * Actualitza la distribució de les tecles d'un teclat específic.
+     * Aquest mètode delega en la funció 'actualizarTeclat' per realitzar l'actualització.
+     * @param idTeclat Identificador del teclat a actualitzar.
+     * @param distribucio Nova distribució de tecles (llista de Strings representant la distribució).
+     */
     public void actualizarDistribucioTeclat(Integer idTeclat, ArrayList<String> distribucio) {
         actualizarTeclat(idTeclat, null, null, null, distribucio);
     }
 
+
+    /**
+     * Actualitza les dades d'un teclat específic en els arxius CSV.
+     * Permet actualitzar el nom, número de files, columnes i distribució del teclat.
+     * @param idTeclat Identificador del teclat a actualitzar.
+     * @param nom Nou nom per al teclat (null per no canviar).
+     * @param numFiles Nou número de files (null per no canviar).
+     * @param numColumnes Nou número de columnes (null per no canviar).
+     * @param distribucio Nova distribució del teclat (null per no canviar).
+     */
     private void actualizarTeclat(Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
         List<String[]> teclatsActualizados = new ArrayList<>();
         boolean teclatEncontrado = false;
