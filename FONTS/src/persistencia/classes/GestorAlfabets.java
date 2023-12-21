@@ -183,7 +183,7 @@ public class GestorAlfabets {
         try (CSVReader reader = new CSVReader(new FileReader(relacioAlfabetEntradaPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
-                if (row.length > 0 && !row[0].equals(String.valueOf(idAlfabet))) {
+                if (row.length > 0 && row[0].equals(String.valueOf(idAlfabet))) {
                     idsEntrades.add(Integer.valueOf(row[1]));
                 }
             }
