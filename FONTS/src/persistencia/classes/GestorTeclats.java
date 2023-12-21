@@ -59,18 +59,34 @@ public class GestorTeclats {
      * @return ArrayList de arrays de Strings representant els teclats.
      */
     public ArrayList<String[]> carregarTeclats(Integer idEntrada) {
-        ArrayList<String[]> teclats = new ArrayList<>();
+        ArrayList<String> idsTeclatsAssociats = new ArrayList<>();
+        ArrayList<String[]> teclatsComplets = new ArrayList<>();
+
+        // Leer relacioEntradaTeclatPath para encontrar teclados asociados a idEntrada
         try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idEntrada.toString())) {
-                    teclats.add(row);
+                    idsTeclatsAssociats.add(row[1]); // Suponiendo que el id del teclado está en la segunda columna
                 }
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
-        return teclats;
+
+        // Leer teclatsPath para recopilar la información completa de cada teclado asociado
+        try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (idsTeclatsAssociats.contains(row[0])) { // Suponiendo que el id del teclado está en la primera columna de teclats.csv
+                    teclatsComplets.add(row);
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        return teclatsComplets;
     }
 
 

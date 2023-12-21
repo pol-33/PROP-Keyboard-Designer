@@ -4,6 +4,7 @@ package drivers;
 import persistencia.controladors.ControladorPersistencia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DriverControladorPersistencia {
@@ -101,12 +102,35 @@ public class DriverControladorPersistencia {
                         Integer idAlfabet = in.nextInt();
                         System.out.println("Introdueix l'id de l'entrada");
                         Integer idEntrada = in.nextInt();
+                        in.nextLine(); // Limpiar buffer del scanner
                         System.out.println("Introdueix el nom de l'entrada");
-                        String nomEntrada = in.next();
-                        System.out.println("Introdueix el text de l'entrada");
-                        String text = in.next(); // Simplificado, en la práctica podría requerir una entrada multilinea
-                        // Asumimos que no se usa el HashMap para este ejemplo
-                        ctrl.crearEntrada(idAlfabet, idEntrada, nomEntrada, null, text);
+                        String nomEntrada = in.nextLine();
+                        System.out.println("Vols introduir text (T) o un LPF (L)? (T/L)");
+                        String opcio = in.nextLine();
+                        HashMap<String, Integer> lpf = null;
+                        String text = "";
+
+                        if ("L".equalsIgnoreCase(opcio)) {
+                            lpf = new HashMap<>();
+                            boolean continuar = true;
+                            while (continuar) {
+                                System.out.println("Introdueix una clau per al LPF (o 'end' per acabar):");
+                                String clau = in.nextLine();
+                                if ("end".equals(clau)) {
+                                    continuar = false;
+                                } else {
+                                    System.out.println("Introdueix un valor per a " + clau + ":");
+                                    Integer valor = in.nextInt();
+                                    in.nextLine(); // Limpiar buffer después de leer un entero
+                                    lpf.put(clau, valor);
+                                }
+                            }
+                        } else {
+                            System.out.println("Introdueix el text de l'entrada:");
+                            text = in.nextLine();
+                        }
+
+                        ctrl.crearEntrada(idAlfabet, idEntrada, nomEntrada, lpf, text);
                         break;
 
                     case 11: // Cargar Entrades
@@ -126,11 +150,36 @@ public class DriverControladorPersistencia {
                         System.out.println("Introdueix l'id de l'entrada a modificar");
                         idEntrada = in.nextInt();
                         in.nextLine();  // Limpiar buffer del scanner
+
                         System.out.println("Introdueix el nom de l'entrada");
                         nomEntrada = in.nextLine();
-                        System.out.println("Introdueix el nou text de l'entrada");
-                        nouText = in.nextLine(); // llegir una linia amb espai
-                        ctrl.modificarContingutEntrada(idEntrada, nomEntrada, null, nouText);
+
+                        System.out.println("Vols modificar el text (T) o la LPF (L)? (T/L)");
+                        String opcio2 = in.nextLine();
+                        HashMap<String, Integer> LPF = null;
+                        String text2 = "";
+
+                        if ("L".equalsIgnoreCase(opcio2)) {
+                            LPF = new HashMap<>();
+                            boolean continuar = true;
+                            while (continuar) {
+                                System.out.println("Introdueix una clau per al LPF (o 'end' per acabar):");
+                                String clau = in.nextLine();
+                                if ("end".equals(clau)) {
+                                    continuar = false;
+                                } else {
+                                    System.out.println("Introdueix un valor per a " + clau + ":");
+                                    Integer valor = in.nextInt();
+                                    in.nextLine(); // Limpiar buffer después de leer un entero
+                                    LPF.put(clau, valor);
+                                }
+                            }
+                        } else {
+                            System.out.println("Introdueix el nou text de l'entrada:");
+                            text2 = in.nextLine(); // Permite leer una línea completa con espacios
+                        }
+
+                        ctrl.modificarContingutEntrada(idEntrada, nomEntrada, LPF, text2);
                         break;
 
 
