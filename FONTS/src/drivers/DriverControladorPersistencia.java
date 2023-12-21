@@ -102,7 +102,7 @@ public class DriverControladorPersistencia {
                         Integer idAlfabet = in.nextInt();
                         System.out.println("Introdueix l'id de l'entrada");
                         Integer idEntrada = in.nextInt();
-                        in.nextLine(); // Limpiar buffer del scanner
+                        in.nextLine(); // neteja el buffer després de llegir un enter
                         System.out.println("Introdueix el nom de l'entrada");
                         String nomEntrada = in.nextLine();
                         System.out.println("Vols introduir text (T) o un LPF (L)? (T/L)");
@@ -121,7 +121,7 @@ public class DriverControladorPersistencia {
                                 } else {
                                     System.out.println("Introdueix un valor per a " + clau + ":");
                                     Integer valor = in.nextInt();
-                                    in.nextLine(); // Limpiar buffer después de leer un entero
+                                    in.nextLine(); // neteja el buffer després de llegir un enter
                                     lpf.put(clau, valor);
                                 }
                             }
@@ -149,7 +149,7 @@ public class DriverControladorPersistencia {
                     case 13: // Modificar Contingut entrada
                         System.out.println("Introdueix l'id de l'entrada a modificar");
                         idEntrada = in.nextInt();
-                        in.nextLine();  // Limpiar buffer del scanner
+                        in.nextLine();  // neteja el buffer del scanner
 
                         System.out.println("Introdueix el nom de l'entrada");
                         nomEntrada = in.nextLine();
@@ -170,13 +170,13 @@ public class DriverControladorPersistencia {
                                 } else {
                                     System.out.println("Introdueix un valor per a " + clau + ":");
                                     Integer valor = in.nextInt();
-                                    in.nextLine(); // Limpiar buffer después de leer un entero
+                                    in.nextLine(); // neteja el buffer després de llegir un enter
                                     LPF.put(clau, valor);
                                 }
                             }
                         } else {
                             System.out.println("Introdueix el nou text de l'entrada:");
-                            text2 = in.nextLine(); // Permite leer una línea completa con espacios
+                            text2 = in.nextLine(); // Permet llegir una linia completa amb espais
                         }
 
                         ctrl.modificarContingutEntrada(idEntrada, nomEntrada, LPF, text2);
@@ -188,14 +188,14 @@ public class DriverControladorPersistencia {
                         idEntradaTeclat = in.nextInt();
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
-                        in.nextLine(); // Limpiar buffer del scanner
+                        in.nextLine(); // neteja el buffer del scanner
                         System.out.println("Introdueix el nom del teclat");
                         nomTeclat = in.nextLine();
                         System.out.println("Introdueix el número de files del teclat");
                         numFiles = in.nextInt();
                         System.out.println("Introdueix el número de columnes del teclat");
                         numColumnes = in.nextInt();
-                        in.nextLine(); // Limpiar buffer del scanner
+                        in.nextLine(); //neteja el buffer del scanner
                         distribucio = new ArrayList<>();
                         System.out.println("Introduce los elementos de la distribución (finaliza con 'end')");
                         while (!(elem = in.nextLine()).equals("end")) {
@@ -217,7 +217,7 @@ public class DriverControladorPersistencia {
                         ctrl.eliminarTeclat(idTeclat);
                         break;
 
-                    case 17: // Modificar Número de Filas de Teclado
+                    case 17: // Modificar Número de Files del Teclat
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
                         System.out.println("Introdueix el nou número de files");
@@ -225,7 +225,7 @@ public class DriverControladorPersistencia {
                         ctrl.modificarNumFilesTeclat(idTeclat, numFiles);
                         break;
 
-                    case 18: // Modificar Número de Columnes del teclat
+                    case 18: // Modificar  el Número de Columnes del teclat
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
                         System.out.println("Introdueix el nou número de columnes");
@@ -233,10 +233,10 @@ public class DriverControladorPersistencia {
                         ctrl.modificarNumColumnesTeclat(idTeclat, numColumnes);
                         break;
 
-                    case 19: // Modificar Distribució del teclta
+                    case 19: // Modificar la  Distribució del teclta
                         System.out.println("Introdueix l'id del teclat");
                         idTeclat = in.nextInt();
-                        in.nextLine(); // Limpiar buffer del scanner
+                        in.nextLine(); // Lneteja el buffer del scanner
                         distribucio = new ArrayList<>();
                         System.out.println("Introduce los elementos de la nueva distribución (finaliza con 'end')");
                         while (!(elem = in.nextLine()).equals("end")) {

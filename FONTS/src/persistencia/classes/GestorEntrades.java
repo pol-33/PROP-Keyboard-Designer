@@ -99,21 +99,29 @@ public class GestorEntrades {
     }
 
     /**
-     * Elimina una entrada específica dels arxius CSV.
+     * Elimina una entrada específica dels arxius CSV corresponents.
+     * Això inclou l'arxiu d'entrades general i els arxius de relació.
      * @param idEntrada Identificador de l'entrada a eliminar.
      */
     public void eliminarEntrada(Integer idEntrada) {
-        // Actualizar Entrades.csv eliminando la entrada especificada
-        actualizarArchivoCSV(entradesPath, idEntrada, 0);
+        // Actualizar Entrades.csv eliminant la entrada especificada
+        actualitzarArchivoCSV(entradesPath, idEntrada, 0);
 
-        // Actualizar relacioEntradaTeclat.csv eliminando la relación de la entrada especificada
-        actualizarArchivoCSV(relacioEntradaTeclatPath, idEntrada, 0);
+        // Actualizar relacioEntradaTeclat.csv eliminant la relació de la entrada especificada
+        actualitzarArchivoCSV(relacioEntradaTeclatPath, idEntrada, 0);
 
-        // Actualizar relacioAlfabetEntradaPath eliminando la relación de la entrada especificada
-        actualizarArchivoCSV(relacioAlfabetEntradaPath, idEntrada, 1);
+        // Actualizar relacioAlfabetEntradaPath eliminant la relació de la entrada especificada
+        actualitzarArchivoCSV(relacioAlfabetEntradaPath, idEntrada, 1);
     }
 
-    private void actualizarArchivoCSV(String filePath, Integer idEntrada, int idColumnIndex) {
+    /**
+     * Actualitza un arxiu CSV eliminant una fila específica.
+     * Aquest mètode és genèric i pot ser utilitzat per qualsevol arxiu CSV.
+     * @param filePath Ruta de l'arxiu CSV a actualitzar.
+     * @param idEntrada Identificador de l'entrada a eliminar de l'arxiu.
+     * @param idColumnIndex Índex de la columna que conté l'identificador a comparar.
+     */
+    private void actualitzarArchivoCSV(String filePath, Integer idEntrada, int idColumnIndex) {
         List<String[]> updatedRows = new ArrayList<>();
 
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
@@ -134,6 +142,15 @@ public class GestorEntrades {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Actualitza una entrada específica en els arxius CSV.
+     * @param idEntrada Identificador de l'entrada a actualitzar.
+     * @param nom       Nou nom per a l'entrada.
+     * @param lpf       Nou HashMap amb dades específiques (pot ser null).
+     * @param text      Nou text associat a l'entrada.
+     */
     public void actualizarEntrada(Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
         List<String[]> entradasActualizadas = new ArrayList<>();
         boolean entradaEncontrada = false;
@@ -142,15 +159,15 @@ public class GestorEntrades {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idEntrada.toString())) {
-                    String tipus = determinarTipo(row); // Determina si es texto o LPF basado en la fila existente
+                    String tipus = determinarTipo(row); // Determina si es text o LPF basat en la fila existent
                     String lpfString = "";
                     String texto = "";
 
-                    if ("0".equals(tipus) && lpf != null) { // Actualizar como LPF
+                    if ("0".equals(tipus) && lpf != null) { // Actualizar com LPF
                         lpfString = lpf.toString();
-                        texto = ""; // Asumiendo que el texto se deja vacío cuando hay LPF
-                    } else if ("1".equals(tipus)) { // Actualizar como texto
-                        lpfString = ""; // Asumiendo que lpf se deja vacío cuando hay texto
+                        texto = ""; // Asumim que el text esta buit quan es LPF
+                    } else if ("1".equals(tipus)) { // Actualizar com text
+                        lpfString = ""; // Asumiendo que lpf  esta buit quan tenim un texto
                         texto = text;
                     }
 
@@ -174,11 +191,14 @@ public class GestorEntrades {
         }
     }
 
+
+    /**
+     * Determina el tipus d'una entrada basant-se en la informació de la fila.
+     * @param row Fila de l'arxiu CSV que representa una entrada.
+     * @return El tipus d'entrada ('0' per a LPF, '1' per a text).
+     */
     private String determinarTipo(String[] row) {
-        // Implementa lógica para determinar si la entrada es texto o LPF
-        // Esto puede depender de cómo almacenas y marcas las diferencias en el CSV
-        // Por ejemplo, si tienes una columna específica para el tipo o si decides basado en el contenido
-        return row[2]; // Suponiendo que la columna 3 almacena el tipo ('0' para LPF, '1' para texto)
+        return row[2]; // Suposant que la columna 3 emmagatzema el tipus ('0' per a LPF, '1' per a text)
     }
 }
 
