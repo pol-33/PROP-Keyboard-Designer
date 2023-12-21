@@ -3,6 +3,7 @@ package domini.controladors;
 import domini.classes.Usuari;
 import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -628,5 +629,23 @@ public class ControladorDomini {
             eliminarEntrada(idEntrada);
         }
         ctrlAlfabet.eliminarAlfabet(idAlfabet);
+    }
+
+    public ArrayList<Character> getAlfabetEntrada(int idEntrada) throws Exception {
+        for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
+            if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
+                return ctrlAlfabet.getLletresAlfabet(idAlfabet);
+            }
+        }
+        throw new Exception("No s'ha trobat cap alfabet per aquesta entrada");
+    }
+
+    public String getNomAlfabetEntrada(int idEntrada) throws Exception {
+        for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
+            if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
+                return ctrlAlfabet.getNomAlfabet(idAlfabet);
+            }
+        }
+        return null;
     }
 }

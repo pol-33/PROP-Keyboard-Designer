@@ -453,4 +453,13 @@ public class ControladorPresentacio {
             return null;
         }
     }
+
+    public static String getNomAlfabetEntrada(int idEntrada) {
+        try {
+            return ctrlDomini.getNomAlfabetEntrada(idEntrada);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el nom de l'alfabet de l'entrada: " + e.getMessage());
+            return null;
+        }
+    }
 }

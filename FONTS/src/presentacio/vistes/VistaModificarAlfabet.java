@@ -45,7 +45,7 @@ public class VistaModificarAlfabet {
         String actualLettersString = ControladorPresentacio.getLletresAlfabet(idAlfabet).toString();
         actualLettersString = actualLettersString.replace("[", "");  //remove the right bracket
         actualLettersString = actualLettersString.replace("]", "");  //remove the left bracket
-        JLabel actualLettersLabel = new JLabel("Lletres actuals: " + actualLettersString);
+        JLabel actualLettersLabel = new JLabel("<html>Lletres actuals: " + actualLettersString + "</html>");
 
         // Create a new JPanel for the info labels and add them to it
         JPanel infoPanel = new JPanel();
