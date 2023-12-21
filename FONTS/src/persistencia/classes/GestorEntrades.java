@@ -43,7 +43,7 @@ public class GestorEntrades {
     public void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
         // Escriure l'entrada en Entrades.csv
         try (CSVWriter writer = new CSVWriter(new FileWriter(entradesPath, true))) {
-            String tipus = lpf != null ? "0" : "1"; // 0 per a LPF, 1 per a text
+            String tipus = text != null ? "0" : "1"; // 0 per a LPF, 1 per a text
             String lpfString = lpf != null ? lpf.toString() : "";
             String[] entrada = {idEntrada.toString(), nom, tipus, lpfString, text};
 
