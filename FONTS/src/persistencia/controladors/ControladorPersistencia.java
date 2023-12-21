@@ -119,7 +119,7 @@ public class ControladorPersistencia {
     public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {
         String[] alfabet = gestorAlfabets.carregarAlfabet(idAlfabet);
         if (alfabet != null) {
-            gestorAlfabets.eliminarAlfabet(idAlfabet);
+            gestorAlfabets.eliminarAlfabetSoft(idAlfabet);
             if (alfabet.length > 2) {
                 alfabet[2] = alfabet[2] + "." + convertirArrayListToString(novesLletres);
             }
@@ -133,7 +133,12 @@ public class ControladorPersistencia {
      */
     public void eliminarAlfabet(Integer idAlfabet) {
         //Eliminem l'alfabet
-        gestorAlfabets.eliminarAlfabet(idAlfabet);
+        ArrayList<Integer> idsEntrades = gestorAlfabets.eliminarAlfabet(idAlfabet);
+
+        //Eliminem les entrades de l'alfabet
+        for (Integer idEntrada : idsEntrades) {
+            eliminarEntrada(idEntrada);
+        }
     }
 
     //--------------------------------Entrada---------------------------------//
