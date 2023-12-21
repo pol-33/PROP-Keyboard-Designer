@@ -1,6 +1,7 @@
 package domini.controladors;
 
 import domini.classes.Usuari;
+import org.apache.commons.lang3.ObjectUtils;
 import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -382,7 +383,7 @@ public class ControladorDomini {
     public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
         ArrayList<String> nomUsuarisExistents = ctrlPersistencia.getUsuarisExistents();
         usuariActiu = Usuari.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
-        ctrlPersistencia.guardarUsuari(nomUsuari, contrasenya);
+        ctrlPersistencia.crearUsuari(nomUsuari, contrasenya);
     }
 
     /**
@@ -450,7 +451,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.guardarTeclat(idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat), idEntrada);
+        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 
@@ -469,7 +470,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatPolzes(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.guardarTeclat(idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat), idEntrada);
+        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 
@@ -511,14 +512,16 @@ public class ControladorDomini {
      * @throws Exception
      */
     public Integer crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
+        // Suponemos que ctrlEntrada.crearText(...) devuelve un identificador para la nueva entrada de texto
         Integer idText = ctrlEntrada.crearText(nomEntrada, contingutEntrada, ctrlAlfabet.getLletresAlfabet(idAlfabet), idAlfabet);
 
-        // Vinculem el text a l'alfabet
+        // Vinculamos el texto al alfabeto
         ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, idText);
 
-        //Guardem el text a persistencia
-        ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
-        ctrlPersistencia.guardarText(idText, nomEntrada, contingutEntrada, idTeclats);
+        // Guardamos el texto en persistencia
+        // Suponemos que no necesitas los teclados vinculados para esta acción, así que comentamos la siguiente línea
+        // ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
+        ctrlPersistencia.crearEntrada(idAlfabet, idText, nomEntrada, null, contingutEntrada);
 
         return idText;
     }
@@ -549,7 +552,7 @@ public class ControladorDomini {
 
         //Guardem la lpf a persistencia
         ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idLPF);
-        ctrlPersistencia.guardarLPF(idLPF, nomEntrada, contingutEntrada, idTeclats);
+        ctrlPersistencia.crearEntrada(idAlfabet, idLPF, nomEntrada, contingutEntrada, null);
 
         return idLPF;
     }
@@ -598,7 +601,7 @@ public class ControladorDomini {
         Integer idAlfabet = ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
 
         ArrayList<Integer> idEntrades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
-        ctrlPersistencia.guardarAlfabet(idAlfabet, nomAlfabet, lletres, idEntrades);
+        ctrlPersistencia.crearAlfabet(username, idAlfabet, nomAlfabet,  lletres);
         return idAlfabet;
     }
 
