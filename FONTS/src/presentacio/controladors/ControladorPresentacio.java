@@ -94,7 +94,7 @@ public class ControladorPresentacio {
         }
     }
     
-    // Métodos para la gestión de Alfabetos
+    // Métodos para la gestión de Alfabets
     public static int crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
@@ -317,6 +317,24 @@ public class ControladorPresentacio {
         }
     }
 
+    public static Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) {
+        try {
+            return ctrlDomini.getFilesOptimesTeclat(idTeclat, numCols);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir les files òptimes del teclat: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) {
+        try {
+            return ctrlDomini.getColumnesOptimesTeclat(idTeclat, numFiles);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir les columnes òptimes del teclat: " + e.getMessage());
+            return null;
+        }
+    }
+
     // Metodes per a la gestio de Texts
     public static void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) {
         try {
@@ -432,6 +450,15 @@ public class ControladorPresentacio {
             return ctrlDomini.getIdTeclatsVinculatsAEntrada(id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al obtenir els teclats vinculats a l'entrada: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static String getNomAlfabetEntrada(int idEntrada) {
+        try {
+            return ctrlDomini.getNomAlfabetEntrada(idEntrada);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el nom de l'alfabet de l'entrada: " + e.getMessage());
             return null;
         }
     }

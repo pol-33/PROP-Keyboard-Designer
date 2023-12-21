@@ -409,7 +409,7 @@ public class VistaPrincipal extends JFrame {
         if (tipus == 0) nomTipus = "Text";
         else nomTipus = "LPF";
 
-        String nombreAlfabeto = "cal implementar mes a domini"; // Obtener el nombre del alfabeto según tu lógica
+        String nombreAlfabeto = ControladorPresentacio.getNomAlfabetEntrada(idEntrada);
         String contingutPreview = "cal implementar mes a domini"; // Obtener una vista previa según tu lógica
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
         ElementEntradaLlista nuevaEntrada = new ElementEntradaLlista(idEntrada, nombreEntrada, nomTipus, contingutPreview, nombreAlfabeto);

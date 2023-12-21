@@ -253,4 +253,35 @@ public class ControladorTeclat {
             throw new Exception("No existeix el teclat amb aquest id");
         }
     }
+
+     /**
+      * Retorna el nombre de files optimes per a un teclat donat el nombre de columnes
+      * @param idTeclat
+      * @param numCols
+      * @return
+      * @throws Exception
+      */
+    public Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getFilesOptimes(numCols);
+        }
+        else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
+
+    /**
+     * Retorna el nombre de columnes optimes per a un teclat donat el nombre de files
+     * @param idTeclat
+     * @param numFiles
+     * @return
+     * @throws Exception
+     */
+    public Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) throws Exception {
+        if (conjuntTeclats.containsKey(idTeclat)) {
+            return conjuntTeclats.get(idTeclat).getColumnesOptimesTeclat(numFiles);
+        } else {
+            throw new Exception("No existeix el teclat amb aquest id");
+        }
+    }
 }

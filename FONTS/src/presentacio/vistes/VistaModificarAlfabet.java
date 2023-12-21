@@ -1,6 +1,10 @@
 package presentacio.vistes;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +45,7 @@ public class VistaModificarAlfabet {
         String actualLettersString = ControladorPresentacio.getLletresAlfabet(idAlfabet).toString();
         actualLettersString = actualLettersString.replace("[", "");  //remove the right bracket
         actualLettersString = actualLettersString.replace("]", "");  //remove the left bracket
-        JLabel actualLettersLabel = new JLabel("Lletres actuals: " + actualLettersString);
+        JLabel actualLettersLabel = new JLabel("<html>Lletres actuals: " + actualLettersString + "</html>");
 
         // Create a new JPanel for the info labels and add them to it
         JPanel infoPanel = new JPanel();
@@ -68,6 +72,15 @@ public class VistaModificarAlfabet {
 
         JLabel letterLabel = new JLabel("Nova lletra:");
         letterTextField = new JTextField(5);
+        // Only allow one character
+        ((AbstractDocument) letterTextField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if ((fb.getDocument().getLength() + text.length() - length) <= 1) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         letterTextField.setToolTipText("Introdueix una sola lletra aquí");
         letterTextField.setMinimumSize(new Dimension(40, 20));
         letterTextField.setPreferredSize(new Dimension(100, 20)); // Set a preferred size for the JTextField

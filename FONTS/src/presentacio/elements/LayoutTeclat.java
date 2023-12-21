@@ -31,7 +31,7 @@ public class LayoutTeclat extends JPanel {
         }
         add(panellTecles, BorderLayout.CENTER);
 
-        JLabel info = new JLabel("Filas: " + files + ", Columnas: " + columnes);
+        JLabel info = new JLabel("Files: " + files + "   Columnes: " + columnes);
         info.setHorizontalAlignment(SwingConstants.CENTER);
         add(info, BorderLayout.NORTH);
     }
