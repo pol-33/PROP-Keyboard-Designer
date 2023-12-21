@@ -120,6 +120,18 @@ public class ControladorDomini {
          if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlEntrada.getTextEntrada(idEntrada);
     }
+
+    /**
+     * Retorna la LPF de l'entrada demanada, que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return HashMap<String, Integer> que representa la LPF de l'entrada
+     * @throws Exception Si l'usuari no ha inciat sessió
+     * @throws Exception Si l'usuari no te una entrada amb aquest identificador
+     */
+    public HashMap<String, Integer> getLpfEntrada(Integer idEntrada) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
+        return ctrlEntrada.getLpfEntrada(idEntrada);
+    }
     
     /**
      * Retorna el nom de l'entrada demanada, que pertany a l'usuari loggejat.
@@ -585,6 +597,21 @@ public class ControladorDomini {
         ctrlPersistencia.eliminarEntrada(idEntrada);
     }
 
+    /**
+     * Modifica el contingut de l'entrada identificada per idEntrada
+     * @param idEntrada
+     * @param contingut
+     * @throws Exception
+     */
+    public void modificarContingutText(Integer idEntrada, String contingut) throws Exception {
+        ctrlEntrada.modificarContingutText(idEntrada, contingut);
+        //ctrlPersistencia.modificarContingutText(idEntrada, nom);
+    }
+
+    public void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) throws Exception {
+        ctrlEntrada.modificarContingutLPF(idEntrada, newContent);
+    }
+
     //--------------------------------Alfabets---------------------------------//
 
     /**
@@ -648,4 +675,5 @@ public class ControladorDomini {
         }
         return null;
     }
+
 }

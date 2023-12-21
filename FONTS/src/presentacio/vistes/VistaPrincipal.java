@@ -410,7 +410,7 @@ public class VistaPrincipal extends JFrame {
         else nomTipus = "LPF";
 
         String nombreAlfabeto = ControladorPresentacio.getNomAlfabetEntrada(idEntrada);
-        String contingutPreview = "cal implementar mes a domini"; // Obtener una vista previa según tu lógica
+        String contingutPreview = ControladorPresentacio.getPreviewEntrada(idEntrada);
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
         ElementEntradaLlista nuevaEntrada = new ElementEntradaLlista(idEntrada, nombreEntrada, nomTipus, contingutPreview, nombreAlfabeto);
         model.addElement(nuevaEntrada);
@@ -494,7 +494,6 @@ public class VistaPrincipal extends JFrame {
     }
     
     // TODO metode que crida el btCrearText
-    // ! Falta moder crear una LPF
     private void crearEntrada() {
         VistaCrearEntrada vCrearText = new VistaCrearEntrada();
         vCrearText.mostrar();
@@ -509,8 +508,9 @@ public class VistaPrincipal extends JFrame {
         }
 
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
-        int idEntradaSeleccionada = model.get(indexSeleccionat).getId();
-        String tipusEntrada = model.get(indexSeleccionat).getTipus();
+        ElementEntradaLlista entradaSeleccionada = model.get(indexSeleccionat);
+        int idEntradaSeleccionada = entradaSeleccionada.getId();
+        String tipusEntrada = entradaSeleccionada.getTipus();
 
         if (tipusEntrada.equals("Text")) {
             VistaModificarText vModificarEntrada = new VistaModificarText(idEntradaSeleccionada);
@@ -518,6 +518,17 @@ public class VistaPrincipal extends JFrame {
         } else if (tipusEntrada.equals("LPF")) {
             VistaModificarLPF vModificarLPF = new VistaModificarLPF(idEntradaSeleccionada);
             vModificarLPF.mostrar();
+        }
+    }
+
+    public void actualitzarEntradaLlista(Integer idEntrada) {
+        for (int i = 0; i < jListEntrades.getModel().getSize(); i++) {
+            ElementEntradaLlista element = jListEntrades.getModel().getElementAt(i);
+            if (element.getId() == idEntrada) {
+                String contingutPreview = ControladorPresentacio.getPreviewEntrada(idEntrada);
+                element.setContingutPreview(contingutPreview);
+                break;
+            }
         }
     }
 
