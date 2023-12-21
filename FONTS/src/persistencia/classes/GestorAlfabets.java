@@ -20,8 +20,10 @@ public class GestorAlfabets {
     // ---------------------------------------------------------------------------- //
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
-    private String alfabetsPath = "../../DATA/alfabet.csv";
-    private String relacioUsuariAlfabetPath = "../../DATA/relacioUsuariAlfabet.csv";
+    private final String alfabetsPath = "../../DATA/alfabet.csv";
+    private final String relacioUsuariAlfabetPath = "../../DATA/relacioUsuariAlfabet.csv";
+
+    private final String relacioAlfabetEntradaPath = "../../DATA/relacioAlfabetEntrada.csv";
 
     // ---------------------------------------------------------------------------- //
     //                                   Mètodes
@@ -135,7 +137,7 @@ public class GestorAlfabets {
      * Elimina un alfabet específic dels arxius CSV.
      * @param idAlfabet Identificador de l'alfabet a eliminar.
      */
-    public void eliminarAlfabet(Integer idAlfabet) {
+    public ArrayList<Integer> eliminarAlfabet(Integer idAlfabet) {
         List<String[]> updatedRows = new ArrayList<>();
 
         //Eliminem l'alfabet
@@ -156,8 +158,9 @@ public class GestorAlfabets {
             e.printStackTrace();
         }
 
-        updatedRows = new ArrayList<>();
+
         //Eliminem la relacio usuariAlfabet
+        updatedRows = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new FileReader(relacioUsuariAlfabetPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
@@ -174,6 +177,21 @@ public class GestorAlfabets {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Retornem les entrades de l'alfabet
+        ArrayList<Integer> idsEntrades = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader(relacioAlfabetEntradaPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row.length > 0 && !row[0].equals(String.valueOf(idAlfabet))) {
+                    idsEntrades.add(Integer.valueOf(row[1]));
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        return idsEntrades;
     }
 
 
