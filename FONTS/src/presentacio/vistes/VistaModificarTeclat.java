@@ -3,9 +3,12 @@ package presentacio.vistes;
 import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class VistaModificarTeclat extends JFrame {
     private JSpinner tfFiles;
@@ -30,40 +33,98 @@ public class VistaModificarTeclat extends JFrame {
         setTitle("Modificar Teclat");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
 
+        JPanel panelFiles = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel lblFiles = new JLabel("Noves files:");
-        panel.add(lblFiles);
+        panelFiles.add(lblFiles);
 
-        tfFiles = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
-        panel.add(tfFiles);
+        int currentFiles = ControladorPresentacio.getFilesTeclat(idTeclat);
+        tfFiles = new JSpinner(new SpinnerNumberModel(currentFiles, 1, Integer.MAX_VALUE, 1));
+        tfFiles.setPreferredSize(new Dimension(160, 20)); // Set the preferred size
+        panelFiles.add(tfFiles);
 
+        panel.add(panelFiles, gbc);
+
+        JPanel panelColumnes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel lblColumnes = new JLabel("Noves columnes:");
-        panel.add(lblColumnes);
+        panelColumnes.add(lblColumnes);
 
-        tfColumnes = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
-        panel.add(tfColumnes);
+        int currentColumnes = ControladorPresentacio.getColumnesTeclat(idTeclat);
+        tfColumnes = new JSpinner(new SpinnerNumberModel(currentColumnes, 1, Integer.MAX_VALUE, 1));
+        tfColumnes.setPreferredSize(new Dimension(130, 20)); // Set the preferred size
+        panelColumnes.add(tfColumnes);
 
-        JButton btnAceptar = new JButton("Aceptar");
+        panel.add(panelColumnes, gbc);
+
+        ChangeListener filesChangeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int files = (int) tfFiles.getValue();
+                Integer columnesOptimes = ControladorPresentacio.getColumnesOptimesTeclat(idTeclat, files);
+                if (columnesOptimes != null) {
+                    tfColumnes.setValue(columnesOptimes);
+                }
+            }
+        };
+
+        ChangeListener columnesChangeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int columnes = (int) tfColumnes.getValue();
+                Integer filesOptimes = ControladorPresentacio.getFilesOptimesTeclat(idTeclat, columnes);
+                if (filesOptimes != null) {
+                    tfFiles.setValue(filesOptimes);
+                }
+            }
+        };
+
+        JPanel panelCheckBox = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JCheckBox cbOptimization = new JCheckBox("Activar optimització de files i columnes", true);
+        cbOptimization.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    // Checkbox has been selected
+                    tfFiles.addChangeListener(filesChangeListener);
+                    tfColumnes.addChangeListener(columnesChangeListener);
+                } else {
+                    // Checkbox has been deselected
+                    tfFiles.removeChangeListener(filesChangeListener);
+                    tfColumnes.removeChangeListener(columnesChangeListener);
+                }
+            }
+        });
+        panelCheckBox.add(cbOptimization);
+
+        panel.add(panelCheckBox, gbc);
+
+        // Manually trigger the stateChanged event
+        if (cbOptimization.isSelected()) {
+            tfFiles.addChangeListener(filesChangeListener);
+            tfColumnes.addChangeListener(columnesChangeListener);
+        }
+
+        panel.add(Box.createRigidArea(new Dimension(0, 5))); // Add some vertical space
+
+        JPanel panelAceptar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnAceptar = new JButton("Acceptar");
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 modificarTeclat(idTeclat);
             }
         });
-        panel.add(btnAceptar);
+        panelAceptar.add(btnAceptar);
 
-        JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra la ventana si se presiona "Cancelar"
-            }
-        });
-        panel.add(btnCancelar);
+        panel.add(panelAceptar, gbc);
 
         add(panel);
 
-        setSize(300, 150);
+        setSize(325, 200);
         setLocationRelativeTo(null);
     }
 

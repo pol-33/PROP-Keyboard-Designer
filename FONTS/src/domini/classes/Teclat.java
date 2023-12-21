@@ -1,6 +1,7 @@
 package domini.classes;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -107,5 +108,31 @@ public class Teclat {
 
     public Integer getTipus() {
         return tipus;
+    }
+
+    /**
+     * Retorna el nombre optim de files del teclat donat el nombre de columnes.
+     * @param numCols
+     * @return
+     */
+    public Integer getFilesOptimes(Integer numCols) {
+        if (numCols == null || numCols == 0) {
+            throw new IllegalArgumentException("numCols is null or zero");
+        }
+        long nonRepeatedCount = distribucio.stream().distinct().count();
+        return (int) Math.ceil((double) nonRepeatedCount / numCols);
+    }
+
+    /**
+     * Retorna el nombre optim de columnes del teclat donat el nombre de files.
+     * @param numFiles
+     * @return
+     */
+    public Integer getColumnesOptimesTeclat(Integer numFiles) {
+        if (numFiles == null || numFiles == 0) {
+            throw new IllegalArgumentException("numFiles is null or zero");
+        }
+        long nonRepeatedCount = distribucio.stream().distinct().count();
+        return (int) Math.ceil((double) nonRepeatedCount / numFiles);
     }
 }

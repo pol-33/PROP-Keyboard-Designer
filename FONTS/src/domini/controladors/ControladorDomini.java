@@ -490,6 +490,16 @@ public class ControladorDomini {
 
         ctrlTeclat.modificarFilesColumnesTeclat(idTeclat, lpf, alfabet, files, columnes);
     }
+
+    public Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) throws Exception {
+        return ctrlTeclat.getFilesOptimesTeclat(idTeclat, numCols);
+    }
+
+    public Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) throws Exception {
+        return ctrlTeclat.getColumnesOptimesTeclat(idTeclat, numFiles);
+    }
+
+
     //--------------------------------Entrades---------------------------------//
 
     /**

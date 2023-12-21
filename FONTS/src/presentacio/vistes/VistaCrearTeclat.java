@@ -41,10 +41,10 @@ public class VistaCrearTeclat {
         entradaComboBox = new JComboBox<>();
 
         JLabel filesLabel = new JLabel("Número de files:");
-        filesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
+        filesSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 500, 1));
 
         JLabel columnesLabel = new JLabel("Número de columnes:");
-        columnesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
+        columnesSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 500, 1));
 
         JLabel tipusLabel = new JLabel("Algoritme a utilizar:");
         tipusComboBox = new JComboBox<>();

@@ -26,13 +26,16 @@ public class VistaVeureTeclat {
     }
 
     private void initComponents(Integer idTeclado) {
-        frame = new JFrame("Ver Teclado");
+        frame = new JFrame("Veure Teclat");
         JPanel panel = new JPanel(new BorderLayout());
 
         JLabel nomLabel = new JLabel(ControladorPresentacio.getNomTeclat(idTeclado));
+        nomLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        nomLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        nomLabel.setVerticalAlignment(SwingConstants.CENTER);
         panel.add(nomLabel, BorderLayout.NORTH);
 
-        JLabel entradaLabel = new JLabel("Entrada asociada: " + ControladorPresentacio.getNomEntrada(ControladorPresentacio.getIdEntradaTeclat(idTeclado)));
+        JLabel entradaLabel = new JLabel("Entrada associada: " + ControladorPresentacio.getNomEntrada(ControladorPresentacio.getIdEntradaTeclat(idTeclado)));
         panel.add(entradaLabel, BorderLayout.CENTER);
 
         LayoutTeclat layout = new LayoutTeclat(ControladorPresentacio.getDistribucioTeclat(idTeclado),
