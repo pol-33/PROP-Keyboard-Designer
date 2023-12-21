@@ -19,7 +19,7 @@ public class GestorEntrades {
     // ---------------------------------------------------------------------------- //
     //                                   Atributs
     // ---------------------------------------------------------------------------- //
-    private String entradesPath = "../../DATA/Entrades.csv";
+    private String entradesPath = "../../DATA/entrada.csv";
     private String relacioAlfabetEntradaPath = "../../DATA/relacioAlfabetEntrada.csv";
 
     private String relacioEntradaTeclatPath = "../../DATA/relacioEntradaTeclat.csv";
