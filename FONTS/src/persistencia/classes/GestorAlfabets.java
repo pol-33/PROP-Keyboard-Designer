@@ -138,6 +138,7 @@ public class GestorAlfabets {
     public void eliminarAlfabet(Integer idAlfabet) {
         List<String[]> updatedRows = new ArrayList<>();
 
+        //Eliminem l'alfabet
         try (CSVReader reader = new CSVReader(new FileReader(alfabetsPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
@@ -150,6 +151,25 @@ public class GestorAlfabets {
         }
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(alfabetsPath))) {
+            writer.writeAll(updatedRows);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        updatedRows = new ArrayList<>();
+        //Eliminem la relacio usuariAlfabet
+        try (CSVReader reader = new CSVReader(new FileReader(relacioUsuariAlfabetPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row.length > 0 && !row[1].equals(String.valueOf(idAlfabet))) {
+                    updatedRows.add(row);
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(relacioUsuariAlfabetPath))) {
             writer.writeAll(updatedRows);
         } catch (IOException e) {
             e.printStackTrace();

@@ -19,10 +19,10 @@ public class ControladorPersistencia {
     private static ControladorPersistencia ctrl;
 
     // Gestors per cada tipus de dada a persistir
-    private GestorUsuaris gestorUsuaris = new GestorUsuaris();
-    private GestorAlfabets gestorAlfabets = new GestorAlfabets();
-    private GestorEntrades gestorEntrades = new GestorEntrades();
-    private GestorTeclats gestorTeclats = new GestorTeclats();
+    private final GestorUsuaris gestorUsuaris = new GestorUsuaris();
+    private final GestorAlfabets gestorAlfabets = new GestorAlfabets();
+    private final GestorEntrades gestorEntrades = new GestorEntrades();
+    private final GestorTeclats gestorTeclats = new GestorTeclats();
 
     // Mètodes per gestionar la persistència
 
