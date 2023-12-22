@@ -335,8 +335,8 @@ public class ControladorDomini {
     /**
      * Carrega els teclats de persistencia i instancia les classses.
      * Els teclats segueixen el seguent format
-     * id,nom,numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
-     * @param teclats
+     * id,nom, tipus, numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
+     * @param teclat
      * @throws Exception
      */
     private void carregarTeclat(String teclat, Integer idEntrada) throws Exception {
@@ -346,9 +346,10 @@ public class ControladorDomini {
 
         Integer id = Integer.valueOf(atributs[0]);
         String nomTeclat = atributs[1];
-        Integer numFiles = Integer.valueOf(atributs[2]);
-        Integer numColumnes = Integer.valueOf(atributs[3]);
-        Integer tipus = Integer.valueOf(atributs[4]);
+        Integer tipus = Integer.valueOf(atributs[2]);
+        Integer numFiles = Integer.valueOf(atributs[3]);
+        Integer numColumnes = Integer.valueOf(atributs[4]);
+
 
         String[] lletres = atributs[5].split("\\.");
         for (String lletra : lletres) {
