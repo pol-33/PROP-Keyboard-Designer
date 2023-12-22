@@ -3,6 +3,8 @@ package presentacio.elements;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ElementEntradaListRenderer extends JPanel implements ListCellRenderer<ElementEntradaLlista> {
     JPanel panell;
@@ -37,6 +39,8 @@ public class ElementEntradaListRenderer extends JPanel implements ListCellRender
 
         contingutPreviewLabel = new JLabel();
         contingutPreviewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        contingutPreviewLabel.setMinimumSize(new Dimension(100, 20)); // Set the minimum size
+
         panell.add(contingutPreviewLabel);
 
         add(panell, BorderLayout.CENTER);
@@ -62,7 +66,31 @@ public class ElementEntradaListRenderer extends JPanel implements ListCellRender
 
         nomLabel.setText(value.getNom());
         infoLabel.setText(value.getTipus() + " | " + value.getNomAlfabet());
-        contingutPreviewLabel.setText(value.getContingutPreview());
+        //contingutPreviewLabel.setText(value.getContingutPreview());
+
+        String previewText = value.getContingutPreview();
+        contingutPreviewLabel.setText(previewText);
+        FontMetrics fm = contingutPreviewLabel.getFontMetrics(contingutPreviewLabel.getFont());
+        int textWidth = fm.stringWidth(previewText);
+        int labelWidth = contingutPreviewLabel.getWidth();
+
+        if (labelWidth < 0) {
+            labelWidth = 735;
+        }
+
+        if (textWidth > labelWidth) {
+            int approxChars = labelWidth / fm.charWidth('n'); // Estimate the number of characters that can fit
+            if (approxChars > 0) {
+                previewText = previewText.substring(0, Math.min(approxChars, previewText.length())) + "...";
+            } else {
+                previewText = "...";
+            }
+        }
+
+        // Select the first 20 characters
+        //previewText = previewText.substring(0, Math.min(100, previewText.length())) + "...";
+
+        contingutPreviewLabel.setText(previewText);
 
         return this;
     }

@@ -292,6 +292,9 @@ public class VistaPrincipal extends JFrame {
         for (int id : idEntrades) {
             afegirEntrada(id);
         }
+
+        // Selecciona el primer element de lamllista, si n'hi ha
+        if (model.size() > 0) jListEntrades.setSelectedIndex(0);
     }
 
     public void carregaEntrades(Integer idAlfabet) {
