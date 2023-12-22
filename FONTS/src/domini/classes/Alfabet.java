@@ -54,7 +54,7 @@ public class Alfabet {
         this.nom = nomAlfabet;
         this.id = idAlfabet;
         this.lletres = lletresAlfabet;
-        this.idEntrades = idEntrades;
+        this.idEntrades = (idEntrades != null) ? idEntrades : new ArrayList<>();
     }
 
     // ---------------------------------------------------------------------------- //

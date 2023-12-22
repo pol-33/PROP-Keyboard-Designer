@@ -247,7 +247,7 @@ public class GestorAlfabets {
      * @return String resultant de la conversió.
      */
     private static String convertirArrayAString(String[] array) {
-        return String.join(", ", array);
+        return String.join(",", array);
     }
 
 }

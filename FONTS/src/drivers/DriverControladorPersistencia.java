@@ -80,7 +80,12 @@ public class DriverControladorPersistencia {
                         System.out.println("Introdueix el nom d'usuari");
                         nomUsuari = in.next();
                         ArrayList<String> alfabets = ctrl.carregarAlfabets(nomUsuari);
-                        alfabets.forEach(alfabet -> System.out.println(alfabet));
+                        for (String alfabet : alfabets) {
+                            String[] elements = alfabet.split(",");
+                            System.out.println(elements[0]);
+                            System.out.println(elements[1]);
+                            System.out.println(elements[2]);
+                        }
                         break;
 
                     case 8:

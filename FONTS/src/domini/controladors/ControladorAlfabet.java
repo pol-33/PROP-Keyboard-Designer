@@ -157,8 +157,8 @@ public class ControladorAlfabet {
      * @param lletres
      * @param idEntrades
      */
-    public void carregarAlfabet(Integer id, String nom, ArrayList<Character> lletres, ArrayList<Integer> idEntrades) {
-        Alfabet nouAlfabet = new Alfabet(nom, id, lletres, idEntrades);
+    public void carregarAlfabet(Integer id, String nom, ArrayList<Character> lletres) {
+        Alfabet nouAlfabet = new Alfabet(nom, id, lletres, null);
         conjuntAlfabets.put(id, nouAlfabet);
         if (id > comptador) {
             comptador = id+1;

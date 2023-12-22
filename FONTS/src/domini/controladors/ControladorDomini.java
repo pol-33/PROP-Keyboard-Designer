@@ -247,6 +247,7 @@ public class ControladorDomini {
         carregarAlfabets(alfabetsEnCSV);
 
         //Carregar entrades de cada un dels alfabets
+        /**
         for (String alfabetEnCSV : alfabetsEnCSV) {
             String idAlfabet = alfabetEnCSV.split(",")[0]; //obtenim l'id de l'alfabet
             ArrayList<String> entradesEnCSV = new ArrayList<>();//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
@@ -256,21 +257,20 @@ public class ControladorDomini {
         //Carregar teclats de l'usuari
         ArrayList<String> teclatsEnCSV = new ArrayList<>();
         carregarTeclats(teclatsEnCSV);
+         **/
     }
 
     /**
      * Carrega els alfabets de persistència i instancia les classses.
      * Els alfabets segueixen el següent format:
-     * id,nom,"lletra1,lletra2, ... ,lletran", "idEntrada1,idEntrada2, ... ,idEntradan"
+     * id,nom,lletra1.lletra2. ... .lletran
      * @param alfabets
      */
     private void carregarAlfabets(ArrayList<String> alfabets) {
-        Integer id;
-        String nomAlfabet;
-        ArrayList<Character> lletres = new ArrayList<>();
-        ArrayList<Integer> idEntrades = new ArrayList<>();
-
         for (String alfabet : alfabets) {
+            Integer id;
+            String nomAlfabet;
+            ArrayList<Character> lletres = new ArrayList<>();
             //Definim tots els atributs necessaris en tipus natius de JAVA
             String[] atributs = alfabet.split(",");
 
@@ -282,19 +282,14 @@ public class ControladorDomini {
                 lletres.add(lletraString.charAt(0));
             }
 
-            String[] idEntradesString = atributs[3].split("\\.");
-            for (String idEntradaString : idEntradesString) {
-                idEntrades.add(Integer.valueOf(idEntradaString.charAt(0)));
-            }
-
             //Instanciem l'alfabet
-            ctrlAlfabet.carregarAlfabet(id, nomAlfabet, lletres, idEntrades);
+            ctrlAlfabet.carregarAlfabet(id, nomAlfabet, lletres);
         }
     }
 
     /**
      * Carrega les entrades de persistencia i instancia les classses.
-     * "tipus,id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
+     * "id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
      * L'atribut tipus pot prendre el valor de "text" o "lpf".
      * L'atribut text només estarà present si el tipus és "text"
      * @param entrades
@@ -410,7 +405,7 @@ public class ControladorDomini {
 
         String contrasenyaUsuari = ctrlPersistencia.obtenirPasswordUsuari(nomUsuari);
         usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, contrasenyaUsuari);
-        //carregarInfoUsuari(nomUsuari);
+        carregarInfoUsuari(nomUsuari);
     }
 
     /**
