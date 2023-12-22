@@ -177,7 +177,8 @@ public class ControladorPersistencia {
      * @param idEntrada Identificador de l'entrada a eliminar.
      */
     public void eliminarEntrada(Integer idEntrada) {
-        gestorEntrades.eliminarEntrada(idEntrada);
+        Integer idTeclat = gestorEntrades.eliminarEntrada(idEntrada);
+        if (idTeclat != -1) eliminarTeclat(idTeclat);
     }
 
     //--------------------------------Teclat---------------------------------//

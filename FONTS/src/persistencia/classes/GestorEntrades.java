@@ -104,15 +104,28 @@ public class GestorEntrades {
      * Això inclou l'arxiu d'entrades general i els arxius de relació.
      * @param idEntrada Identificador de l'entrada a eliminar.
      */
-    public void eliminarEntrada(Integer idEntrada) {
+    public Integer eliminarEntrada(Integer idEntrada) {
         // Actualizar Entrades.csv eliminant la entrada especificada
         actualitzarArchivoCSV(entradesPath, idEntrada, 0);
+
+        try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                if (row[0].equals(idEntrada.toString())) {
+                    return Integer.valueOf(row[1]);
+                }
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
 
         // Actualizar relacioEntradaTeclat.csv eliminant la relació de la entrada especificada
         actualitzarArchivoCSV(relacioEntradaTeclatPath, idEntrada, 0);
 
         // Actualizar relacioAlfabetEntradaPath eliminant la relació de la entrada especificada
         actualitzarArchivoCSV(relacioAlfabetEntradaPath, idEntrada, 1);
+
+        return -1;
     }
 
     /**
