@@ -316,6 +316,57 @@ public class ControladorPresentacio {
         }
     }
 
+    public static void importarTeclat(File selectedFile) throws FileNotFoundException {
+        try {
+            Scanner scanner = new Scanner(selectedFile);
+            String nomTeclat = scanner.nextLine();
+            if (nomTeclat == null || nomTeclat.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El nom del teclat no pot estar buit.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int files = Integer.parseInt(scanner.nextLine());
+            int columnes = Integer.parseInt(scanner.nextLine());
+            ArrayList<Character> distribucio = new ArrayList<>();
+            for (char c : scanner.nextLine().toCharArray()) {
+                distribucio.add(c);
+            }
+            scanner.close();
+
+            ArrayList<Integer> idEntrades = getIdEntrades();
+            ArrayList<String> nombresEntrades = new ArrayList<>();
+            for (Integer id : idEntrades) {
+                nombresEntrades.add(getNomEntrada(id));
+            }
+            JComboBox<String> entradaComboBox = new JComboBox<>(nombresEntrades.toArray(new String[0]));
+            int resultat = JOptionPane.showConfirmDialog(null, entradaComboBox, "Selecciona la entrada a la que vols associar el teclat", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resultat == JOptionPane.OK_OPTION) {
+                int indiceSeleccionado = entradaComboBox.getSelectedIndex();
+                Integer idEntradaSeleccionada = idEntrades.get(indiceSeleccionado);
+                Integer idAlfabetEntradaSeleccionada = getIdAlfabetEntrada(idEntradaSeleccionada);
+                ArrayList<Character> lletresAlfabet = getLletresAlfabet(idAlfabetEntradaSeleccionada);
+                if (lletresAlfabet.size() != distribucio.size() || !lletresAlfabet.containsAll(distribucio) || !distribucio.containsAll(lletresAlfabet)) {
+                    JOptionPane.showMessageDialog(null, "La distribució de lletres no coincideix amb l'alfabet de l'entrada seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Integer idTeclat = ctrlDomini.importarTeclat(nomTeclat, idEntradaSeleccionada, files, columnes, distribucio, 0);
+                vPrincipal.afegirTeclat(idTeclat);
+            }
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error en importar el Teclat.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en importar el Teclat: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private static Integer getIdAlfabetEntrada(Integer idEntradaSeleccionada) {
+        try {
+            return ctrlDomini.getIdAlfabetEntrada(idEntradaSeleccionada);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir l'alfabet de l'entrada: " + e.getMessage());
+            return null;
+        }
+    }
+
     // Metodes per a la gestio de Texts
     public static void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) {
         try {
@@ -458,4 +509,5 @@ public class ControladorPresentacio {
             return null;
         }
     }
+
 }

@@ -471,6 +471,15 @@ public class ControladorDomini {
         return idTeclat;
     }
 
+    public Integer importarTeclat(String nom, Integer idEntrada, int files, int columnes, ArrayList<Character> distribucio, Integer tipus) throws Exception {
+
+        Integer idTeclat = ctrlTeclat.importarTeclat(nom, idEntrada, files, columnes, distribucio, tipus);
+
+        ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
+        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
+        return idTeclat;
+    }
+
     /**
      * Elimina el teclat identificat per idTeclat
      * @param idTeclat
@@ -665,6 +674,15 @@ public class ControladorDomini {
         for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
             if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
                 return ctrlAlfabet.getNomAlfabet(idAlfabet);
+            }
+        }
+        return null;
+    }
+
+    public Integer getIdAlfabetEntrada(int idEntrada) throws Exception {
+        for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
+            if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
+                return idAlfabet;
             }
         }
         return null;

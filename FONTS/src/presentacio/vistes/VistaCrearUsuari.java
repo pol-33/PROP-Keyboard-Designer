@@ -131,6 +131,8 @@ public class VistaCrearUsuari {
         frame.setLocationRelativeTo(null); // Center the window on the screen
 
         frame.setVisible(true); // Make the window visible
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the program when the window is closed
     }
 
     private void setActionListeners() {

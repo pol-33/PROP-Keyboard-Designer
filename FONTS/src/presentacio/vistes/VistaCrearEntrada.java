@@ -43,6 +43,7 @@ public class VistaCrearEntrada {
         crearTextButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new VistaCrearText().mostrar();
+                tancar();
             }
         });
 
@@ -55,6 +56,7 @@ public class VistaCrearEntrada {
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
                         ControladorPresentacio.importarText(selectedFile);
+                        tancar();
                     } catch (FileNotFoundException ex) {
                         JOptionPane.showMessageDialog(frame, "Error en importar el Text.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -72,6 +74,7 @@ public class VistaCrearEntrada {
         crearLPFButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new VistaCrearLPF().mostrar();
+                tancar();
             }
         });
 
@@ -84,6 +87,7 @@ public class VistaCrearEntrada {
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
                         ControladorPresentacio.importarLPF(selectedFile);
+                        tancar();
                     } catch (FileNotFoundException ex) {
                         JOptionPane.showMessageDialog(frame, "Error en importar la LPF.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
