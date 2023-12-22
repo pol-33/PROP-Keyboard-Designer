@@ -1,10 +1,8 @@
 package domini.controladors;
 
 import domini.classes.Usuari;
-import org.apache.commons.lang3.ObjectUtils;
 import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
 

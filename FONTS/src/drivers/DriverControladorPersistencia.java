@@ -14,9 +14,10 @@ public class DriverControladorPersistencia {
         try {
             Scanner in = new Scanner(System.in);
             int opcion = -1;
-            String nomUsuari, contrasenya, nouText, nomTeclat, elem;
+            String nomUsuari, contrasenya, nouText, nomTeclat;
+            Character elem;
             Integer idEntradaTeclat, idTeclat, numFiles, numColumnes;
-            ArrayList<String> distribucio;
+            ArrayList<Character> distribucio;
 
 
             while (opcion != 0) {
@@ -198,7 +199,7 @@ public class DriverControladorPersistencia {
                         in.nextLine(); //neteja el buffer del scanner
                         distribucio = new ArrayList<>();
                         System.out.println("Introduce los elementos de la distribución (finaliza con 'end')");
-                        while (!(elem = in.nextLine()).equals("end")) {
+                        while (!(elem = in.nextLine().charAt(0)).equals("end")) {
                             distribucio.add(elem);
                         }
                         ctrl.crearTeclat(idEntradaTeclat, idTeclat, nomTeclat, numFiles, numColumnes, distribucio);
@@ -239,7 +240,7 @@ public class DriverControladorPersistencia {
                         in.nextLine(); // Lneteja el buffer del scanner
                         distribucio = new ArrayList<>();
                         System.out.println("Introduce los elementos de la nueva distribución (finaliza con 'end')");
-                        while (!(elem = in.nextLine()).equals("end")) {
+                        while (!(elem = in.nextLine().charAt(0)).equals("end")) {
                             distribucio.add(elem);
                         }
                         ctrl.modificarDistribucio(idTeclat, distribucio);

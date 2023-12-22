@@ -230,7 +230,7 @@ public class ControladorPersistencia {
      * @param idTeclat Identificador del teclat a modificar.
      * @param distribucio Nova distribució de tecles (llista de Strings representant la distribució).
      */
-    public void modificarDistribucio(Integer idTeclat, ArrayList<String> distribucio) {
+    public void modificarDistribucio(Integer idTeclat, ArrayList<Character> distribucio) {
         gestorTeclats.actualizarDistribucioTeclat(idTeclat, distribucio);
     }
 

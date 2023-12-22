@@ -162,7 +162,7 @@ public class GestorTeclats {
      * @param idTeclat Identificador del teclat a actualitzar.
      * @param distribucio Nova distribució de tecles (llista de Strings representant la distribució).
      */
-    public void actualizarDistribucioTeclat(Integer idTeclat, ArrayList<String> distribucio) {
+    public void actualizarDistribucioTeclat(Integer idTeclat, ArrayList<Character> distribucio) {
         actualizarTeclat(idTeclat, null, null, null, distribucio);
     }
 
@@ -176,7 +176,7 @@ public class GestorTeclats {
      * @param numColumnes Nou número de columnes (null per no canviar).
      * @param distribucio Nova distribució del teclat (null per no canviar).
      */
-    private void actualizarTeclat(Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+    private void actualizarTeclat(Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         List<String[]> teclatsActualizados = new ArrayList<>();
         boolean teclatEncontrado = false;
 
@@ -184,7 +184,7 @@ public class GestorTeclats {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idTeclat.toString())) {
-                    String distribucioString = distribucio != null ? String.join(",", distribucio) : row[4];
+                    String distribucioString = convertirArrayListAString(distribucio);
                     String[] teclatActualizado = {
                             idTeclat.toString(),
                             nom != null ? nom : row[1],

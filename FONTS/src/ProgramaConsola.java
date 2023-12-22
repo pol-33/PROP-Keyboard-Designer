@@ -271,6 +271,7 @@ public class ProgramaConsola {
         }
     }
 
+
     private static void mostrarTextos() {
         try {
             ArrayList<Integer> idsTextos = controlador.getIdEntrades();
