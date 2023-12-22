@@ -178,7 +178,7 @@ public class DriverControladorPersistencia {
                             text2 = in.nextLine(); // Permet llegir una linia completa amb espais
                         }
 
-                        ctrl.modificarContingutEntrada(idEntrada, nomEntrada, LPF, text2);
+                        ctrl.modificarContingutEntrada(idEntrada, LPF, text2);
                         break;
 
 
