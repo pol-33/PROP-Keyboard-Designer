@@ -10,6 +10,13 @@ CLASS_INPUT =	./src/domini/classes/*.java \
 CLASS_INPUT_PERSISTENCIA =  ./src/persistencia/controladors/*.java \
                             ./src/persistencia/classes/*.java
 
+CLASS_INPUT_DOMINI = ./src/domini/classes/*.java \
+                     ./src/domini/controladors/*.java
+
+CLASS_INPUT_PRESENTACIO = ./src/presentacio/vistes/*.java \
+                          ./src/presentacio/elements/*.java \
+                          ./src/presentacio/controladors/*.java
+
 CLASS_OUTPUT =	../EXE/out/
 
 JAR_OUTPUT =	../EXE/
@@ -26,14 +33,19 @@ all:
 	javac --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT)
 	javac --release 11 -cp $(JUNIT_JARS) -d $(CLASS_OUTPUT) $(CLASS_INPUT) $(JUNIT_TESTS)
 
-jars:
-	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT) ./src/drivers/*.java
-	jar cmvf ./src/drivers/DriverControladorAlgoritme.mf $(JAR_OUTPUT)DriverControladorAlgoritme.jar -C $(CLASS_OUTPUT) .
-	jar cmvf ./src/drivers/Main.mf $(JAR_OUTPUT)Main.jar -C $(CLASS_OUTPUT) .
+jars: jars_persistencia jars_domini jars_presentacio
 
 jars_persistencia:
 	javac -cp $(OPENCSV_JARS) --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT_PERSISTENCIA) ./src/drivers/DriverControladorPersistencia.java
 	jar cmvf ./src/drivers/DriverControladorPersistencia.mf $(JAR_OUTPUT)DriverControladorPersistencia.jar -C $(CLASS_OUTPUT) .
+
+jars_domini:
+	javac --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT_DOMINI) ./src/drivers/DriverControladorDomini.java
+	jar cmvf ./src/drivers/DriverControladorDomini.mf $(JAR_OUTPUT)DriverControladorDomini.jar -C $(CLASS_OUTPUT) .
+
+jars_presentacio:
+	javac --release 11 -d $(CLASS_OUTPUT) $(CLASS_INPUT_PRESENTACIO) ./src/drivers/Main.java
+	jar cmvf ./src/drivers/Main.mf $(JAR_OUTPUT)Main.jar -C $(CLASS_OUTPUT) .
 
 executaDriverControladorAlgoritme: jars
 	java -jar $(JAR_OUTPUT)DriverControladorAlgoritme.jar
@@ -44,6 +56,9 @@ executaAplicacio: jars
 executaDriverControladorPersistencia: jars_persistencia
 	cd ./../EXE/out && \
     java -cp .:../../FONTS/lib/opencsv-5.9.jar:../../FONTS/lib/commons-lang3-3.14.0.jar drivers.DriverControladorPersistencia
+
+executaDriverControladorDomini: jars_domini
+	java -jar $(JAR_OUTPUT)DriverControladorDomini.jar
 
 AllTests: AlfabetTest EntradaTest LPFTest TeclatTest TextTest UsuariTest
 
