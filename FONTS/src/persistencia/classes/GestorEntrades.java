@@ -193,6 +193,20 @@ public class GestorEntrades {
         }
     }
 
+    public Integer carregarIdMaxim() {
+        Integer idMax = 0;
+        try (CSVReader reader = new CSVReader(new FileReader(entradesPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                Integer id = Integer.valueOf(row[0]);
+                if (id > idMax) idMax = id;
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+        return idMax;
+    }
+
 
     /**
      * Determina el tipus d'una entrada basant-se en la informació de la fila.
