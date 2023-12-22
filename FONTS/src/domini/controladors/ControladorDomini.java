@@ -493,6 +493,9 @@ public class ControladorDomini {
         ArrayList<Character> alfabet = ctrlAlfabet.getLletresAlfabet(idAlfabet);
 
         ctrlTeclat.modificarFilesColumnesTeclat(idTeclat, lpf, alfabet, files, columnes);
+        ctrlPersistencia.modificarNumColumnesTeclat(idTeclat, columnes);
+        ctrlPersistencia.modificarNumFilesTeclat(idTeclat, files);
+        ctrlPersistencia.modificarDistribucio(idTeclat, ctrlTeclat.getDistribucioTeclat(idTeclat));
     }
 
     public Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) throws Exception {
