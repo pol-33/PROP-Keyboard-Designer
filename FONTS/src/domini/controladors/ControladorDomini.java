@@ -260,6 +260,7 @@ public class ControladorDomini {
         }
 
         //Carregar ids maxims als controladors
+        /**
         Integer idMaxAlfabets = ctrlPersistencia.carregarIdMaxAlfabet();
         Integer idMaxEntrades = ctrlPersistencia.carregarIdMaxEntrada();
         Integer idMaxTeclats = ctrlPersistencia.carregarIdMaxTeclat();
@@ -267,6 +268,7 @@ public class ControladorDomini {
         ctrlAlfabet.carregarComptador(idMaxAlfabets);
         ctrlEntrada.carregarComptador(idMaxEntrades);
         ctrlTeclat.carregarComptador(idMaxTeclats);
+         **/
     }
 
     /**
