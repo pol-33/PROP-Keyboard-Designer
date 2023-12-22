@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -34,11 +35,11 @@ public class GestorTeclats {
      * @param numColumnes Número de columnes del teclat.
      * @param distribucio Llista amb la distribució de teclas.
      */
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer tipus, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath, true))) {
             // Conversió de ArrayList<String> a String per al CSV
             String distribucioString = convertirArrayListAString(distribucio);
-            String[] teclatData = { idTeclat.toString(), nom, numFiles.toString(), numColumnes.toString(), distribucioString };
+            String[] teclatData = { idTeclat.toString(), nom, tipus.toString(), numFiles.toString(), numColumnes.toString(), distribucioString };
             writer.writeNext(teclatData);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,16 +59,16 @@ public class GestorTeclats {
      * @param idEntrada Identificador de l'entrada.
      * @return ArrayList de arrays de Strings representant els teclats.
      */
-    public ArrayList<String[]> carregarTeclats(Integer idEntrada) {
-        ArrayList<String> idsTeclatsAssociats = new ArrayList<>();
-        ArrayList<String[]> teclatsComplets = new ArrayList<>();
+    public String carregarTeclat(Integer idEntrada) {
+        String idTeclatAssociat = null;
+        String teclatComplet = null;
 
-        // Llegeix relacioEntradaTeclatPath per trobar els teclats associatsnidEntrada
+        // Llegeix relacioEntradaTeclatPath per trobar el teclat associat a idEntrada
         try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idEntrada.toString())) {
-                    idsTeclatsAssociats.add(row[1]); // suposem que el id del telcta esta en la segona columna
+                    idTeclatAssociat = row[1];
                 }
             }
         } catch (IOException | CsvException e) {
@@ -78,15 +79,15 @@ public class GestorTeclats {
         try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
-                if (idsTeclatsAssociats.contains(row[0])) { // Suposem que el id del telcta esta en la primera columna de teclatas.csv
-                    teclatsComplets.add(row);
+                if (Objects.equals(idTeclatAssociat, row[0])) { // Suposem que el id del teclat esta en la primera columna de teclatas.csv
+                    teclatComplet = convertirArrayAString(row);
                 }
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
 
-        return teclatsComplets;
+        return teclatComplet;
     }
 
 
@@ -142,7 +143,7 @@ public class GestorTeclats {
      * @param numFiles Nou número de files que tindrà el teclat.
      */
     public void actualizarNumFilesTeclat(Integer idTeclat, Integer numFiles) {
-        actualizarTeclat(idTeclat, null, numFiles, null, null);
+        actualizarTeclat(idTeclat, null, null, numFiles, null, null);
     }
 
     /**
@@ -152,7 +153,7 @@ public class GestorTeclats {
      * @param numColumnes Nou número de columnes que tindrà el teclat.
      */
     public void actualizarNumColumnesTeclat(Integer idTeclat, Integer numColumnes) {
-        actualizarTeclat(idTeclat, null, null, numColumnes, null);
+        actualizarTeclat(idTeclat, null, null, null, numColumnes, null);
     }
 
 
@@ -163,7 +164,7 @@ public class GestorTeclats {
      * @param distribucio Nova distribució de tecles (llista de Strings representant la distribució).
      */
     public void actualizarDistribucioTeclat(Integer idTeclat, ArrayList<Character> distribucio) {
-        actualizarTeclat(idTeclat, null, null, null, distribucio);
+        actualizarTeclat(idTeclat, null, null, null, null, distribucio);
     }
 
 
@@ -176,7 +177,7 @@ public class GestorTeclats {
      * @param numColumnes Nou número de columnes (null per no canviar).
      * @param distribucio Nova distribució del teclat (null per no canviar).
      */
-    private void actualizarTeclat(Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
+    private void actualizarTeclat(Integer idTeclat, String nom, Integer tipus, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         List<String[]> teclatsActualizados = new ArrayList<>();
         boolean teclatEncontrado = false;
 
@@ -187,9 +188,10 @@ public class GestorTeclats {
                     String[] teclatActualizado = {
                             idTeclat.toString(),
                             nom != null ? nom : row[1],
-                            numFiles != null ? numFiles.toString() : row[2],
-                            numColumnes != null ? numColumnes.toString() : row[3],
-                            distribucio != null ? convertirArrayListAString(distribucio) : row[4]
+                            tipus != null ? nom : row[2],
+                            numFiles != null ? numFiles.toString() : row[3],
+                            numColumnes != null ? numColumnes.toString() : row[4],
+                            distribucio != null ? convertirArrayListAString(distribucio) : row[5]
                     };
                     teclatsActualizados.add(teclatActualizado);
                     teclatEncontrado = true;
@@ -228,7 +230,13 @@ public class GestorTeclats {
         return stringBuilder.toString();
     }
 
-
-
-
+    /**
+     * Converteix un array de Strings en una única cadena de text.
+     * Cada element de l'array es separa per una coma i un espai.
+     * @param array Array de Strings a convertir.
+     * @return String resultant de la conversió.
+     */
+    private static String convertirArrayAString(String[] array) {
+        return String.join(",", array);
+    }
 }
