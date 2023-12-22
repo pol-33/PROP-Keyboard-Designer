@@ -48,10 +48,8 @@ public class VistaModificarLPF {
 
         JPanel alfabetPanel = new JPanel(new GridBagLayout());
 
-        //Integer idAlfabet = ControladorPresentacio.getIdAlfabetDeLPF(idLPF);
-        //String nombreAlfabet = ControladorPresentacio.getNomAlfabet(idAlfabet);
-        String nombreAlfabet = "getIdAlfabetDeLPF(idLPF) no implementat a domini";
-        JLabel alfabetLabel = new JLabel("Alfabet seleccionat: " + nombreAlfabet);
+        String nomAlfabet = ControladorPresentacio.getNomAlfabetEntrada(idLPF);
+        JLabel alfabetLabel = new JLabel("Alfabet seleccionat: " + nomAlfabet);
         alfabetPanel.add(alfabetLabel, gbc);
 
         JPanel entryAndAlphabetPanel = new JPanel(new GridLayout(2, 1));

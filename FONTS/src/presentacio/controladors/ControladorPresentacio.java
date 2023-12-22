@@ -157,16 +157,6 @@ public class ControladorPresentacio {
         }
     }
 
-    public static Integer getIdAlfabetDeLPF(Integer idLPF) {
-        try {
-            //return ctrlDomini.getIdAlfabetDeLPF(idLPF);
-            return 1;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al obtenir l'id de l'alfabet de l'LPF: " + e.getMessage());
-            return null;
-        }
-    }
-
     public static ArrayList<Integer> getIdEntrades () {
         try {
             return ctrlDomini.getIdEntrades();

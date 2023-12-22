@@ -39,10 +39,8 @@ public class VistaModificarText {
         JLabel nomLabel = new JLabel("Nom del text: " + nombreEntrada);
         panel.add(nomLabel, gbc);
 
-        //Integer idAlfabet = ControladorPresentacio.getIdAlfabetDeLPF(idLPF);
-        //String nombreAlfabet = ControladorPresentacio.getNomAlfabet(idAlfabet);
-        String nombreAlfabet = "getIdAlfabetDeLPF(idLPF) no implementat a domini";
-        JLabel alfabetLabel = new JLabel("Alfabet seleccionat: " + nombreAlfabet);
+        String nomAlfabet = ControladorPresentacio.getNomAlfabetEntrada(idText);
+        JLabel alfabetLabel = new JLabel("Alfabet seleccionat: " + nomAlfabet);
         panel.add(alfabetLabel, gbc);
 
         JLabel contingutLabel = new JLabel("Contingut:");
