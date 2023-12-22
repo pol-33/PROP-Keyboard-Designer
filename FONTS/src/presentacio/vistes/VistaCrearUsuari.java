@@ -159,6 +159,7 @@ public class VistaCrearUsuari {
                 }
                 else {
                     ControladorPresentacio.crearUsuari(username, new String(password)); // Convert the password to a String
+                    tancar();
                 }
             }
         });
