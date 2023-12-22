@@ -85,7 +85,6 @@ public class ControladorTeclat {
     public Integer crearTeclatPolzes(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) throws Exception {
 
-
         Integer idTeclat = contador;
         contador++;
 
@@ -96,6 +95,16 @@ public class ControladorTeclat {
         conjuntTeclats.put(idTeclat, nouTeclat);
         return idTeclat;
     }
+
+     public Integer importarTeclat(String nom, Integer idEntrada, int files, int columnes, ArrayList<Character> distribucio,
+                                   Integer tipus) throws Exception {
+        Integer idTeclat = contador;
+        contador++;
+
+        Teclat nouTeclat = new Teclat(nom, distribucio, idEntrada, files, columnes, idTeclat, tipus);
+        conjuntTeclats.put(idTeclat, nouTeclat);
+        return idTeclat;
+     }
     
     /**
      * Crea un teclat donada la seva distribucio, sense pasar per algoritme
@@ -284,4 +293,5 @@ public class ControladorTeclat {
             throw new Exception("No existeix el teclat amb aquest id");
         }
     }
-}
+
+ }

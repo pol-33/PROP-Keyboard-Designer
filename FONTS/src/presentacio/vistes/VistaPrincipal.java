@@ -141,7 +141,7 @@ public class VistaPrincipal extends JFrame {
         // Botons
         btCrearText = new JButton("Nova Entrada");
         btCrearLPF = new JButton("Nova LPF");
-        btModificarEntrada = new JButton("Modificar");
+        btModificarEntrada = new JButton("Modificar Entrada Seleccionada");
         btEliminarEntrada = new JButton("Eliminar");
 
         // Configuracio de les accions dels botons d'Entrades
@@ -202,8 +202,8 @@ public class VistaPrincipal extends JFrame {
         panellTeclats.setLayout(new BoxLayout(panellTeclats, BoxLayout.Y_AXIS));
 
         // Botons
-        btCrearTeclat = new JButton("Crear nou teclat");
-        btModificarTeclat = new JButton("Modificar files i columnes");
+        btCrearTeclat = new JButton("Crear Nou Teclat");
+        btModificarTeclat = new JButton("Modificar Files i Columnes");
         btEliminarTeclat = new JButton("Eliminar");
         btVeureTeclat = new JButton("Veure Teclat Seleccionat");
 
@@ -587,8 +587,8 @@ public class VistaPrincipal extends JFrame {
 
     // * metode que crida el btCrearTeclat
     private void crearTeclat() {
-        VistaCrearTeclat vCrearTeclat = new VistaCrearTeclat();
-        vCrearTeclat.mostrar();
+        VistaComCrearTeclat vComCrearTeclat = new VistaComCrearTeclat();
+        vComCrearTeclat.mostrar();
     }
 
     // TODO metode que crida el btModificarTeclat
