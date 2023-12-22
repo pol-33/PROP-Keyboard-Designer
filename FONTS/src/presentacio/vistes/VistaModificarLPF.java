@@ -1,5 +1,7 @@
 package presentacio.vistes;
 
+import presentacio.elements.*;
+
 import javax.swing.*;
 import presentacio.controladors.ControladorPresentacio;
 import java.awt.*;
@@ -11,8 +13,8 @@ import javax.swing.table.DefaultTableModel;
 public class VistaModificarLPF {
     private JFrame frame;
     private JTextField wordTextField;
-    private DefaultListModel<String> listModel;
-    private JList<String> list;
+    private DefaultListModel<WordFrequency> listModel;
+    private JList<WordFrequency> list;
     private Integer idLPF;
 
     public VistaModificarLPF(Integer idLPF) {
@@ -76,7 +78,7 @@ public class VistaModificarLPF {
             public void actionPerformed(ActionEvent e) {
                 String word = wordTextField.getText();
                 int frequency = (Integer) frequencySpinner.getValue();
-                listModel.addElement(word + " " + frequency);
+                listModel.addElement(new WordFrequency(word, frequency));
                 wordTextField.setText("");
                 frequencySpinner.setValue(1);
             }
@@ -128,7 +130,7 @@ public class VistaModificarLPF {
         HashMap<String, Integer> contenidoLPF = ControladorPresentacio.getContingutLPF(idLPF);
         for (String word : contenidoLPF.keySet()) {
             int frequency = contenidoLPF.get(word);
-            listModel.addElement(word + " " + frequency);
+            listModel.addElement(new WordFrequency(word, frequency));
         }
     }
 
@@ -136,10 +138,8 @@ public class VistaModificarLPF {
         // Convert the list data into a HashMap<String, Integer>
         HashMap<String, Integer> contenidoEntradaMap = new HashMap<>();
         for (int i = 0; i < listModel.getSize(); i++) {
-            String[] parts = listModel.getElementAt(i).split(" ");
-            String word = parts[0];
-            int frequency = Integer.parseInt(parts[1]);
-            contenidoEntradaMap.put(word, frequency);
+            WordFrequency wordFrequency = listModel.getElementAt(i);
+            contenidoEntradaMap.put(wordFrequency.getWord(), wordFrequency.getFrequency());
         }
 
         try {

@@ -1,7 +1,11 @@
 package presentacio.vistes;
 
+import presentacio.elements.*;
+
 import javax.swing.*;
 import presentacio.controladors.ControladorPresentacio;
+import presentacio.elements.WordFrequency;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -14,8 +18,8 @@ public class VistaCrearLPF {
     private JTextField nomTextField;
     private JTextField wordTextField;
     private JTextField frequencyTextField;
-    private DefaultListModel<String> listModel;
-    private JList<String> list;
+    private DefaultListModel<WordFrequency> listModel;
+    private JList<WordFrequency> list;
     private JComboBox<String> alfabetComboBox;
 
     public VistaCrearLPF() {
@@ -80,7 +84,7 @@ private void initComponents() {
         public void actionPerformed(ActionEvent e) {
             String word = wordTextField.getText();
             int frequency = (Integer) frequencySpinner.getValue();
-            listModel.addElement(word + " " + frequency);
+            listModel.addElement(new WordFrequency(word, frequency));
             wordTextField.setText("");
             frequencySpinner.setValue(1);
         }
@@ -142,10 +146,8 @@ private void initComponents() {
         // Convert the list data into a HashMap<String, Integer>
         HashMap<String, Integer> contenidoEntradaMap = new HashMap<>();
         for (int i = 0; i < listModel.getSize(); i++) {
-            String[] parts = listModel.getElementAt(i).split(" ");
-            String word = parts[0];
-            int frequency = Integer.parseInt(parts[1]);
-            contenidoEntradaMap.put(word, frequency);
+            WordFrequency wordFrequency = listModel.getElementAt(i);
+            contenidoEntradaMap.put(wordFrequency.getWord(), wordFrequency.getFrequency());
         }
 
         int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
