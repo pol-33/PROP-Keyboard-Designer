@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class TextTest{
     @Test
     public void provaConstructor() throws Exception {
-        Text text = new Text("ProvaText", 1, "hello world", 2);
+        Text text = new Text("ProvaText", 1, null,"hello world", 2);
 
         // Verify the LPF field was calculated properly using reflection
         Field campLPF = Text.class.getSuperclass().getDeclaredField("lpf");
@@ -22,19 +22,19 @@ public class TextTest{
 
     @Test
     public void provaConstructorAmbContingutNull() {
-        Exception excepcio = assertThrows(Exception.class, () -> new Text("ProvaText", 1, null, 2));
+        Exception excepcio = assertThrows(Exception.class, () -> new Text("ProvaText", 1, null, null,2));
         assertEquals("ERROR: El contingut del text no pot ser nul", excepcio.getMessage());
     }
 @Test
     public void provaSetTextNull() throws Exception {
-        Text text = new Text("ProvaText", 1, "hello world", 2);
+        Text text = new Text("ProvaText", 1, null,"hello world", 2);
         Exception excepcio = assertThrows(IllegalArgumentException.class, () -> text.setText(null));
         assertEquals("ERROR: El contingut del text no pot ser null", excepcio.getMessage());
     }
 
     @Test
     public void provaCalculateLPFOnConstruction() throws Exception {
-        Text text = new Text("ProvaText", 1, "hello hello world", 2);
+        Text text = new Text("ProvaText", 1, null,"hello hello world", 2);
 
         // Access and test the private LPF field
         Field campLPF = Text.class.getSuperclass().getDeclaredField("lpf");
@@ -46,7 +46,7 @@ public class TextTest{
     }
 @Test
     public void provaCalculateLPFOnSetText() throws Exception {
-        Text text = new Text("ProvaText", 1, "text inicial", 2);
+        Text text = new Text("ProvaText", 1, null,"text inicial", 2);
         text.setText("new new text");
 
         // Access and test the private LPF field

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe GestorEntrades. Gestiona les entrades emmagatzemades en arxius CSV.
@@ -44,7 +45,7 @@ public class GestorEntrades {
         // Escriure l'entrada en Entrades.csv
         try (CSVWriter writer = new CSVWriter(new FileWriter(entradesPath, true))) {
             String tipus = text != null ? "0" : "1"; // 0 per a LPF, 1 per a text
-            String lpfString = lpf != null ? lpf.toString() : "";
+            String lpfString = lpf != null ? hashMapToString(lpf) : "";
             String[] entrada = {idEntrada.toString(), nom, tipus, lpfString, text};
 
             writer.writeNext(entrada);
@@ -67,9 +68,9 @@ public class GestorEntrades {
      * @param idAlfabet Identificador de l'alfabet.
      * @return ArrayList de arrays de Strings representant les entrades.
      */
-    public ArrayList<String[]> carregarEntrades(Integer idAlfabet) {
+    public ArrayList<String> carregarEntrades(Integer idAlfabet) {
         ArrayList<String> idsEntradesAssociades = new ArrayList<>();
-        ArrayList<String[]> entradesCompletes = new ArrayList<>();
+        ArrayList<String> entradesCompletes = new ArrayList<>();
 
         // Leer relacioAlfabetEntradaPath para encontrar entradas asociadas a idAlfabet
         try (CSVReader reader = new CSVReader(new FileReader(relacioAlfabetEntradaPath))) {
@@ -88,7 +89,7 @@ public class GestorEntrades {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (idsEntradesAssociades.contains(row[0])) { // Suponiendo que el id de la entrada está en la primera columna de Entrada.csv
-                    entradesCompletes.add(row);
+                    entradesCompletes.add(convertirArrayAString(row));
                 }
             }
         } catch (IOException | CsvException e) {
@@ -165,10 +166,10 @@ public class GestorEntrades {
                     String nom = row[1];
 
                     if ("1".equals(tipus) && lpf != null) { // Actualizar com LPF
-                        lpfString = lpf.toString();
+                        lpfString = hashMapToString(lpf);
                         texto = ""; // Asumim que el text esta buit quan es LPF
                     } else if ("0".equals(tipus) && lpf != null) { // Actualizar com text
-                        lpfString = lpf.toString();
+                        lpfString = hashMapToString(lpf);
                         texto = text;
                     }
 
@@ -200,6 +201,32 @@ public class GestorEntrades {
      */
     private String determinarTipo(String[] row) {
         return row[2]; // Suposant que la columna 3 emmagatzema el tipus ('0' per a LPF, '1' per a text)
+    }
+
+    /**
+     * Converteix un array de Strings en una única cadena de text.
+     * Cada element de l'array es separa per una coma i un espai.
+     * @param array Array de Strings a convertir.
+     * @return String resultant de la conversió.
+     */
+    private static String convertirArrayAString(String[] array) {
+        return String.join(",", array);
+    }
+
+    public static String hashMapToString(HashMap<String, Integer> hashMap) {
+        StringBuilder result = new StringBuilder();
+
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            // Agregar palabra y frecuencia separadas por ":"
+            result.append(entry.getKey()).append(":").append(entry.getValue()).append(".");
+        }
+
+        // Eliminar el último punto
+        if (result.length() > 0) {
+            result.deleteCharAt(result.length() - 1);
+        }
+
+        return result.toString();
     }
 }
 

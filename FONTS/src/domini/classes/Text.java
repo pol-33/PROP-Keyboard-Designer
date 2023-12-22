@@ -21,11 +21,12 @@ public class Text extends Entrada{
      * Constructora de Text.
      * @param nomEntrada Nom de l'entrada associada al text
      * @param id Identificador del text
+     * @param lpf Lpf del text
      * @param contingutEntrada Contingut textual del text
      * @param idAlfabet Identificador de l'alfabet associat al text
      * @throws Exception Si el contingut del text és null
      */
-    public Text(String nomEntrada, Integer id, String contingutEntrada, Integer idAlfabet) throws Exception {
+    public Text(String nomEntrada, Integer id, HashMap<String, Integer> lpf, String contingutEntrada, Integer idAlfabet) throws Exception {
         if(contingutEntrada == null) throw new Exception("ERROR: El contingut del text no pot ser nul");
         this.nom = nomEntrada;
         this.id = id;
@@ -33,7 +34,12 @@ public class Text extends Entrada{
         this.idAlfabet = idAlfabet;
         this.idTeclats = new ArrayList<>();
         this.tipus = 0;
-        calculateLPF();
+        if (lpf != null) {
+            this.lpf = lpf;
+        }
+        else {
+            calculateLPF();
+        }
     }
 
     // ---------------------------------------------------------------------------- //
