@@ -1,5 +1,0 @@
-id,nom,tipus,lpf,text
-1,lpfCat,lpf,"a.1,b.1,c.1,d.1,ç.1"
-2,textCat,text,"a.1,b.1,c.1,d.1,ç.1","a,b,c,d,ç"
-3,lpfCast,lpf,"a.1,b.1,c.1,d.1,ñ.1"
-1,lpfCast,text,"a.1,b.1,c.1,d.1,ñ.1","a,b,c,d,ñ"
