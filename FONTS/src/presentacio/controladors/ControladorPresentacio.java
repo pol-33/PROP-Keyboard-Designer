@@ -357,9 +357,10 @@ public class ControladorPresentacio {
         String nombreEntrada = scanner.nextLine();
         HashMap<String, Integer> contenidoEntrada = new HashMap<>();
         while (scanner.hasNextLine()) {
-            String[] parts = scanner.nextLine().split(" ");
-            String word = parts[0];
-            int frequency = Integer.parseInt(parts[1]);
+            String line = scanner.nextLine();
+            int lastSpaceIndex = line.lastIndexOf(" ");
+            String word = line.substring(0, lastSpaceIndex);
+            int frequency = Integer.parseInt(line.substring(lastSpaceIndex + 1));
             contenidoEntrada.put(word, frequency);
         }
         scanner.close();
