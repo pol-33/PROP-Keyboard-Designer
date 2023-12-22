@@ -433,17 +433,7 @@ public class ControladorDomini {
     public void modificarContrasenyaUsuari(String contrasenya) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder modificar un usuari");
         usuariActiu.modificarContrasenya(contrasenya);
-    }
-
-
-    /**
-     * Modifica el nom de l'usuari actiu.
-     * @param nomUsuari Nova contrasenya
-     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
-     */
-    public void modificarNomUsuari(String nomUsuari) throws Exception {
-        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder modificar un usuari");
-        usuariActiu.modificarNomUsuari(nomUsuari);
+        ctrlPersistencia.modificarPasswordUsuari(usuariActiu.getNom(), contrasenya);
     }
 
     //--------------------------------Teclats---------------------------------//
