@@ -407,7 +407,7 @@ public class ControladorDomini {
      * @throws Exception Si la combinació usuari-contraseya és incorrecta
      */
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
-        if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
+        if (usuariActiu != null) tancarSessio();
         ArrayList<String> usernames = ctrlPersistencia.obtenirUsernames();
         if (!usernames.contains(nomUsuari)) throw new Exception("No existeix un usuari amb aquest nom");
 
