@@ -64,5 +64,8 @@ public class DriverControladorDomini {
         System.out.println("3 - Tancar sessio");
         System.out.println("4 - Modificar contrasenya");
         System.out.println("5 - Imprimir si hi ha usuari actiu");
+        System.out.println("---------------------------");
+        System.out.println("6 - Crear alfabet");
+        System.out.println();
     }
 }

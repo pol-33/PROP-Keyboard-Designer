@@ -116,12 +116,12 @@ public class ControladorPersistencia {
      * @param idAlfabet Identificador de l'alfabet a modificar.
      * @param novesLletres Llista de noves lletres a afegir a l'alfabet.
      */
-    public void afegirLletresAlfabet(Integer idAlfabet, ArrayList<Character> novesLletres) {
+    public void afegirLletresAlfabet(Integer idAlfabet, Character novaLletra) {
         String[] alfabet = gestorAlfabets.carregarAlfabet(idAlfabet);
         if (alfabet != null) {
             gestorAlfabets.eliminarAlfabetSoft(idAlfabet);
             if (alfabet.length > 2) {
-                alfabet[2] = alfabet[2] + "." + convertirArrayListToString(novesLletres);
+                alfabet[2] = alfabet[2] + "." + novaLletra;
             }
             gestorAlfabets.crearAlfabet(alfabet);
         }
