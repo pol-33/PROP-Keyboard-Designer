@@ -7,47 +7,50 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VistaLogin {
+public class VistaCrearUsuari {
 
     private JFrame frame;
     private JPanel panel;
-    private JLabel userLabel, passwordLabel;
+    private JLabel userLabel, passwordLabel, passwordRepeatLabel;
     private JTextField userTextField;
-    private JPasswordField passwordField;
+    private JPasswordField passwordField, passwordRepeatField;
     private JButton loginButton, signUpButton;
 
-    public VistaLogin() {
+    public VistaCrearUsuari() {
         initComponents();
         initUI();
         setActionListeners();
-    }
-
-    public void tancar() {
-        frame.dispose();
     }
 
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    public void tancar() {
+        frame.dispose();
+    }
+
     private void initComponents() {
-        frame = new JFrame("Inici de sessió");
+        frame = new JFrame("Crear Usuari");
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Afegir marges al panell
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add a margin to the panel
 
         userLabel = new JLabel("Nom d'Usuari: ");
         passwordLabel = new JLabel("Contrasenya: ");
+        passwordRepeatLabel = new JLabel("Repetir contrasenya: ");
         userTextField = new JTextField(20);
-        userTextField.setMinimumSize(new Dimension(160, 20)); // Establir la mida mínima
+        userTextField.setMinimumSize(new Dimension(160, 20)); // Set the minimum size
         passwordField = new JPasswordField(20);
-        passwordField.setMinimumSize(new Dimension(160, 20)); // Establir la mida mínima
-        loginButton = new JButton("Inicia la sessió");
-        signUpButton = new JButton("<html><center>No tens un compte?<br>Registra't-hi ara!</center></html>");
+        passwordField.setMinimumSize(new Dimension(160, 20)); // Set the minimum size
+        passwordRepeatField = new JPasswordField(20);
+        passwordRepeatField.setMinimumSize(new Dimension(160, 20)); // Set the minimum size
+        loginButton = new JButton("<html><center>Ja tens un compte?<br>Inicia la sessió!</center></html>");
+        signUpButton = new JButton("Registra-t'hi");
 
-        // Estilitzar els botons
+        // Style the buttons
         loginButton.setBackground(Color.LIGHT_GRAY);
+        loginButton.setBorder(null); // Remove border from the button
         signUpButton.setBackground(Color.LIGHT_GRAY);
-        signUpButton.setBorder(null); // Treure borde al botó
     }
 
     private void initUI() {
@@ -71,25 +74,32 @@ public class VistaLogin {
         gbc.gridx = 1;
         panel.add(passwordField, gbc);
 
+        // Add passwordRepeatLabel and passwordRepeatField to the panel
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(passwordRepeatLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(passwordRepeatField, gbc);
+
         // Create a JPanel for the buttons and add it to the panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.add(loginButton);
-        gbc.gridy = 2;
+        buttonPanel.add(signUpButton);
+        gbc.gridy = 3;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
         panel.add(buttonPanel, gbc);
 
         // Add passwordLabel and passwordField to the panel
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridx = 0;
-        panel.add(signUpButton, gbc);
+        panel.add(loginButton, gbc);
         gbc.gridx = 1;
 
         // Add panel to the frame
         frame.add(panel, BorderLayout.CENTER);
 
         // Center the window on the screen and adjust size
-        frame.setSize(350, 250);
+        frame.setSize(350, 270);
         frame.setLocationRelativeTo(null); // Center the window on the screen
 
         frame.setVisible(true); // Make the window visible
@@ -99,21 +109,27 @@ public class VistaLogin {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = userTextField.getText();
-                char[] password = passwordField.getPassword();
-                ControladorPresentacio.iniciarSessio(username, new String(password)); // Convertir la contraseña a String
+                // Obrir la vista de login
+                VistaLogin vistaLogin = new VistaLogin();
+                vistaLogin.mostrar();
+
+                tancar();
             }
         });
 
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obre la vista de registrar usuari
-                VistaCrearUsuari vistaCrearUsuari = new VistaCrearUsuari();
-                vistaCrearUsuari.mostrar();
-
-                // Tancar la vista de login
-                tancar();
+                String username = userTextField.getText();
+                String password = new String(passwordField.getPassword());
+                String passwordRepeat = new String(passwordRepeatField.getPassword());
+                if (!password.equals(passwordRepeat)) {
+                    JOptionPane.showMessageDialog(frame, "Les contrasenyes no coincideixen", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else {
+                    ControladorPresentacio.crearUsuari(username, new String(password)); // Convert the password to a String
+                }
             }
         });
     }
