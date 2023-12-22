@@ -246,18 +246,14 @@ public class ControladorDomini {
         ArrayList<String> alfabetsEnCSV = ctrlPersistencia.carregarAlfabets(nomUsuari);
         carregarAlfabets(alfabetsEnCSV);
 
+
         //Carregar entrades de cada un dels alfabets
-        /**
         for (String alfabetEnCSV : alfabetsEnCSV) {
-            String idAlfabet = alfabetEnCSV.split(",")[0]; //obtenim l'id de l'alfabet
-            ArrayList<String> entradesEnCSV = new ArrayList<>();//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
-            carregarEntrades(entradesEnCSV); //instanciem les entrades
+            Integer idAlfabet = Integer.valueOf(alfabetEnCSV.split(",")[0]); //obtenim l'id de l'alfabet
+            ArrayList<String> entradesEnCSV = ctrlPersistencia.carregarEntrades(idAlfabet);//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
+            carregarEntrades(entradesEnCSV, idAlfabet); //instanciem les entrades
         }
 
-        //Carregar teclats de l'usuari
-        ArrayList<String> teclatsEnCSV = new ArrayList<>();
-        carregarTeclats(teclatsEnCSV);
-         **/
     }
 
     /**
@@ -289,49 +285,45 @@ public class ControladorDomini {
 
     /**
      * Carrega les entrades de persistencia i instancia les classses.
-     * "id,nom,idAlfabet,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, idTeclat1.idTeclat2. ... .idTeclatn, text"
-     * L'atribut tipus pot prendre el valor de "text" o "lpf".
+     * "id,nom,tipus,Paraula1:Freq1.Paraula2:Freq2. ... .Paraulan:Freqn, text"
+     * L'atribut tipus pot prendre el valor de 0 si es un text o 1 si es un lpf.
      * L'atribut text només estarà present si el tipus és "text"
      * @param entrades
      * @throws Exception
      */
-    private void carregarEntrades(ArrayList<String> entrades) throws Exception {
-        String tipus;
-        Integer id;
-        Integer idAlfabet;
-        String nomEntrada;
-        String text;
-        HashMap<String, Integer> lpf = new HashMap<>();
-        ArrayList<Integer> idTeclats = new ArrayList<>();
-
+    private void carregarEntrades(ArrayList<String> entrades, Integer idAlfabet) throws Exception {
         for (String entrada : entrades) {
+            Integer tipus;
+            Integer id;
+            String nomEntrada;
+            String text;
+            HashMap<String, Integer> lpf = new HashMap<>();
+
             //Definim tots els atributs necessaris en tipus natius de JAVA
             String[] atributs = entrada.split(",");
 
-            tipus = atributs[0];
-            id = Integer.valueOf(atributs[1]);
-            nomEntrada = atributs[2];
-            idAlfabet = Integer.valueOf(atributs[3]);
 
-            String[] paraulesIFrequencies = atributs[4].split("\\.");
+            id = Integer.valueOf(atributs[0]);
+            nomEntrada = atributs[1];
+            tipus = Integer.valueOf(atributs[2]);
+
+            String[] paraulesIFrequencies = atributs[3].split("\\.");
             for (String paraulaIFreq : paraulesIFrequencies) {
                 String paraula = paraulaIFreq.split(":")[0];
                 Integer frequencia = Integer.valueOf(paraulaIFreq.split(":")[1]);
                 lpf.put(paraula, frequencia);
             }
 
-            String[] identificadorsTeclats = atributs[5].split("\\.");
-            for (String identificadorTeclat : identificadorsTeclats) {
-                idTeclats.add(Integer.valueOf(identificadorTeclat.charAt(0)));
-            }
-
             //Instanciem el text o lpf a través del controlador
-            if (Objects.equals(tipus, "text")) {
-                text = atributs[6];
-                ctrlEntrada.carregarText(id, nomEntrada, text, idAlfabet);
+            if (tipus == 0) {
+                text = atributs[4];
+                ctrlEntrada.carregarText(id, nomEntrada, lpf, text, idAlfabet);
+                ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, id);
             } else {
                 ctrlEntrada.carregarLPF(id, nomEntrada, lpf, idAlfabet);
+                ctrlAlfabet.vincularEntradaAlfabet(idAlfabet, id);
             }
+
         }
     }
 

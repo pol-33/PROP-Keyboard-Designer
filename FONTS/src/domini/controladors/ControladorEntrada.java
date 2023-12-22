@@ -134,7 +134,7 @@ public class ControladorEntrada {
      * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
     public Integer crearText(String nomEntrada, String contingutEntrada, ArrayList<Character> lletres, Integer idAlfabet) throws Exception {
-        Text nouText = new Text(nomEntrada, contador, contingutEntrada, idAlfabet);
+        Text nouText = new Text(nomEntrada, contador, null, contingutEntrada, idAlfabet);
         conjuntEntrades.put(contador, nouText);
         contador++;
         return contador-1;
@@ -149,8 +149,8 @@ public class ControladorEntrada {
      * @param lpf
      * @throws Exception
      */
-    public void carregarText(Integer id, String nomEntrada, String contingutEntrada, Integer idAlfabet) throws Exception {
-        Text nouText = new Text(nomEntrada, id, contingutEntrada, idAlfabet);
+    public void carregarText(Integer id, String nomEntrada, HashMap<String, Integer> lpf, String contingutEntrada, Integer idAlfabet) throws Exception {
+        Text nouText = new Text(nomEntrada, id, lpf, contingutEntrada, idAlfabet);
         conjuntEntrades.put(id, nouText);
         if (id > contador) {
             contador = id+1;

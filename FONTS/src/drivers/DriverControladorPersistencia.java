@@ -140,8 +140,8 @@ public class DriverControladorPersistencia {
                     case 11: // Cargar Entrades
                         System.out.println("Introdueix l'id de l'alfabet");
                         idAlfabet = in.nextInt();
-                        ArrayList<String[]> entrades = ctrl.carregarEntrades(idAlfabet);
-                        entrades.forEach(entrada -> System.out.println(String.join(", ", entrada)));
+                        ArrayList<String> entrades = ctrl.carregarEntrades(idAlfabet);
+                        entrades.forEach(entrada -> System.out.println(entrada));
                         break;
 
                     case 12: // Eliminar Entrada

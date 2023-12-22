@@ -160,7 +160,7 @@ public class ControladorPersistencia {
      * @param idAlfabet Identificador de l'alfabet del qual es volen carregar les entrades.
      * @return ArrayList de arrays de Strings amb la informació de cada entrada.
      */
-    public ArrayList<String[]> carregarEntrades(Integer idAlfabet) {
+    public ArrayList<String> carregarEntrades(Integer idAlfabet) {
         return gestorEntrades.carregarEntrades(idAlfabet);
     }
 
