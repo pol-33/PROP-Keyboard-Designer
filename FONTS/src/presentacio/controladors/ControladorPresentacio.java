@@ -479,4 +479,12 @@ public class ControladorPresentacio {
         }
     }
 
+    public static String getNomUsuariActiu() {
+        try {
+            return ctrlDomini.getNomUsuariActiu();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el nom de l'usuari actiu: " + e.getMessage());
+            return null;
+        }
+    }
 }

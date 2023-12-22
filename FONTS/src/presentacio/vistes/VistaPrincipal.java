@@ -63,7 +63,7 @@ public class VistaPrincipal extends JFrame {
 
         panellMenu = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panellMenu.setMaximumSize(new Dimension(Short.MAX_VALUE, 40)); // Estableix l'ample maxim
-        
+
         pestanyes = new JTabbedPane();
 
         initUIMenu();
@@ -92,10 +92,17 @@ public class VistaPrincipal extends JFrame {
     }
 
     private void initUIMenu() {
+        panellMenu.setLayout(new BorderLayout());
+
         btTancarSesio = new JButton("Tancar Sessió");
         btTancarSesio.addActionListener(e -> tancarSessio());
 
-        panellMenu.add(btTancarSesio);
+        // Add a label with the name of the active user
+        JLabel labelNomUsuari = new JLabel("Benvingut al teu compte, " + ControladorPresentacio.getNomUsuariActiu());
+        labelNomUsuari.setFont(new Font("Arial", Font.BOLD, 18));
+        panellMenu.add(labelNomUsuari, BorderLayout.WEST);
+
+        panellMenu.add(btTancarSesio, BorderLayout.EAST);
     }
 
     private void initUIAlfabets() {

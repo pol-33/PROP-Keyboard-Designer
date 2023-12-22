@@ -378,6 +378,11 @@ public class ControladorDomini {
     }
 
     //--------------------------------Usuari---------------------------------//
+    public String getNomUsuariActiu() throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure el teu nom");
+        return usuariActiu.getNom();
+    }
+
     /**
      * Crea un usuari i inicia sessió a partir d'un nom i contrasenya, també el persisteix.
      * @param nomUsuari Nom de l'usuari a crear
