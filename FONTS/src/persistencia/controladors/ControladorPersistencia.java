@@ -1,9 +1,6 @@
 package persistencia.controladors;
 
-import persistencia.classes.GestorAlfabets;
-import persistencia.classes.GestorUsuaris;
-import persistencia.classes.GestorTeclats;
-import persistencia.classes.GestorEntrades;
+import persistencia.classes.*;
 
 
 import java.util.ArrayList;
@@ -23,6 +20,8 @@ public class ControladorPersistencia {
     private final GestorAlfabets gestorAlfabets = new GestorAlfabets();
     private final GestorEntrades gestorEntrades = new GestorEntrades();
     private final GestorTeclats gestorTeclats = new GestorTeclats();
+
+    private final GestorIds gestorIds = new GestorIds();
 
     // Mètodes per gestionar la persistència
 
@@ -100,6 +99,7 @@ public class ControladorPersistencia {
      */
     public void crearAlfabet(String username, Integer idAlfabet, String nom, ArrayList<Character> lletres){
         gestorAlfabets.crearAlfabet(username, idAlfabet, nom, lletres);
+        gestorIds.augmentarIdAlfabet();
     }
 
     /**
@@ -153,6 +153,7 @@ public class ControladorPersistencia {
      */
     public void crearEntrada(Integer idAlfabet, Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
         gestorEntrades.crearEntrada(idAlfabet, idEntrada, nom, lpf, text);
+        gestorIds.augmentarIdEntrada();
     }
 
     /**
@@ -196,6 +197,7 @@ public class ControladorPersistencia {
      */
     public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer tipus, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         gestorTeclats.crearTeclat(idEntrada, idTeclat, nom, tipus, numFiles, numColumnes, distribucio);
+        gestorIds.augmentarIdTeclat();
     }
 
     /**
@@ -240,6 +242,19 @@ public class ControladorPersistencia {
      */
     public void eliminarTeclat(Integer idTeclat) {
         gestorTeclats.eliminarTeclat(idTeclat);
+    }
+
+    //--------------------------------IdsMaxims---------------------------------//
+    public Integer carregarIdMaxAlfabet() {
+        return gestorIds.carregarIdMaxAlfabet();
+    }
+
+    public Integer carregarIdMaxEntrada() {
+        return gestorIds.carregarIdMaxEntrada();
+    }
+
+    public Integer carregarIdMaxTeclat() {
+        return gestorIds.carregarIdMaxTeclat();
     }
 
     //--------------------------------Privat---------------------------------//

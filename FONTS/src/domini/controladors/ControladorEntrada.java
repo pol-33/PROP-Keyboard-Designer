@@ -46,6 +46,10 @@ public class ControladorEntrada {
         return ctrlEntrada;
     }
 
+    public void carregarComptador(Integer comptador) {
+        this.contador = comptador;
+    }
+
     // ---------------------------------------------------------------------------- //
     //                                   Getters
     // ---------------------------------------------------------------------------- //

@@ -46,6 +46,10 @@ public class ControladorAlfabet {
         return ctrlAlfabet;
     }
 
+    public void carregarComptador(Integer comptador) {
+        this.comptador = comptador;
+    }
+
     // ---------------------------------------------------------------------------- //
     //                                   Crear i eliminar
     // ---------------------------------------------------------------------------- //

@@ -247,7 +247,7 @@ public class ControladorDomini {
         carregarAlfabets(alfabetsEnCSV);
 
 
-        //Carregar entrades de cada un dels alfabets
+        //Carregar entrades i teclats de cada un dels alfabets
         for (String alfabetEnCSV : alfabetsEnCSV) {
             Integer idAlfabet = Integer.valueOf(alfabetEnCSV.split(",")[0]); //obtenim l'id de l'alfabet
             ArrayList<String> entradesEnCSV = ctrlPersistencia.carregarEntrades(idAlfabet);//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
@@ -259,6 +259,14 @@ public class ControladorDomini {
             }
         }
 
+        //Carregar ids maxims als controladors
+        Integer idMaxAlfabets = ctrlPersistencia.carregarIdMaxAlfabet();
+        Integer idMaxEntrades = ctrlPersistencia.carregarIdMaxEntrada();
+        Integer idMaxTeclats = ctrlPersistencia.carregarIdMaxTeclat();
+
+        ctrlAlfabet.carregarComptador(idMaxAlfabets);
+        ctrlEntrada.carregarComptador(idMaxEntrades);
+        ctrlTeclat.carregarComptador(idMaxTeclats);
     }
 
     /**
