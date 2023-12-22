@@ -410,7 +410,7 @@ public class ControladorDomini {
 
         String contrasenyaUsuari = ctrlPersistencia.obtenirPasswordUsuari(nomUsuari);
         usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, contrasenyaUsuari);
-        carregarInfoUsuari(nomUsuari);
+        //carregarInfoUsuari(nomUsuari);
     }
 
     /**
@@ -640,6 +640,7 @@ public class ControladorDomini {
      */
     public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
         ctrlAlfabet.afegirLletraAlfabet(idAlfabet, lletra);
+        ctrlPersistencia.afegirLletresAlfabet(idAlfabet, lletra);
     }
 
     //Elimina l'alfabet identificat per idAlfabet
@@ -649,6 +650,7 @@ public class ControladorDomini {
             eliminarEntrada(idEntrada);
         }
         ctrlAlfabet.eliminarAlfabet(idAlfabet);
+        ctrlPersistencia.eliminarAlfabet(idAlfabet);
     }
 
     public ArrayList<Character> getAlfabetEntrada(int idEntrada) throws Exception {
