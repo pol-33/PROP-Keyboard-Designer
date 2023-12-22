@@ -410,7 +410,7 @@ public class ControladorDomini {
 
         String contrasenyaUsuari = ctrlPersistencia.obtenirPasswordUsuari(nomUsuari);
         usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, contrasenyaUsuari);
-        carregarInfoUsuari(nomUsuari);
+        //carregarInfoUsuari(nomUsuari);
     }
 
     /**
@@ -523,7 +523,7 @@ public class ControladorDomini {
         // Guardamos el texto en persistencia
         // Suponemos que no necesitas los teclados vinculados para esta acción, así que comentamos la siguiente línea
         // ArrayList<Integer> idTeclats = ctrlEntrada.getIdTeclatsVinculatsAEntrada(idText);
-        ctrlPersistencia.crearEntrada(idAlfabet, idText, nomEntrada, null, contingutEntrada);
+        ctrlPersistencia.crearEntrada(idAlfabet, idText, nomEntrada, ctrlEntrada.getLpfEntrada(idText), contingutEntrada);
 
         return idText;
     }
@@ -598,11 +598,12 @@ public class ControladorDomini {
      */
     public void modificarContingutText(Integer idEntrada, String contingut) throws Exception {
         ctrlEntrada.modificarContingutText(idEntrada, contingut);
-        //ctrlPersistencia.modificarContingutText(idEntrada, nom);
+        ctrlPersistencia.modificarContingutEntrada(idEntrada, ctrlEntrada.getLpfEntrada(idEntrada), contingut);
     }
 
     public void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) throws Exception {
         ctrlEntrada.modificarContingutLPF(idEntrada, newContent);
+        ctrlPersistencia.modificarContingutEntrada(idEntrada, ctrlEntrada.getLpfEntrada(idEntrada), null);
     }
 
     //--------------------------------Alfabets---------------------------------//
@@ -640,6 +641,7 @@ public class ControladorDomini {
      */
     public void afegirLletraAlfabet(Integer idAlfabet, Character lletra) throws Exception {
         ctrlAlfabet.afegirLletraAlfabet(idAlfabet, lletra);
+        ctrlPersistencia.afegirLletresAlfabet(idAlfabet, lletra);
     }
 
     //Elimina l'alfabet identificat per idAlfabet
@@ -649,6 +651,7 @@ public class ControladorDomini {
             eliminarEntrada(idEntrada);
         }
         ctrlAlfabet.eliminarAlfabet(idAlfabet);
+        ctrlPersistencia.eliminarAlfabet(idAlfabet);
     }
 
     public ArrayList<Character> getAlfabetEntrada(int idEntrada) throws Exception {

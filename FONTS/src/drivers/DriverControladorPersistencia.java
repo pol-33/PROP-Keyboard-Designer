@@ -86,9 +86,7 @@ public class DriverControladorPersistencia {
                     case 8:
                         System.out.println("Introdueix l'id de l'alfabet");
                         id = in.nextInt();
-                        ArrayList<Character> novesLletres = new ArrayList<>();
-                        novesLletres.add('k');
-                        novesLletres.add('z');
+                        Character novesLletres = 'a';
                         ctrl.afegirLletresAlfabet(id, novesLletres);
                         break;
 
@@ -180,7 +178,7 @@ public class DriverControladorPersistencia {
                             text2 = in.nextLine(); // Permet llegir una linia completa amb espais
                         }
 
-                        ctrl.modificarContingutEntrada(idEntrada, nomEntrada, LPF, text2);
+                        ctrl.modificarContingutEntrada(idEntrada, LPF, text2);
                         break;
 
 
