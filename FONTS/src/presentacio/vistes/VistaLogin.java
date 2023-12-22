@@ -3,6 +3,10 @@ package presentacio.vistes;
 import presentacio.controladors.ControladorPresentacio;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,8 +43,24 @@ public class VistaLogin {
         passwordLabel = new JLabel("Contrasenya: ");
         userTextField = new JTextField(20);
         userTextField.setMinimumSize(new Dimension(160, 20)); // Establir la mida mínima
+        ((AbstractDocument) userTextField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if ((fb.getDocument().getLength() + text.length() - length) < 16) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         passwordField = new JPasswordField(20);
         passwordField.setMinimumSize(new Dimension(160, 20)); // Establir la mida mínima
+        ((AbstractDocument) passwordField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if ((fb.getDocument().getLength() + text.length() - length) < 16) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         loginButton = new JButton("Inicia la sessió");
         signUpButton = new JButton("<html><center>No tens un compte?<br>Registra't-hi ara!</center></html>");
 
