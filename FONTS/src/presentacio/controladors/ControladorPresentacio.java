@@ -23,41 +23,6 @@ public class ControladorPresentacio {
     public static void startAplicacio() {
         vLogin = new VistaLogin();
         vLogin.mostrar();
-        crearProves();
-    }
-
-    // Método para crear datos de prueba
-    private static void crearProves() {
-        try {
-            ArrayList<Character> lletresANG = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
-            ArrayList<Character> lletresCAST = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
-            ArrayList<Character> lletresCAT = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
-            ArrayList<Character> vocals = new ArrayList<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-
-            int idAngles = ctrlDomini.crearAlfabet("Angles", lletresANG);
-            int idCastella = ctrlDomini.crearAlfabet("Castella", lletresCAST);
-            int idCatala = ctrlDomini.crearAlfabet("Catala", lletresCAT);
-            int idVocals = ctrlDomini.crearAlfabet("Vocals", vocals);
-
-            int idTxt1 = ctrlDomini.crearText("Hello world!", "Hello world in english!", idAngles);
-            int idTxt2 = ctrlDomini.crearText("Hola mundo!", "Hola mundo en español!", idCastella);
-            HashMap<String, Integer> lpf = new HashMap<>();
-            lpf.put("hola", 3);
-            lpf.put("mon", 4);
-            int idLPF1 = ctrlDomini.crearLPF("Hola mon", lpf, idCatala);
-            int idLPF2 = ctrlDomini.crearLPF("Hola mon 2", lpf, idVocals);
-
-            ctrlDomini.crearTeclatDuesMans("Teclat 1", idTxt1, 3, 10);
-            ctrlDomini.crearTeclatDuesMans("Teclat 2", idTxt2, 3, 10);
-            ctrlDomini.crearTeclatDuesMans("Teclat 3", idTxt2, 3, 10);
-            ctrlDomini.crearTeclatPolzes("Teclat 4", idLPF1, 3, 10);
-            ctrlDomini.crearTeclatPolzes("Teclat 5", idLPF2, 3, 10);
-
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al carregar les proves: " + e.getMessage());
-        }
-
     }
 
     // Métodos para la gestión de usuarios
