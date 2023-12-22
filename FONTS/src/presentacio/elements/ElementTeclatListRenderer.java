@@ -51,7 +51,7 @@ public class ElementTeclatListRenderer extends JPanel implements ListCellRendere
         }
 
         nomLabel.setText(value.getNom());
-        nomEntradaLabel.setText(value.getNomEntrada());
+        nomEntradaLabel.setText(value.getNomEntrada() + " | " + value.getNomAlfabet());
         filesColumnesLabel.setText("Files x Columnes: " + value.getFiles() + "x" + value.getColumnes());
 
         return this;

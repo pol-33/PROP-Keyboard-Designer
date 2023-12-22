@@ -10,13 +10,15 @@ public class ElementTeclatLlista extends JPanel {
     private String nomEntrada;
     private int files;
     private int columnes;
+    private String nomAlfabet;
 
-    public ElementTeclatLlista(int id, String nom, String nomEntrada, int files, int columnes) {
+    public ElementTeclatLlista(int id, String nom, String nomEntrada, int files, int columnes, String nomAlfabet) {
         this.id = id;
         this.nom = nom;
         this.nomEntrada = nomEntrada;
         this.files = files;
         this.columnes = columnes;
+        this.nomAlfabet = nomAlfabet;
     }
 
     public int getId() {
@@ -37,5 +39,9 @@ public class ElementTeclatLlista extends JPanel {
 
     public int getColumnes() {
         return columnes;
+    }
+
+    public String getNomAlfabet() {
+        return nomAlfabet;
     }
 }

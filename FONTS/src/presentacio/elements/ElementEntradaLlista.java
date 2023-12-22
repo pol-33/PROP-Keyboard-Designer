@@ -38,5 +38,9 @@ public class ElementEntradaLlista extends JPanel {
     public String getNomAlfabet() {
         return nomAlfabet;
     }
+
+    public void setContingutPreview(String contingutPreview) {
+        this.contingutPreview = contingutPreview;
+    }
 }
 

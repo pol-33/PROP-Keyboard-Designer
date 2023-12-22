@@ -241,6 +241,20 @@ public class ControladorEntrada {
         conjuntEntrades = new HashMap<>();
     }
 
+    public void modificarContingutText(Integer idText, String contingut) throws Exception {
+        if (!conjuntEntrades.containsKey(idText)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idText);
+        if (entrada.getTipus() != 0) throw new Exception("L'entrada no és de tipus text");
+        entrada.setText(contingut);
+    }
+
+    public void modificarContingutLPF(Integer idLPF, HashMap<String, Integer> contingut) throws Exception {
+        if (!conjuntEntrades.containsKey(idLPF)) throw new Exception("No existeix una entrada amb aquest identificador");
+        Entrada entrada = conjuntEntrades.get(idLPF);
+        if (entrada.getTipus() != 1) throw new Exception("L'entrada no és de tipus LPF");
+        entrada.setLPF(contingut);
+    }
+
     // ---------------------------------------------------------------------------- //
     //                                   Metodes privats
     // ---------------------------------------------------------------------------- //

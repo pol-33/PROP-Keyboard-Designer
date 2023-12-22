@@ -103,4 +103,13 @@ public abstract class Entrada {
         }
         else throw new Exception("L'entrda no tenia aquest teclat vinculat");
     }
+
+    public void setText(String contingut) throws Exception {
+        throw new Exception("Aquesta entrada no disposa de text");
+    }
+
+    public void setLPF(HashMap<String, Integer> stringIntegerHashMap) throws Exception {
+        if (stringIntegerHashMap == null) throw new Exception("ERROR: El contingut de la LPF no pot ser null");
+        this.lpf = stringIntegerHashMap;
+    }
 }
