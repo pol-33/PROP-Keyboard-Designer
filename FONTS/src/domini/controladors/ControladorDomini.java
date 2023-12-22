@@ -251,12 +251,12 @@ public class ControladorDomini {
         //Carregar entrades de cada un dels alfabets
         for (String alfabetEnCSV : alfabetsEnCSV) {
             String idAlfabet = alfabetEnCSV.split(",")[0]; //obtenim l'id de l'alfabet
-            ArrayList<String[]> entradesEnCSV = ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
+            ArrayList<String> entradesEnCSV = new ArrayList<>();//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
             carregarEntrades(entradesEnCSV); //instanciem les entrades
         }
 
         //Carregar teclats de l'usuari
-        ArrayList<String> teclatsEnCSV = ctrlPersistencia.getTeclatsUsuari(nomUsuari);
+        ArrayList<String> teclatsEnCSV = new ArrayList<>();
         carregarTeclats(teclatsEnCSV);
     }
 
@@ -393,7 +393,7 @@ public class ControladorDomini {
      * @throws Exception Si ja existeix un usuari amb aquest nom.
      */
     public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
-        ArrayList<String> nomUsuarisExistents = ctrlPersistencia.getUsuarisExistents();
+        ArrayList<String> nomUsuarisExistents = ctrlPersistencia.obtenirUsernames();
         usuariActiu = Usuari.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
         ctrlPersistencia.crearUsuari(nomUsuari, contrasenya);
     }
@@ -407,9 +407,11 @@ public class ControladorDomini {
      */
     public void iniciarSessio(String nomUsuari, String contrasenya) throws Exception {
         if (usuariActiu != null) throw new Exception("Tanca la sessió actual per a poder iniciar sessio");
-        HashMap<String, String> nomUsuarisContrasenyes = ctrlPersistencia.getUsuarisContrasenyes();
+        ArrayList<String> usernames = ctrlPersistencia.obtenirUsernames();
+        if (!usernames.contains(nomUsuari)) throw new Exception("No existeix un usuari amb aquest nom");
 
-        usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, nomUsuarisContrasenyes);
+        String contrasenyaUsuari = ctrlPersistencia.obtenirPasswordUsuari(nomUsuari);
+        usuariActiu = Usuari.iniciarSessio(nomUsuari, contrasenya, contrasenyaUsuari);
         carregarInfoUsuari(nomUsuari);
     }
 
@@ -628,7 +630,7 @@ public class ControladorDomini {
         Integer idAlfabet = ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);
 
         ArrayList<Integer> idEntrades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
-        ctrlPersistencia.crearAlfabet(username, idAlfabet, nomAlfabet,  lletres);
+        ctrlPersistencia.crearAlfabet(usuariActiu.getNom(), idAlfabet, nomAlfabet,  lletres);
         return idAlfabet;
     }
 

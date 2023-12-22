@@ -34,10 +34,10 @@ public class GestorTeclats {
      * @param numColumnes Número de columnes del teclat.
      * @param distribucio Llista amb la distribució de teclas.
      */
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         try (CSVWriter writer = new CSVWriter(new FileWriter(teclatPath, true))) {
             // Conversió de ArrayList<String> a String per al CSV
-            String distribucioString = String.join(",", distribucio);
+            String distribucioString = convertirArrayListAString(distribucio);
             String[] teclatData = { idTeclat.toString(), nom, numFiles.toString(), numColumnes.toString(), distribucioString };
             writer.writeNext(teclatData);
         } catch (IOException e) {
@@ -209,6 +209,24 @@ public class GestorTeclats {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static String convertirArrayListAString(ArrayList<Character> arrayList) {
+        // Crear un StringBuilder para construir el String resultante
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Iterar sobre el ArrayList y agregar cada carácter al StringBuilder
+        for (int i = 0; i < arrayList.size(); i++) {
+            stringBuilder.append(arrayList.get(i));
+
+            // Agregar un punto después de cada carácter, excepto el último
+            if (i < arrayList.size() - 1) {
+                stringBuilder.append('.');
+            }
+        }
+
+        // Convertir el StringBuilder a un String y devolverlo
+        return stringBuilder.toString();
     }
 
 

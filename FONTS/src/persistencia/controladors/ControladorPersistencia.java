@@ -194,7 +194,7 @@ public class ControladorPersistencia {
      * @param numColumnes Número de columnes del teclat.
      * @param distribucio Llista amb la distribució de tecles.
      */
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<String> distribucio) {
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
         gestorTeclats.crearTeclat(idEntrada, idTeclat, nom, numFiles, numColumnes, distribucio);
     }
 
