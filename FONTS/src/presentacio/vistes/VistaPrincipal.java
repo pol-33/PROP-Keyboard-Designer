@@ -394,13 +394,14 @@ public class VistaPrincipal extends JFrame {
 
     // * Metode per afegir un teclat a la llista
     public void afegirTeclat(int idTeclado) {
-        String nombreTeclado = ControladorPresentacio.getNomTeclat(idTeclado);
+        String nomTeclado = ControladorPresentacio.getNomTeclat(idTeclado);
         int idEntrada = ControladorPresentacio.getIdEntradaTeclat(idTeclado);
-        String nombreEntrada = ControladorPresentacio.getNomEntrada(idEntrada);
+        String nomEntrada = ControladorPresentacio.getNomEntrada(idEntrada);
         int files = ControladorPresentacio.getFilesTeclat(idTeclado);
         int columnas = ControladorPresentacio.getColumnesTeclat(idTeclado);
+        String nomAlfabet = ControladorPresentacio.getNomAlfabetEntrada(idEntrada);
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
-        ElementTeclatLlista nuevoTeclado = new ElementTeclatLlista(idTeclado, nombreTeclado, nombreEntrada, files, columnas);
+        ElementTeclatLlista nuevoTeclado = new ElementTeclatLlista(idTeclado, nomTeclado, nomEntrada, files, columnas, nomAlfabet);
         model.addElement(nuevoTeclado);
     }
 
