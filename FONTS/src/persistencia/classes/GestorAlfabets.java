@@ -216,6 +216,20 @@ public class GestorAlfabets {
         }
     }
 
+    public Integer carregarIdMaxim() {
+        Integer idMax = 0;
+        try (CSVReader reader = new CSVReader(new FileReader(alfabetsPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                Integer id = Integer.valueOf(row[0]);
+                if (id > idMax) idMax = id;
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+        return idMax;
+    }
+
 
     /**
      * Converteix una llista d'objectes Character en una cadena de text.

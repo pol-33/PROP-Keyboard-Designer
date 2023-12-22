@@ -212,6 +212,20 @@ public class GestorTeclats {
         }
     }
 
+    public Integer carregarIdMaxim() {
+        Integer idMax = 0;
+        try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
+            List<String[]> rows = reader.readAll();
+            for (String[] row : rows) {
+                Integer id = Integer.valueOf(row[0]);
+                if (id > idMax) idMax = id;
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+        return idMax;
+    }
+
     private static String convertirArrayListAString(ArrayList<Character> arrayList) {
         // Crear un StringBuilder para construir el String resultante
         StringBuilder stringBuilder = new StringBuilder();
