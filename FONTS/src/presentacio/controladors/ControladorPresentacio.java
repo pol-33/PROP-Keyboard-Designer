@@ -67,6 +67,7 @@ public class ControladorPresentacio {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
             vPrincipal.afegirAlfabet(idAlfabet);
             JOptionPane.showMessageDialog(null, "Alfabet creat amb èxit");
+            vPrincipal.updateAlfabetComboBoxes();
             return 0;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());

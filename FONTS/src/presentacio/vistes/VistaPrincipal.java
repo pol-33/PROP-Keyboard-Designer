@@ -425,7 +425,6 @@ public class VistaPrincipal extends JFrame {
     // * Metode que crida el btCrearAlfabet
     private void crearAlfabet() {
         VistaCrearAlfabet vCrearAlfabet = new VistaCrearAlfabet();
-        updateAlfabetComboBoxes();
     }
 
     // TODO metode que crida el btModificarAlfabet
@@ -636,7 +635,7 @@ public class VistaPrincipal extends JFrame {
         ControladorPresentacio.tancarSessio();
     }
 
-    private void updateAlfabetComboBoxes() {
+    public void updateAlfabetComboBoxes() {
         // Update alfabetComboBoxEntrades
         alfabetComboBoxEntrades.removeAllItems();
         alfabetComboBoxEntrades.addItem("Tots");
