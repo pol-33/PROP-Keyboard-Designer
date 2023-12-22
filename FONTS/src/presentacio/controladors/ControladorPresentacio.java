@@ -26,14 +26,16 @@ public class ControladorPresentacio {
     }
 
     // Métodos para la gestión de usuarios
-    public static void crearUsuari(String usuari, String contrasenya) {
+    public static int crearUsuari(String usuari, String contrasenya) {
         try {
             ctrlDomini.crearUsuari(usuari, contrasenya);
             vPrincipal = new VistaPrincipal();
             vPrincipal.mostrar();
             vLogin.tancar();
+            return 0;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            return -1;
         }
     }
     

@@ -88,10 +88,11 @@ public class Usuari {
      * @return Usuari objecte de l'usuari que ha iniciat sessió.
      * @throws Exception Si el nom d'usuari no existeix o la contrasenya és incorrecta.
      */
-    public static Usuari iniciarSessio(String nomUsuari, String contrasenya, String contrasenyaUsuari) throws Exception {
-        if (!contrasenya.equals(contrasenyaUsuari)) throw new Exception("La contrasenya no es correcte");
+    public static Usuari iniciarSessio(String nomUsuari, String contrasenyaIntroduida, String contrasenyaUsuari) throws Exception {
+        if (contrasenyaUsuari == null) throw new Exception("L'usuari no té contrasenya");
+        if (!contrasenyaIntroduida.equals(contrasenyaUsuari)) throw new Exception("La contrasenya no es correcte");
 
-        return new Usuari(nomUsuari, contrasenya);
+        return new Usuari(nomUsuari, contrasenyaIntroduida);
     }
 
     /**
