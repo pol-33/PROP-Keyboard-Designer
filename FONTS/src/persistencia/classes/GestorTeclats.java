@@ -184,13 +184,12 @@ public class GestorTeclats {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idTeclat.toString())) {
-                    String distribucioString = convertirArrayListAString(distribucio);
                     String[] teclatActualizado = {
                             idTeclat.toString(),
                             nom != null ? nom : row[1],
                             numFiles != null ? numFiles.toString() : row[2],
                             numColumnes != null ? numColumnes.toString() : row[3],
-                            distribucioString
+                            distribucio != null ? convertirArrayListAString(distribucio) : row[4]
                     };
                     teclatsActualizados.add(teclatActualizado);
                     teclatEncontrado = true;
