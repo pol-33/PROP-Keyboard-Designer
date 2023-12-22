@@ -46,6 +46,10 @@ public class ControladorTeclat {
         return ctrlTeclats;
     }
 
+    public void carregarComptador(Integer comptador) {
+         this.contador = comptador;
+    }
+
      // ---------------------------------------------------------------------------- //
      //                                   Metodes publics
      // ---------------------------------------------------------------------------- //
