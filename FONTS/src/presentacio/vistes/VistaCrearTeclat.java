@@ -32,36 +32,53 @@ public class VistaCrearTeclat {
 
     private void initComponents() {
         frame = new JFrame("Crear Teclat");
-        JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
+        JPanel panel = new JPanel(new GridBagLayout()); // Change to GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         JLabel nomLabel = new JLabel("Nom del teclat:");
         nomTextField = new JTextField();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(nomLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(nomTextField, gbc);
 
         JLabel entradaLabel = new JLabel("Seleccionar entrada:");
         entradaComboBox = new JComboBox<>();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(entradaLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(entradaComboBox, gbc);
 
         JLabel filesLabel = new JLabel("Número de files:");
         filesSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 500, 1));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(filesLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(filesSpinner, gbc);
 
         JLabel columnesLabel = new JLabel("Número de columnes:");
         columnesSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 500, 1));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(columnesLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(columnesSpinner, gbc);
 
-        JLabel tipusLabel = new JLabel("Algoritme a utilizar:");
+        JLabel tipusLabel = new JLabel("Tipus de teclat:");
         tipusComboBox = new JComboBox<>();
-        tipusComboBox.addItem("Algoritme per a teclats de portatil (dues mans)");
-        tipusComboBox.addItem("Algoritme per a teclats tactils (dos dits)");
+        tipusComboBox.addItem("Teclat d'ordinador (dues mans)");
+        tipusComboBox.addItem("Teclat tàctil (dos dits)");
         tipusComboBox.setSelectedIndex(0);
-
-        panel.add(nomLabel);
-        panel.add(nomTextField);
-        panel.add(entradaLabel);
-        panel.add(entradaComboBox);
-        panel.add(filesLabel);
-        panel.add(filesSpinner);
-        panel.add(columnesLabel);
-        panel.add(columnesSpinner);
-        panel.add(tipusLabel);
-        panel.add(tipusComboBox);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(tipusLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(tipusComboBox, gbc);
 
         JButton crearButton = new JButton("Crear Teclat");
         crearButton.addActionListener(new ActionListener() {
@@ -69,13 +86,14 @@ public class VistaCrearTeclat {
                 crearTeclado();
             }
         });
-
-        panel.add(new JLabel());
-        panel.add(crearButton);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        panel.add(crearButton, gbc);
 
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(490, 340);
         frame.setLocationRelativeTo(null);
     }
 
@@ -89,6 +107,10 @@ public class VistaCrearTeclat {
 
     private void crearTeclado() {
         String nombreTeclado = nomTextField.getText();
+        if (nombreTeclado.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "El nom del teclat no pot estar buit.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int indiceSeleccionado = entradaComboBox.getSelectedIndex();
         if (indiceSeleccionado != -1) {
             ArrayList<Integer> idEntradas = ControladorPresentacio.getIdEntrades();
