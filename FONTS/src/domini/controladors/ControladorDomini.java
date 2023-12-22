@@ -456,7 +456,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, 0, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
+        ctrlPersistencia.crearTeclat(idEntrada, idTeclat, nom, 0, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 
