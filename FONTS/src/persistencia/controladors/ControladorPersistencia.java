@@ -171,8 +171,8 @@ public class ControladorPersistencia {
      * @param lpf Nou HashMap amb dades específiques (pot ser null).
      * @param text Nou text associat a l'entrada.
      */
-    public void modificarContingutEntrada(Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
-        gestorEntrades.actualizarEntrada(idEntrada, nom, lpf, text);
+    public void modificarContingutEntrada(Integer idEntrada, HashMap<String, Integer> lpf, String text) {
+        gestorEntrades.actualizarEntrada(idEntrada, lpf, text);
     }
 
     /**

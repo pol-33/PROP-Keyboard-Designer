@@ -151,7 +151,7 @@ public class GestorEntrades {
      * @param lpf       Nou HashMap amb dades específiques (pot ser null).
      * @param text      Nou text associat a l'entrada.
      */
-    public void actualizarEntrada(Integer idEntrada, String nom, HashMap<String, Integer> lpf, String text) {
+    public void actualizarEntrada(Integer idEntrada, HashMap<String, Integer> lpf, String text) {
         List<String[]> entradasActualizadas = new ArrayList<>();
         boolean entradaEncontrada = false;
 
@@ -162,12 +162,13 @@ public class GestorEntrades {
                     String tipus = determinarTipo(row); // Determina si es text o LPF basat en la fila existent
                     String lpfString = "";
                     String texto = "";
+                    String nom = row[1];
 
-                    if ("0".equals(tipus) && lpf != null) { // Actualizar com LPF
+                    if ("1".equals(tipus) && lpf != null) { // Actualizar com LPF
                         lpfString = lpf.toString();
                         texto = ""; // Asumim que el text esta buit quan es LPF
-                    } else if ("1".equals(tipus)) { // Actualizar com text
-                        lpfString = ""; // Asumiendo que lpf  esta buit quan tenim un texto
+                    } else if ("0".equals(tipus) && lpf != null) { // Actualizar com text
+                        lpfString = lpf.toString();
                         texto = text;
                     }
 
