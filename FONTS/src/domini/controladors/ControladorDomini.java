@@ -252,6 +252,11 @@ public class ControladorDomini {
             Integer idAlfabet = Integer.valueOf(alfabetEnCSV.split(",")[0]); //obtenim l'id de l'alfabet
             ArrayList<String> entradesEnCSV = ctrlPersistencia.carregarEntrades(idAlfabet);//ctrlPersistencia.carregarEntrades(Integer.valueOf(idAlfabet)); //obtenim les entrades associades a l'alfabet
             carregarEntrades(entradesEnCSV, idAlfabet); //instanciem les entrades
+            for (String entradaEnCSV : entradesEnCSV) {
+                Integer idEntrada = Integer.valueOf(entradaEnCSV.split(",")[0]); //obtenim l'id de l'entrada
+                String teclat = ctrlPersistencia.carregarTeclat(idEntrada);
+                if (teclat != null) carregarTeclat(teclat, idEntrada);
+            }
         }
 
     }
@@ -334,31 +339,24 @@ public class ControladorDomini {
      * @param teclats
      * @throws Exception
      */
-    private void carregarTeclats(ArrayList<String> teclats) throws Exception {
-        Integer id, idEntrada;
-        String nomTeclat;
-        Integer numFiles, numColumnes, tipus;
+    private void carregarTeclat(String teclat, Integer idEntrada) throws Exception {
         ArrayList<Character> distribucio = new ArrayList<>();
 
-        for (String teclat : teclats) {
-            //Definim tots els atributs necessaris en tipus natius de JAVA
-            String[] atributs = teclat.split(",");
+        String[] atributs = teclat.split(",");
 
-            id = Integer.valueOf(atributs[0]);
-            nomTeclat = atributs[1];
-            numFiles = Integer.valueOf(atributs[2]);
-            numColumnes = Integer.valueOf(atributs[3]);
-            idEntrada = Integer.valueOf(atributs[4]);
-            tipus = Integer.valueOf(atributs[5]);
+        Integer id = Integer.valueOf(atributs[0]);
+        String nomTeclat = atributs[1];
+        Integer numFiles = Integer.valueOf(atributs[2]);
+        Integer numColumnes = Integer.valueOf(atributs[3]);
+        Integer tipus = Integer.valueOf(atributs[4]);
 
-            String[] lletres = atributs[5].split("\\.");
-            for (String lletra : lletres) {
-                distribucio.add(lletra.charAt(0));
-            }
-
-            //Instanciem el teclat
-            ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
+        String[] lletres = atributs[5].split("\\.");
+        for (String lletra : lletres) {
+            distribucio.add(lletra.charAt(0));
         }
+
+        //Instanciem el teclat
+        ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
     }
 
     /**
@@ -440,7 +438,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatDuesMans(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
+        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, 0, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 
@@ -459,7 +457,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.crearTeclatPolzes(nom, lfp, alfabet, idEntrada, files, columnes);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.crearTeclat(idEntrada, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
+        ctrlPersistencia.crearTeclat(idEntrada, idTeclat, nom, 1, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 
@@ -468,7 +466,7 @@ public class ControladorDomini {
         Integer idTeclat = ctrlTeclat.importarTeclat(nom, idEntrada, files, columnes, distribucio, tipus);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
-        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
+        ctrlPersistencia.crearTeclat(idTeclat, idTeclat, nom, tipus, files, columnes, ctrlTeclat.getDistribucioTeclat(idTeclat));
         return idTeclat;
     }
 

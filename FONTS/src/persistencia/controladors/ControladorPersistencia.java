@@ -194,8 +194,8 @@ public class ControladorPersistencia {
      * @param numColumnes Número de columnes del teclat.
      * @param distribucio Llista amb la distribució de tecles.
      */
-    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
-        gestorTeclats.crearTeclat(idEntrada, idTeclat, nom, numFiles, numColumnes, distribucio);
+    public void crearTeclat(Integer idEntrada, Integer idTeclat, String nom, Integer tipus, Integer numFiles, Integer numColumnes, ArrayList<Character> distribucio) {
+        gestorTeclats.crearTeclat(idEntrada, idTeclat, nom, tipus, numFiles, numColumnes, distribucio);
     }
 
     /**
@@ -203,8 +203,8 @@ public class ControladorPersistencia {
      * @param idEntrada Identificador de l'entrada de la qual es volen carregar els teclats.
      * @return ArrayList de arrays de Strings amb la informació de cada teclat.
      */
-    public ArrayList<String[]> carregarTeclats(Integer idEntrada) {
-        return gestorTeclats.carregarTeclats(idEntrada);
+    public String carregarTeclat(Integer idEntrada) {
+        return gestorTeclats.carregarTeclat(idEntrada);
     }
 
     /**

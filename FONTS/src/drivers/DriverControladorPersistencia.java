@@ -205,14 +205,14 @@ public class DriverControladorPersistencia {
                         while (!(elem = in.nextLine().charAt(0)).equals("end")) {
                             distribucio.add(elem);
                         }
-                        ctrl.crearTeclat(idEntradaTeclat, idTeclat, nomTeclat, numFiles, numColumnes, distribucio);
+                        ctrl.crearTeclat(idEntradaTeclat, idTeclat, nomTeclat, 1, numFiles, numColumnes, distribucio);
                         break;
 
                     case 15: // Cargar Teclat
                         System.out.println("Introdueix l'id de l'entrada");
                         idEntradaTeclat = in.nextInt();
-                        ArrayList<String[]> teclats = ctrl.carregarTeclats(idEntradaTeclat);
-                        teclats.forEach(teclat -> System.out.println(String.join(", ", teclat)));
+                        String teclat = ctrl.carregarTeclat(idEntradaTeclat);
+                        System.out.println(teclat);
                         break;
 
                     case 16: // Eliminar Teclat
