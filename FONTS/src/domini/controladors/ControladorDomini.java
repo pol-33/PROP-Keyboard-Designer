@@ -379,6 +379,14 @@ public class ControladorDomini {
     public void crearUsuari(String nomUsuari, String contrasenya) throws Exception{
         ArrayList<String> nomUsuarisExistents = ctrlPersistencia.obtenirUsernames();
         usuariActiu = Usuari.crearUsuari(nomUsuari, contrasenya, nomUsuarisExistents);
+        // Crear alfabets per defecte
+        String lletresCatala = "abcdefghijklmnopqrstuvwxyzç";
+        ArrayList<Character> ArrayLletresCatala = new ArrayList<>();
+        for (int i = 0; i < lletresCatala.length(); ++i) {
+            ArrayLletresCatala.add(lletresCatala.charAt(i));
+        }
+        crearAlfabet("Català", ArrayLletresCatala);
+
         ctrlPersistencia.crearUsuari(nomUsuari, contrasenya);
     }
 
