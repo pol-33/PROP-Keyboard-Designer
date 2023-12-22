@@ -48,29 +48,43 @@ public class VistaLogin {
     }
 
     private void initUI() {
-        panel.setLayout(new GridLayout(3, 2, 10, 10)); // Grid layout para organizar los componentes
+        // Create a GridBagLayout and GridBagConstraints for the panel
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Añadir componentes al panel
-        panel.add(userLabel);
-        panel.add(userTextField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
+        // Add userLabel and userTextField to the panel
+        gbc.gridy = 0;
+        gbc.gridx = 0;
+        panel.add(userLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(userTextField, gbc);
 
-        // Crear un panel separado para los botones
+        // Add passwordLabel and passwordField to the panel
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        panel.add(passwordLabel, gbc);
+        gbc.gridx = 1;
+        panel.add(passwordField, gbc);
+
+        // Create a JPanel for the buttons and add it to the panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(loginButton);
         buttonPanel.add(signUpButton);
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        panel.add(buttonPanel, gbc);
 
-        // Agregar paneles al frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Add panel to the frame
         frame.add(panel, BorderLayout.CENTER);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Centrar la ventana en la pantalla y ajustar tamaño
-        frame.setSize(350, 200);
-        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        // Center the window on the screen and adjust size
+        frame.setSize(350, 250);
+        frame.setLocationRelativeTo(null); // Center the window on the screen
 
-        frame.setVisible(true); // Hacer visible la ventana
+        frame.setVisible(true); // Make the window visible
     }
 
     private void setActionListeners() {
