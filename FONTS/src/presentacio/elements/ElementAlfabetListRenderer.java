@@ -3,10 +3,16 @@ package presentacio.elements;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe ElementAlfabetListRenderer. Renderitza els elements de la llista d'alfabets.
+ */
 public class ElementAlfabetListRenderer extends JPanel implements ListCellRenderer<ElementAlfabetLlista> {
     private JLabel nomLabel;
     private JLabel letrasLabel;
 
+    /**
+     * Constructora de la classe ElementAlfabetListRenderer.
+     */
     public ElementAlfabetListRenderer() {
         setLayout(new BorderLayout());
         setOpaque(true);

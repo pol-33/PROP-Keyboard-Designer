@@ -13,6 +13,9 @@ import domini.controladors.ControladorDomini;
 import presentacio.elements.ElementAlfabetLlista;
 import presentacio.vistes.*;
 
+/**
+ * Classe ControladorPresentacio. Controlador de la capa de presentació.
+ */
 public class ControladorPresentacio {
     
     // Variables estáticas para las vistas y el controlador de dominio
