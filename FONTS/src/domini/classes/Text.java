@@ -28,6 +28,7 @@ public class Text extends Entrada{
      */
     public Text(String nomEntrada, Integer id, HashMap<String, Integer> lpf, String contingutEntrada, Integer idAlfabet) throws Exception {
         if(contingutEntrada == null) throw new Exception("ERROR: El contingut del text no pot ser nul");
+        if(contingutEntrada.isEmpty()) throw new Exception("ERROR: El contingut del text no pot ser buit");
         this.nom = nomEntrada;
         this.id = id;
         this.text = contingutEntrada;
@@ -65,6 +66,8 @@ public class Text extends Entrada{
      */
     public void setText(String nouText) throws Exception {
         if (nouText == null) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser null");
+        if (nouText.isEmpty()) throw new IllegalArgumentException("ERROR: El contingut del text no pot ser buit");
+        if (nouText.equals(this.text)) return;
         this.text = nouText;
         calculateLPF();
     }

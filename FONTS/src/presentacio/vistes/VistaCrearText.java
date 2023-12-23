@@ -79,6 +79,15 @@ public class VistaCrearText {
         String nombreEntrada = nomTextField.getText();
         String contenidoEntrada = contingutTextArea.getText();
 
+        if (nombreEntrada.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "El nom del text no pot estar buit.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (contenidoEntrada.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "El contingut del text no pot estar buit.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int indiceSeleccionado = alfabetComboBox.getSelectedIndex();
         if (indiceSeleccionado != -1) {
             ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();

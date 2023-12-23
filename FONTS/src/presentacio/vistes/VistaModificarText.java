@@ -74,6 +74,11 @@ public class VistaModificarText {
     private void modificarText() {
         String contenidoEntrada = contingutTextArea.getText();
 
+        if (contenidoEntrada.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "El contingut del text no pot ser buit.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
             ControladorPresentacio.modificarContingutText(idText, contenidoEntrada);
             JOptionPane.showMessageDialog(frame, "Text modificat correctament.", "Èxit", JOptionPane.INFORMATION_MESSAGE);
