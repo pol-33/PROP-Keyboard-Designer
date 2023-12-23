@@ -1,5 +1,6 @@
 package presentacio.controladors;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -306,7 +307,15 @@ public class ControladorPresentacio {
                 nombresEntrades.add(getNomEntrada(id));
             }
             JComboBox<String> entradaComboBox = new JComboBox<>(nombresEntrades.toArray(new String[0]));
-            int resultat = JOptionPane.showConfirmDialog(null, entradaComboBox, "Selecciona la entrada a la que vols associar el teclat", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            JComboBox<String> tipusTeclatComboBox = new JComboBox<>(new String[]{"Teclat d'ordinador (dues mans)", "Teclat tàctil (dos dits)"});
+
+            JPanel panel = new JPanel(new GridLayout(2, 1));
+            panel.add(new JLabel("Selecciona la entrada a la que vols associar el teclat"));
+            panel.add(entradaComboBox);
+            panel.add(new JLabel("Selecciona el tipus de teclat"));
+            panel.add(tipusTeclatComboBox);
+
+            int resultat = JOptionPane.showConfirmDialog(null, panel, "Selecciona les opcions", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resultat == JOptionPane.OK_OPTION) {
                 int indiceSeleccionado = entradaComboBox.getSelectedIndex();
                 Integer idEntradaSeleccionada = idEntrades.get(indiceSeleccionado);
@@ -316,7 +325,27 @@ public class ControladorPresentacio {
                     JOptionPane.showMessageDialog(null, "La distribució de lletres no coincideix amb l'alfabet de l'entrada seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                Integer idTeclat = ctrlDomini.importarTeclat(nomTeclat, idEntradaSeleccionada, files, columnes, distribucio, 0);
+                if (files * columnes < distribucio.size()) {
+                    JOptionPane.showMessageDialog(null, "El nombre de files i columnes no pot ser inferior al nombre de lletres.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else if (files * columnes > distribucio.size()) {
+                    // Calculate the total size of the keyboard and the number of blank spaces needed
+                    int totalSize = files * columnes;
+                    int blankSpacesNeeded = totalSize - distribucio.size();
+
+                    // Create a new list for the new distribution
+                    ArrayList<Character> newDistribucio = new ArrayList<>();
+
+                    // If there are still blank spaces needed, add them to the end of the new distribution
+                    for (int i = 0; i < blankSpacesNeeded; i++) {
+                        distribucio.add(' '); // Add a blank space
+                    }
+                }
+
+                String tipusTeclat = (String) tipusTeclatComboBox.getSelectedItem();
+                int tipus = tipusTeclat.equals("Teclat d'ordinador (dues mans)") ? 0 : 1;
+                Integer idTeclat = ctrlDomini.importarTeclat(nomTeclat, idEntradaSeleccionada, files, columnes, distribucio, tipus);
                 vPrincipal.afegirTeclat(idTeclat);
             }
         } catch (FileNotFoundException e) {

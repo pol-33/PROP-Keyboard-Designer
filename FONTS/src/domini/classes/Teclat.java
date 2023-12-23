@@ -36,6 +36,7 @@ public class Teclat {
      * @param id Identificador únic del teclat
      */
     public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id, Integer tipus) {
+        if (numFiles * numColumnes < distribucio.size()) throw new IllegalArgumentException("Tamany introduit inferior al nombre de lletres");
         this.distribucio = distribucio;
         this.idEntrada = idEntrada;
         this.numFiles = numFiles;

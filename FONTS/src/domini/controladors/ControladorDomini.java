@@ -488,7 +488,7 @@ public class ControladorDomini {
     }
 
     public Integer importarTeclat(String nom, Integer idEntrada, int files, int columnes, ArrayList<Character> distribucio, Integer tipus) throws Exception {
-
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder importar un teclat");
         Integer idTeclat = ctrlTeclat.importarTeclat(nom, idEntrada, files, columnes, distribucio, tipus);
 
         ctrlEntrada.vincularTeclatAEntrada(idEntrada, idTeclat);
