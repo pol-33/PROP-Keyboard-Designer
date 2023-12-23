@@ -161,7 +161,6 @@ public class GestorEntrades {
     /**
      * Actualitza una entrada específica en els arxius CSV.
      * @param idEntrada Identificador de l'entrada a actualitzar.
-     * @param nom       Nou nom per a l'entrada.
      * @param lpf       Nou HashMap amb dades específiques (pot ser null).
      * @param text      Nou text associat a l'entrada.
      */
@@ -206,6 +205,10 @@ public class GestorEntrades {
         }
     }
 
+    /**
+     * Carrega l'identificador màxim de les entrades.
+     * @return Identificador màxim de les entrades.
+     */
     public Integer carregarIdMaxim() {
         Integer idMax = 0;
         try (CSVReader reader = new CSVReader(new FileReader(entradesPath))) {
@@ -240,6 +243,12 @@ public class GestorEntrades {
         return String.join(",", array);
     }
 
+    /**
+     * Converteix un HashMap en una única cadena de text.
+     * Cada element del HashMap es separa per un punt.
+     * @param hashMap HashMap a convertir.
+     * @return String resultant de la conversió.
+     */
     public static String hashMapToString(HashMap<String, Integer> hashMap) {
         StringBuilder result = new StringBuilder();
 

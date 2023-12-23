@@ -212,6 +212,10 @@ public class GestorTeclats {
         }
     }
 
+    /**
+     * Carrega l'identificador màxim dels teclats.
+     * @return Identificador màxim dels teclats.
+     */
     public Integer carregarIdMaxim() {
         Integer idMax = 0;
         try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
@@ -226,6 +230,11 @@ public class GestorTeclats {
         return idMax;
     }
 
+    /**
+     * Converteix un ArrayList de caràcters en un String.
+     * @param arrayList ArrayList de caràcters a convertir.
+     * @return String resultant de la conversió.
+     */
     private static String convertirArrayListAString(ArrayList<Character> arrayList) {
         // Crear un StringBuilder para construir el String resultante
         StringBuilder stringBuilder = new StringBuilder();

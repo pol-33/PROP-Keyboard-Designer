@@ -76,7 +76,6 @@ public class GestorAlfabets {
      * @param idAlfabet Identificador de l'alfabet a carregar.
      * @return Array de Strings amb la informació de l'alfabet.
      */
-
     public String[] carregarAlfabet(Integer idAlfabet) {
         try (CSVReader reader = new CSVReader(new FileReader(alfabetsPath))) {
             List<String[]> rows = reader.readAll();
@@ -193,6 +192,10 @@ public class GestorAlfabets {
         return idsEntrades;
     }
 
+    /**
+     * Elimina un alfabet específic dels arxius CSV de forma soft.
+     * @param idAlfabet Identificador de l'alfabet a eliminar.
+     */
     public void eliminarAlfabetSoft(Integer idAlfabet) {
         List<String[]> updatedRows = new ArrayList<>();
 
@@ -215,6 +218,10 @@ public class GestorAlfabets {
         }
     }
 
+    /**
+     * Carrega l'identificador màxim dels alfàbets.
+     * @return Identificador màxim dels alfàbets.
+     */
     public Integer carregarIdMaxim() {
         Integer idMax = 0;
         try (CSVReader reader = new CSVReader(new FileReader(alfabetsPath))) {
