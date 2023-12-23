@@ -46,6 +46,10 @@ public class ControladorAlfabet {
         return ctrlAlfabet;
     }
 
+    /**
+     * Carrega el comptador amb el valor donat.
+     * @param comptador Valor amb el que es vol carregar el comptador
+     */
     public void carregarComptador(Integer comptador) {
         this.comptador = comptador;
     }
@@ -155,11 +159,10 @@ public class ControladorAlfabet {
     // ---------------------------------------------------------------------------- //
 
     /**
-     * Carrega l'alfabet amb els parametres donats generant l'instància d'aquest
-     * @param id
-     * @param nom
-     * @param lletres
-     * @param idEntrades
+     * Carrega l'alfabet amb els parametres donats generant la instància d'aquest
+     * @param id Identificador de l'alfabet
+     * @param nom Nom de l'alfabet
+     * @param lletres Lletres de l'alfabet
      */
     public void carregarAlfabet(Integer id, String nom, ArrayList<Character> lletres) {
         Alfabet nouAlfabet = new Alfabet(nom, id, lletres, null);
