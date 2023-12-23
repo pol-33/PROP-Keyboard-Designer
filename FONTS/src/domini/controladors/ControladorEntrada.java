@@ -46,6 +46,10 @@ public class ControladorEntrada {
         return ctrlEntrada;
     }
 
+    /**
+     * Carrega el comptador amb el valor donat.
+     * @param comptador Valor del comptador.
+     */
     public void carregarComptador(Integer comptador) {
         this.contador = comptador;
     }
@@ -76,11 +80,18 @@ public class ControladorEntrada {
         if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
         return conjuntEntrades.get(idEntrada).getTipus();
     }
-    
+
+    /**
+     * Retorna el contingut de text de l'entrada donada.
+     * @param idEntrada Identificador de l'entrada.
+     * @return El contingut de text de l'entrada.
+     * @throws Exception Si no existeix una entrada amb aquest identificador o l'entrada no és de tipus Text.
+     */
     public String getTextEntrada(Integer idEntrada) throws Exception {
         if (!conjuntEntrades.containsKey(idEntrada)) throw new Exception("No existeix una entrada amb aquest identificador");
         return conjuntEntrades.get(idEntrada).getText();
     }
+
     /**
      * Retorna la llista de paraules freqüents de l'entrada donada.
      * @param idEntrada Identificador de l'entrada.
@@ -178,6 +189,14 @@ public class ControladorEntrada {
         return contador-1;
     }
 
+    /**
+     * Carrega l'LPF amb els paràmetres donats.
+     * @param id Identificador de l'entrada
+     * @param nomEntrada Nom de l'entrada
+     * @param contingutEntrada Contingut de l'entrada
+     * @param idAlfabet Identificador de l'alfabet associat
+     * @throws Exception Si hi ha errors durant la creació de l'entrada.
+     */
     public void carregarLPF(Integer id, String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
         LPF nouLPF = new LPF(nomEntrada, id, contingutEntrada, idAlfabet);
         conjuntEntrades.put(id, nouLPF);
@@ -245,6 +264,12 @@ public class ControladorEntrada {
         conjuntEntrades = new HashMap<>();
     }
 
+    /**
+     * Modifica el contingut d'una entrada de tipus text.
+     * @param idText Identificador de l'entrada de tipus text.
+     * @param contingut Contingut nou de l'entrada.
+     * @throws Exception Si no existeix una entrada amb aquest identificador o l'entrada no és de tipus text.
+     */
     public void modificarContingutText(Integer idText, String contingut) throws Exception {
         if (!conjuntEntrades.containsKey(idText)) throw new Exception("No existeix una entrada amb aquest identificador");
         Entrada entrada = conjuntEntrades.get(idText);
@@ -252,6 +277,12 @@ public class ControladorEntrada {
         entrada.setText(contingut);
     }
 
+    /**
+     * Modifica el contingut d'una entrada de tipus LPF.
+     * @param idLPF Identificador de l'entrada de tipus LPF.
+     * @param contingut Contingut nou de l'entrada.
+     * @throws Exception Si no existeix una entrada amb aquest identificador o l'entrada no és de tipus LPF.
+     */
     public void modificarContingutLPF(Integer idLPF, HashMap<String, Integer> contingut) throws Exception {
         if (!conjuntEntrades.containsKey(idLPF)) throw new Exception("No existeix una entrada amb aquest identificador");
         Entrada entrada = conjuntEntrades.get(idLPF);
