@@ -66,12 +66,19 @@ public abstract class Entrada {
         return idAlfabet;
     }
 
+    /**
+     * Retorna el tipus de l'entrada.
+     * @return Integer amb el tipus de l'entrada. 0 si es un text, 1 si es una lpf
+     */
     public Integer getTipus() {
         return tipus;
     }
 
 
-
+    /**
+     * Retorna el text de l'entrada.
+     * @return String amb el text de l'entrada. Null si no es un text.
+     */
     public String getText() {
         return null;
     }
@@ -104,12 +111,23 @@ public abstract class Entrada {
         else throw new Exception("L'entrda no tenia aquest teclat vinculat");
     }
 
+    /**
+     * Defineix un nou text per l'entrada.
+     * @param contingut String amb el nou text de l'entrada.
+     * @throws Exception Si l'entrada no és de tipus text.
+     */
     public void setText(String contingut) throws Exception {
         throw new Exception("Aquesta entrada no disposa de text");
     }
 
+    /**
+     * Defineix una nova LPF per l'entrada.
+     * @param stringIntegerHashMap HashMap de String i Integer amb la nova LPF de l'entrada.
+     * @throws Exception Si l'entrada no és de tipus LPF.
+     */
     public void setLPF(HashMap<String, Integer> stringIntegerHashMap) throws Exception {
         if (stringIntegerHashMap == null) throw new Exception("ERROR: El contingut de la LPF no pot ser null");
+        if (stringIntegerHashMap.isEmpty()) throw new Exception("ERROR: El contingut de la LPF no pot ser buit");
         this.lpf = stringIntegerHashMap;
     }
 }
