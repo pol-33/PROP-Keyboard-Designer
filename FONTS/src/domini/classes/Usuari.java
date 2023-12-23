@@ -83,8 +83,8 @@ public class Usuari {
     /**
      * Inicia sessió per a un usuari existent en el sistema.
      * @param nomUsuari Nom d'usuari per a iniciar sessió.
-     * @param contrasenya Contrasenya per a iniciar sessió.
-     * @param nomUsuarisContrasenyes HashMap amb noms d'usuari i les seves contrasenyes.
+     * @param contrasenyaIntroduida Contrasenya per a iniciar sessió.
+     * @param contrasenyaUsuari Contrasenya de l'usuari.
      * @return Usuari objecte de l'usuari que ha iniciat sessió.
      * @throws Exception Si el nom d'usuari no existeix o la contrasenya és incorrecta.
      */
