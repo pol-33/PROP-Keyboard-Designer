@@ -1,0 +1,10 @@
+jordi: Controlador domini, persistencia i usuari, GestorUsuari, GestorAlfabet, ControladorDomini, controladorPersistencia, DriverControladorPersistencia
+
+
+Lluis: Entrada, Text, Lpf, ControladorEntrada i testos, GestorTeclat,GestorEntrada, controladorPersistenciai, DriverControladorPersistencia, docu
+
+
+Pol: Alfabet, Controlador alfabet i docu, controladorPresentacio, driverControladorPresentacio, vistaLogin VistaCrearCompte, vistaCrearEntradaAmbTeclat, VistaGestioAlfabets, vistaModificarAlfabet, vistaModificarEntrada, vistaModificarTeclat
+
+
+Marc: Controlador algoritme, AlgoritmeQAP, algoritmeLAP, HillClimbing, ControladorPresentacio, driverControladroPresentacio, vistaPrincipal, vistaCrearAlfabet, vestioGestioEntrades, VistaGestioTeclats, vistaObrirTeclat
