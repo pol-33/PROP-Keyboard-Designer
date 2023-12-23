@@ -71,6 +71,7 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure els teus teclats");
         return ctrlTeclat.getIdTeclats();
     }
+
     /**
      * Retorna el nom de l'idioma de l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet
@@ -116,6 +117,12 @@ public class ControladorDomini {
         return ctrlEntrada.getTipusEntrada(idEntrada);
     }
 
+    /**
+     * Retorna el text de l'entrada demanada, que pertany a l'usuari loggejat.
+     * @param idEntrada Identificador de l'entrada
+     * @return String que representa el text de l'entrada
+     * @throws Exception Si l'usuari no ha inciat sessió
+     */
     public String getTextEntrada(Integer idEntrada) throws Exception {
          if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlEntrada.getTextEntrada(idEntrada);
@@ -203,7 +210,13 @@ public class ControladorDomini {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getNomTeclat(idTeclat);
     }
-    
+
+    /**
+     * Obte l'identificador de l'entrada vinculada al teclat identificat per idTeclat
+     * @param idTeclat Identificador del teclat
+     * @return Integer que representa l'identificador de l'entrada vinculada al teclat
+     * @throws Exception Si l'usuari no ha inciat sessió
+     */
     public Integer getIdEntradaVinculadaTeclat(Integer idTeclat) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getIdEntradaVinculadaTeclat(idTeclat);
@@ -227,7 +240,14 @@ public class ControladorDomini {
         return idsTeclats;
     }
 
+    /**
+     * Retorna el tipus del teclat demanat, que pertany a l'usuari loggejat.
+     * @param idTeclado Identificador del teclat
+     * @return int que representa el tipus del teclat. 0 si es un teclat de dos dits, 1 si es un teclat de dues mans
+     * @throws Exception Si l'usuari no ha inciat sessió
+     */
     public int getTipusTeclat(int idTeclado) throws Exception {
+        if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure les teves entrades");
         return ctrlTeclat.getTipusTeclat(idTeclado);
     }
 
@@ -349,8 +369,9 @@ public class ControladorDomini {
      * Carrega els teclats de persistencia i instancia les classses.
      * Els teclats segueixen el seguent format
      * id,nom, tipus, numFiles,numColumnes,idEntrada,tecla1.tecla2. ... .teclan
-     * @param teclat
-     * @throws Exception
+     * @param teclats ArrayList de Strings que representa els teclats
+     * @param idEntrada Identificador de l'entrada a la que estan vinculats els teclats
+     * @throws Exception Si l'entrada no existeix
      */
     private void carregarTeclats(ArrayList<String> teclats, Integer idEntrada) throws Exception {
         for (String teclat : teclats) {
@@ -377,7 +398,7 @@ public class ControladorDomini {
     }
 
     /**
-     * Borra de memòria totes les instàncies de les classes
+     * Esborra de memòria totes les instàncies de les classes
      */
     private void resetInfoPrograma() {
         ctrlAlfabet.resetAlfabets();
@@ -386,6 +407,12 @@ public class ControladorDomini {
     }
 
     //--------------------------------Usuari---------------------------------//
+
+    /**
+     * Obte el nom de l'usuari actiu
+     * @return String que representa el nom de l'usuari actiu
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public String getNomUsuariActiu() throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder veure el teu nom");
         return usuariActiu.getNom();
@@ -493,6 +520,17 @@ public class ControladorDomini {
         return idTeclat;
     }
 
+    /**
+     * Importa un teclat a partir de la seva informació
+     * @param nom Nom del teclat
+     * @param idEntrada Identificador de l'entrada
+     * @param files Nombre de files del teclat
+     * @param columnes Nombre de columnes del teclat
+     * @param distribucio Distribució de les tecles del teclat
+     * @param tipus Tipus del teclat
+     * @return Integer que representa l'identificador del teclat creat
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public Integer importarTeclat(String nom, Integer idEntrada, int files, int columnes, ArrayList<Character> distribucio, Integer tipus) throws Exception {
         if (usuariActiu == null) throw new Exception("Has d'haver iniciat sessio per a poder importar un teclat");
         Integer idTeclat = ctrlTeclat.importarTeclat(nom, idEntrada, files, columnes, distribucio, tipus);
@@ -512,6 +550,13 @@ public class ControladorDomini {
         ctrlPersistencia.eliminarTeclat(idTeclat);
     }
 
+    /**
+     * Modifica les files i columnes del teclat identificat per idTeclat
+     * @param idTeclat Identificador del teclat
+     * @param files Nombre de files del teclat
+     * @param columnes Nombre de columnes del teclat
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public void modificarFilesColumnesTeclat(Integer idTeclat, int files, int columnes) throws Exception {
         int idEntrada = ctrlTeclat.getIdEntradaVinculadaTeclat(idTeclat);
         HashMap<String, Integer> lpf = ctrlEntrada.getLpfEntrada(idEntrada);
@@ -524,10 +569,24 @@ public class ControladorDomini {
         ctrlPersistencia.modificarDistribucio(idTeclat, ctrlTeclat.getDistribucioTeclat(idTeclat));
     }
 
+    /**
+     * Obte en numero de files optimes per al teclat identificat per idTeclat
+     * @param idTeclat Identificador del teclat
+     * @param numCols Nombre de columnes del teclat
+     * @return Integer que representa el nombre de files optimes per al teclat
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) throws Exception {
         return ctrlTeclat.getFilesOptimesTeclat(idTeclat, numCols);
     }
 
+    /**
+     * Obte en numero de columnes optimes per al teclat identificat per idTeclat
+     * @param idTeclat Identificador del teclat
+     * @param numFiles Nombre de files del teclat
+     * @return Integer que representa el nombre de columnes optimes per al teclat
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) throws Exception {
         return ctrlTeclat.getColumnesOptimesTeclat(idTeclat, numFiles);
     }
@@ -630,6 +689,12 @@ public class ControladorDomini {
         ctrlPersistencia.modificarContingutEntrada(idEntrada, ctrlEntrada.getLpfEntrada(idEntrada), contingut);
     }
 
+    /**
+     * Modifica el contingut lpf de la entrada identificada per idEntrada
+     * @param idEntrada Identificador de l'entrada
+     * @param newContent Nou contingut de l'entrada
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) throws Exception {
         ctrlEntrada.modificarContingutLPF(idEntrada, newContent);
         ctrlPersistencia.modificarContingutEntrada(idEntrada, ctrlEntrada.getLpfEntrada(idEntrada), null);
@@ -673,7 +738,11 @@ public class ControladorDomini {
         ctrlPersistencia.afegirLletresAlfabet(idAlfabet, lletra);
     }
 
-    //Elimina l'alfabet identificat per idAlfabet
+    /**
+     * Elimina l'alfabet identificat per idAlfabet
+     * @param idAlfabet Identificador de l'alfabet
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public void eliminarAlfabet(Integer idAlfabet) throws Exception {
         ArrayList<Integer> entradesVinculades = ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet);
         for (Integer idEntrada : entradesVinculades) {
@@ -683,6 +752,12 @@ public class ControladorDomini {
         ctrlPersistencia.eliminarAlfabet(idAlfabet);
     }
 
+    /**
+     * Get id de l'alfabet de la entrada identificada per idEntrada
+     * @param idEntrada Identificador de l'entrada
+     * @return Integer que representa l'identificador de l'alfabet
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public ArrayList<Character> getAlfabetEntrada(int idEntrada) throws Exception {
         for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
             if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
@@ -692,6 +767,12 @@ public class ControladorDomini {
         throw new Exception("No s'ha trobat cap alfabet per aquesta entrada");
     }
 
+    /**
+     * Obte el nom de l'alfabet de la entrada identificada per idEntrada
+     * @param idEntrada Identificador de l'entrada
+     * @return String que representa el nom de l'alfabet
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public String getNomAlfabetEntrada(int idEntrada) throws Exception {
         for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
             if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
@@ -701,6 +782,12 @@ public class ControladorDomini {
         return null;
     }
 
+    /**
+     * Obte l'identificador de l'alfabet de la entrada identificada per idEntrada
+     * @param idEntrada Identificador de l'entrada
+     * @return Integer que representa l'identificador de l'alfabet
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
+     */
     public Integer getIdAlfabetEntrada(int idEntrada) throws Exception {
         for (Integer idAlfabet : ctrlAlfabet.getIdAlfabets()) {
             if (ctrlAlfabet.getEntradesVinculadesAlfabet(idAlfabet).contains(idEntrada)) {
