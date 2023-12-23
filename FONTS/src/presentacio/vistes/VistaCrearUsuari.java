@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe VistaCrearAlfabet. Vista per a la creació d'un alfabet.
+ */
 public class VistaCrearUsuari {
 
     private JFrame frame;
@@ -20,20 +23,32 @@ public class VistaCrearUsuari {
     private JPasswordField passwordField, passwordRepeatField;
     private JButton loginButton, signUpButton;
 
+    /**
+     * Constructora de la classe VistaCrearAlfabet.
+     */
     public VistaCrearUsuari() {
         initComponents();
         initUI();
         setActionListeners();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.dispose();
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Crear Usuari");
         panel = new JPanel();
@@ -81,6 +96,9 @@ public class VistaCrearUsuari {
         signUpButton.setBackground(Color.LIGHT_GRAY);
     }
 
+    /**
+     * Inicialitza la interfície de la vista.
+     */
     private void initUI() {
         // Create a GridBagLayout and GridBagConstraints for the panel
         panel.setLayout(new GridBagLayout());
@@ -135,6 +153,9 @@ public class VistaCrearUsuari {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the program when the window is closed
     }
 
+    /**
+     * Configura el comportament dels elements de la interfície.
+     */
     private void setActionListeners() {
         loginButton.addActionListener(new ActionListener() {
             @Override

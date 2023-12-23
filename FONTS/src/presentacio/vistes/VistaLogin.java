@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe VistaLogin. Vista per a l'inici de sessió.
+ */
 public class VistaLogin {
 
     private JFrame frame;
@@ -20,20 +23,32 @@ public class VistaLogin {
     private JPasswordField passwordField;
     private JButton loginButton, signUpButton;
 
+    /**
+     * Constructora de la classe VistaLogin.
+     */
     public VistaLogin() {
         initComponents();
         initUI();
         setActionListeners();
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.dispose();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Inici de sessió");
         panel = new JPanel();
@@ -70,6 +85,9 @@ public class VistaLogin {
         signUpButton.setBorder(null); // Treure borde al botó
     }
 
+    /**
+     * Inicialitza la interfície gràfica de la vista.
+     */
     private void initUI() {
         // Create a GridBagLayout and GridBagConstraints for the panel
         panel.setLayout(new GridBagLayout());
@@ -117,6 +135,9 @@ public class VistaLogin {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the program when the window is closed
     }
 
+    /**
+     * Assigna el comportament als botons.
+     */
     private void setActionListeners() {
         loginButton.addActionListener(new ActionListener() {
             @Override

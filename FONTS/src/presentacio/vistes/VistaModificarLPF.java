@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Classe VistaModificarLPF. Vista per a la modificació d'una LPF.
+ */
 public class VistaModificarLPF {
     private JFrame frame;
     private JTextField wordTextField;
@@ -17,20 +20,32 @@ public class VistaModificarLPF {
     private JList<WordFrequency> list;
     private Integer idLPF;
 
+    /**
+     * Constructora de la classe VistaModificarLPF.
+     */
     public VistaModificarLPF(Integer idLPF) {
         this.idLPF = idLPF;
         initComponents();
         initUI();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Modificar LPF");
         frame.setLayout(new BorderLayout());
@@ -126,6 +141,9 @@ public class VistaModificarLPF {
         frame.add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Inicialitza els elements de la interfície gràfica.
+     */
     private void initUI() {
         HashMap<String, Integer> contenidoLPF = ControladorPresentacio.getContingutLPF(idLPF);
         for (String word : contenidoLPF.keySet()) {
@@ -134,6 +152,9 @@ public class VistaModificarLPF {
         }
     }
 
+    /**
+     * Modifica la LPF.
+     */
     private void modificarLPF() {
         // Convert the list data into a HashMap<String, Integer>
         HashMap<String, Integer> contenidoEntradaMap = new HashMap<>();

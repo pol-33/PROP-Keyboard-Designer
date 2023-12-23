@@ -10,25 +10,37 @@ import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
+/**
+ * Classe VistaModificarTeclat. Vista per a la modificació d'un teclat.
+ */
 public class VistaModificarTeclat extends JFrame {
     private JSpinner tfFiles;
     private JSpinner tfColumnes;
 
+    /**
+     * Constructora de la classe VistaModificarTeclat.
+     */
     public VistaModificarTeclat(Integer idTeclat) {
         initUI(idTeclat);
     }
 
-    // Mostra la finestra
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         setVisible(true);
     }
 
-    // Tanca la finestra
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         setVisible(false);
     }
 
-
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initUI(Integer idTeclat) {
         setTitle("Modificar Teclat");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -128,6 +140,9 @@ public class VistaModificarTeclat extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Modifica el teclat amb els paràmetres especificats.
+     */
     private void modificarTeclat(Integer idTeclat) {
         int files = (Integer) tfFiles.getValue();
         int columnes = (Integer) tfColumnes.getValue();

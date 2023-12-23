@@ -8,23 +8,37 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle.Control;
 
+/**
+ * Classe VistaVeureTeclat. Vista per a la visualització d'un teclat.
+ */
 public class VistaVeureTeclat {
 
     private JFrame frame;
 
+    /**
+     * Constructora de la classe VistaVeureTeclat.
+     */
     public VistaVeureTeclat(Integer idTeclat) {
         initComponents(idTeclat);
-        initUI();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents(Integer idTeclado) {
         frame = new JFrame("Veure Teclat");
         JPanel panel = new JPanel(new BorderLayout());
@@ -48,9 +62,5 @@ public class VistaVeureTeclat {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
-    }
-
-    private void initUI() {
-        
     }
 }

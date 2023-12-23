@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
+/**
+ * Classe VistaPrincipal. Vista principal de l'aplicació que permet gestionar els alfabets, les entrades i els teclats.
+ */
 public class VistaPrincipal extends JFrame {
     
     // Declaracio de variables de la interficie
@@ -34,7 +37,9 @@ public class VistaPrincipal extends JFrame {
     private JButton btCrearTeclat, btModificarTeclat, btEliminarTeclat, btVeureTeclat;
     private JList<ElementTeclatLlista> jListTeclats;
 
-    // ? Constructor de la classe
+    /**
+     * Constructora de la classe VistaPrincipal.
+     */
     public VistaPrincipal() {
         initUI();
         carregaAlfabets();
@@ -42,19 +47,25 @@ public class VistaPrincipal extends JFrame {
         carregaTotsTeclats();
     }
 
-    // Mostra la finestra
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
-    // Tanca la finestra
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
     // * ------------------ INICIALITZADORS DEL UI -----------
 
-    // Metode per inicialitzar la interficie d'usuari
+    /**
+     * Inicialitza els components de la vista i la interficie d'usuari.
+     */
     private void initUI() {
         // Inicialitzacio de la finestra i el panell de pestanyes
         frame = new JFrame("Vista principal");
@@ -91,6 +102,9 @@ public class VistaPrincipal extends JFrame {
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
     }
 
+    /**
+     * Inicialitza el panell de menu superior.
+     */
     private void initUIMenu() {
         panellMenu.setLayout(new BorderLayout());
 
@@ -105,6 +119,9 @@ public class VistaPrincipal extends JFrame {
         panellMenu.add(btTancarSesio, BorderLayout.EAST);
     }
 
+    /**
+     * Inicialitza el panell d'Alfabets.
+     */
     private void initUIAlfabets() {
 
         // Configuracio del disseny del panell d'Alfabets
@@ -139,6 +156,9 @@ public class VistaPrincipal extends JFrame {
         
     }
 
+    /**
+     * Inicialitza el panell d'Entrades.
+     */
     private void initUIEntrades() {
 
         // Configuracio del disseny del panell d'Entrades
@@ -203,6 +223,9 @@ public class VistaPrincipal extends JFrame {
         panellEntrades.add(panelBotonsEntrades, BorderLayout.NORTH);
     }
 
+    /**
+     * Inicialitza el panell de Teclats.
+     */
     private void initUITeclats() {
         // Configuracio del disseny del panell de Teclats
         panellTeclats = new JPanel();
@@ -271,7 +294,9 @@ public class VistaPrincipal extends JFrame {
 
     // ! ------------------ INICIALITZADORS DE LLISTES -----------
 
-    // Metode per inicialitzar la seccio dels Alfabets
+    /**
+     * Carrega els alfabets a la llista.
+     */
     public void carregaAlfabets() {
 
         // Obtencio de dades d'Alfabets i visualitzacio a la llista
@@ -284,7 +309,9 @@ public class VistaPrincipal extends JFrame {
 
     }
 
-    // Metode per inicialitzar la seccio d'Entrades
+    /**
+     * Carrega totes les entrades a la llista.
+     */
     public void carregaTotesEntrades() {
         // Get the DefaultListModel associated with jListEntrades
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
@@ -304,6 +331,9 @@ public class VistaPrincipal extends JFrame {
         if (model.size() > 0) jListEntrades.setSelectedIndex(0);
     }
 
+    /**
+     * Carrega les entrades vinculades a un alfabet a la llista.
+     */
     public void carregaEntrades(Integer idAlfabet) {
         // Get the DefaultListModel associated with jListEntrades
         DefaultListModel<ElementEntradaLlista> model = (DefaultListModel<ElementEntradaLlista>) jListEntrades.getModel();
@@ -320,7 +350,9 @@ public class VistaPrincipal extends JFrame {
         }
     }
     
-    // Metode per inicialitzar la seccio dels Teclats
+    /**
+     * Carrega tots els teclats a la llista.
+     */
     public void carregaTotsTeclats() {
         // Get the DefaultListModel associated with jListEntrades
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
@@ -337,7 +369,9 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
-    // Metode per inicialitzar la seccio dels Teclats
+    /**
+     * Carrega els teclats vinculats a un alfabet a la llista.
+     */
     public void carregaTeclats(Integer idAlfabet) {
         // Get the DefaultListModel associated with jListEntrades
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
@@ -363,7 +397,9 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
-    // * Metode per afegir un alfabet a la llista
+    /**
+     * Alfegeix un alfabet al panell d'Alfabets.
+     */
     public void afegirAlfabet(int idAlfabeto) {
         String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(idAlfabeto);
         ArrayList<Character> letrasAlfabeto = ControladorPresentacio.getLletresAlfabet(idAlfabeto);
@@ -372,7 +408,10 @@ public class VistaPrincipal extends JFrame {
         model.addElement(nuevoAlfabeto);
     }
 
-    // Metode per actualitzar un alfabet de la llista
+    /**
+     * Actualitza la informacio d'un alfabet de la llista del panell.
+     * @param idAlfabet Identificador de l'alfabet a actualitzar
+     */
     public void actualitzarAlfabetLlista(int idAlfabet) {
         DefaultListModel<ElementAlfabetLlista> model = (DefaultListModel<ElementAlfabetLlista>) jListAlfabets.getModel();
 
@@ -385,7 +424,11 @@ public class VistaPrincipal extends JFrame {
 
         afegirAlfabet(idAlfabet);
     }
-    
+
+    /**
+     * Actualitza la informacio d'un teclat de la llista del panell.
+     * @param idTeclat Identificador del teclat a actualitzar
+     */
     public void actualitzarTeclatLlista(int idTeclat) {
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
 
@@ -399,7 +442,10 @@ public class VistaPrincipal extends JFrame {
         afegirTeclat(idTeclat);
     }
 
-    // * Metode per afegir un teclat a la llista
+    /**
+     * Afegeix un teclat al panell de Teclats.
+     * @param idTeclado Identificador del teclat a afegir
+     */
     public void afegirTeclat(int idTeclado) {
         String nomTeclado = ControladorPresentacio.getNomTeclat(idTeclado);
         int idEntrada = ControladorPresentacio.getIdEntradaTeclat(idTeclado);
@@ -416,7 +462,10 @@ public class VistaPrincipal extends JFrame {
         model.addElement(nuevoTeclado);
     }
 
-    // * Metode per afegir una entrada a la llista
+    /**
+     * Afegeix una entrada a la llista del panell d'Entrades.
+     * @param idEntrada Identificador de l'entrada a afegir
+     */
     public void afegirEntrada(int idEntrada) {
         String nombreEntrada = ControladorPresentacio.getNomEntrada(idEntrada);
         Integer tipus = ControladorPresentacio.getTipusEntrada(idEntrada);
@@ -433,12 +482,16 @@ public class VistaPrincipal extends JFrame {
 
     // ! ------------------- METODES DELS BOTONS ------------------------------
 
-    // * Metode que crida el btCrearAlfabet
+    /**
+     * Obre la vista per a crear un nou alfabet.
+     */
     private void crearAlfabet() {
         VistaCrearAlfabet vCrearAlfabet = new VistaCrearAlfabet();
     }
 
-    // TODO metode que crida el btModificarAlfabet
+    /**
+     * Obre la vista per modificar un alfabet.
+     */
     private void modificarAlfabet() {
         int indexSeleccionat = jListAlfabets.getSelectedIndex();
         if (indexSeleccionat == -1) {
@@ -453,7 +506,9 @@ public class VistaPrincipal extends JFrame {
         vModificarAlfabet.mostrar();
     }
 
-    // * metode que crida el btEliminarAlfabet
+    /**
+     * Elimina un alfabet de la llista.
+     */
     private void eliminarAlfabet() {
         int indexSeleccionat = jListAlfabets.getSelectedIndex();
         if (indexSeleccionat == -1) {
@@ -506,14 +561,18 @@ public class VistaPrincipal extends JFrame {
             alfabetComboBoxTeclats.setSelectedIndex(0);
         }
     }
-    
-    // TODO metode que crida el btCrearText
+
+    /**
+     * Obra la vista per a crear una nova entrada.
+     */
     private void crearEntrada() {
         VistaCrearEntrada vCrearText = new VistaCrearEntrada();
         vCrearText.mostrar();
     }
 
-    // TODO metode que crida el btModificarEntrada
+    /**
+     * Obre la vista per a modificar una entrada.
+     */
     private void modificarEntrada() {
         int indexSeleccionat = jListEntrades.getSelectedIndex();
         if (indexSeleccionat == -1) {
@@ -535,6 +594,10 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Actualitza la informacio d'una entrada de la llista del panell.
+     * @param idEntrada
+     */
     public void actualitzarEntradaLlista(Integer idEntrada) {
         for (int i = 0; i < jListEntrades.getModel().getSize(); i++) {
             ElementEntradaLlista element = jListEntrades.getModel().getElementAt(i);
@@ -546,7 +609,9 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
-    // * metode que crida el btEliminarEntrada
+    /**
+     * Elimina una entrada de la llista.
+     */
     private void eliminarEntrada() {
         int indexSeleccionat = jListEntrades.getSelectedIndex();
         if (indexSeleccionat == -1) {
@@ -595,13 +660,17 @@ public class VistaPrincipal extends JFrame {
         }
     }
 
-    // * metode que crida el btCrearTeclat
+    /**
+     * Obre la vista per a crear un nou teclat.
+     */
     private void crearTeclat() {
         VistaComCrearTeclat vComCrearTeclat = new VistaComCrearTeclat();
         vComCrearTeclat.mostrar();
     }
 
-    // TODO metode que crida el btModificarTeclat
+    /**
+     * Obre la vista per a modificar un teclat.
+     */
     private void modificarTeclat() {
         int indexSeleccionat = jListTeclats.getSelectedIndex();
         if (indexSeleccionat == -1) JOptionPane.showMessageDialog(this, "Cap teclat seleccionat!");
@@ -613,7 +682,9 @@ public class VistaPrincipal extends JFrame {
         vModificarTeclat.mostrar();
     }
 
-    // * metodo que llama el btEliminarTeclat
+    /**
+     * Elimina un teclat de la llista.
+     */
     private void eliminarTeclat() {
         int selectedIndex = jListTeclats.getSelectedIndex();
         if (selectedIndex == -1) JOptionPane.showMessageDialog(this, "Cap teclat seleccionat!");
@@ -628,8 +699,10 @@ public class VistaPrincipal extends JFrame {
         ControladorPresentacio.eliminarTeclat(model.get(selectedIndex).getId());
         model.remove(selectedIndex);
     }
-    
-    // * metode que crida el btVeureTeclat
+
+    /**
+     * Obre la vista per a veure un teclat.
+     */
     private void veureTeclat() {
         int indexSeleccionat = jListTeclats.getSelectedIndex();
         if (indexSeleccionat == -1) JOptionPane.showMessageDialog(this, "Cap teclat seleccionat!");
@@ -641,11 +714,16 @@ public class VistaPrincipal extends JFrame {
         vVeureTeclat.mostrar();
     }
 
-    // * metode que crida el btTancarSessio
+    /**
+     * Tanca la sessio de l'usuari.
+     */
     private void tancarSessio() {
         ControladorPresentacio.tancarSessio();
     }
 
+    /**
+     * Actualitza els comboboxes de filtre d'alfabets de les pestanyes d'Entrades i Teclats.
+     */
     public void updateAlfabetComboBoxes() {
         // Update alfabetComboBoxEntrades
         alfabetComboBoxEntrades.removeAllItems();

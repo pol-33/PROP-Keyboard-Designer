@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Classe VistaCrearAlfabet. Vista per a la creació d'un alfabet.
+ */
 public class VistaCrearAlfabet extends JFrame {
     private JTextField symbolField;
     private JList<Character> symbolList;
@@ -19,6 +22,9 @@ public class VistaCrearAlfabet extends JFrame {
     private JButton createAlphabetButton;
     private JTextField alphabetNameField;
 
+    /**
+     * Constructora de la classe VistaCrearAlfabet.
+     */
     public VistaCrearAlfabet() {
         setTitle("Vista Alfabet");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

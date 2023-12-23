@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * Classe VistaCrearTeclat. Vista per a la creació d'un teclat.
+ */
 public class VistaCrearTeclat {
 
     private JFrame frame;
@@ -17,19 +20,31 @@ public class VistaCrearTeclat {
     private JSpinner columnesSpinner;
     private JComboBox<String> tipusComboBox;
 
+    /**
+     * Constructora de la classe VistaCrearTeclat.
+     */
     public VistaCrearTeclat() {
         initComponents();
         initUI();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Crear Teclat");
         JPanel panel = new JPanel(new GridBagLayout()); // Change to GridBagLayout
@@ -97,6 +112,9 @@ public class VistaCrearTeclat {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza els elements de la interfície gràfica.
+     */
     private void initUI() {
         ArrayList<Integer> idEntradas = ControladorPresentacio.getIdEntrades();
         for (Integer id : idEntradas) {
@@ -105,6 +123,9 @@ public class VistaCrearTeclat {
         }
     }
 
+    /**
+     * Crea el teclat amb els paràmetres especificats.
+     */
     private void crearTeclado() {
         String nombreTeclado = nomTextField.getText();
         if (nombreTeclado.isEmpty()) {

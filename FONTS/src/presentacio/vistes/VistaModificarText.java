@@ -7,26 +7,41 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Classe VistaModificarText. Vista per a la modificació d'un text.
+ */
 public class VistaModificarText {
 
     private JFrame frame;
     private JTextArea contingutTextArea;
     private Integer idText;
 
+    /**
+     * Constructora de la classe VistaModificarText.
+     */
     public VistaModificarText(Integer idText) {
         this.idText = idText;
         initComponents();
         initUI();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Crear Text");
         JPanel panel = new JPanel(new GridBagLayout());
@@ -66,11 +81,17 @@ public class VistaModificarText {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza el contingut de la vista.
+     */
     private void initUI() {
         String contingutText = ControladorPresentacio.getContingutText(idText);
         contingutTextArea.setText(contingutText);
     }
 
+    /**
+     * Modifica el text.
+     */
     private void modificarText() {
         String contenidoEntrada = contingutTextArea.getText();
 

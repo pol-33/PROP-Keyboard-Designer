@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import presentacio.controladors.ControladorPresentacio;
 
+/**
+ * Classe VistaModificarAlfabet. Vista per a la modificació d'un alfabet.
+ */
 public class VistaModificarAlfabet {
 
     private JFrame frame;
@@ -18,19 +21,31 @@ public class VistaModificarAlfabet {
     private JTextField letterTextField;
     private Integer idAlfabet;
 
+    /**
+     * Constructora de la classe VistaModificarAlfabet.
+     */
     public VistaModificarAlfabet(Integer idAlfabet) {
         this.idAlfabet = idAlfabet;
         initComponents();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Modificar Alfabet");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

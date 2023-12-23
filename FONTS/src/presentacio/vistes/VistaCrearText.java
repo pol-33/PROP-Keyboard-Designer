@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * Classe VistaCrearText. Vista per a la creació d'un text.
+ */
 public class VistaCrearText {
 
     private JFrame frame;
@@ -13,19 +16,31 @@ public class VistaCrearText {
     private JTextArea contingutTextArea;
     private JComboBox<String> alfabetComboBox;
 
+    /**
+     * Constructora de la classe VistaCrearText.
+     */
     public VistaCrearText() {
         initComponents();
         initUI();
     }
 
+    /**
+     * Mostra la vista.
+     */
     public void mostrar() {
         frame.setVisible(true);
     }
 
+    /**
+     * Tanca la vista.
+     */
     public void tancar() {
         frame.setVisible(false);
     }
 
+    /**
+     * Inicialitza els components de la vista.
+     */
     private void initComponents() {
         frame = new JFrame("Crear Text");
         JPanel panel = new JPanel(new GridBagLayout());
@@ -67,6 +82,9 @@ public class VistaCrearText {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza els elements de la interfície.
+     */
     private void initUI() {
         ArrayList<Integer> idAlfabets = ControladorPresentacio.getIdAlfabets();
         for (Integer id : idAlfabets) {
@@ -75,6 +93,9 @@ public class VistaCrearText {
         }
     }
 
+    /**
+     * Crea el text amb les dades introduïdes.
+     */
     private void crearTexto() {
         String nombreEntrada = nomTextField.getText();
         String contenidoEntrada = contingutTextArea.getText();
