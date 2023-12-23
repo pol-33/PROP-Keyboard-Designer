@@ -3,6 +3,7 @@ package domini.controladors;
 import domini.classes.Usuari;
 import persistencia.controladors.ControladorPersistencia;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -403,12 +404,13 @@ public class ControladorDomini {
         ctrlPersistencia.crearUsuari(nomUsuari, contrasenya);
 
         // Crear alfabets per defecte
-        String lletresCatala = "abcdefghijklmnopqrstuvwxyzç";
-        ArrayList<Character> ArrayLletresCatala = new ArrayList<>();
-        for (int i = 0; i < lletresCatala.length(); ++i) {
-            ArrayLletresCatala.add(lletresCatala.charAt(i));
-        }
-        crearAlfabet("Català", ArrayLletresCatala);
+        ArrayList<Character> lletresCAT = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+        ArrayList<Character> lletresCAST = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+        ArrayList<Character> lletresANG = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+
+        crearAlfabet("Català", lletresCAT);
+        crearAlfabet("Castellà", lletresCAST);
+        crearAlfabet("Anglès", lletresANG);
     }
 
     /**
