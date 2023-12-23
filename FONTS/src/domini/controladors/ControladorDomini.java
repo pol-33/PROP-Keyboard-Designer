@@ -366,6 +366,7 @@ public class ControladorDomini {
 
         //Instanciem el teclat
         ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
+        ctrlEntrada.vincularTeclatAEntrada(idEntrada, id);
     }
 
     /**
