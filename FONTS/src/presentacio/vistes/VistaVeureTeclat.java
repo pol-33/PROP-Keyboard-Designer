@@ -17,6 +17,7 @@ public class VistaVeureTeclat {
 
     /**
      * Constructora de la classe VistaVeureTeclat.
+     * @param idTeclat Identificador del teclat.
      */
     public VistaVeureTeclat(Integer idTeclat) {
         initComponents(idTeclat);
@@ -38,6 +39,7 @@ public class VistaVeureTeclat {
 
     /**
      * Inicialitza els components de la vista.
+     * @param idTeclado Identificador del teclat.
      */
     private void initComponents(Integer idTeclado) {
         frame = new JFrame("Veure Teclat");

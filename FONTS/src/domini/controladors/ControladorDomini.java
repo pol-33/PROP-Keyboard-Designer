@@ -44,7 +44,7 @@ public class ControladorDomini {
 
     /**
      * Retorna una llista de noms dels alfabets existents de l'usuari loggejat.
-     * @return ArrayList<Integer> que representa la llista de noms dels alfabets.
+     * @return ArrayList de Integer que representa la llista de noms dels alfabets.
      * @throws Exception Si l'usuari no ha inciat sessió
      */
     public ArrayList<Integer> getIdAlfabets() throws Exception {
@@ -131,7 +131,7 @@ public class ControladorDomini {
     /**
      * Retorna la LPF de l'entrada demanada, que pertany a l'usuari loggejat.
      * @param idEntrada Identificador de l'entrada
-     * @return HashMap<String, Integer> que representa la LPF de l'entrada
+     * @return HashMap de String, Integer que representa la LPF de l'entrada
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te una entrada amb aquest identificador
      */
@@ -167,7 +167,7 @@ public class ControladorDomini {
     /**
      * Retorna les tecles del teclat demanat, que pertany a l'usuari loggejat.
      * @param idTeclat Identificador del teclat
-     * @return ArrayList<Character> que representa les tecles del teclat
+     * @return ArrayList de Character que representa les tecles del teclat
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un teclat amb aquest identificador
      */
@@ -225,7 +225,7 @@ public class ControladorDomini {
     /**
      * Retorna els identificadors dels teclats associats a l'alfabet demanat, que pertany a l'usuari loggejat.
      * @param idAlfabet Identificador de l'alfabet
-     * @return ArrayList<Integer> que representa els identificadors dels teclats associats a l'alfabet
+     * @return ArrayList de Integer que representa els identificadors dels teclats associats a l'alfabet
      * @throws Exception Si l'usuari no ha inciat sessió
      * @throws Exception Si l'usuari no te un alfabet amb aquest identificador
      */
@@ -704,10 +704,10 @@ public class ControladorDomini {
 
     /**
      * Crea l'alfabet amb els paràmetres donats
-     * @param nomAlfabet
-     * @param lletres
-     * @return
-     * @throws Exception
+     * @param nomAlfabet Nom de l'alfabet
+     * @param lletres Lletres de l'alfabet
+     * @return Integer que representa l'identificador de l'alfabet creat
+     * @throws Exception Si no hi ha cap usuari amb la sessió iniciada
      */
     public Integer crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) throws Exception {
         Integer idAlfabet = ctrlAlfabet.crearAlfabet(nomAlfabet, lletres);

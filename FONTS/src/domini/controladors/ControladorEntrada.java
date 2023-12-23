@@ -157,12 +157,12 @@ public class ControladorEntrada {
 
     /**
      * Carrega el text amb els paràmetres donats.
-     * @param id
-     * @param nomEntrada
-     * @param contingutEntrada
-     * @param idAlfabet
-     * @param lpf
-     * @throws Exception
+     * @param id Identificador de l'entrada
+     * @param nomEntrada Nom de l'entrada
+     * @param contingutEntrada Contingut de l'entrada
+     * @param idAlfabet Identificador de l'alfabet associat
+     * @param lpf Llista de paraules freqüents
+     * @throws Exception Si hi ha errors durant la creació de l'entrada.
      */
     public void carregarText(Integer id, String nomEntrada, HashMap<String, Integer> lpf, String contingutEntrada, Integer idAlfabet) throws Exception {
         Text nouText = new Text(nomEntrada, id, lpf, contingutEntrada, idAlfabet);

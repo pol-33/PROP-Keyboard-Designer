@@ -27,7 +27,7 @@ public abstract class Entrada {
 
     /**
      * Retorna els idTeclats
-     * @return ArrayList<Integer> amb els ids 
+     * @return ArrayList de Integer amb els ids
      */
     public ArrayList<Integer> getIdTeclats() {
         return new ArrayList<>(idTeclats);

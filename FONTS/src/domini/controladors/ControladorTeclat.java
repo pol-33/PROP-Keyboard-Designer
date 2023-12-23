@@ -83,12 +83,14 @@ public class ControladorTeclat {
 
     /**
      * Crear teclat polzes
+     * @param nom Nom del teclat
      * @param lpf  Llista de paraules amb frequencies per a calcular la distribucio optima 
      * @param alfabet  Conjunt de lletres a colocar en el teclat 
      * @param uidEntrada  Identificador de l'entrada d'on prove la lpf
      * @param files  Nombre de files al layout del teclat 
      * @param columnes  Nombre de columnes del layout del teclat
      * @return Enter que representa l'identificador del teclat creat
+     * @throws Exception Si el teclat no es pot crear
      */
     public Integer crearTeclatPolzes(String nom, HashMap<String, Integer> lpf, ArrayList<Character> alfabet, 
      Integer uidEntrada, Integer files, Integer columnes) throws Exception {
@@ -134,7 +136,6 @@ public class ControladorTeclat {
      * @param files Nombre de files al layout del teclat
      * @param columnes Nombre de columnes al layout del teclat
      * @param tipus Tipus de teclat
-     * @throws Exception Si el teclat no es pot crear
      */
     public void carregarTeclat(String nom, ArrayList<Character> distribucio,
         int id, int idEntrada, int files, int columnes, int tipus) {
@@ -294,10 +295,10 @@ public class ControladorTeclat {
 
      /**
       * Retorna el nombre de files optimes per a un teclat donat el nombre de columnes
-      * @param idTeclat
-      * @param numCols
-      * @return
-      * @throws Exception
+      * @param idTeclat Identificador del teclat
+      * @param numCols Nombre de columnes
+      * @return Nombre de files optimes
+      * @throws Exception Si no existeix un teclat amb aquell identificador.
       */
     public Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {
@@ -310,10 +311,10 @@ public class ControladorTeclat {
 
     /**
      * Retorna el nombre de columnes optimes per a un teclat donat el nombre de files
-     * @param idTeclat
-     * @param numFiles
-     * @return
-     * @throws Exception
+     * @param idTeclat Identificador del teclat
+     * @param numFiles Nombre de files
+     * @return Nombre de columnes optimes
+     * @throws Exception Si no existeix un teclat amb aquell identificador.
      */
     public Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) throws Exception {
         if (conjuntTeclats.containsKey(idTeclat)) {

@@ -18,6 +18,7 @@ public class VistaModificarText {
 
     /**
      * Constructora de la classe VistaModificarText.
+     * @param idText Identificador del text.
      */
     public VistaModificarText(Integer idText) {
         this.idText = idText;

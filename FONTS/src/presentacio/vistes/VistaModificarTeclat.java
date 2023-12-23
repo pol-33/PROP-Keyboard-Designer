@@ -19,6 +19,7 @@ public class VistaModificarTeclat extends JFrame {
 
     /**
      * Constructora de la classe VistaModificarTeclat.
+     * @param idTeclat Identificador del teclat.
      */
     public VistaModificarTeclat(Integer idTeclat) {
         initUI(idTeclat);
@@ -40,6 +41,7 @@ public class VistaModificarTeclat extends JFrame {
 
     /**
      * Inicialitza els components de la vista.
+     * @param idTeclat Identificador del teclat.
      */
     private void initUI(Integer idTeclat) {
         setTitle("Modificar Teclat");
@@ -142,6 +144,7 @@ public class VistaModificarTeclat extends JFrame {
 
     /**
      * Modifica el teclat amb els paràmetres especificats.
+     * @param idTeclat Identificador del teclat.
      */
     private void modificarTeclat(Integer idTeclat) {
         int files = (Integer) tfFiles.getValue();

@@ -22,6 +22,7 @@ public class VistaModificarLPF {
 
     /**
      * Constructora de la classe VistaModificarLPF.
+     * @param idLPF Identificador de la LPF.
      */
     public VistaModificarLPF(Integer idLPF) {
         this.idLPF = idLPF;

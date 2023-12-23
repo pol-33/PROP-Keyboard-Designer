@@ -23,6 +23,7 @@ public class VistaModificarAlfabet {
 
     /**
      * Constructora de la classe VistaModificarAlfabet.
+     * @param idAlfabet Identificador de l'alfabet.
      */
     public VistaModificarAlfabet(Integer idAlfabet) {
         this.idAlfabet = idAlfabet;

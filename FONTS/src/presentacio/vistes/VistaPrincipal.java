@@ -333,6 +333,7 @@ public class VistaPrincipal extends JFrame {
 
     /**
      * Carrega les entrades vinculades a un alfabet a la llista.
+     * @param idAlfabet Identificador de l'alfabet
      */
     public void carregaEntrades(Integer idAlfabet) {
         // Get the DefaultListModel associated with jListEntrades
@@ -371,6 +372,7 @@ public class VistaPrincipal extends JFrame {
 
     /**
      * Carrega els teclats vinculats a un alfabet a la llista.
+     * @param idAlfabet Identificador de l'alfabet
      */
     public void carregaTeclats(Integer idAlfabet) {
         // Get the DefaultListModel associated with jListEntrades
@@ -399,6 +401,7 @@ public class VistaPrincipal extends JFrame {
 
     /**
      * Alfegeix un alfabet al panell d'Alfabets.
+     * @param idAlfabeto Identificador de l'alfabet a afegir
      */
     public void afegirAlfabet(int idAlfabeto) {
         String nombreAlfabeto = ControladorPresentacio.getNomAlfabet(idAlfabeto);
@@ -596,7 +599,7 @@ public class VistaPrincipal extends JFrame {
 
     /**
      * Actualitza la informacio d'una entrada de la llista del panell.
-     * @param idEntrada
+     * @param idEntrada Identificador de l'entrada a actualitzar
      */
     public void actualitzarEntradaLlista(Integer idEntrada) {
         for (int i = 0; i < jListEntrades.getModel().getSize(); i++) {
