@@ -226,6 +226,10 @@ public class ControladorDomini {
         return idsTeclats;
     }
 
+    public int getTipusTeclat(int idTeclado) throws Exception {
+        return ctrlTeclat.getTipusTeclat(idTeclado);
+    }
+
     /**
      * Comprova si hi ha un usuari amb la sessió iniciada.
      * @return boolean que representa si hi ha un usuari amb la sessió iniciada.
@@ -703,5 +707,4 @@ public class ControladorDomini {
         }
         return null;
     }
-
 }

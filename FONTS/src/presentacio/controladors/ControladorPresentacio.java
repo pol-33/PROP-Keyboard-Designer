@@ -355,6 +355,15 @@ public class ControladorPresentacio {
         }
     }
 
+    public static int getTipusTeclat(int idTeclado) {
+        try {
+            return ctrlDomini.getTipusTeclat(idTeclado);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al obtenir el tipus del teclat: " + e.getMessage());
+            return -1;
+        }
+    }
+
     private static Integer getIdAlfabetEntrada(Integer idEntradaSeleccionada) {
         try {
             return ctrlDomini.getIdAlfabetEntrada(idEntradaSeleccionada);

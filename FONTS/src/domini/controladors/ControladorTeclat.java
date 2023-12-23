@@ -298,4 +298,10 @@ public class ControladorTeclat {
         }
     }
 
+     public int getTipusTeclat(int idTeclado) throws Exception {
+            if (!conjuntTeclats.containsKey(idTeclado)) {
+                throw new Exception("No existeix el teclat amb aquest id");
+            }
+            return conjuntTeclats.get(idTeclado).getTipus();
+     }
  }

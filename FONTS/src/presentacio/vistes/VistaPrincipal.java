@@ -98,7 +98,7 @@ public class VistaPrincipal extends JFrame {
         btTancarSesio.addActionListener(e -> tancarSessio());
 
         // Add a label with the name of the active user
-        JLabel labelNomUsuari = new JLabel("Benvingut al teu compte, " + ControladorPresentacio.getNomUsuariActiu());
+        JLabel labelNomUsuari = new JLabel("Benvingut al teu compte, " + ControladorPresentacio.getNomUsuariActiu() + "!");
         labelNomUsuari.setFont(new Font("Arial", Font.BOLD, 18));
         panellMenu.add(labelNomUsuari, BorderLayout.WEST);
 
@@ -407,8 +407,12 @@ public class VistaPrincipal extends JFrame {
         int files = ControladorPresentacio.getFilesTeclat(idTeclado);
         int columnas = ControladorPresentacio.getColumnesTeclat(idTeclado);
         String nomAlfabet = ControladorPresentacio.getNomAlfabetEntrada(idEntrada);
+        int numTipusTeclat = ControladorPresentacio.getTipusTeclat(idTeclado);
+        String tipusTeclat;
+        if (numTipusTeclat == 0) tipusTeclat = "Teclat d'ordinador (dues mans)";
+        else tipusTeclat = "Teclat tàctil (dos dits)";
         DefaultListModel<ElementTeclatLlista> model = (DefaultListModel<ElementTeclatLlista>) jListTeclats.getModel();
-        ElementTeclatLlista nuevoTeclado = new ElementTeclatLlista(idTeclado, nomTeclado, nomEntrada, files, columnas, nomAlfabet);
+        ElementTeclatLlista nuevoTeclado = new ElementTeclatLlista(idTeclado, nomTeclado, nomEntrada, files, columnas, nomAlfabet, tipusTeclat);
         model.addElement(nuevoTeclado);
     }
 
