@@ -3,12 +3,18 @@ package presentacio.elements;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe ElementTeclatListRenderer. Renderitza els elements de la llista de teclats.
+ */
 public class ElementTeclatListRenderer extends JPanel implements ListCellRenderer<ElementTeclatLlista> {
     private JLabel nomLabel;
     private JLabel nomEntradaLabel;
     private JLabel tipusLabel;
     private JLabel filesColumnesLabel;
 
+    /**
+     * Constructora de la classe ElementTeclatListRenderer.
+     */
     public ElementTeclatListRenderer() {
         setLayout(new BorderLayout());
         setOpaque(true);
