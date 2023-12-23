@@ -34,6 +34,7 @@ public class Teclat {
      * @param numFiles Nombre de files del teclat
      * @param numColumnes Nombre de columnes del teclat
      * @param id Identificador únic del teclat
+     * @param tipus Tipus de teclat
      */
     public Teclat(String nom, ArrayList<Character> distribucio, Integer idEntrada, Integer numFiles, Integer numColumnes, Integer id, Integer tipus) {
         if (numFiles * numColumnes < distribucio.size()) throw new IllegalArgumentException("Tamany introduit inferior al nombre de lletres");
@@ -46,6 +47,12 @@ public class Teclat {
         this.tipus = tipus;
     }
 
+    /**
+     * Modificadora de les files i columnes del teclat.
+     * @param files Nombre de files del teclat
+     * @param columnes Nombre de columnes del teclat
+     * @throws Exception Si el nombre de files o columnes és negatiu o si el nombre de files * columnes és inferior al nombre de lletres
+     */
     public void modificarFilesColumnes(int files, int columnes) throws Exception {
         if (files * columnes < distribucio.size()) throw new Exception("Tamany inferior al nombre de lletres");
         if (files < 0) throw new Exception("Hi ha d'haver minim una fila");
@@ -54,11 +61,20 @@ public class Teclat {
         numColumnes = columnes;
     }
 
+    /**
+     * Modificadora del nom del teclat.
+     * @param nom Nom del teclat
+     * @throws Exception Si el nom és buit
+     */
     public void modificarNom(String nom) throws Exception {
-        if (nom == "") throw new Exception("El nom no pot ser buit");
+        if (nom.isEmpty()) throw new Exception("El nom no pot ser buit");
         this.nom = nom;
     }
 
+    /**
+     * Setter de la distribució de caràcters del teclat.
+     * @param novaDistribucio ArrayList de caràcters amb la nova distribució del teclat.
+     */
     public void setDistribucio(ArrayList<Character> novaDistribucio) {
         distribucio = novaDistribucio;
     } 
@@ -107,6 +123,10 @@ public class Teclat {
         return this.idEntrada;
     }
 
+    /**
+     * Retorna el tipus de teclat.
+     * @return
+     */
     public Integer getTipus() {
         return tipus;
     }
