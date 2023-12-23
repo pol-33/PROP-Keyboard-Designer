@@ -254,8 +254,8 @@ public class ControladorDomini {
             carregarEntrades(entradesEnCSV, idAlfabet); //instanciem les entrades
             for (String entradaEnCSV : entradesEnCSV) {
                 Integer idEntrada = Integer.valueOf(entradaEnCSV.split(",")[0]); //obtenim l'id de l'entrada
-                String teclat = ctrlPersistencia.carregarTeclat(idEntrada);
-                if (teclat != null) carregarTeclat(teclat, idEntrada);
+                ArrayList<String> teclats = ctrlPersistencia.carregarTeclats(idEntrada);
+                carregarTeclats(teclats, idEntrada);
             }
         }
 
@@ -347,25 +347,28 @@ public class ControladorDomini {
      * @param teclat
      * @throws Exception
      */
-    private void carregarTeclat(String teclat, Integer idEntrada) throws Exception {
-        ArrayList<Character> distribucio = new ArrayList<>();
+    private void carregarTeclats(ArrayList<String> teclats, Integer idEntrada) throws Exception {
+        for (String teclat : teclats) {
+            ArrayList<Character> distribucio = new ArrayList<>();
 
-        String[] atributs = teclat.split(",");
+            String[] atributs = teclat.split(",");
 
-        Integer id = Integer.valueOf(atributs[0]);
-        String nomTeclat = atributs[1];
-        Integer tipus = Integer.valueOf(atributs[2]);
-        Integer numFiles = Integer.valueOf(atributs[3]);
-        Integer numColumnes = Integer.valueOf(atributs[4]);
+            Integer id = Integer.valueOf(atributs[0]);
+            String nomTeclat = atributs[1];
+            Integer tipus = Integer.valueOf(atributs[2]);
+            Integer numFiles = Integer.valueOf(atributs[3]);
+            Integer numColumnes = Integer.valueOf(atributs[4]);
 
 
-        String[] lletres = atributs[5].split("\\.");
-        for (String lletra : lletres) {
-            distribucio.add(lletra.charAt(0));
+            String[] lletres = atributs[5].split("\\.");
+            for (String lletra : lletres) {
+                distribucio.add(lletra.charAt(0));
+            }
+
+            //Instanciem el teclat
+            ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
+            ctrlEntrada.vincularTeclatAEntrada(idEntrada, id);
         }
-
-        //Instanciem el teclat
-        ctrlTeclat.carregarTeclat(nomTeclat, distribucio, id, idEntrada, numFiles, numColumnes, tipus);
     }
 
     /**

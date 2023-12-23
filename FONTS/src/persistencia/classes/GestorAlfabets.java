@@ -41,7 +41,6 @@ public class GestorAlfabets {
         //Creem l'alfabet al fitxer alfabet.csv
         try (CSVWriter writer = new CSVWriter(new FileWriter(alfabetsPath, true)))  {
             String lletresString = convertirArrayListToString(lletres);
-            System.out.println(lletresString);
             String[] alfabet = { String.valueOf(idAlfabet), nom, lletresString };
 
             writer.writeNext(alfabet);

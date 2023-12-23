@@ -201,8 +201,8 @@ public class ControladorPersistencia {
      * @param idEntrada Identificador de l'entrada de la qual es volen carregar els teclats.
      * @return ArrayList de arrays de Strings amb la informació de cada teclat.
      */
-    public String carregarTeclat(Integer idEntrada) {
-        return gestorTeclats.carregarTeclat(idEntrada);
+    public ArrayList<String> carregarTeclats(Integer idEntrada) {
+        return gestorTeclats.carregarTeclats(idEntrada);
     }
 
     /**

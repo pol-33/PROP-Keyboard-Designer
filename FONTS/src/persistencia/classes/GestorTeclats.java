@@ -59,16 +59,16 @@ public class GestorTeclats {
      * @param idEntrada Identificador de l'entrada.
      * @return ArrayList de arrays de Strings representant els teclats.
      */
-    public String carregarTeclat(Integer idEntrada) {
-        String idTeclatAssociat = null;
-        String teclatComplet = null;
+    public ArrayList<String> carregarTeclats(Integer idEntrada) {
+        ArrayList<String> idTeclatsAssociats = new ArrayList<>();
+        ArrayList<String> teclatsComplets = new ArrayList<>();
 
-        // Llegeix relacioEntradaTeclatPath per trobar el teclat associat a idEntrada
+        // Llegeix relacioEntradaTeclatPath per trobar els teclats associats a idEntrada
         try (CSVReader reader = new CSVReader(new FileReader(relacioEntradaTeclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
                 if (row[0].equals(idEntrada.toString())) {
-                    idTeclatAssociat = row[1];
+                    idTeclatsAssociats.add(row[1]);
                 }
             }
         } catch (IOException | CsvException e) {
@@ -79,15 +79,15 @@ public class GestorTeclats {
         try (CSVReader reader = new CSVReader(new FileReader(teclatPath))) {
             List<String[]> rows = reader.readAll();
             for (String[] row : rows) {
-                if (Objects.equals(idTeclatAssociat, row[0])) { // Suposem que el id del teclat esta en la primera columna de teclatas.csv
-                    teclatComplet = convertirArrayAString(row);
+                if (idTeclatsAssociats.contains(row[0])) { // Suposem que el id del teclat esta en la primera columna de teclatas.csv
+                    teclatsComplets.add(convertirArrayAString(row));
                 }
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
 
-        return teclatComplet;
+        return teclatsComplets;
     }
 
 
