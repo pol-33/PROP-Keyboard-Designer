@@ -211,8 +211,7 @@ public class DriverControladorPersistencia {
                     case 15: // Cargar Teclat
                         System.out.println("Introdueix l'id de l'entrada");
                         idEntradaTeclat = in.nextInt();
-                        String teclat = ctrl.carregarTeclat(idEntradaTeclat);
-                        System.out.println(teclat);
+
                         break;
 
                     case 16: // Eliminar Teclat
