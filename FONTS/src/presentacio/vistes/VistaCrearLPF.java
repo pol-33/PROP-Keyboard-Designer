@@ -143,11 +143,21 @@ private void initComponents() {
     private void crearLPF() {
         String nombreEntrada = nomTextField.getText();
 
+        if (nombreEntrada.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No s'ha introduït cap nom.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Convert the list data into a HashMap<String, Integer>
         HashMap<String, Integer> contenidoEntradaMap = new HashMap<>();
         for (int i = 0; i < listModel.getSize(); i++) {
             WordFrequency wordFrequency = listModel.getElementAt(i);
             contenidoEntradaMap.put(wordFrequency.getWord(), wordFrequency.getFrequency());
+        }
+
+        if (contenidoEntradaMap.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No s'ha introduït cap contingut.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         int indiceSeleccionado = alfabetComboBox.getSelectedIndex();

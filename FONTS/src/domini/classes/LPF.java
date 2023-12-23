@@ -23,6 +23,12 @@ public class LPF extends Entrada {
      * @throws Exception Si alguna de les freqüències de les paraules és negativa.
      */
     public LPF(String nomEntrada, Integer id, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) throws Exception {
+        if (nomEntrada == null || nomEntrada.isEmpty()) {
+            throw new Exception("El nom de l'entrada no pot ser null o buit");
+        }
+        if (contingutEntrada == null || contingutEntrada.isEmpty()) {
+            throw new Exception("El contingut de l'entrada no pot ser null o buit");
+        }
         for (Map.Entry<String, Integer> paraulaAmbFreq : contingutEntrada.entrySet()) {
             if (paraulaAmbFreq.getValue() < 0) {
                 throw new Exception("Una paraula no pot tenir frequencia negativa");

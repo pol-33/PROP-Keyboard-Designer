@@ -142,6 +142,11 @@ public class VistaModificarLPF {
             contenidoEntradaMap.put(wordFrequency.getWord(), wordFrequency.getFrequency());
         }
 
+        if (contenidoEntradaMap.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "La LPF no pot estar buida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
             ControladorPresentacio.modificarContingutLPF(idLPF, contenidoEntradaMap);
             JOptionPane.showMessageDialog(frame, "LPF modificada correctament.", "Èxit", JOptionPane.INFORMATION_MESSAGE);
