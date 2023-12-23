@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"domini.classes"},{"l":"domini.controladors"},{"l":"drivers"},{"l":"persistencia.classes"},{"l":"persistencia.controladors"},{"l":"presentacio.controladors"},{"l":"presentacio.elements"},{"l":"presentacio.vistes"},{"l":"test"}]
