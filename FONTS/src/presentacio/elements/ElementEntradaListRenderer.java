@@ -6,12 +6,18 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * Classe ElementEntradaListRenderer. Renderitza els elements de la llista d'entrades.
+ */
 public class ElementEntradaListRenderer extends JPanel implements ListCellRenderer<ElementEntradaLlista> {
     JPanel panell;
     private JLabel nomLabel;
     private JLabel infoLabel;
     private JLabel contingutPreviewLabel;
 
+    /**
+     * Constructora de la classe ElementEntradaListRenderer.
+     */
     public ElementEntradaListRenderer() {
         setLayout(new BorderLayout());
         setOpaque(true);
