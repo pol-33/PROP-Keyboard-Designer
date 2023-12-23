@@ -127,7 +127,7 @@ public class VistaCrearUsuari {
         frame.add(panel, BorderLayout.CENTER);
 
         // Center the window on the screen and adjust size
-        frame.setSize(350, 270);
+        frame.setSize(350, 275);
         frame.setLocationRelativeTo(null); // Center the window on the screen
 
         frame.setVisible(true); // Make the window visible

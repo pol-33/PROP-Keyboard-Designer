@@ -109,7 +109,7 @@ public class VistaLogin {
         frame.add(panel, BorderLayout.CENTER);
 
         // Center the window on the screen and adjust size
-        frame.setSize(350, 250);
+        frame.setSize(350, 275);
         frame.setLocationRelativeTo(null); // Center the window on the screen
 
         frame.setVisible(true); // Make the window visible
