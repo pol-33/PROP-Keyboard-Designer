@@ -20,13 +20,20 @@ public class ControladorPresentacio {
     private static VistaPrincipal vPrincipal;
     private static ControladorDomini ctrlDomini = new ControladorDomini();
 
-    // Método para iniciar la aplicación
+    /**
+     * Metode per a iniciar l'aplicació.
+     */
     public static void startAplicacio() {
         vLogin = new VistaLogin();
         vLogin.mostrar();
     }
 
-    // Métodos para la gestión de usuarios
+    /**
+     * Metode per a tancar l'aplicació.
+     * @param usuari Nom de l'usuari que ha tancat sessió.
+     * @param contrasenya Contrasenya de l'usuari que ha tancat sessió.
+     * @return 0 si s'ha tancat l'aplicació correctament, -1 altrament.
+     */
     public static int crearUsuari(String usuari, String contrasenya) {
         try {
             ctrlDomini.crearUsuari(usuari, contrasenya);
@@ -39,7 +46,12 @@ public class ControladorPresentacio {
             return -1;
         }
     }
-    
+
+    /**
+     * Metode per a iniciar sessió.
+     * @param usuari Nom de l'usuari que vol iniciar sessió.
+     * @param contrasenya Contrasenya de l'usuari que vol iniciar sessió.
+     */
     public static void iniciarSessio(String usuari, String contrasenya) {
         try {
             ctrlDomini.iniciarSessio(usuari, contrasenya);
@@ -51,6 +63,9 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Metode per a tancar sessió.
+     */
     public static void tancarSessio() {
         try {
             ctrlDomini.tancarSessio();
@@ -61,8 +76,13 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error al tancar sessio: " + e.getMessage());
         }
     }
-    
-    // Métodos para la gestión de Alfabets
+
+    /**
+     * Metode per a tancar l'aplicació.
+     * @param nomAlfabet Nom de l'alfabet a crear.
+     * @param lletres Lletres de l'alfabet a crear.
+     * @return 0 si s'ha creat l'alfabet correctament, -1 altrament.
+     */
     public static int crearAlfabet(String nomAlfabet, ArrayList<Character> lletres) {
         try {
             int idAlfabet = ctrlDomini.crearAlfabet(nomAlfabet, lletres);
@@ -76,6 +96,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Metode per a eliminar un alfabet.
+     * @param idAlfabet Identificador de l'alfabet a eliminar.
+     */
     public static void eliminarAlfabet(Integer idAlfabet) {
         try {
             ctrlDomini.eliminarAlfabet(idAlfabet);
@@ -85,6 +109,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte els identificadors de tots els alfabets.
+     * @return ArrayList amb els identificadors de tots els alfabets.
+     */
     public static ArrayList<Integer> getIdAlfabets () {
         try {
             return ctrlDomini.getIdAlfabets();
@@ -93,6 +121,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Metode per a obtenir el nom d'un alfabet.
+     * @param idAlfabet Identificador de l'alfabet.
+     * @return String amb el nom de l'alfabet.
+     */
     public static String getNomAlfabet(Integer idAlfabet) {
         try {
             return ctrlDomini.getNomAlfabet(idAlfabet);
@@ -101,6 +134,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Metode per a obtenir les lletres d'un alfabet.
+     * @param idAlfabet Identificador de l'alfabet.
+     * @return ArrayList amb les lletres de l'alfabet.
+     */
     public static ArrayList<Character> getLletresAlfabet(Integer idAlfabet) {
         try {
             return ctrlDomini.getLletresAlfabet(idAlfabet);
@@ -109,7 +147,13 @@ public class ControladorPresentacio {
         }
     }
 
-    // Métodos para la gestión de Entradas
+    // Metodes per a la gestió d'Entradas
+
+    /**
+     * Obtenir el nom de d'una entrada.
+     * @param idEntrada Identificador de l'entrada.
+     * @return String amb el nom de l'entrada.
+     */
     public static String getNomEntrada(int idEntrada) {
         try {
             return ctrlDomini.getNomEntrada(idEntrada);
@@ -118,6 +162,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el tipus d'una entrada.
+     * @param idEntrada Identificador de l'entrada.
+     * @return Integer amb el tipus de l'entrada.
+     */
     public static Integer getTipusEntrada (int idEntrada) {
         try {
             return ctrlDomini.getTipusEntrada(idEntrada);
@@ -126,6 +175,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte els identificadors de totes les entrades.
+     * @return ArrayList amb els identificadors de totes les entrades.
+     */
     public static ArrayList<Integer> getIdEntrades () {
         try {
             return ctrlDomini.getIdEntrades();
@@ -134,6 +187,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte els identificadors de totes les entrades d'un alfabet.
+     * @param idAlfabetSeleccionado Identificador de l'alfabet.
+     * @return ArrayList amb els identificadors de totes les entrades d'un alfabet.
+     */
     public static ArrayList<Integer> getIdEntradesVinculadesAlfabet(Integer idAlfabetSeleccionado) {
         try {
             return ctrlDomini.getIdEntradesVinculadesAlfabet(idAlfabetSeleccionado);
@@ -142,6 +200,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el contingut de text d'una entrada.
+     * @param idText Identificador de l'entrada.
+     * @return String amb el contingut de text de l'entrada.
+     */
     public static String getContingutText(Integer idText) {
         try {
             return ctrlDomini.getTextEntrada(idText);
@@ -151,6 +214,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el contingut de lpf d'una entrada.
+     * @param idLPF Identificador de l'entrada.
+     * @return HashMap amb el contingut de lpf de l'entrada.
+     */
     public static HashMap<String, Integer> getContingutLPF(Integer idLPF) {
         try {
             return ctrlDomini.getLpfEntrada(idLPF);
@@ -160,6 +228,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Elimina una entrada.
+     * @param idEntrada Identificador de l'entrada.
+     */
     public static void eliminarEntrada(Integer idEntrada) {
         try {
             ctrlDomini.eliminarEntrada(idEntrada);
@@ -169,7 +241,13 @@ public class ControladorPresentacio {
         }
     }
 
-    // Métodos para la gestión de Teclats
+    // metodes per a la gestió de Teclats
+
+    /**
+     * Obte el nom d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @return String amb el nom del teclat.
+     */
     public static String getNomTeclat(int idTeclat) {
         try {
             return ctrlDomini.getNomTeclat(idTeclat);
@@ -178,6 +256,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte l'identificador de l'entrada vinculada a un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @return Integer amb l'identificador de l'entrada vinculada al teclat.
+     */
     public static Integer getIdEntradaTeclat (int idTeclat) {
         try {
             return ctrlDomini.getIdEntradaVinculadaTeclat(idTeclat);
@@ -186,6 +269,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nombre de files d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @return Integer amb el nombre de files del teclat.
+     */
     public static Integer getFilesTeclat (int idTeclat) {
         try {
             return ctrlDomini.getFilesTeclat(idTeclat);
@@ -194,6 +282,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nombre de columnes d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @return Integer amb el nombre de columnes del teclat.
+     */
     public static Integer getColumnesTeclat (int idTeclat) {
         try {
             return ctrlDomini.getColumnesTeclat(idTeclat);
@@ -202,6 +295,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte la distribucio de tecles d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @return ArrayList amb la distribucio de tecles del teclat.
+     */
     public static ArrayList<Character> getDistribucioTeclat (int idTeclat) {
         try {
             return ctrlDomini.getDistribucioTeclat(idTeclat);
@@ -211,7 +309,11 @@ public class ControladorPresentacio {
             return null;
         }
     }
-    
+
+    /**
+     * Obte els identificadors de tots els teclats.
+     * @return ArrayList amb els identificadors de tots els teclats.
+     */
     public static ArrayList<Integer> getIdTeclats () {
         try {
             return ctrlDomini.getIdTeclats();
@@ -220,6 +322,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Elimina un teclat.
+     * @param idTeclat Identificador del teclat.
+     */
     public static void eliminarTeclat(Integer idTeclat) {
         try {
             ctrlDomini.eliminarTeclat(idTeclat);
@@ -228,7 +334,15 @@ public class ControladorPresentacio {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-    
+
+    /**
+     * Crear un teclat optimitzat per a dues mans.
+     * @param nom Nom del teclat.
+     * @param idEntrada Identificador de l'entrada vinculada al teclat.
+     * @param files Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     * @return 0 si s'ha creat el teclat correctament, -1 altrament.
+     */
     public static int crearTeclatDuesMans(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatDuesMans(nom, idEntrada, files, columnes);
@@ -242,6 +356,14 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Crear un teclat optimitzat per a dos dits.
+     * @param nom Nom del teclat.
+     * @param idEntrada Identificador de l'entrada vinculada al teclat.
+     * @param files Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     * @return 0 si s'ha creat el teclat correctament, -1 altrament.
+     */
     public static int crearTeclatPolzes(String nom, Integer idEntrada, int files, int columnes) {
         try {
             int idTeclat = ctrlDomini.crearTeclatPolzes(nom, idEntrada, files, columnes);
@@ -255,6 +377,12 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Modifica les files i columnes d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @param files Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     */
     public static void modificarFilesColumnesTeclat(Integer idTeclat, int files, int columnes) {
         try {
             ctrlDomini.modificarFilesColumnesTeclat(idTeclat, files, columnes);
@@ -267,6 +395,12 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nombre de files òptimes d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @param numCols Nombre de columnes del teclat.
+     * @return Integer amb el nombre de files òptimes del teclat.
+     */
     public static Integer getFilesOptimesTeclat(Integer idTeclat, Integer numCols) {
         try {
             return ctrlDomini.getFilesOptimesTeclat(idTeclat, numCols);
@@ -276,6 +410,12 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nombre de columnes òptimes d'un teclat.
+     * @param idTeclat Identificador del teclat.
+     * @param numFiles Nombre de files del teclat.
+     * @return Integer amb el nombre de columnes òptimes del teclat.
+     */
     public static Integer getColumnesOptimesTeclat(Integer idTeclat, Integer numFiles) {
         try {
             return ctrlDomini.getColumnesOptimesTeclat(idTeclat, numFiles);
@@ -285,6 +425,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Importa un teclat.
+     * @param selectedFile Arxiu amb el teclat a importar.
+     * @throws FileNotFoundException Si no s'ha trobat l'arxiu.
+     */
     public static void importarTeclat(File selectedFile) throws FileNotFoundException {
         try {
             Scanner scanner = new Scanner(selectedFile);
@@ -355,6 +500,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el tipus d'un teclat.
+     * @param idTeclado Identificador del teclat.
+     * @return Integer amb el tipus del teclat.
+     */
     public static int getTipusTeclat(int idTeclado) {
         try {
             return ctrlDomini.getTipusTeclat(idTeclado);
@@ -364,6 +514,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte l'identificador de l'alfabet d'una entrada.
+     * @param idEntradaSeleccionada Identificador de l'entrada.
+     * @return Integer amb l'identificador de l'alfabet de l'entrada.
+     */
     private static Integer getIdAlfabetEntrada(Integer idEntradaSeleccionada) {
         try {
             return ctrlDomini.getIdAlfabetEntrada(idEntradaSeleccionada);
@@ -374,6 +529,13 @@ public class ControladorPresentacio {
     }
 
     // Metodes per a la gestio de Texts
+
+    /**
+     * Crea un text.
+     * @param nomEntrada Nom de l'entrada.
+     * @param contingutEntrada Contingut del text.
+     * @param idAlfabet Identificador de l'alfabet.
+     */
     public static void crearText(String nomEntrada, String contingutEntrada, Integer idAlfabet) {
         try {
             int idEntrada = ctrlDomini.crearText(nomEntrada, contingutEntrada, idAlfabet);
@@ -384,15 +546,26 @@ public class ControladorPresentacio {
         }
     }
 
-    public static void crearLPF(String nombreEntrada, HashMap<String, Integer> contenidoEntrada, Integer idAlfabetSeleccionado) {
+    /**
+     * Crea un LPF.
+     * @param nomEntrada Nom de l'entrada.
+     * @param contingutEntrada Contingut del LPF.
+     * @param idAlfabet Identificador de l'alfabet.
+     */
+    public static void crearLPF(String nomEntrada, HashMap<String, Integer> contingutEntrada, Integer idAlfabet) {
         try {
-            int idEntrada = ctrlDomini.crearLPF(nombreEntrada, contenidoEntrada, idAlfabetSeleccionado);
+            int idEntrada = ctrlDomini.crearLPF(nomEntrada, contingutEntrada, idAlfabet);
             vPrincipal.afegirEntrada(idEntrada);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al crear el LPF: " + e.getMessage());
         }
     }
 
+    /**
+     * Importa una LPF
+     * @param file Arxiu amb la LPF a importar.
+     * @throws FileNotFoundException Si no s'ha trobat l'arxiu.
+     */
     public static void importarLPF(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         String nombreEntrada = scanner.nextLine();
@@ -428,6 +601,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Importa un text.
+     * @param file Arxiu amb el text a importar.
+     * @throws FileNotFoundException Si no s'ha trobat l'arxiu.
+     */
     public static void importarText(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         String nombreEntrada = scanner.nextLine();
@@ -459,6 +637,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Modifica un alfabet afegint una lletra.
+     * @param idAlfabet Identificador de l'alfabet.
+     * @param letter Lletra a afegir.
+     */
     public static void modificarAlfabetAfegirLletra(Integer idAlfabet, Character letter) {
         try {
             ctrlDomini.afegirLletraAlfabet(idAlfabet, letter);
@@ -468,6 +651,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Moodifica el contingut d'un text.
+     * @param idEntrada Identificador de l'entrada.
+     * @param newContent Nou contingut del text.
+     */
     public static void modificarContingutText(Integer idEntrada, String newContent) {
         try {
             ctrlDomini.modificarContingutText(idEntrada, newContent);
@@ -477,6 +665,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Modifica el contingut d'un LPF.
+     * @param idEntrada Identificador de l'entrada.
+     * @param newContent Nou contingut del LPF.
+     */
     public static void modificarContingutLPF(Integer idEntrada, HashMap<String, Integer> newContent) {
         try {
             ctrlDomini.modificarContingutLPF(idEntrada, newContent);
@@ -486,6 +679,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte els identificadors dels teclats vinculats a una entrada.
+     * @param id Identificador de l'entrada.
+     * @return ArrayList amb els identificadors dels teclats vinculats a una entrada.
+     */
     public static ArrayList<Integer> getIdTeclatsVinculatsAEntrada(int id) {
         try {
             return ctrlDomini.getIdTeclatsVinculatsAEntrada(id);
@@ -495,6 +693,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nom de l'alfabet d'una entrada.
+     * @param idEntrada Identificador de l'entrada.
+     * @return String amb el nom de l'alfabet de l'entrada.
+     */
     public static String getNomAlfabetEntrada(int idEntrada) {
         try {
             return ctrlDomini.getNomAlfabetEntrada(idEntrada);
@@ -504,6 +707,11 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte la preview del contingut d'una entrada.
+     * @param idEntrada Identificador de l'entrada.
+     * @return String amb la preview del contingut de l'entrada.
+     */
     public static String getPreviewEntrada(int idEntrada) {
         try {
             if (getTipusEntrada(idEntrada) == 0) {
@@ -517,6 +725,10 @@ public class ControladorPresentacio {
         }
     }
 
+    /**
+     * Obte el nom de l'usuari actiu
+     * @return String amb el nom de l'usuari actiu
+     */
     public static String getNomUsuariActiu() {
         try {
             return ctrlDomini.getNomUsuariActiu();
