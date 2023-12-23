@@ -111,7 +111,7 @@ public class ControladorPersistencia {
     /**
      * Afegeix noves lletres a un alfabet existent.
      * @param idAlfabet Identificador de l'alfabet a modificar.
-     * @param novesLletres Llista de noves lletres a afegir a l'alfabet.
+     * @param novaLletra Nova lletra en forma de caràcter a afegir a l'alfabet.
      */
     public void afegirLletresAlfabet(Integer idAlfabet, Character novaLletra) {
         String[] alfabet = gestorAlfabets.carregarAlfabet(idAlfabet);
@@ -164,7 +164,6 @@ public class ControladorPersistencia {
     /**
      * Modifica el contingut d'una entrada existent.
      * @param idEntrada Identificador de l'entrada a modificar.
-     * @param nom Nou nom per a l'entrada.
      * @param lpf Nou HashMap amb dades específiques (pot ser null).
      * @param text Nou text associat a l'entrada.
      */
