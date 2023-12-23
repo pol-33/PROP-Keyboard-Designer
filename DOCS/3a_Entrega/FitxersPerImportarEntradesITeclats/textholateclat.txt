@@ -1,0 +1,4 @@
+teclat Cat
+4
+8
+qwertyuiopasdfghjklzxcvbnmç
