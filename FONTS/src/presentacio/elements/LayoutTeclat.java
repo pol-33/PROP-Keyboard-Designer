@@ -5,8 +5,16 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Classe LayoutTeclat. Representa el layout d'un teclat.
+ */
 public class LayoutTeclat extends JPanel {
-
+    /**
+     * Constructora de la classe LayoutTeclat.
+     * @param lletres Lletres del teclat.
+     * @param files Nombre de files del teclat.
+     * @param columnes Nombre de columnes del teclat.
+     */
     public LayoutTeclat(ArrayList<Character> lletres, int files, int columnes) {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -36,6 +44,10 @@ public class LayoutTeclat extends JPanel {
         add(info, BorderLayout.NORTH);
     }
 
+    /**
+     * Mètode main de la classe LayoutTeclat.
+     * @param args Arguments input.
+     */
     public static void main(String[] args) {
         ArrayList<Character> letras = new ArrayList<>();
         for (char c = 'A'; c <= 'Z'; c++) {
